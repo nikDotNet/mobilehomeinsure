@@ -1,0 +1,87 @@
+﻿@model mobilehome.insure.Models.Appraisal.MobileHomeAppraisalViewModel
+@{
+    ViewBag.Title = "Mobile Home Appraisal - MobileHome.Insure";
+}
+
+<div class="col-md-9 m-right" id="rightContainer">
+
+
+    <!-- Intro Slider -->
+    <div class="row" data-animated="0">
+        <div class="col-md-12">
+            <div class="page-header">
+                <h1>Mobile Home Appraisal</h1>
+            </div>
+            <div class="col-md-8">
+                @using (Html.BeginForm())
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.State)
+                        @Html.DropDownListFor(x => x.State, new SelectList(Model.StateList), new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Manufacturer)
+                        @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList), new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.ModelYear)
+                        @Html.TextBoxFor(x => x.ModelYear, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Length)
+                        @Html.TextBoxFor(x => x.Length, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Width)
+                        @Html.TextBoxFor(x => x.Width, new { @class = "form-control" })
+                    </div>
+                 <div class="form-action">
+                   <input type="submit" class="btn btn-default" value="Calculate" />
+                </div>
+                }
+
+               
+            </div>
+            <div class="col-md-4">
+                            
+                <div class="page-header text-center">
+                    <span>Estimated Appraisal Value</span>
+                    <h2>@Model.EstimatedValue.ToString("c")</h2>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div style="margin-top:10px">&nbsp;</div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Additions
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-4">Central Air Conditioning</div>
+                    <div class="col-md-8">$2800.00</div>
+                    <div class="col-md-4">Decks/Porches</div>
+                    <div class="col-md-8">$9.00 per square foot</div>
+                    <div class="col-md-4">Skirting/Underpinning</div>
+                    <div class="col-md-8">Brick: $32 Per Linear Foot, Vinyl/Other: $7 Per Linear Foot</div>
+                    <div class="col-md-4">Added Rooms/Additions</div>
+                    <div class="col-md-8">$35.00 Per Square Foot</div>
+                </div>
+
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    *Note
+                </div>
+                <div class="panel-body">
+                    The above information is intended to present an estimated value only. Additions to the home, conditon of the home, and location of the home may alter the valuation. The Colonial Group, Inc. makes no representation to the actual value of the home above. An accurate valuation could be obtained with an on site appraisal. The Colonial Group, Inc. shall have no liability as a result of any inaccuracies of the information above.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
