@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Model;
+using MobileHome.Insure.Model;
 
-namespace DAL.EF.Mapping
+namespace MobileHome.Insure.DAL.EF.Mapping
 {
     public class StateMap : EntityTypeConfiguration<State>
     {

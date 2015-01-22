@@ -195,6 +195,7 @@
     <Content Include="Content\img\icons\intro-next.png" />
     <Content Include="Content\img\icons\intro-prev-hr.png" />
     <Content Include="Content\img\icons\intro-prev.png" />
+    <Content Include="Content\img\loading.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\marker.png" />
     <Content Include="Content\img\others\1.jpg" />
@@ -619,17 +620,17 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\MobileHome.Insure.DAL.csproj">
       <Project>{6964c27a-078c-44dc-b89d-39de700d03b6}</Project>
-      <Name>DAL</Name>
+      <Name>MobileHome.Insure.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\MobileHome.Insure.Model.csproj">
       <Project>{e16f7a35-ab75-482f-b37d-48eab4fcc7c2}</Project>
-      <Name>Model</Name>
+      <Name>MobileHome.Insure.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Service\Service.csproj">
+    <ProjectReference Include="..\Service\MobileHome.Insure.Service.csproj">
       <Project>{c44414af-ff88-41ed-8522-dc60dd71544d}</Project>
-      <Name>Service</Name>
+      <Name>MobileHome.Insure.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

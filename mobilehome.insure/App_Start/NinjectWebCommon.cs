@@ -1,9 +1,9 @@
 
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(mobilehome.insure.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(mobilehome.insure.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(MobileHome.Insure.Web.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(MobileHome.Insure.Web.App_Start.NinjectWebCommon), "Stop")]
 
-namespace mobilehome.insure.App_Start
+namespace MobileHome.Insure.Web.App_Start
 {
     using System;
     using System.Web;

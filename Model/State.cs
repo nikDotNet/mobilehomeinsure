@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Model.Appraisal;
+using MobileHome.Insure.Model.Appraisal;
 
-namespace Model
+namespace MobileHome.Insure.Model
 {
     public partial class State
     {

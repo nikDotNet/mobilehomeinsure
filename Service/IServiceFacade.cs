@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Service
+namespace MobileHome.Insure.Service
 {
     public interface IServiceFacade
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Model.Appraisal
+namespace MobileHome.Insure.Model.Appraisal
 {
     public partial class AgeFactor
     {

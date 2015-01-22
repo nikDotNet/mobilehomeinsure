@@ -1,10 +1,10 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using DAL.EF.Mapping;
-using Model;
-using Model.Appraisal;
+using MobileHome.Insure.DAL.EF.Mapping;
+using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.Appraisal;
 
-namespace DAL.EF
+namespace MobileHome.Insure.DAL.EF
 {
     public partial class mhappraisalContext : DbContext, IDBContext
     {

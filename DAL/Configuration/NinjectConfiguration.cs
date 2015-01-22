@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.EF;
-using DAL.EF;
+using MobileHome.Insure.DAL.EF;
+using MobileHome.Insure.DAL.EF;
 using Ninject.Modules;
 
-namespace DAL.Configuration
+namespace MobileHome.Insure.DAL.Configuration
 {
    public class NinjectConfiguration :NinjectModule
     {

@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
-using Model.Appraisal;
+using MobileHome.Insure.Model.Appraisal;
 
 
-namespace DAL.EF.Mapping
+namespace MobileHome.Insure.DAL.EF.Mapping
 {
     public class AgeFactorMap : EntityTypeConfiguration<AgeFactor>
     {

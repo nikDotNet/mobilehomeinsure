@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DAL.EF;
-using Model;
+using MobileHome.Insure.DAL.EF;
+using MobileHome.Insure.Model;
 
-namespace Service.Appraisal
+namespace MobileHome.Insure.Service.Appraisal
 {
     public class AppraisalServiceFacade : IAppraisalServiceFacade
     {

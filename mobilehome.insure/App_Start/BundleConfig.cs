@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace mobilehome.insure
+namespace MobileHome.Insure.Web
 {
     public class BundleConfig
     {

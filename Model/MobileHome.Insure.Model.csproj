@@ -7,8 +7,8 @@
     <ProjectGuid>{E16F7A35-AB75-482F-B37D-48EAB4FCC7C2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Model</RootNamespace>
-    <AssemblyName>Model</AssemblyName>
+    <RootNamespace>MobileHome.Insure.Model</RootNamespace>
+    <AssemblyName>MobileHome.Insure.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

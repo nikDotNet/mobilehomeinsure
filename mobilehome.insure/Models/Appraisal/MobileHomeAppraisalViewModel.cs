@@ -1,11 +1,11 @@
-﻿using Model;
+﻿using MobileHome.Insure.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace mobilehome.insure.Models.Appraisal
+namespace MobileHome.Insure.Web.Models.Appraisal
 {
     public class MobileHomeAppraisalViewModel
     {

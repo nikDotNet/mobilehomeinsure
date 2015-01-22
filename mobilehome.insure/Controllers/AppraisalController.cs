@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using mobilehome.insure.Models.Appraisal;
-using Service.Appraisal;
+using MobileHome.Insure.Service.Appraisal;
+using MobileHome.Insure.Web.Models.Appraisal;
 
-namespace mobilehome.insure.Controllers
+namespace MobileHome.Insure.Web.Controllers
 {
     public class AppraisalController : Controller
     {

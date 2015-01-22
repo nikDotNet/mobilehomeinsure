@@ -7,8 +7,8 @@
     <ProjectGuid>{C44414AF-FF88-41ED-8522-DC60DD71544D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Service</RootNamespace>
-    <AssemblyName>Service</AssemblyName>
+    <RootNamespace>MobileHome.Insure.Service</RootNamespace>
+    <AssemblyName>MobileHome.Insure.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -76,13 +76,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DAL\DAL.csproj">
+    <ProjectReference Include="..\DAL\MobileHome.Insure.DAL.csproj">
       <Project>{6964c27a-078c-44dc-b89d-39de700d03b6}</Project>
-      <Name>DAL</Name>
+      <Name>MobileHome.Insure.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\Model\MobileHome.Insure.Model.csproj">
       <Project>{e16f7a35-ab75-482f-b37d-48eab4fcc7c2}</Project>
-      <Name>Model</Name>
+      <Name>MobileHome.Insure.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ninject.Modules;
 
-namespace Service.Configuration
+namespace MobileHome.Insure.Service.Configuration
 {
    public class NinjectConfiguration : NinjectModule
     {

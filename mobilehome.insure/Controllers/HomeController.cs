@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace mobilehome.insure.Controllers
+namespace MobileHome.Insure.Web.Controllers
 {
     public class HomeController : Controller
     {
