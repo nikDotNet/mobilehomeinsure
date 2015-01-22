@@ -31,14 +31,19 @@ namespace mobilehome.insure.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult Index(MobileHomeAppraisalViewModel model)
-        {
-            model.EstimatedValue = _serviceFacade.calculateAppraisalValue(model.State, model.Manufacturer, model.Length, model.Width, model.ModelYear);
-            model.ManufacturerList = _serviceFacade.getManufacturers();
-            model.StateList = _serviceFacade.getStates();
-            return View(model);
-        }
+        //[HttpPost]
+        //public ActionResult Index(MobileHomeAppraisalViewModel model)
+        //{
+        //    model.EstimatedValue = _serviceFacade.calculateAppraisalValue(model.State, model.Manufacturer, model.Length, model.Width, model.ModelYear);
+        //    model.ManufacturerList = _serviceFacade.getManufacturers();
+        //    model.StateList = _serviceFacade.getStates();
+        //    return View(model);
+        //}
 
+        public JsonResult GetEstimatedValue(int StateId, int ManafacturerId, int Length, int width, int year)
+        {
+            decimal EstimatedValue = _serviceFacade.calculateAppraisalValue(StateId, ManafacturerId, Length, width, year);
+            return Json(EstimatedValue, JsonRequestBehavior.AllowGet);
+        }
     }
 }

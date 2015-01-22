@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,11 +15,11 @@ namespace mobilehome.insure.Models.Appraisal
             
             
         }
-        
-        
-        public List<string> StateList { get; set; }
+
+
+        public List<State> StateList { get; set; }
                 
-        public List<string> ManufacturerList { get; set; }
+        public List<Manufacturer> ManufacturerList { get; set; }
 
         [Display(Name = "State")]
         [Required(ErrorMessage = "Please select a state")]

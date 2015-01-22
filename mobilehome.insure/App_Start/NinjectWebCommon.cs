@@ -66,6 +66,7 @@ using System.Collections.Generic;
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+
         }
 
         private static void LoadDependencyModules(IKernel kernel)
@@ -75,11 +76,12 @@ using System.Collections.Generic;
 //                (Activator.CreateInstance(typeof(assembly)) as NinjectModule).Load();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(x => x.FullName.StartsWith("DAL") || x.FullName.StartsWith("Service") || x.FullName.StartsWith("mobilehome.insure"));
             //GetModules().Where(p => p.Name.StartsWith("DAL") || p.Name.StartsWith("Service") || p.Name.StartsWith("mobilehome.insure")));
-            foreach (var assembly in assemblies.GetModules().Select(x => x.GetTypes().Where(y => y.IsClass && !y.IsAbstract && y.IsAssignableFrom(typeof(NinjectModule))))
-            {
-               var module = assembly.GetModules().Select(x => x.GetTypes().Where(y => y.IsClass && !y.IsAbstract && y.IsAssignableFrom(typeof(NinjectModule))));
-                (Activator.CreateInstance(typeof(assembly)) as NinjectModule).Load();
-            }
+            //foreach (var assembly in assemblies.GetModules().Select(x => x.GetTypes().Where(y => y.IsClass && !y.IsAbstract && y.IsAssignableFrom(typeof(NinjectModule))))
+            //{
+            //   var module = assembly.GetModules().Select(x => x.GetTypes().Where(y => y.IsClass && !y.IsAbstract && y.IsAssignableFrom(typeof(NinjectModule))));
+            //    (Activator.CreateInstance(typeof(assembly)) as NinjectModule).Load();
+            //}
+
         }
 
     }

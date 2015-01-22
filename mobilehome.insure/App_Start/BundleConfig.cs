@@ -33,8 +33,8 @@ namespace mobilehome.insure
                 "~/Scripts/jquery.appear.js",
                 "~/Scripts/jquery.inview.js",
                 "~/Scripts/jquery.prettyphoto.js",
-                "~/Scripts/jquery.nicescroll.js",
-                "~/Scripts/gmaps.js"
+                "~/Scripts/jquery.nicescroll.js"
+                //,"~/Scripts/gmaps.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Custom/customScripts").Include(
@@ -81,19 +81,10 @@ namespace mobilehome.insure
             bundles.Add(new StyleBundle("~/Content/font-awesome/css/fontstyle").Include(
             "~/Content/font-awesome/css/*.css"));
 
-
-
             bundles.Add(new StyleBundle("~/Content/css/CustomStyle").Include(
                 "~/Content/css/style.css",
                 "~/Content/css/style-responsive.css",
                "~/Content/css/custom.css" ));
-
-    
-    
-
-	
-
-
         }
     }
 }

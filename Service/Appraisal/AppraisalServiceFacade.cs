@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.EF;
+using Model;
 
 namespace Service.Appraisal
 {
@@ -17,15 +18,15 @@ namespace Service.Appraisal
         }
 
 
-        public List<string> getStates()
+        public List<State> getStates()
         {
-            return _context.States.Select(x => x.Name).ToList();
+            return _context.States.ToList();
         }
 
 
-        public List<string> getManufacturers()
+        public List<Manufacturer> getManufacturers()
         {
-            return _context.Manufacturers.Select(x => x.Manufacturer1).ToList();
+            return _context.Manufacturers.ToList();
         }
 
 
@@ -35,17 +36,28 @@ namespace Service.Appraisal
 
         }
 
-        public decimal calculateAppraisalValue(string state, string mfg, int length, int width, int modelYear)
+        public decimal calculateAppraisalValue(int state, int mfg, int length, int width, int modelYear)
         {
             int area = length * width;
             int age = DateTime.Now.Year - modelYear;
+            decimal? agefactor = 0M;
+            decimal? areafactor = 0M;
+            var stateFactor = _context.StateFactors.Where(x => x.Id == state).SingleOrDefault();
+            var mfgFactor = _context.ManufacturerFactors.Where(x => x.Id == mfg).SingleOrDefault();
+            var areaFactor = _context.AreaFactors.Where(x => x.Area >= area).Take(1);
+            var ageFactor = _context.AgeFactors.ToList().Where(x => x.Age >= age).Take(1);
+            if (areaFactor.Count() < 1)
+                areafactor = 0M;
+            else
+                areafactor = areaFactor.FirstOrDefault().Factor;
 
-            var areaFactor = _context.AreaFactors.Where(x => x.Area <= area).SingleOrDefault();
-            var stateFactor = _context.StateFactors.Where(x => x.State.Name == state).SingleOrDefault();
-            var mfgFactor = _context.ManufacturerFactors.Where(x => x.Manufacturer.Manufacturer1 == mfg).SingleOrDefault();
-            var ageFactor = _context.AgeFactors.Where(x => x.Age <= age).Take(1).SingleOrDefault();
+            if(ageFactor.Count() > 0)
+                agefactor = ageFactor.FirstOrDefault().Factor;
+            else
+                agefactor = 0M;
 
-            decimal? estimatedValue = areaFactor.Factor * area * stateFactor.Factor * mfgFactor.Factor * ageFactor.Factor;
+
+            decimal? estimatedValue = areafactor * area * stateFactor.Factor * mfgFactor.Factor * agefactor;
 
             if (estimatedValue.HasValue)
                 return estimatedValue.Value;
