@@ -5,9 +5,8 @@
 
 <style>
 
-
 </style>
-
+@using (Html.BeginForm()) {
 <div class="col-md-9 m-right" id="rightContainer">
     <!-- Intro Slider -->
     <div class="row" data-animated="0">
@@ -19,23 +18,28 @@
                 
                     <div class="form-group">
                         @Html.LabelFor(x => x.State)
-                        @Html.DropDownListFor(x => x.State, new SelectList(Model.StateList, "Id", "Name"), new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.State, new SelectList(Model.StateList, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.State, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.Manufacturer)
-                        @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList, "Id", "Manufacturer1"), new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList, "Id", "Manufacturer1"),"Please Select", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Manufacturer, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.ModelYear)
                         @Html.TextBoxFor(x => x.ModelYear, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.ModelYear, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.Length)
                         @Html.TextBoxFor(x => x.Length, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Length, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.Width)
                         @Html.TextBoxFor(x => x.Width, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Width, "", new { @class = "text-danger" })
                     </div>
                  <div class="form-action">
                    <button class="btn btn-default" id="btnApprisal">Calculate</button>
@@ -86,16 +90,29 @@
         </div>
     </div>
 </div>
+@Html.ValidationSummary(true)
+}
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
+            $('form').submit(function (evt) {
+                evt.preventDefault();
+                var $form = $(this);
+                if ($form.valid()) {
+                    //Ajax call here
+                }
+            });
             $('#dvLoading').hide();
-            $("#btnApprisal").click(function () {
-                $('#dvLoading').show();
-                $.getJSON("/Appraisal/GetEstimatedValue", { StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(), year: $('#ModelYear').val() }, function (result) {
-                    $("#txtEstApp").val(result);
-                    $('#dvLoading').hide();
-                });
+            $("#btnApprisal").click(function (evt) {
+                evt.preventDefault();
+                var $form = $('form');
+                if ($form.valid()) {
+                    $('#dvLoading').show();
+                    $.getJSON("/Appraisal/GetEstimatedValue", { StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(), year: $('#ModelYear').val() }, function (result) {
+                        $("#txtEstApp").val(result);
+                        $('#dvLoading').hide();
+                    });
+                }
             });
         });
     </script>

@@ -31,14 +31,17 @@ namespace MobileHome.Insure.Web.Models.Appraisal
 
         [Display(Name = "Model Year")]
         [Required(ErrorMessage = "Please select a year of manufacture")]
+        [Range(1975, 2014, ErrorMessage="Please enter a valid year")]
         public int ModelYear { get; set; }
 
         [Display(Name = "Length")]
         [Required(ErrorMessage = "Please select a length")]
+        [Range(1, 100000, ErrorMessage = "Please enter length")]
         public int Length { get; set; }
 
         [Display(Name = "Width")]
         [Required(ErrorMessage = "Please select a width")]
+        [Range(1, 100000, ErrorMessage = "Please enter width")]
         public int Width { get; set; }
 
         [Display(Name = "Estimated Value")]
