@@ -85,6 +85,28 @@ namespace MobileHome.Insure.Web
                 "~/Content/css/style.css",
                 "~/Content/css/style-responsive.css",
                "~/Content/css/custom.css" ));
+            bundles.Add(new StyleBundle("~/Content/assets/global").Include(
+                "~/Content/assets/global/plugins/font-awesome/css/font-awesome.min.css",
+                "~/Content/assets/global/plugins/simple-line-icons/simple-line-icons.min.css",
+                "~/Content/assets/global/plugins/bootstrap/css/bootstrap.min.css",
+                "~/Content/assets/global/plugins/uniform/css/uniform.default.css",
+                "~/Content/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css",
+                "~/Content/assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css",
+                "~/Content/assets/global/plugins/fullcalendar/fullcalendar.min.css",
+                "~/Content/assets/global/plugins/jqvmap/jqvmap/jqvmap.css",
+                "~/Content/assets/admin/pages/css/tasks.css",
+                "~/Content/assets/global/css/components.css",
+                "~/Content/assets/global/css/plugins.css",
+                "~/Content/assets/admin/layout/css/layout.css",
+                "~/Content/assets/admin/layout/css/themes/darkblue.css",
+                "~/Content/assets/admin/layout/css/custom.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/assets/admin").Include(
+                "~/Content/assets/admin/layout/css/layout.css",
+                "~/Content/assets/admin/layout/css/themes/darkblue.css",
+                "~/Content/assets/admin/layout/css/custom.css"
+                ));
         }
     }
 }
