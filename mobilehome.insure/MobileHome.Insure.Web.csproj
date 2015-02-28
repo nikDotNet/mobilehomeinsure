@@ -47,6 +47,10 @@
       <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
@@ -59,12 +63,24 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -82,21 +98,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.WebRequest">
-    </Reference>
-    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -412,156 +416,6 @@
     <Content Include="Content\Plugins\owl-carousel\owl.transitions.css" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Views\ExistingHTML\about.html" />
-    <Content Include="Views\ExistingHTML\blog.html" />
-    <Content Include="Views\ExistingHTML\contact.html" />
-    <Content Include="Views\ExistingHTML\css\bootstrap.min.css" />
-    <Content Include="Views\ExistingHTML\css\custom.css" />
-    <Content Include="Views\ExistingHTML\css\prettyphoto.css" />
-    <Content Include="Views\ExistingHTML\css\style-responsive.css" />
-    <Content Include="Views\ExistingHTML\css\style.css" />
-    <Content Include="Views\ExistingHTML\font-awesome\css\font-awesome.css" />
-    <Content Include="Views\ExistingHTML\font-awesome\css\font-awesome.min.css" />
-    <Content Include="Views\ExistingHTML\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Views\ExistingHTML\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Views\ExistingHTML\hostingstart.html" />
-    <Content Include="Views\ExistingHTML\img\bg-pattern.jpg" />
-    <Content Include="Views\ExistingHTML\img\bg-patternOLD.png" />
-    <Content Include="Views\ExistingHTML\img\bg-patterntrash.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\1-big.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\1.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\2.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\3.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\4.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\5.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\6.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\1.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\2.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\3.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\4.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\5.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\6.jpg" />
-    <Content Include="Views\ExistingHTML\img\blog\comments\7.jpg" />
-    <Content Include="Views\ExistingHTML\img\c1.png" />
-    <Content Include="Views\ExistingHTML\img\c3.png" />
-    <Content Include="Views\ExistingHTML\img\clients\1.png" />
-    <Content Include="Views\ExistingHTML\img\clients\2.png" />
-    <Content Include="Views\ExistingHTML\img\clients\3.png" />
-    <Content Include="Views\ExistingHTML\img\clients\4.png" />
-    <Content Include="Views\ExistingHTML\img\clients\5.png" />
-    <Content Include="Views\ExistingHTML\img\clients\6.png" />
-    <Content Include="Views\ExistingHTML\img\clients\7.png" />
-    <Content Include="Views\ExistingHTML\img\error.png" />
-    <Content Include="Views\ExistingHTML\img\icons\bubble.png" />
-    <Content Include="Views\ExistingHTML\img\icons\intro-next-hr.png" />
-    <Content Include="Views\ExistingHTML\img\icons\intro-next.png" />
-    <Content Include="Views\ExistingHTML\img\icons\intro-prev-hr.png" />
-    <Content Include="Views\ExistingHTML\img\icons\intro-prev.png" />
-    <Content Include="Views\ExistingHTML\img\logo.png" />
-    <Content Include="Views\ExistingHTML\img\marker.png" />
-    <Content Include="Views\ExistingHTML\img\others\1.jpg" />
-    <Content Include="Views\ExistingHTML\img\others\2.jpg" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_rounded\btnNext.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_rounded\btnPrevious.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_rounded\contentPattern.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_rounded\default_thumbnail.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_rounded\loader.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_rounded\sprite.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_square\btnNext.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_square\btnPrevious.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_square\contentPattern.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_square\default_thumbnail.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_square\loader.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\dark_square\sprite.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\default_thumb.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\loader.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\sprite.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\sprite_next.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\sprite_prev.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\sprite_x.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\default\sprite_y.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\btnNext.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\btnPrevious.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\contentPatternBottom.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\contentPatternLeft.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\contentPatternRight.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\contentPatternTop.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\default_thumbnail.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\loader.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\facebook\sprite.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_rounded\btnNext.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_rounded\btnPrevious.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_rounded\default_thumbnail.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_rounded\loader.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_rounded\sprite.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_square\btnNext.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_square\btnPrevious.png" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_square\default_thumbnail.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_square\loader.gif" />
-    <Content Include="Views\ExistingHTML\img\prettyphoto\light_square\sprite.png" />
-    <Content Include="Views\ExistingHTML\img\products\1.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\2.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\3.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\4.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\5.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\6.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\7.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\8.jpg" />
-    <Content Include="Views\ExistingHTML\img\products\9.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\1.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\10.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\11.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\12.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\13.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\14.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\15.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\2.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\3.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\4.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\5.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\6.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\7.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\8.jpg" />
-    <Content Include="Views\ExistingHTML\img\projects\9.jpg" />
-    <Content Include="Views\ExistingHTML\img\promo-banner.png" />
-    <Content Include="Views\ExistingHTML\img\quote\1.png" />
-    <Content Include="Views\ExistingHTML\img\slider\intro\1.jpg" />
-    <Content Include="Views\ExistingHTML\img\slider\intro\2.jpg" />
-    <Content Include="Views\ExistingHTML\img\slider\intro\3.jpg" />
-    <Content Include="Views\ExistingHTML\img\success.png" />
-    <Content Include="Views\ExistingHTML\img\tabs\1.png" />
-    <Content Include="Views\ExistingHTML\img\tabs\2.png" />
-    <Content Include="Views\ExistingHTML\img\tabs\3.png" />
-    <Content Include="Views\ExistingHTML\img\tabs\4.png" />
-    <Content Include="Views\ExistingHTML\img\team\1.png" />
-    <Content Include="Views\ExistingHTML\indexTEMP.html" />
-    <Content Include="Views\ExistingHTML\js\bootstrap.min.js" />
-    <Content Include="Views\ExistingHTML\js\contact.js" />
-    <Content Include="Views\ExistingHTML\js\easytabs\easy-responsive-tabs.css" />
-    <Content Include="Views\ExistingHTML\js\easytabs\easyResponsiveTabs.js" />
-    <Content Include="Views\ExistingHTML\js\flex-slider\flexslider.css" />
-    <Content Include="Views\ExistingHTML\js\flex-slider\jquery.flexslider.js" />
-    <Content Include="Views\ExistingHTML\js\gmaps.js" />
-    <Content Include="Views\ExistingHTML\js\html5shiv.js" />
-    <Content Include="Views\ExistingHTML\js\jCProgress-1.0.3.js" />
-    <Content Include="Views\ExistingHTML\js\jflickrfeed.min.js" />
-    <Content Include="Views\ExistingHTML\js\jquery.appear.js" />
-    <Content Include="Views\ExistingHTML\js\jquery.easing.min.js" />
-    <Content Include="Views\ExistingHTML\js\jquery.inview.js" />
-    <Content Include="Views\ExistingHTML\js\jquery.js" />
-    <Content Include="Views\ExistingHTML\js\jquery.nicescroll.js" />
-    <Content Include="Views\ExistingHTML\js\jquery.prettyphoto.js" />
-    <Content Include="Views\ExistingHTML\js\main.js" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\AjaxLoader.gif" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\grabbing.png" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\owl.carousel.css" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\owl.carousel.js" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\owl.carousel.min.js" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\owl.theme.css" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\owl.transitions.css" />
-    <Content Include="Views\ExistingHTML\js\respond.js" />
-    <Content Include="Views\ExistingHTML\portfolio.html" />
-    <Content Include="Views\ExistingHTML\single-post.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -573,41 +427,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\ExistingHTML\font-awesome\fonts\fontawesome-webfont.eot" />
-    <Content Include="Views\ExistingHTML\font-awesome\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Views\ExistingHTML\font-awesome\fonts\fontawesome-webfont.woff" />
-    <Content Include="Views\ExistingHTML\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\bordered-pulled.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\core.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\fixed-width.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\font-awesome.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\icons.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\larger.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\list.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\mixins.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\path.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\rotated-flipped.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\spinning.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\stacked.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\less\variables.less" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\font-awesome.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_bordered-pulled.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_core.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_fixed-width.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_icons.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_larger.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_list.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_mixins.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_path.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_rotated-flipped.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_spinning.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_stacked.scss" />
-    <Content Include="Views\ExistingHTML\font-awesome\scss\_variables.scss" />
-    <Content Include="Views\ExistingHTML\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Views\ExistingHTML\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Views\ExistingHTML\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Views\ExistingHTML\js\owl-carousel\.DS_Store" />
-    <Content Include="Views\ExistingHTML\php\contact.php" />
     <Content Include="Content\Plugins\owl-carousel\.DS_Store" />
     <Content Include="Views\Shared\_menu.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />

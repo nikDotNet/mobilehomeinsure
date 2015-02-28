@@ -4,7 +4,7 @@ using MobileHome.Insure.Model.Appraisal;
 
 namespace MobileHome.Insure.Model
 {
-    public partial class Manufacturer
+    public partial class Manufacturer 
     {
         public Manufacturer()
         {
@@ -17,5 +17,7 @@ namespace MobileHome.Insure.Model
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<bool> isActive { get; set; }
         public virtual ICollection<ManufacturerFactor> ManufacturerFactors { get; set; }
+
+       
     }
 }

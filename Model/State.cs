@@ -4,7 +4,7 @@ using MobileHome.Insure.Model.Appraisal;
 
 namespace MobileHome.Insure.Model
 {
-    public partial class State
+    public partial class State 
     {
         public State()
         {
@@ -15,5 +15,7 @@ namespace MobileHome.Insure.Model
         public string Abbr { get; set; }
         public string Name { get; set; }
         public virtual ICollection<StateFactor> StateFactors { get; set; }
+
+       
     }
 }

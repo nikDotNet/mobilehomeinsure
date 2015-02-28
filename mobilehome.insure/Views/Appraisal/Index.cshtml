@@ -51,7 +51,7 @@
                             
                 <div class="page-header text-center">
                     <span>Estimated Appraisal Value</span>
-                    <h2>@Html.TextBox("txtEstApp","", new { @class = "form-control" })</h2>
+                    <h2><span id="txtEstApp">$0.00</span></h2>
                 </div>
             </div>
 
@@ -109,7 +109,7 @@
                 if ($form.valid()) {
                     $('#dvLoading').show();
                     $.getJSON("/Appraisal/GetEstimatedValue", { StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(), year: $('#ModelYear').val() }, function (result) {
-                        $("#txtEstApp").val(result);
+                        $("#txtEstApp").text(result);
                         $('#dvLoading').hide();
                     });
                 }

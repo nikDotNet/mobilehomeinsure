@@ -20,13 +20,13 @@ namespace MobileHome.Insure.Service.Appraisal
 
         public List<State> getStates()
         {
-            return _context.States.ToList();
+            return _context.States. OrderBy(x => x.Name).ToList();
         }
 
 
         public List<Manufacturer> getManufacturers()
         {
-            return _context.Manufacturers.ToList();
+            return _context.Manufacturers.OrderBy(x => x.Manufacturer1).ToList();
         }
 
 
