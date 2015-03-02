@@ -15,6 +15,5 @@ namespace MobileHome.Insure.Web.Controllers
         {
             return View();
         }
-
     }
 }

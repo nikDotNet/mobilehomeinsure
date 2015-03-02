@@ -1,0 +1,156 @@
+﻿@model MobileHome.Insure.Web.Models.Admin.ListManufacturerFactorViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+<div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                Widget settings form goes here
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn blue">Save changes</button>
+                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+<!-- BEGIN STYLE CUSTOMIZER -->
+<!-- END STYLE CUSTOMIZER -->
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">Manufacturer Factor
+</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Dashboard</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Appraisal</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Manufacturer Factor</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Factor Data
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <button id="sample_editable_1_new" class="btn green">
+                                    Add New <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="btn-group pull-right">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                    Tools <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li>
+                                        <a href="#">Print </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Save as PDF </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Export to Excel </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover table-bordered" id="tblAgeFactor">
+                    <thead>
+                        <tr>
+                            <th>ID
+                            </th>
+                            <th>Manufacturer
+                            </th>
+                            <th>Factor
+                            </th>
+                            <th>Active
+                            </th>
+                            <th>Edit
+                            </th>
+                            <th>Delete
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            @foreach (var item in Model.ListManufacturerFactor)
+                            {
+                        <tr>
+                            <td>@item.Id
+                            </td>
+                            <td>@item.Manufacturer.Manufacturer1
+                            </td>
+                            <td>@item.Factor
+                            </td>
+                            <td>@item.isActive
+                            </td>
+                            <td>
+                                <a class="edit" href="javascript:;">Edit </a>
+                            </td>
+                            <td>
+                                <a class="delete" href="javascript:;">Delete </a>
+                            </td>
+                        </tr>}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END EXAMPLE TABLE PORTLET-->
+    </div>
+</div>
+<!-- END PAGE CONTENT -->
+
+@section scripts{
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Content/assets/global/plugins/select2/select2.min.js"></script>
+    <script src="~/Content/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+    <script src="~/Areas/Admin/Script/AgeFactor.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+            AgeEditable.init();
+        });
+    </script>
+} 

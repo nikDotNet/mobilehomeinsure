@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.Appraisal;
 
 namespace MobileHome.Insure.Service.Appraisal
 {
@@ -65,6 +66,34 @@ namespace MobileHome.Insure.Service.Appraisal
             return 0M;
         }
 
+        public List<AgeFactor> GetAgeFactor()
+        {
+            return _context.AgeFactors.ToList();
+        }
 
+        public List<AreaFactor> GetAreaFactor()
+        {
+            return _context.AreaFactors.ToList();
+        }
+
+        public List<ManufacturerFactor> GetManufacturerFactor()
+        {
+            return _context.ManufacturerFactors.ToList();
+        }
+
+        public List<StateFactor> GetStateFactor()
+        {
+            return _context.StateFactors.ToList();
+        }
+
+        public List<Manufacturer> GetManufacturer()
+        {
+            return _context.Manufacturers.ToList();
+        }
+
+        public List<State> GetState()
+        {
+            return _context.States.ToList();
+        }
     }
 }
