@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MobileHome.Insure.Model.Appraisal
 {
-    public partial class StateFactor
+    public partial class StateFactor : Base.BaseEntity
     {
-        public int Id { get; set; }
+        
         public Nullable<int> StateId { get; set; }
         public Nullable<decimal> Factor { get; set; }
         public string CreatedBy { get; set; }

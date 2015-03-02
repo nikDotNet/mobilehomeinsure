@@ -4,14 +4,14 @@ using MobileHome.Insure.Model.Appraisal;
 
 namespace MobileHome.Insure.Model
 {
-    public partial class Manufacturer 
+    public partial class Manufacturer : Base.BaseEntity
     {
         public Manufacturer()
         {
             this.ManufacturerFactors = new List<ManufacturerFactor>();
         }
 
-        public int Id { get; set; }
+        
         public string Manufacturer1 { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }

@@ -8,5 +8,6 @@ namespace MobileHome.Insure.Service
 {
     public interface IServiceFacade
     {
+        void getStates();
     }
 }

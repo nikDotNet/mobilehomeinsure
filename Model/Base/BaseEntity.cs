@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MobileHome.Insure.DAL
+namespace MobileHome.Insure.Model.Base
 {
-    public interface IDBContext
+    public abstract class BaseEntity
     {
-          int SaveChanges();
+        public int Id { get; set; }
     }
 }
