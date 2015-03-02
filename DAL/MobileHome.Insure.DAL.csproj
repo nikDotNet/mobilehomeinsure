@@ -65,6 +65,7 @@
     <Compile Include="Configuration\NinjectConfiguration.cs" />
     <Compile Include="EF\EFDBContext.cs" />
     <Compile Include="EF\EFUnitOfWork.cs" />
+    <Compile Include="IAuditableEntity.cs" />
     <Compile Include="IDBContext.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="EF\Mapping\AgeFactorMap.cs" />

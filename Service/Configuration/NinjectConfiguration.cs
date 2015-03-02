@@ -12,6 +12,7 @@ namespace MobileHome.Insure.Service.Configuration
         public override void Load()
         {
             Kernel.Bind<IServiceFacade>().To<ServiceFacade>();
+
         }
     }
 }
