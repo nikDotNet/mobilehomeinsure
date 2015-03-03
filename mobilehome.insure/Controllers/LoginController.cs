@@ -19,6 +19,7 @@ namespace MobileHome.Insure.Web.Controllers
         {
             if (model.Name == "admin" && model.Password == "password")
             {
+                TempData["IsLoggedIn"] = "true";
                 return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
             }
             return View();

@@ -1,4 +1,9 @@
-﻿<!-- BEGIN SIDEBAR MENU -->
+﻿@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower();
+    var action = HttpContext.Current.Request.RequestContext.RouteData.Values["action"].ToString().ToLower();
+}
+
+<!-- BEGIN SIDEBAR MENU -->
 <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
 <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
 <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
@@ -14,17 +19,31 @@
         <!-- END SIDEBAR TOGGLER BUTTON -->
     </li>*@
     <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
-    <li class="start active open">
+    @if (controller == "dashboard")
+    {
+        @:<li class="active open">
+    }
+    else
+    {
+        @:<li>
+    }
         <a href="javascript:;">
             <i class="icon-home"></i>
             <span class="title">Dashboard</span>
-            <span class="selected"></span>
         </a>
     </li>
-    <li>
+    @if (controller == "master")
+    {
+        @:<li class="active open">
+    }
+    else
+    {
+        @:<li>
+    }
         <a href="javascript:;">
             <i class="icon-basket"></i>
             <span class="title">Master</span>
+            <span class="selected"></span>
             <span class="arrow "></span>
         </a>
         <ul class="sub-menu">
@@ -40,7 +59,14 @@
             </li>
         </ul>
     </li>
-    <li>
+    @if (controller == "appraisal")
+    {
+        @:<li class="active open">
+    }
+    else
+    {
+        @:<li>
+    }
         <a href="javascript:;">
             <i class="icon-rocket"></i>
             <span class="title">Appraisal</span>

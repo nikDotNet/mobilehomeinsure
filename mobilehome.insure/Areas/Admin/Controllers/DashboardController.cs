@@ -13,7 +13,17 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
+            if (TempData["IsLoggedIn"] != "true")
+            {
+                return RedirectToAction("Index", "Login", new { area = "" });
+            }
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            TempData["IsLoggedIn"] = "false";
+            return RedirectToAction("Index", "Login", new { area = "" });
         }
 
     }

@@ -3806,6 +3806,7 @@
     <Content Include="Content\img\clients\5.png" />
     <Content Include="Content\img\clients\6.png" />
     <Content Include="Content\img\clients\7.png" />
+    <Content Include="Content\img\adminlogo.png" />
     <Content Include="Content\img\error.png" />
     <Content Include="Content\img\icons\bubble.png" />
     <Content Include="Content\img\icons\intro-next-hr.png" />
