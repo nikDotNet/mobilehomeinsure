@@ -17,7 +17,8 @@ namespace mobilehome.insure.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index",controller= "Dashboard", id = UrlParameter.Optional }
+                new { action = "Index",controller= "Dashboard", id = UrlParameter.Optional },
+                new[] { "mobilehome.insure.Areas.Admin.Controllers" }
             );
         }
     }
