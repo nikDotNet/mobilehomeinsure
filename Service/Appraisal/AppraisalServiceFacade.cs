@@ -66,25 +66,134 @@ namespace MobileHome.Insure.Service.Appraisal
             return 0M;
         }
 
+        #region AgeFactor
         public List<AgeFactor> GetAgeFactor()
         {
             return _context.AgeFactors.ToList();
         }
 
+        public void saveAgeFactor(AgeFactor objAgeFactor)
+        {
+            if (objAgeFactor.Id != 0)
+            {
+                var existingObj = _context.AgeFactors.Where(x => x.Id == objAgeFactor.Id).FirstOrDefault();
+                if (existingObj != null)
+                {
+
+                    existingObj.Age = objAgeFactor.Age;
+                    existingObj.Factor = objAgeFactor.Factor;
+                   _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                objAgeFactor.isActive = true;
+                objAgeFactor.CreatedOn = DateTime.Now;
+                objAgeFactor.CreatedBy = "admin";
+                _context.AgeFactors.Add(objAgeFactor);
+                _context.SaveChanges();
+            }
+        }
+
+       
+
+        #endregion
+
+        #region AreaFactor
         public List<AreaFactor> GetAreaFactor()
         {
             return _context.AreaFactors.ToList();
         }
 
+        public void saveAreaFactor(AreaFactor objAreaFactor)
+        {
+            if (objAreaFactor.Id != 0)
+            {
+                var existingObj = _context.AreaFactors.Where(x => x.Id == objAreaFactor.Id).SingleOrDefault();
+                if (existingObj != null)
+                {
+                    existingObj.Area = objAreaFactor.Area;
+                    existingObj.Factor = objAreaFactor.Factor;
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                objAreaFactor.CreatedOn = DateTime.Now;
+                objAreaFactor.isActive = true;
+                objAreaFactor.CreatedBy = "admin";
+                _context.AreaFactors.Add(objAreaFactor);
+                _context.SaveChanges();
+            }
+        }
+        
+        
+        
+        #endregion
+
+        #region ManufacturerFactor
         public List<ManufacturerFactor> GetManufacturerFactor()
         {
             return _context.ManufacturerFactors.ToList();
         }
 
+        public void saveManufacturerFactor(ManufacturerFactor objManufacturerFactor)
+        {
+            if (objManufacturerFactor.Id != 0)
+            {
+                var existingObj = _context.ManufacturerFactors.Where(x => x.Id == objManufacturerFactor.Id).SingleOrDefault();
+                if (existingObj != null)
+                {
+                    existingObj.ManufacturerId = objManufacturerFactor.ManufacturerId;
+                    existingObj.Factor = objManufacturerFactor.Factor;
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                objManufacturerFactor.CreatedOn = DateTime.Now;
+                objManufacturerFactor.CreatedBy = "admin";
+                objManufacturerFactor.isActive = true;
+                _context.ManufacturerFactors.Add(objManufacturerFactor);
+                _context.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region saveStateFactor
         public List<StateFactor> GetStateFactor()
         {
             return _context.StateFactors.ToList();
         }
+
+        public void saveStateFactor(StateFactor objStateFactor)
+        {
+            if (objStateFactor.Id != 0)
+            {
+                var existingObj = _context.StateFactors.Where(x => x.Id == objStateFactor.Id).SingleOrDefault();
+                if (existingObj != null)
+                {
+                    existingObj.StateId = objStateFactor.StateId;
+                    existingObj.Factor = objStateFactor.Factor;
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                objStateFactor.CreatedBy = "admin";
+                objStateFactor.CreatedOn = DateTime.Now;
+                objStateFactor.isActive = true;
+                _context.StateFactors.Add(objStateFactor);
+                _context.SaveChanges();
+            }
+        }
+
+        #endregion
 
         public List<Manufacturer> GetManufacturer()
         {

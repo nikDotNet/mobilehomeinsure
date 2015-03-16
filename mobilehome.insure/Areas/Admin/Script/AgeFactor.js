@@ -16,16 +16,31 @@ var AgeEditable = function () {
         function editRow(oTable, nRow) {
             var aData = oTable.fnGetData(nRow);
             var jqTds = $('>td', nRow);
-            jqTds[0].innerHTML = '';
-            jqTds[1].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[1] + '">';
-            jqTds[2].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[2] + '">';
-            jqTds[3].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[3] + '">';
+            jqTds[0].innerHTML = '<span id="Id">' + aData[0] +  '</span>';
+            jqTds[1].innerHTML = '<input type="text" class="form-control input-small" id="txtAge" value="' + aData[1] + '">';
+            jqTds[2].innerHTML = '<input type="text" class="form-control input-small" id="txtFactor" value="' + aData[2] + '">';
+            //jqTds[3].innerHTML = '<input type="text" class="form-control input-small" id="" value="' + aData[3] + '">';
             jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
             jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
         }
 
         function saveRow(oTable, nRow) {
             var jqInputs = $('input', nRow);
+            var options = {};
+            options.url = "saveAgeFactor";
+            options.method = "POST";
+            options.data = {  Id: $("#Id").text() ,Age: $("#txtAge").val(), Factor: $("#txtFactor").val()};
+            var request = $.ajax(options);
+
+            request.done(function (msg) {
+                alert("Success");
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
+
+          
             oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
             oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
             oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);

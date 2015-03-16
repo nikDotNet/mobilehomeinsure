@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using mobilehome.insure.Models;
 using MobileHome.Insure.Service;
 
 namespace MobileHome.Insure.Web.Controllers
@@ -14,15 +15,26 @@ namespace MobileHome.Insure.Web.Controllers
 
         private readonly IServiceFacade _serviceFacade;
 
-        //public HomeController(IServiceFacade serviceFacade)
-        //{
-        //    _serviceFacade = serviceFacade;
-        //}
+        public HomeController()
+        {
+            _serviceFacade = new Service.ServiceFacade();
+        }
 
         public ActionResult Index()
         {
            // _serviceFacade.getStates();
+            ViewBag.ContactSent = false;
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Index(ContactViewModel objContact)
+        {
+            _serviceFacade.sendMail(objContact.senderName, objContact.senderEmail, objContact.subject, objContact.message);
+            ViewBag.ContactSent = true;
+            return View();
+        }
+
+
     }
 }

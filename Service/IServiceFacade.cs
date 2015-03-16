@@ -9,5 +9,6 @@ namespace MobileHome.Insure.Service
     public interface IServiceFacade
     {
         void getStates();
+        void sendMail(string sender, string senderMail, string subject, string message);
     }
 }

@@ -163,6 +163,7 @@
     <Compile Include="Models\Admin\ListAreaFactorViewModel.cs" />
     <Compile Include="Models\Admin\ListAgeFactorViewModel.cs" />
     <Compile Include="Models\Appraisal\MobileHomeAppraisalViewModel.cs" />
+    <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1283,7 +1284,6 @@
     <Content Include="Areas\Admin\Views\Master\State.cshtml" />
     <Content Include="Areas\Admin\Views\Master\Manufacturer.cshtml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
-    <Content Include="Content\assets\global\plugins\bootstrap-switch\README.md" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Content\assets\global\plugins\uniform\README.md" />
     <Content Include="Content\assets\global\plugins\select2\bower.json" />
@@ -1355,6 +1355,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Appraisal\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Shared\_contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,38 @@
+﻿@model mobilehome.insure.Models.ContactViewModel
+
+<h3>Send us a message</h3>
+
+						<form class="contact-form" data-animated="0" id="contactForm" action="" method="post">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="mc-name">
+										<input type="text" name="senderName" id="senderName" placeholder="name" Required>
+										<span><i class="fa fa-user"></i></span>
+									</div>
+									<div class="mc-email">
+										<input type="email" name="senderEmail" id="senderEmail" placeholder="Email Address" Required>
+										<span><i class="fa fa-envelope-o"></i></span>
+									</div>
+									<div class="mc-website">
+										<input type="text" name="subject" id="subject" placeholder="subject">
+										<span><i class="fa fa-link"></i></span>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="mc-message">
+										<textarea name="message" id="message" placeholder="Message" Required></textarea>
+										<button type="submit"><span>Send</span></button>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div id="successMessage" class="successmessage">
+							<p><span class="success-ico"></span> Thanks for sending your message! We'll get back to you shortly.</p>
+						</div>
+						<div id="failureMessage" class="errormessage">
+							<p><span class="error-ico"></span> There was a problem sending your message. Please try again.</p>
+						</div>
+						<div id="incompleteMessage" class="statusMessage">
+							<p>Please complete all the fields in the form before sending.</p>
+						</div>
+

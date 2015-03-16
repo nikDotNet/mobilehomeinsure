@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MobileHome.Insure.Web.Models.Admin;
+using MobileHome.Insure.Model.Appraisal;
 
 
 namespace mobilehome.insure.Areas.Admin.Controllers
@@ -24,6 +25,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
+        #region AgeFactor
         public ActionResult AgeFactor()
         {
             var model = new ListAgeFactorViewModel();
@@ -37,6 +39,23 @@ namespace mobilehome.insure.Areas.Admin.Controllers
            return View(model);
         }
 
+        [HttpPost]
+        public JsonResult saveAgeFactor(AgeFactor objFactor)
+        {
+            try
+            {
+                _serviceFacade.saveAgeFactor(objFactor);
+                return Json("success");
+            }
+            catch (Exception ex)
+            {
+                return Json("Internal Error occured while processing your request!");
+            }
+
+        }
+
+#endregion
+
         public ActionResult AreaFactor()
         {
             var model = new ListAreaFactorViewModel();
@@ -48,6 +67,21 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public JsonResult saveAreaFactor(AreaFactor objFactor)
+        {
+            try
+            {
+                _serviceFacade.saveAreaFactor(objFactor);
+                return Json("success");
+            }
+            catch (Exception ex)
+            {
+                return Json("Internal Error occured while processing your request!");
+            }
+
         }
 
         public ActionResult StateFactor()
@@ -63,6 +97,23 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        public JsonResult saveStateFactor(StateFactor objFactor)
+        {
+            try
+            {
+                _serviceFacade.saveStateFactor(objFactor);
+                return Json("success");
+            }
+            catch (Exception ex)
+            {
+                return Json("Internal Error occured while processing your request!");
+            }
+
+        }
+
+
         public ActionResult ManufacturerFactor()
         {
             var model = new ListManufacturerFactorViewModel();
@@ -75,6 +126,27 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
             return View(model);
         }
+
+
+
+        [HttpPost]
+        public JsonResult saveManufacturerFactor(ManufacturerFactor objFactor)
+        {
+            try
+            {
+                _serviceFacade.saveManufacturerFactor(objFactor);
+                return Json("success");
+            }
+            catch (Exception ex)
+            {
+                return Json("Internal Error occured while processing your request!");
+            }
+
+        }
+
+
+
+
 
         public ActionResult State()
         {
