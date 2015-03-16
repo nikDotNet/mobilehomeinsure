@@ -28,7 +28,7 @@ namespace MobileHome.Insure.Web.Controllers
             MobileHomeAppraisalViewModel model = new MobileHomeAppraisalViewModel();
             model.ManufacturerList = _serviceFacade.getManufacturers();
             model.StateList = _serviceFacade.getStates();
-           
+            model.OptionsType = _serviceFacade.getOptionTypes();
             return View(model);
         }
 
@@ -41,9 +41,9 @@ namespace MobileHome.Insure.Web.Controllers
         //    return View(model);
         //}
 
-        public JsonResult GetEstimatedValue(int StateId, int ManafacturerId, int Length, int width, int year)
+        public JsonResult GetEstimatedValue(int StateId, int ManafacturerId, int Length, int width, int year, List<int> options)
         {
-            decimal EstimatedValue = _serviceFacade.calculateAppraisalValue(StateId, ManafacturerId, Length, width, year);
+            decimal EstimatedValue = _serviceFacade.calculateAppraisalValue(StateId, ManafacturerId, Length, width, year, options);
             return Json(EstimatedValue.ToString("c"), JsonRequestBehavior.AllowGet);
         }
     }

@@ -25,6 +25,19 @@ namespace MobileHome.Insure.Service.Appraisal
         }
 
 
+        public Dictionary<int, string> getOptionTypes()
+        {
+            Dictionary<int, string> optionTypes = new Dictionary<int, string>();
+            var listOptionTypes = _context.OptionsTypes.Where(x => x.IsActive == true).ToList();
+
+            foreach (var opt in listOptionTypes)
+            {
+                optionTypes.Add(opt.Id, opt.Name);
+            }
+            return optionTypes;
+        }
+
+
         public List<Manufacturer> getManufacturers()
         {
             return _context.Manufacturers.OrderBy(x => x.Manufacturer1).ToList();
@@ -37,10 +50,12 @@ namespace MobileHome.Insure.Service.Appraisal
 
         }
 
-        public decimal calculateAppraisalValue(int state, int mfg, int length, int width, int modelYear)
+        public decimal calculateAppraisalValue(int state, int mfg, int length, int width, int modelYear, List<int> options)
         {
             int area = length * width;
             int age = DateTime.Now.Year - modelYear;
+            List<decimal> optionsAmount = new List<decimal>();
+
             decimal? agefactor = 0M;
             decimal? areafactor = 0M;
             var stateFactor = _context.StateFactors.Where(x => x.Id == state).SingleOrDefault();
@@ -57,8 +72,27 @@ namespace MobileHome.Insure.Service.Appraisal
             else
                 agefactor = 0M;
 
-
             decimal? estimatedValue = areafactor * area * stateFactor.Factor * mfgFactor.Factor * agefactor;
+            
+            foreach (int option in options)
+            {
+                //var optionFactor = _context.OptionsFactors.Where(x => x.ManufacturerId == mfg && x.StateId == state && x.OptionsTypeId == option).Take(1);
+                var optionFactor = _context.OptionsFactors.Where(x => x.OptionsTypeId == option && x.IsActive == true).Take(1);
+                switch (option)
+                {
+                    case 1: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor);
+                            break;
+                    case 2:
+                    case 3: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor * width); // linear foot
+                            break;
+                    case 4:
+                    case 5: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor * area); // area
+                            break;
+
+                }
+            }
+
+            
 
             if (estimatedValue.HasValue)
                 return estimatedValue.Value;

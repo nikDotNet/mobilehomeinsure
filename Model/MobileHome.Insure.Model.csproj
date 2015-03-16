@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Appraisal\AgeFactor.cs" />
     <Compile Include="Appraisal\AreaFactor.cs" />
+    <Compile Include="Appraisal\OptionsFactor.cs" />
+    <Compile Include="Appraisal\OptionsType.cs" />
     <Compile Include="Base\BaseEntity.cs" />
     <Compile Include="Manufacturer.cs" />
     <Compile Include="Appraisal\ManufacturerFactor.cs" />

@@ -24,6 +24,8 @@ namespace MobileHome.Insure.DAL.EF
         public DbSet<StateFactor> StateFactors { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<State> States { get; set; }
+        public DbSet<OptionsFactor> OptionsFactors { get; set; }
+        public DbSet<OptionsType> OptionsTypes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -33,6 +35,8 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new StateFactorMap());
             modelBuilder.Configurations.Add(new ManufacturerMap());
             modelBuilder.Configurations.Add(new StateMap());
+            modelBuilder.Configurations.Add(new OptionsFactorMap() );
+            modelBuilder.Configurations.Add(new OptionsTypeMap());
         }
     }
 }

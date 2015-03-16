@@ -21,10 +21,13 @@ namespace MobileHome.Insure.Web.Models.Appraisal
                 
         public List<Manufacturer> ManufacturerList { get; set; }
 
+        [Display(Name = "Options Type")]
+        public Dictionary<int, string> OptionsType { get; set; }
+
         [Display(Name = "State")]
         [Required(ErrorMessage = "Please select a state")]
         public string State { get; set; }
-
+    
         [Display(Name = "Manufacturer")]
         [Required(ErrorMessage = "Please select a manufacturer")]
         public string Manufacturer { get; set; }
@@ -38,7 +41,7 @@ namespace MobileHome.Insure.Web.Models.Appraisal
         [Required(ErrorMessage = "Please select a length")]
         [Range(1, 100000, ErrorMessage = "Please enter length")]
         public int Length { get; set; }
-
+            
         [Display(Name = "Width")]
         [Required(ErrorMessage = "Please select a width")]
         [Range(1, 100000, ErrorMessage = "Please enter width")]
@@ -47,5 +50,12 @@ namespace MobileHome.Insure.Web.Models.Appraisal
         [Display(Name = "Estimated Value")]
         public decimal EstimatedValue { get; set; }
 
+        [Display(Name = "Selected Options")]
+        public Dictionary<int, string> selectedOptionsType { get; set; }
+
+        
+
     }
+
+
 }

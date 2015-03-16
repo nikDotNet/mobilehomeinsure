@@ -41,6 +41,10 @@
                         @Html.TextBoxFor(x => x.Width, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Width, "", new { @class = "text-danger" })
                     </div>
+                <div class="form-group">
+                    @Html.LabelFor(x => x.OptionsType)
+                    @Html.DropDownListFor(x => x.OptionsType, new SelectList(Model.OptionsType, "Key", "Value"), new { id="ddlOptionType", @class = "form-control select2", multiple="multiple" })
+                </div>
                  <div class="form-action">
                    <button class="btn btn-default" id="btnApprisal">Calculate</button>
                 </div>
@@ -61,7 +65,7 @@
         <div style="margin-top:10px">&nbsp;</div>
 
         <div class="col-md-12">
-            <div class="panel panel-default">
+            @*<div class="panel panel-default">
                 <div class="panel-heading">
                     Additions
                 </div>
@@ -76,7 +80,7 @@
                     <div class="col-md-8">$35.00 Per Square Foot</div>
                 </div>
 
-            </div>
+            </div>*@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -102,16 +106,39 @@
                     //Ajax call here
                 }
             });
+
+            $("#ddlOptionType").select2(
+                {
+                    placeholder: "Select an Option",
+                    allowClear: true
+                });
+
             $('#dvLoading').hide();
             $("#btnApprisal").click(function (evt) {
                 evt.preventDefault();
                 var $form = $('form');
                 if ($form.valid()) {
                     $('#dvLoading').show();
-                    $.getJSON("/Appraisal/GetEstimatedValue", { StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(), year: $('#ModelYear').val() }, function (result) {
+                  
+                    var ajaxOptions = {};
+                    ajaxOptions.data = JSON.stringify( { StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(), year: $('#ModelYear').val(), options :  $('#ddlOptionType').val() });
+                    ajaxOptions.url = "/Appraisal/GetEstimatedValue";
+                    ajaxOptions.method = "POST";
+                    ajaxOptions.dataType = "JSON";
+                    ajaxOptions.contentType = 'application/json';
+                    var request = $.ajax(ajaxOptions);
+
+                    request.done(function (result) {
                         $("#txtEstApp").text(result);
                         $('#dvLoading').hide();
                     });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        alert("Request failed: " + textStatus);
+                    });
+                    
+
+                    
                 }
             });
         });

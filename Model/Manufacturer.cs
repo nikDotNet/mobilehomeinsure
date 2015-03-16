@@ -9,6 +9,7 @@ namespace MobileHome.Insure.Model
         public Manufacturer()
         {
             this.ManufacturerFactors = new List<ManufacturerFactor>();
+            this.OptionsFactors = new List<OptionsFactor>();
         }
 
         
@@ -17,6 +18,7 @@ namespace MobileHome.Insure.Model
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<bool> isActive { get; set; }
         public virtual ICollection<ManufacturerFactor> ManufacturerFactors { get; set; }
+        public virtual ICollection<OptionsFactor> OptionsFactors { get; set; }
 
        
     }
