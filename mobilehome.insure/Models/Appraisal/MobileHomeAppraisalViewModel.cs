@@ -58,8 +58,12 @@ namespace MobileHome.Insure.Web.Models.Appraisal
 
         [Display(Name = "Vinyl/Other Skirting/Underpinning Footage")]
         public double VinylSkirtingLinearFootage { get; set; }
-        
 
+        [Display(Name = "Area of Decks / Porches")]
+        public double AreaOfDeckPorche { get; set; }
+
+        [Display(Name = "Area of Additions")]
+        public double AreaOfAdditions { get; set; }
     }
 
 

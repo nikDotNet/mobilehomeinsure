@@ -50,9 +50,10 @@ function submitForm() {
 
     $('#sendingMessage').fadeIn();
     contactForm.fadeOut();
+    $("#dvLoading").show();
 
     $.ajax( {
-      url: contactForm.attr( 'action' ) + "?ajax=true",
+      url: contactForm.attr( 'action' ),
       type: contactForm.attr( 'method' ),
       data: contactForm.serialize(),
       success: submitFinished
@@ -67,7 +68,8 @@ function submitForm() {
 // Handle the Ajax response
 
 function submitFinished( response ) {
-  response = $.trim( response );
+    response = $.trim(response);
+    $("#dvLoading").hide();
   $('#sendingMessage').fadeOut();
 
   if ( response == "success" ) {
@@ -77,12 +79,13 @@ function submitFinished( response ) {
     // 2. Clear the form fields
     // 3. Fade the content back in
 
-    $('#successMessage').fadeIn().delay(messageDelay).fadeOut();
+    $('#successMessage').fadeIn().delay(messageDelay+1000).fadeOut();
     $('#senderName').val( "" );
-    $('#senderEmail').val( "" );
+    $('#senderEmail').val("");
+    $("#subject").val("");
     $('#message').val( "" );
 
-    $('#contactForm').delay(messageDelay+500).fadeIn();
+    $('#contactForm').delay(messageDelay+1500).fadeIn();
 
   } else {
 

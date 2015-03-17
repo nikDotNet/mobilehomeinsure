@@ -50,7 +50,7 @@ namespace MobileHome.Insure.Service.Appraisal
 
         }
 
-        public decimal calculateAppraisalValue(int state, int mfg, int length, int width, int modelYear, List<int> options, decimal? BrickLinearFootage, decimal? VinylLinearFootage)
+        public decimal calculateAppraisalValue(int state, int mfg, int length, int width, int modelYear, List<int> options, decimal? BrickLinearFootage, decimal? VinylLinearFootage, decimal? areaOfDeckPorche, decimal? areaOfAdditions)
         {
             int area = length * width;
             int age = DateTime.Now.Year - modelYear;
@@ -86,8 +86,9 @@ namespace MobileHome.Insure.Service.Appraisal
                             break;
                     case 3: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor * VinylLinearFootage.Value); // linear foot
                             break;
-                    case 4:
-                    case 5: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor * area); // area
+                    case 4: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor * areaOfDeckPorche); // area
+                            break;
+                    case 5: estimatedValue = estimatedValue + (optionFactor.FirstOrDefault().Rate * optionFactor.FirstOrDefault().Factor * areaOfAdditions); // area
                             break;
 
                 }

@@ -37,11 +37,11 @@ namespace MobileHome.Insure.Web
                 //,"~/Scripts/gmaps.js"
                 ));
 
-            bundles.Add(new ScriptBundle("~/Content/Assets/Global/Plugins/select2").Include(
+            bundles.Add(new ScriptBundle("~/Content/Assets/Global/Plugins/select2/scripts").Include(
                 "~/Content/Assets/Global/Plugins/select2/*.js"
                 ));
 
-            bundles.Add(new StyleBundle("~/Content/Assets/Global/Plugins").Include(
+            bundles.Add(new StyleBundle("~/Content/Assets/Global/Plugins/select2/css").Include(
                  "~/Content/Assets/Global/Plugins/select2/*.css"
                 ));
 

@@ -1044,6 +1044,7 @@
     <Content Include="Content\img\icons\intro-next.png" />
     <Content Include="Content\img\icons\intro-prev-hr.png" />
     <Content Include="Content\img\icons\intro-prev.png" />
+    <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\loading.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\marker.png" />
@@ -1116,6 +1117,7 @@
     <Content Include="Content\img\slider\intro\1.jpg" />
     <Content Include="Content\img\slider\intro\2.jpg" />
     <Content Include="Content\img\slider\intro\3.jpg" />
+    <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\success.png" />
     <Content Include="Content\img\tabs\1.png" />
     <Content Include="Content\img\tabs\2.png" />

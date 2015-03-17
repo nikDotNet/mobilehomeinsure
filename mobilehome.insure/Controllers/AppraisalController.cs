@@ -41,9 +41,9 @@ namespace MobileHome.Insure.Web.Controllers
         //    return View(model);
         //}
 
-        public JsonResult GetEstimatedValue(int StateId, int ManafacturerId, int Length, int width, int year, List<int> options, decimal? BrickLinearFootage, decimal? VinylLinearFootage)
+        public JsonResult GetEstimatedValue(int StateId, int ManafacturerId, int Length, int width, int year, List<int> options, decimal? BrickLinearFootage, decimal? VinylLinearFootage, decimal? AreaOfDeckPorche, decimal? AreaOfAdditions)
         {
-            decimal EstimatedValue = _serviceFacade.calculateAppraisalValue(StateId, ManafacturerId, Length, width, year, options, BrickLinearFootage, VinylLinearFootage);
+            decimal EstimatedValue = _serviceFacade.calculateAppraisalValue(StateId, ManafacturerId, Length, width, year, options, BrickLinearFootage, VinylLinearFootage, AreaOfDeckPorche,AreaOfAdditions);
             return Json(EstimatedValue.ToString("c"), JsonRequestBehavior.AllowGet);
         }
     }

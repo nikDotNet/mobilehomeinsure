@@ -55,7 +55,18 @@
                     @Html.TextBoxFor(x => x.VinylSkirtingLinearFootage, new { @class = "form-control" })
                     <span id="vinylErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Vinyl/Other Skirting</span>
                 </div>
+                
+                <div class="form-group" id="areaOfDecksPorches" style="display:none">
+                    @Html.LabelFor(x => x.AreaOfDeckPorche)
+                    @Html.TextBoxFor(x => x.AreaOfDeckPorche, new { @class = "form-control" })
+                    <span id="deckporcheErrorMessage" class="text-danger" style="display:none">Please enter the area of Decks / Porches</span>
+                </div>
 
+                 <div class="form-group" id="divAreaOfAdditions" style="display:none">
+                    @Html.LabelFor(x => x.AreaOfAdditions)
+                    @Html.TextBoxFor(x => x.AreaOfAdditions, new { @class = "form-control" })
+                    <span id="additionsErrorMessage" class="text-danger" style="display:none">Please enter the area of Additions</span>
+                </div>
                  <div class="form-action">
                    <button class="btn btn-default" id="btnApprisal">Calculate</button>
                 </div>
@@ -127,7 +138,11 @@
                 if ($.inArray("2", e.val.toString().split(",")) != -1)
                     $("#brickSkirtingFootage").show();
                  if ($.inArray("3", e.val.toString().split(",")) != -1)
-                    $("#vinylSkirtingFootage").show();
+                     $("#vinylSkirtingFootage").show();
+                 if ($.inArray("4", e.val.toString().split(",")) != -1)
+                     $("#areaOfDecksPorches").show();
+                 if ($.inArray("5", e.val.toString().split(",")) != -1)
+                     $("#divAreaOfAdditions").show();
                 
 
             })
@@ -140,7 +155,14 @@
                     $("#vinylSkirtingFootage").hide();
                     $("#VinylSkirtingLinearFootage").empty();
                 }
-
+                if ($.inArray("4", e.val.toString().split(",")) != -1) {
+                    $("#areaOfDecksPorches").hide();
+                    $("#AreaOfDeckPorche").empty();
+                }
+                if ($.inArray("5", e.val.toString().split(",")) != -1) {
+                    $("#divAreaOfAdditions").hide();
+                    $("#AreaOfAdditions").empty();
+                }
             });
             
 
@@ -157,7 +179,9 @@
                         StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(),
                         Year: $('#ModelYear').val(), Options: $('#ddlOptionType').val(),
                         BrickLinearFootage: $("#BrickSkirtingLinearFootage").val(),
-                        VinylLinearFootage: $("#VinylSkirtingLinearFootage").val()
+                        VinylLinearFootage: $("#VinylSkirtingLinearFootage").val(),
+                        AreaOfAdditions: $("#AreaOfAdditions").val(),
+                        AreaOfDeckPorche: $("#AreaOfDeckPorche").val()
                     });
                     ajaxOptions.url = "/Appraisal/GetEstimatedValue";
                     ajaxOptions.method = "POST";

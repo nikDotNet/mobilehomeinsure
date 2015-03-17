@@ -28,11 +28,19 @@ namespace MobileHome.Insure.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(ContactViewModel objContact)
+        public ContentResult Contact(ContactViewModel objContact)
         {
-            _serviceFacade.sendMail(objContact.senderName, objContact.senderEmail, objContact.subject, objContact.message);
-            ViewBag.ContactSent = true;
-            return View();
+            try
+            {
+                _serviceFacade.sendMail(objContact.senderName, objContact.senderEmail, objContact.subject, objContact.message);
+                return Content("success");
+            }
+            catch (Exception ex)
+            {
+                return Content("Failed");
+            }
+
+
         }
 
 
