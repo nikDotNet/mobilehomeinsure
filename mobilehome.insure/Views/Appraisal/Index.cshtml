@@ -45,6 +45,17 @@
                     @Html.LabelFor(x => x.OptionsType)
                     @Html.DropDownListFor(x => x.OptionsType, new SelectList(Model.OptionsType, "Key", "Value"), new { id="ddlOptionType", @class = "form-control select2", multiple="multiple" })
                 </div>
+                <div class="form-group" id="brickSkirtingFootage" style="display:none">
+                    @Html.LabelFor(x => x.BrickSkirtingLinearFootage)
+                    @Html.TextBoxFor(x => x.BrickSkirtingLinearFootage, new { @class = "form-control" })
+                    <span id="brickErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Brick Skirting</span>
+                </div>
+                <div class="form-group" id="vinylSkirtingFootage" style="display:none">
+                    @Html.LabelFor(x => x.VinylSkirtingLinearFootage)
+                    @Html.TextBoxFor(x => x.VinylSkirtingLinearFootage, new { @class = "form-control" })
+                    <span id="vinylErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Vinyl/Other Skirting</span>
+                </div>
+
                  <div class="form-action">
                    <button class="btn btn-default" id="btnApprisal">Calculate</button>
                 </div>
@@ -111,17 +122,43 @@
                 {
                     placeholder: "Select an Option",
                     allowClear: true
-                });
+                })
+            .on("change", function (e) {
+                if ($.inArray("2", e.val.toString().split(",")) != -1)
+                    $("#brickSkirtingFootage").show();
+                 if ($.inArray("3", e.val.toString().split(",")) != -1)
+                    $("#vinylSkirtingFootage").show();
+                
+
+            })
+            .on("select2-removed", function (e) {
+                if ($.inArray("2", e.val.toString().split(",")) != -1) {
+                    $("#brickSkirtingFootage").hide();
+                    $("#BrickSkirtingLinearFootage").empty();
+                }
+                if ($.inArray("3", e.val.toString().split(",")) != -1) {
+                    $("#vinylSkirtingFootage").hide();
+                    $("#VinylSkirtingLinearFootage").empty();
+                }
+
+            });
+            
 
             $('#dvLoading').hide();
             $("#btnApprisal").click(function (evt) {
                 evt.preventDefault();
                 var $form = $('form');
-                if ($form.valid()) {
+
+                 if ($form.valid()) {
                     $('#dvLoading').show();
                   
                     var ajaxOptions = {};
-                    ajaxOptions.data = JSON.stringify( { StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(), year: $('#ModelYear').val(), options :  $('#ddlOptionType').val() });
+                    ajaxOptions.data = JSON.stringify({
+                        StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(),
+                        Year: $('#ModelYear').val(), Options: $('#ddlOptionType').val(),
+                        BrickLinearFootage: $("#BrickSkirtingLinearFootage").val(),
+                        VinylLinearFootage: $("#VinylSkirtingLinearFootage").val()
+                    });
                     ajaxOptions.url = "/Appraisal/GetEstimatedValue";
                     ajaxOptions.method = "POST";
                     ajaxOptions.dataType = "JSON";

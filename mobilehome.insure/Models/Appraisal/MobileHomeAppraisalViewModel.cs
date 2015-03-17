@@ -53,6 +53,11 @@ namespace MobileHome.Insure.Web.Models.Appraisal
         [Display(Name = "Selected Options")]
         public Dictionary<int, string> selectedOptionsType { get; set; }
 
+        [Display(Name = "Brick Skirting/Underpinning Footage")]
+        public double BrickSkirtingLinearFootage { get; set; }
+
+        [Display(Name = "Vinyl/Other Skirting/Underpinning Footage")]
+        public double VinylSkirtingLinearFootage { get; set; }
         
 
     }
