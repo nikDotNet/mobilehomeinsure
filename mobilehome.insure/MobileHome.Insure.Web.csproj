@@ -157,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin\ListManufacturerViewModel.cs" />
+    <Compile Include="Models\Admin\ListOptionsFactorViewModel.cs" />
     <Compile Include="Models\Admin\ListStateViewModel.cs" />
     <Compile Include="Models\Admin\ListStateFactorViewModel.cs" />
     <Compile Include="Models\Admin\ListManufacturerFactorViewModel.cs" />
@@ -1285,6 +1286,8 @@
     <Content Include="Areas\Admin\Views\Appraisal\StateFactor.cshtml" />
     <Content Include="Areas\Admin\Views\Master\State.cshtml" />
     <Content Include="Areas\Admin\Views\Master\Manufacturer.cshtml" />
+    <Content Include="Areas\Admin\Views\Appraisal\OptionsFactor.cshtml" />
+    <Content Include="Areas\Admin\Views\Appraisal\_partialOptions.cshtml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Content\assets\global\plugins\uniform\README.md" />

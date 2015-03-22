@@ -8,6 +8,7 @@ using MobileHome.Insure.Web.Models.Admin;
 using MobileHome.Insure.Model.Appraisal;
 
 
+
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
     public class AppraisalController : Controller
@@ -24,6 +25,14 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             return View();
         }
+
+
+
+        public ActionResult _partialOptions()
+        {
+            return View();
+        }
+
 
         #region AgeFactor
         public ActionResult AgeFactor()
@@ -56,6 +65,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
 #endregion
 
+        #region AreaFactor
+
         public ActionResult AreaFactor()
         {
             var model = new ListAreaFactorViewModel();
@@ -84,6 +95,10 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         }
 
+
+#endregion
+
+        #region state factor
         public ActionResult StateFactor()
         {
             var model = new ListStateFactorViewModel();
@@ -113,7 +128,22 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         }
 
+        #endregion
 
+        #region options factor
+
+        public ActionResult OptionsFactor()
+        {
+            var model = new ListOptionsFactorViewModel();
+            var optionsFactor = _serviceFacade.getOptionFactors();
+            model.lstOptionFactors = optionsFactor;
+
+            return View(model);
+        }
+
+        #endregion
+
+        #region manufacturer factor
         public ActionResult ManufacturerFactor()
         {
             var model = new ListManufacturerFactorViewModel();
@@ -145,7 +175,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         }
 
 
-
+        #endregion
 
 
         public ActionResult State()

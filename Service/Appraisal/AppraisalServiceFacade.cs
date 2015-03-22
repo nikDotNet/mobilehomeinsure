@@ -102,6 +102,16 @@ namespace MobileHome.Insure.Service.Appraisal
             return 0M;
         }
 
+
+        #region optionsFactors
+        public List<OptionsFactor> getOptionFactors()
+        {
+            return _context.OptionsFactors.ToList();
+        }
+
+        #endregion
+
+
         #region AgeFactor
         public List<AgeFactor> GetAgeFactor()
         {
