@@ -11,9 +11,18 @@ namespace MobileHome.Insure.Web.Models.Admin
     public class ListAgeFactorViewModel
     {
         public List<AgeFactor> ListAgeFactor = new List<AgeFactor>();
+
+     
+
+        public AgeFactor ageFactorObj { get; set; }
+
+
+
         public ListAgeFactorViewModel()
         {
 
         }
+
+
     }
 }

@@ -1,6 +1,4 @@
-﻿@* this is optionsfactor *@
-
-@model MobileHome.Insure.Web.Models.Admin.ListOptionsFactorViewModel
+﻿@model MobileHome.Insure.Web.Models.Admin.ListOptionsFactorViewModel
 
 @{
     ViewBag.Title = "Options Factor";
@@ -32,7 +30,8 @@
 <!-- BEGIN STYLE CUSTOMIZER -->
 <!-- END STYLE CUSTOMIZER -->
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">Options Factor
+<h3 class="page-title">
+    Options Factor
 </h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -58,29 +57,24 @@
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
     <div class="col-md-12">
-        <a class=" btn default" data-toggle="modal" href="#static">
-									View Demo </a>
-        @Html.ActionLink("Lyubomir ", "_partialOptions", "Appraisal", 
-null, new { @class = "modal-link btn btn-success" })
-@*        <div id="static" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-											<h4 class="modal-title">Confirmation</h4>
-										</div>
-										<div class="modal-body">
-											<p>
-												 Would you like to continue with some arbitrary task?
-											</p>
-										</div>
-										<div class="modal-footer">
-											<button type="button" data-dismiss="modal" class="btn default">Cancel</button>
-											<button type="button" data-dismiss="modal" class="btn green">Continue Task</button>
-										</div>
-									</div>
-								</div>
-							</div>*@
+
+        @if (TempData["Success"] != null)
+        {
+            if (Convert.ToBoolean(TempData["Success"]) == true)
+            {
+                <div class="alert alert-success">
+                    <b>Success!</b> Request Completed Successfully!
+                </div>
+            }
+            else if (Convert.ToBoolean(TempData["Success"]) == false)
+            {
+                <div class="alert alert-warning">
+                    <span class="glyphicon glyphicon-warning-sign"></span>
+                    Internal Error Occured
+                </div>
+            }
+        }
+
 
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box blue">
@@ -94,9 +88,8 @@ null, new { @class = "modal-link btn btn-success" })
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn green">
-                                    Add New <i class="fa fa-plus"></i>
-                                </button>
+                                @Html.ActionLink("Add New ", "_partialOptions", "Appraisal", null, new { @class = "modal-link btn green" })
+                              
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -112,7 +105,7 @@ null, new { @class = "modal-link btn btn-success" })
                                         <a href="#">Save as PDF </a>
                                     </li>
                                     <li>
-                                        <a href="#">Export to Excel </a>
+                                        @Html.ActionLink("Save as Excel", "OptionsFactor", "Appraisal", new { exportCsv = true }, new { })
                                     </li>
                                 </ul>
                             </div>
@@ -122,43 +115,55 @@ null, new { @class = "modal-link btn btn-success" })
                 <table class="table table-striped table-hover table-bordered" id="tblAgeFactor">
                     <thead>
                         <tr>
-                            <th>Manufacturer
+                            <th>
+                                Manufacturer
                             </th>
-                            <th>State
+                            <th>
+                                State
                             </th>
-                            <th>Options Type
+                            <th>
+                                Options Type
                             </th>
-                            <th>Rate
+                            <th>
+                                Rate
                             </th>
-                            <th>Factor
+                            <th>
+                                Factor
                             </th>
-                            <th>Edit
+                            <th>
+                                Edit
                             </th>
-                            <th>Delete
+                            <th>
+                                Delete
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach(var item in Model.lstOptionFactors)
-                            {
-                        <tr>
-                            <td>@item.Manufacturer.Manufacturer1
-                            </td>
-                            <td>@item.State.Name
-                            </td>
-                            <td>@item.OptionsType.Name
-                            </td>
-                            <td>@item.Rate
-                            </td>
-                            <td>@item.Factor
+                        @foreach (var item in Model.lstOptionFactors)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Manufacturer.Name
                             </td>
                             <td>
-                                <a class="edit" href="javascript:;">Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">Delete </a>
-                            </td>
-                        </tr>}
+                                @item.State.Name
+                        </td>
+                        <td>
+                            @item.OptionsType.Name
+                    </td>
+                    <td>
+                        @item.Rate
+                </td>
+                <td>
+                    @item.Factor
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "_partialOptions", "Appraisal", new { Id = item.Id }, new { @class = "modal-link" })
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "deletePartialOptions", "Appraisal", new { Id = item.Id }, new { @class = "delete-link" })
+            </td>
+        </tr>}
                     </tbody>
                 </table>
             </div>
@@ -167,7 +172,6 @@ null, new { @class = "modal-link btn btn-success" })
     </div>
 </div>
 <!-- END PAGE CONTENT -->
-
 @section scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
     <script src="~/Content/assets/global/plugins/select2/select2.min.js"></script>
@@ -183,4 +187,4 @@ null, new { @class = "modal-link btn btn-success" })
             AgeEditable.init();
         });
     </script>
-} 
+}

@@ -30,7 +30,7 @@
 <!-- BEGIN STYLE CUSTOMIZER -->
 <!-- END STYLE CUSTOMIZER -->
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">State Factor
+<h3 class="page-title">States
 </h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -44,7 +44,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="#">Appraisal</a>
+            <a href="#">Master</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
@@ -60,7 +60,7 @@
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-edit"></i>Factor Data
+                    <i class="fa fa-edit"></i>States Data
                 </div>
             </div>
             <div class="portlet-body">
@@ -68,9 +68,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn green">
-                                    Add New <i class="fa fa-plus"></i>
-                                </button>
+                               @Html.ActionLink("Add New ", "_partialEditState", "Master", null, new { @class = "modal-link btn green" })
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -86,7 +84,7 @@
                                         <a href="#">Save as PDF </a>
                                     </li>
                                     <li>
-                                        <a href="#">Export to Excel </a>
+                                        @Html.ActionLink("Save as Excel", "State", "Master", new { exportCsv = true }, new { })
                                     </li>
                                 </ul>
                             </div>
@@ -102,8 +100,7 @@
                             </th>
                             <th>CreatedBy
                             </th>
-                            <th style="display:none">Active
-                            </th>
+                          
                             <th>Edit
                             </th>
                             <th>Delete
@@ -120,13 +117,12 @@
                             </td>
                             <td>@item.Abbr
                             </td>
-                            <td style="display:none">
+                            
+                            <td>
+                                @Html.ActionLink("Edit", "_partialEditState", "Master", new { Id = item.Id }, new { @class = "modal-link" })
                             </td>
                             <td>
-                                <a class="edit" href="javascript:;">Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">Delete </a>
+                                @Html.ActionLink("Delete", "deleteState", "Master", new { Id = item.Id }, new { @class = "delete-link" })
                             </td>
                         </tr>}
                     </tbody>

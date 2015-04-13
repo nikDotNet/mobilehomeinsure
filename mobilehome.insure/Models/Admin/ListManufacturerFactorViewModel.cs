@@ -11,6 +11,11 @@ namespace MobileHome.Insure.Web.Models.Admin
     public class ListManufacturerFactorViewModel
     {
         public List<ManufacturerFactor> ListManufacturerFactor = new List<ManufacturerFactor>();
+
+      public  List<Manufacturer> lstManufacturers { get; set; }
+
+       public ManufacturerFactor objManufacturerFactor { get; set; }
+
         public ListManufacturerFactorViewModel()
         {
 

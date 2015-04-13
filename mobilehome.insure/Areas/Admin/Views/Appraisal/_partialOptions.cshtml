@@ -1,40 +1,94 @@
-﻿<div class="modal-body">
-    <div class="alert alert-warning">
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Donec consequat nisl a nibh tincidunt condimentum. 
-        Nullam in augue vitae augue dictum eleifend. 
-        Nunc porta fermentum metus, quis efficitur lectus scelerisque ac. 
-        Quisque egestas sit amet nunc in interdum. 
-        Etiam malesuada maximus nisi, id tempus metus. 
-        Vivamus at sapien ut metus aliquet sodales sed id magna. 
-        Integer in auctor ex. Phasellus tempor, est vel placerat dapibus, 
-        nulla dui tempor ligula, at pulvinar libero nunc gravida metus. 
-        Proin non feugiat felis. Proin ut ultrices ex. Morbi aliquet lacinia elit at bibendum. 
-        Nunc facilisis, neque a finibus dignissim, turpis felis vulputate diam, 
-        a tristique tellus nibh nec nulla. Suspendisse eget augue non turpis 
-        dignissim euismod eget eget odio. Donec sit amet nibh cursus, efficitur 
-        nibh in, sodales arcu. Pellentesque pulvinar consequat lacus ac porttitor.
-    </div>
-    @using (Html.BeginForm("Lyubomir", "Home", FormMethod.Post))
-    {
+﻿@model mobilehome.insure.Areas.Admin.Models.OptionsFactorViewModel
+
+
+<div class="portlet-title"><div class="caption">Add / Edit Options Factors</div></div>
+<div class="portlet-body">
+    <form method="post" id="frmOptions" action="_partialOptions" class="form-horizontal" role="form">
+        <div class="form-body">
+
+
+            @Html.HiddenFor(x=> x.optionFactorObject.Id)
+
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.optionFactorObject.StateId, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(x => x.optionFactorObject.StateId, new SelectList(Model.lstStates, "Id", "Name"), "", new { @class = "form-control select2me input-medium" })
+                    @Html.ValidationMessageFor(x => x.optionFactorObject.StateId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.optionFactorObject.ManufacturerId, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(x => x.optionFactorObject.ManufacturerId, new SelectList(Model.lstManufacturers, "Id", "Name"), "", new { @class = "form-control select2me input-medium" })
+                    @Html.ValidationMessageFor(x => x.optionFactorObject.ManufacturerId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.optionFactorObject.OptionsTypeId, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(x => x.optionFactorObject.OptionsTypeId, new SelectList(Model.lstOptionsType, "key", "value"), "Select One", new { @class = "form-control select2me input-large" })
+                    @Html.ValidationMessageFor(x => x.optionFactorObject.OptionsTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(x => x.optionFactorObject.Rate, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(x => x.optionFactorObject.Rate, new { @class = "form-control input-medium" })
+                    @Html.ValidationMessageFor(x => x.optionFactorObject.Rate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.optionFactorObject.Factor, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(x => x.optionFactorObject.Factor, new { @class = "form-control input-medium" })
+                    @Html.ValidationMessageFor(x => x.optionFactorObject.Factor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+
+      
+
         <div class="row">
             &nbsp;
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <button type="button" class="btn btn-default" 
-                data-dismiss="modal">Cancel</button>
-                <button type="submit" id="approve-btn" 
-                class="btn btn-danger">Save</button>
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="submit" id="approve-btn"
+                        class="btn btn-danger">
+                    Save
+                </button>
             </div>
         </div>
-    }
+    </form>
+ 
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#approve-btn').click(function () {
-            $('#modal-container').modal('hide');
+        $('#frmOptions').submit(function () {
+            if ($(this).valid())
+                $('#modal-container').modal('hide');
         });
+        $(".select2me").select2();
+        $.validator.unobtrusive.parse("#frmOptions");
     });
+
 </script>
+
+
+
+
+
+
+
+
+

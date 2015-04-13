@@ -11,6 +11,9 @@ namespace MobileHome.Insure.Web.Models.Admin
     public class ListStateViewModel
     {
         public List<State> ListState = new List<State>();
+
+        public State stateObj { get; set; }
+
         public ListStateViewModel()
         {
 

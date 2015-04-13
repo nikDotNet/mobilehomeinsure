@@ -19,37 +19,6 @@ namespace MobileHome.Insure.Service.Appraisal
         }
 
 
-        public List<State> getStates()
-        {
-            return _context.States. OrderBy(x => x.Name).ToList();
-        }
-
-
-        public Dictionary<int, string> getOptionTypes()
-        {
-            Dictionary<int, string> optionTypes = new Dictionary<int, string>();
-            var listOptionTypes = _context.OptionsTypes.Where(x => x.IsActive == true).ToList();
-
-            foreach (var opt in listOptionTypes)
-            {
-                optionTypes.Add(opt.Id, opt.Name);
-            }
-            return optionTypes;
-        }
-
-
-        public List<Manufacturer> getManufacturers()
-        {
-            return _context.Manufacturers.OrderBy(x => x.Manufacturer1).ToList();
-        }
-
-
-
-        public void GetAppraisalComponents()
-        {
-
-        }
-
         public decimal calculateAppraisalValue(int state, int mfg, int length, int width, int modelYear, List<int> options, decimal? BrickLinearFootage, decimal? VinylLinearFootage, decimal? areaOfDeckPorche, decimal? areaOfAdditions)
         {
             int area = length * width;
@@ -106,7 +75,44 @@ namespace MobileHome.Insure.Service.Appraisal
         #region optionsFactors
         public List<OptionsFactor> getOptionFactors()
         {
-            return _context.OptionsFactors.ToList();
+            return _context.OptionsFactors.Where(x=>x.IsActive== true).ToList();
+        }
+
+        public OptionsFactor getOptionFactorsById(int id)
+        {
+            return _context.OptionsFactors.Where(x => x.Id == id && x.IsActive == true).SingleOrDefault();
+        }
+
+        public void saveOptionsFactor(OptionsFactor objOptionsFactor, bool toDelete = false)
+        {
+            if (objOptionsFactor.Id != 0)
+            {
+                var existingObj = _context.OptionsFactors.Where(x => x.Id == objOptionsFactor.Id && x.IsActive == true).FirstOrDefault();
+                if (existingObj != null)
+                {
+                    if (toDelete)
+                        existingObj.IsActive = false;
+                    else
+                    { 
+                    existingObj.ManufacturerId = objOptionsFactor.ManufacturerId;
+                    existingObj.StateId = objOptionsFactor.StateId;
+                    existingObj.OptionsTypeId = objOptionsFactor.OptionsTypeId;
+                    existingObj.Rate = objOptionsFactor.Rate;
+                    existingObj.Factor = objOptionsFactor.Factor;
+                    }
+
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                objOptionsFactor.IsActive = true;
+                objOptionsFactor.CreatedOn = DateTime.Now;
+                objOptionsFactor.CreatedBy = "admin";
+                _context.OptionsFactors.Add(objOptionsFactor);
+                _context.SaveChanges();
+            }
         }
 
         #endregion
@@ -115,19 +121,29 @@ namespace MobileHome.Insure.Service.Appraisal
         #region AgeFactor
         public List<AgeFactor> GetAgeFactor()
         {
-            return _context.AgeFactors.ToList();
+            return _context.AgeFactors.Where(x => x.isActive==true).ToList();
         }
 
-        public void saveAgeFactor(AgeFactor objAgeFactor)
+        public AgeFactor GetAgeFactorById(int id)
+        {
+            return _context.AgeFactors.Where(x => x.Id == id && x.isActive == true).SingleOrDefault();
+        }
+
+
+        public void saveAgeFactor(AgeFactor objAgeFactor, bool toDelete = false)
         {
             if (objAgeFactor.Id != 0)
             {
-                var existingObj = _context.AgeFactors.Where(x => x.Id == objAgeFactor.Id).FirstOrDefault();
+                var existingObj = _context.AgeFactors.Where(x => x.Id == objAgeFactor.Id && x.isActive == true).FirstOrDefault();
                 if (existingObj != null)
                 {
-
-                    existingObj.Age = objAgeFactor.Age;
-                    existingObj.Factor = objAgeFactor.Factor;
+                    if (toDelete)
+                        existingObj.isActive = false;
+                    else
+                    {
+                        existingObj.Age = objAgeFactor.Age;
+                        existingObj.Factor = objAgeFactor.Factor;
+                    }
                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                 }
@@ -149,18 +165,29 @@ namespace MobileHome.Insure.Service.Appraisal
         #region AreaFactor
         public List<AreaFactor> GetAreaFactor()
         {
-            return _context.AreaFactors.ToList();
+            return _context.AreaFactors.Where(x => x.isActive == true).ToList();
         }
 
-        public void saveAreaFactor(AreaFactor objAreaFactor)
+
+        public AreaFactor getAreaFactorById(int id)
+        {
+            return _context.AreaFactors.Where(x => x.Id == id && x.isActive==true).SingleOrDefault();
+        }
+
+        public void saveAreaFactor(AreaFactor objAreaFactor, bool toDelete = false)
         {
             if (objAreaFactor.Id != 0)
             {
-                var existingObj = _context.AreaFactors.Where(x => x.Id == objAreaFactor.Id).SingleOrDefault();
+                var existingObj = _context.AreaFactors.Where(x => x.Id == objAreaFactor.Id && x.isActive == true).SingleOrDefault();
                 if (existingObj != null)
                 {
-                    existingObj.Area = objAreaFactor.Area;
-                    existingObj.Factor = objAreaFactor.Factor;
+                    if (toDelete)
+                        existingObj.isActive = false;
+                    else
+                    {
+                        existingObj.Area = objAreaFactor.Area;
+                        existingObj.Factor = objAreaFactor.Factor;
+                    }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                 }
@@ -182,18 +209,28 @@ namespace MobileHome.Insure.Service.Appraisal
         #region ManufacturerFactor
         public List<ManufacturerFactor> GetManufacturerFactor()
         {
-            return _context.ManufacturerFactors.ToList();
+            return _context.ManufacturerFactors.Where(x => x.isActive == true).ToList();
         }
 
-        public void saveManufacturerFactor(ManufacturerFactor objManufacturerFactor)
+        public ManufacturerFactor getManufacturerFactorById(int id)
+        {
+            return _context.ManufacturerFactors.Where(x => x.Id == id && x.isActive == true).SingleOrDefault();
+        }
+
+        public void saveManufacturerFactor(ManufacturerFactor objManufacturerFactor, bool toDelete = false)
         {
             if (objManufacturerFactor.Id != 0)
             {
-                var existingObj = _context.ManufacturerFactors.Where(x => x.Id == objManufacturerFactor.Id).SingleOrDefault();
+                var existingObj = _context.ManufacturerFactors.Where(x => x.Id == objManufacturerFactor.Id && x.isActive == true).SingleOrDefault();
                 if (existingObj != null)
                 {
-                    existingObj.ManufacturerId = objManufacturerFactor.ManufacturerId;
-                    existingObj.Factor = objManufacturerFactor.Factor;
+                    if (toDelete)
+                        existingObj.isActive = false;
+                    else
+                    {
+                        existingObj.ManufacturerId = objManufacturerFactor.ManufacturerId;
+                        existingObj.Factor = objManufacturerFactor.Factor;
+                    }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                 }
@@ -213,18 +250,29 @@ namespace MobileHome.Insure.Service.Appraisal
         #region saveStateFactor
         public List<StateFactor> GetStateFactor()
         {
-            return _context.StateFactors.ToList();
+            return _context.StateFactors.Where(x => x.isActive== true).ToList();
         }
 
-        public void saveStateFactor(StateFactor objStateFactor)
+        public StateFactor getStateFactorById(int id)
+        {
+            return _context.StateFactors.Where(x => x.Id == id && x.isActive == true).SingleOrDefault();
+        }
+
+        public void saveStateFactor(StateFactor objStateFactor, bool toDelete = false)
         {
             if (objStateFactor.Id != 0)
             {
-                var existingObj = _context.StateFactors.Where(x => x.Id == objStateFactor.Id).SingleOrDefault();
+                var existingObj = _context.StateFactors.Where(x => x.Id == objStateFactor.Id && x.isActive == true).SingleOrDefault();
+
                 if (existingObj != null)
                 {
-                    existingObj.StateId = objStateFactor.StateId;
-                    existingObj.Factor = objStateFactor.Factor;
+                    if (toDelete)
+                        existingObj.isActive = false;
+                    else
+                    {
+                        existingObj.StateId = objStateFactor.StateId;
+                        existingObj.Factor = objStateFactor.Factor;
+                    }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                 }
@@ -241,14 +289,7 @@ namespace MobileHome.Insure.Service.Appraisal
 
         #endregion
 
-        public List<Manufacturer> GetManufacturer()
-        {
-            return _context.Manufacturers.ToList();
-        }
-
-        public List<State> GetState()
-        {
-            return _context.States.ToList();
-        }
+       
     }
+        
 }

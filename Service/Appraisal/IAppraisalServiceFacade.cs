@@ -8,6 +8,6 @@ namespace MobileHome.Insure.Service.Appraisal
 {
     public interface IAppraisalServiceFacade
     {
-        Dictionary<int, string> getOptionTypes();
+        
     }
 }

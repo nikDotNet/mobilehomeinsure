@@ -12,7 +12,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Manufacturer1)
+            this.Property(t => t.Name)
                 .HasMaxLength(150);
 
             this.Property(t => t.CreatedBy)
@@ -21,7 +21,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             // Table & Column Mappings
             this.ToTable("Manufacturer");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.Manufacturer1).HasColumnName("Manufacturer");
+            this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
             this.Property(t => t.CreatedOn).HasColumnName("CreatedOn");
             this.Property(t => t.isActive).HasColumnName("isActive");

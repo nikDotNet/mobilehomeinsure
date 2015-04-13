@@ -15,6 +15,11 @@ namespace MobileHome.Insure.Web.Models.Admin
 
         public ListOptionsFactorViewModel()
         {
+
         }
+
+        
+
+
     }
 }

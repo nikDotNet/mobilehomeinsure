@@ -11,6 +11,9 @@ namespace MobileHome.Insure.Web.Models.Admin
     public class ListAreaFactorViewModel
     {
         public List<AreaFactor> ListAreaFactor = new List<AreaFactor>();
+
+        public AreaFactor areaFactorObj { get; set; }
+
         public ListAreaFactorViewModel()
         {
 

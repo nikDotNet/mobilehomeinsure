@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MobileHome.Insure.Model.Appraisal;
+using System.ComponentModel.DataAnnotations;
 
 namespace MobileHome.Insure.Model
 {
@@ -12,8 +13,9 @@ namespace MobileHome.Insure.Model
             this.OptionsFactors = new List<OptionsFactor>();
         }
 
-        
-        public string Manufacturer1 { get; set; }
+        [Display(Name = "Name")]
+        [Required(ErrorMessage="Please enter a name")]
+        public string Name { get; set; }
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<bool> isActive { get; set; }

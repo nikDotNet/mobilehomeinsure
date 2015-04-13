@@ -23,6 +23,9 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Abbr).HasColumnName("Abbr");
             this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
+            this.Property(t => t.CreatedOn).HasColumnName("CreatedOn");
+            this.Property(t => t.isActive).HasColumnName("isActive");
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MobileHome.Insure.Service.Appraisal;
 using MobileHome.Insure.Web.Models.Appraisal;
+using MobileHome.Insure.Service.Master;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -14,11 +15,12 @@ namespace MobileHome.Insure.Web.Controllers
         // GET: /Appraisal/
 
         private readonly AppraisalServiceFacade _serviceFacade;
-
+        private readonly MasterServiceFacade _masterServiceFacade;
 
         public AppraisalController()
         {
             _serviceFacade = new AppraisalServiceFacade();
+            _masterServiceFacade = new MasterServiceFacade();
         }
 
 
@@ -26,9 +28,9 @@ namespace MobileHome.Insure.Web.Controllers
         public ActionResult Index()
         {
             MobileHomeAppraisalViewModel model = new MobileHomeAppraisalViewModel();
-            model.ManufacturerList = _serviceFacade.getManufacturers();
-            model.StateList = _serviceFacade.getStates();
-            model.OptionsType = _serviceFacade.getOptionTypes();
+            model.ManufacturerList = _masterServiceFacade.GetManufacturer();
+            model.StateList = _masterServiceFacade.GetStates();
+            model.OptionsType = _masterServiceFacade.getOptionTypes();
             return View(model);
         }
 

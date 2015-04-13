@@ -56,6 +56,24 @@
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
     <div class="col-md-12">
+
+        @if (TempData["Success"] != null)
+        {
+            if (Convert.ToBoolean(TempData["Success"]) == true)
+            {
+                <div class="alert alert-success">
+                    <b>Success!</b> Request Completed Successfully!
+                </div>
+            }
+            else if (Convert.ToBoolean(TempData["Success"]) == false)
+            {
+                <div class="alert alert-warning">
+                    <span class="glyphicon glyphicon-warning-sign"></span>
+                    Internal Error Occured
+                </div>
+            }
+        }
+
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box blue">
             <div class="portlet-title">
@@ -68,9 +86,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                <button id="sample_editable_1_new" class="btn green">
-                                    Add New <i class="fa fa-plus"></i>
-                                </button>
+                                @Html.ActionLink("Add New ", "_partialAreaFactor", "Appraisal", null, new { @class = "modal-link btn green" })
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -86,7 +102,7 @@
                                         <a href="#">Save as PDF </a>
                                     </li>
                                     <li>
-                                        <a href="#">Export to Excel </a>
+                                        @Html.ActionLink("Save as Excel", "AreaFactor", "Appraisal", new { exportCsv = true }, new { })
                                     </li>
                                 </ul>
                             </div>
@@ -102,8 +118,7 @@
                             </th>
                             <th>Factor
                             </th>
-                            <th>Active
-                            </th>
+                            
                             <th>Edit
                             </th>
                             <th>Delete
@@ -120,13 +135,12 @@
                             </td>
                             <td>@item.Factor
                             </td>
-                            <td>@item.isActive
+                           
+                            <td>
+                                @Html.ActionLink("Edit", "_partialAreaFactor", "Appraisal", new { Id = item.Id }, new { @class = "modal-link" })
                             </td>
                             <td>
-                                <a class="edit" href="javascript:;">Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">Delete </a>
+                                @Html.ActionLink("Delete", "deleteAreaFactor", "Appraisal", new { Id = item.Id }, new { @class = "delete-link" })
                             </td>
                         </tr>}
                     </tbody>

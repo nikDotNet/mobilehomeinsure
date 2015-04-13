@@ -150,6 +150,9 @@
     <Compile Include="Areas\Admin\Controllers\AppraisalController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Helpers\CSVExportExtension.cs" />
+    <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
+    <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -461,6 +464,7 @@
     <Content Include="Content\assets\global\img\remove-icon-small.png" />
     <Content Include="Content\assets\global\img\syncfusion-icons-white.png" />
     <Content Include="Content\assets\global\img\syncfusion-icons.png" />
+    <Content Include="Content\assets\global\plugins\bootbox\bootbox.min.js" />
     <Content Include="Content\assets\global\plugins\bootstrap\css\bootstrap.css" />
     <Content Include="Content\assets\global\plugins\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\assets\global\plugins\bootstrap\fonts\glyphicons-halflings-regular.svg" />
@@ -1288,6 +1292,14 @@
     <Content Include="Areas\Admin\Views\Master\Manufacturer.cshtml" />
     <Content Include="Areas\Admin\Views\Appraisal\OptionsFactor.cshtml" />
     <Content Include="Areas\Admin\Views\Appraisal\_partialOptions.cshtml" />
+    <Content Include="Areas\Admin\Views\Appraisal\_partialAgeFactor.cshtml" />
+    <Content Include="Areas\Admin\Views\Appraisal\_partialAreaFactor.cshtml" />
+    <Content Include="Areas\Admin\Views\Appraisal\_partialManufacturerFactor.cshtml" />
+    <Content Include="Areas\Admin\Views\Appraisal\_partialStateFactor.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\_partialEditManufacturer.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\_partialEditState.cshtml" />
+    <Content Include="Content\assets\global\plugins\bootbox\LICENSE.md" />
+    <Content Include="Content\assets\global\plugins\bootbox\README.md" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Content\assets\global\plugins\uniform\README.md" />
@@ -1364,7 +1376,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

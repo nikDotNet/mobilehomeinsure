@@ -25,7 +25,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.isActive).HasColumnName("isActive");
 
             // Relationships
-            this.HasOptional(t => t.Manufacturer)
+            this.HasRequired(t => t.Manufacturer)
                 .WithMany(t => t.ManufacturerFactors)
                 .HasForeignKey(d => d.ManufacturerId);
 

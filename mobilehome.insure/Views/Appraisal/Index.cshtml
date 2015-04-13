@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.Manufacturer)
-                        @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList, "Id", "Manufacturer1"),"Please Select", new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList, "Id", "Name"),"Please Select", new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Manufacturer, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
