@@ -173,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Script\AgeFactor.js" />
+    <Content Include="Areas\Admin\Script\swf\copy_csv_xls.swf" />
+    <Content Include="Areas\Admin\Script\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\assets\admin\layout\css\custom.css" />
     <Content Include="Content\assets\admin\layout\css\layout.css" />
     <Content Include="Content\assets\admin\layout\css\themes\blue.css" />
@@ -994,6 +996,12 @@
     <Content Include="Content\assets\global\plugins\simple-line-icons\Readme.txt" />
     <Content Include="Content\assets\global\plugins\simple-line-icons\simple-line-icons.css" />
     <Content Include="Content\assets\global\plugins\simple-line-icons\simple-line-icons.min.css" />
+    <Content Include="Content\assets\global\plugins\TableToolsv2.2.4\css\dataTables.tableTools.css" />
+    <Content Include="Content\assets\global\plugins\TableToolsv2.2.4\css\dataTables.tableTools.min.css" />
+    <Content Include="Content\assets\global\plugins\TableToolsv2.2.4\js\dataTables.tableTools.js" />
+    <Content Include="Content\assets\global\plugins\TableToolsv2.2.4\js\dataTables.tableTools.min.js" />
+    <Content Include="Content\assets\global\plugins\TableToolsv2.2.4\swf\copy_csv_xls.swf" />
+    <Content Include="Content\assets\global\plugins\TableToolsv2.2.4\swf\copy_csv_xls_pdf.swf" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.css" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.min.css" />
     <Content Include="Content\assets\global\plugins\uniform\images\bg-input-focus.png" />

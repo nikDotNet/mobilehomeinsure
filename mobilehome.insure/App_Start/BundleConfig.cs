@@ -37,6 +37,15 @@ namespace MobileHome.Insure.Web
                 //,"~/Scripts/gmaps.js"
                 ));
 
+
+            bundles.Add(new StyleBundle("~/Content/assets/global/plugins/TableToolsv2.2.4/css/style").Include(
+                "~/Content/assets/global/plugins/TableToolsv2.2.4/css/*.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/assets/global/plugins/TableToolsv2.2.4/css/script")
+                .Include("~/Content/assets/global/plugins/TableToolsv2.2.4/js/*.js")
+                );
+
             bundles.Add(new ScriptBundle("~/Content/Assets/Global/Plugins/select2/scripts").Include(
                 "~/Content/Assets/Global/Plugins/select2/*.js"
                 ));

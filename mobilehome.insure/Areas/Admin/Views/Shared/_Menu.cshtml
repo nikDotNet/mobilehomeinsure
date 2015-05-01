@@ -32,6 +32,43 @@
             <span class="title">Dashboard</span>
         </a>
     </li>
+
+    @if (controller == "appraisal")
+    {
+        @:<li class="active open">
+    }
+    else
+    {
+        @:<li>
+    }
+    <a href="javascript:;">
+        <i class="icon-list"></i>
+        <span class="title">Appraisal</span>
+        <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li>
+            <a href="~/Admin/Appraisal/AgeFactor">Age Factor</a>
+        </li>
+        <li>
+            <a href="~/Admin/Appraisal/AreaFactor">Area Factor</a>
+        </li>
+        <li>
+            <a href="~/Admin/Appraisal/ManufacturerFactor">Manufacturer Factor</a>
+        </li>
+
+        <li>
+            <a href="~/Admin/Appraisal/OptionsFactor">Options Factor</a>
+        </li>
+        <li>
+            <a href="~/Admin/Appraisal/StateFactor">State Factor</a>
+        </li>
+
+    </ul>
+</li>
+
+
+
     @if (controller == "master")
     {
         @:<li class="active open">
@@ -59,37 +96,6 @@
             </li>
         </ul>
     </li>
-    @if (controller == "appraisal")
-    {
-        @:<li class="active open">
-    }
-    else
-    {
-        @:<li>
-    }
-        <a href="javascript:;">
-            <i class="icon-rocket"></i>
-            <span class="title">Appraisal</span>
-            <span class="arrow "></span>
-        </a>
-        <ul class="sub-menu">
-            <li>
-                <a href="~/Admin/Appraisal/AgeFactor">Age Factor</a>
-            </li>
-            <li>
-                <a href="~/Admin/Appraisal/AreaFactor">Area Factor</a>
-            </li>
-            <li>
-                <a href="~/Admin/Appraisal/ManufacturerFactor">Manufacturer Factor</a>
-            </li>
-            <li>
-                <a href="~/Admin/Appraisal/StateFactor">State Factor</a>
-            </li>
-            <li>
-                <a href="~/Admin/Appraisal/OptionsFactor">Options Factor</a>
-            </li>
-            
-        </ul>
-    </li>
+   
 </ul>
 <!-- END SIDEBAR MENU -->

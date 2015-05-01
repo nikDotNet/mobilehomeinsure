@@ -92,24 +92,7 @@
                               
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="btn-group pull-right">
-                                <button class="btn dropdown-toggle" data-toggle="dropdown">
-                                    Tools <i class="fa fa-angle-down"></i>
-                                </button>
-                                <ul class="dropdown-menu pull-right">
-                                    <li>
-                                        <a href="#">Print </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Save as PDF </a>
-                                    </li>
-                                    <li>
-                                        @Html.ActionLink("Save as Excel", "OptionsFactor", "Appraisal", new { exportCsv = true }, new { })
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <table class="table table-striped table-hover table-bordered" id="tblAgeFactor">
@@ -174,9 +157,7 @@
 <!-- END PAGE CONTENT -->
 @section scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script src="~/Content/assets/global/plugins/select2/select2.min.js"></script>
-    <script src="~/Content/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-    <script src="~/Content/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+   
     <script src="~/Areas/Admin/Script/AgeFactor.js"></script>
     <script>
         jQuery(document).ready(function () {
