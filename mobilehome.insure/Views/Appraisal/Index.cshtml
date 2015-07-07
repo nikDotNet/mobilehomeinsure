@@ -6,118 +6,123 @@
 <style>
 
 </style>
-@using (Html.BeginForm()) {
-<div class="col-md-9 m-right" id="rightContainer">
-    <!-- Intro Slider -->
-    <div class="row" data-animated="0">
-        <div class="col-md-12">
-            <div class="page-header">
-                <h1>Mobile Home Appraisal</h1>
+<div class="col-md-9 m-right">
+    <div id="rightcontainer" style="background-color:white">
+        @using (Html.BeginForm())
+        {
+
+            
+            <div class="row" data-animated="0">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h1>Mobile Home Appraisal</h1>
+                    </div>
+                    <div class="col-md-8">
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.State)
+                            @Html.DropDownListFor(x => x.State, new SelectList(Model.StateList, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.State, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Manufacturer)
+                            @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList, "Id", "Name"), "Please Select", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Manufacturer, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.ModelYear)
+                            @Html.TextBoxFor(x => x.ModelYear, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ModelYear, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Length)
+                            @Html.TextBoxFor(x => x.Length, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Length, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Width)
+                            @Html.TextBoxFor(x => x.Width, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Width, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.OptionsType)
+                            @Html.DropDownListFor(x => x.OptionsType, new SelectList(Model.OptionsType, "Key", "Value"), new { id = "ddlOptionType", @class = "form-control select2", multiple = "multiple" })
+                        </div>
+                        <div class="form-group" id="brickSkirtingFootage" style="display:none">
+                            @Html.LabelFor(x => x.BrickSkirtingLinearFootage)
+                            @Html.TextBoxFor(x => x.BrickSkirtingLinearFootage, new { @class = "form-control" })
+                            <span id="brickErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Brick Skirting</span>
+                        </div>
+                        <div class="form-group" id="vinylSkirtingFootage" style="display:none">
+                            @Html.LabelFor(x => x.VinylSkirtingLinearFootage)
+                            @Html.TextBoxFor(x => x.VinylSkirtingLinearFootage, new { @class = "form-control" })
+                            <span id="vinylErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Vinyl/Other Skirting</span>
+                        </div>
+
+                        <div class="form-group" id="areaOfDecksPorches" style="display:none">
+                            @Html.LabelFor(x => x.AreaOfDeckPorche)
+                            @Html.TextBoxFor(x => x.AreaOfDeckPorche, new { @class = "form-control" })
+                            <span id="deckporcheErrorMessage" class="text-danger" style="display:none">Please enter the area of Decks / Porches</span>
+                        </div>
+
+                        <div class="form-group" id="divAreaOfAdditions" style="display:none">
+                            @Html.LabelFor(x => x.AreaOfAdditions)
+                            @Html.TextBoxFor(x => x.AreaOfAdditions, new { @class = "form-control" })
+                            <span id="additionsErrorMessage" class="text-danger" style="display:none">Please enter the area of Additions</span>
+                        </div>
+                        <div class="form-action">
+                            <button class="btn btn-default" id="btnApprisal">Calculate</button>
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-4">
+
+                        <div class="page-header text-center">
+                            <span>Estimated Appraisal Value</span>
+                            <h2><span id="txtEstApp">$0.00</span></h2>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div style="margin-top:10px">&nbsp;</div>
+
+                <div class="col-md-12">
+                    @*<div class="panel panel-default">
+                            <div class="panel-heading">
+                                Additions
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-md-4">Central Air Conditioning</div>
+                                <div class="col-md-8">$2800.00</div>
+                                <div class="col-md-4">Decks/Porches</div>
+                                <div class="col-md-8">$9.00 per square foot</div>
+                                <div class="col-md-4">Skirting/Underpinning</div>
+                                <div class="col-md-8">Brick: $32 Per Linear Foot, Vinyl/Other: $7 Per Linear Foot</div>
+                                <div class="col-md-4">Added Rooms/Additions</div>
+                                <div class="col-md-8">$35.00 Per Square Foot</div>
+                            </div>
+
+                        </div>*@
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            *Note
+                        </div>
+                        <div class="panel-body">
+                            The above information is intended to present an estimated value only. Additions to the home, conditon of the home, and location of the home may alter the valuation. The Colonial Group, Inc. makes no representation to the actual value of the home above. An accurate valuation could be obtained with an on site appraisal. The Colonial Group, Inc. shall have no liability as a result of any inaccuracies of the information above.
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="col-md-8">
-                
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.State)
-                        @Html.DropDownListFor(x => x.State, new SelectList(Model.StateList, "Id", "Name"), "Please Select", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.State, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Manufacturer)
-                        @Html.DropDownListFor(x => x.Manufacturer, new SelectList(Model.ManufacturerList, "Id", "Name"),"Please Select", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Manufacturer, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.ModelYear)
-                        @Html.TextBoxFor(x => x.ModelYear, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.ModelYear, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Length)
-                        @Html.TextBoxFor(x => x.Length, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Length, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Width)
-                        @Html.TextBoxFor(x => x.Width, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Width, "", new { @class = "text-danger" })
-                    </div>
-                <div class="form-group">
-                    @Html.LabelFor(x => x.OptionsType)
-                    @Html.DropDownListFor(x => x.OptionsType, new SelectList(Model.OptionsType, "Key", "Value"), new { id="ddlOptionType", @class = "form-control select2", multiple="multiple" })
-                </div>
-                <div class="form-group" id="brickSkirtingFootage" style="display:none">
-                    @Html.LabelFor(x => x.BrickSkirtingLinearFootage)
-                    @Html.TextBoxFor(x => x.BrickSkirtingLinearFootage, new { @class = "form-control" })
-                    <span id="brickErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Brick Skirting</span>
-                </div>
-                <div class="form-group" id="vinylSkirtingFootage" style="display:none">
-                    @Html.LabelFor(x => x.VinylSkirtingLinearFootage)
-                    @Html.TextBoxFor(x => x.VinylSkirtingLinearFootage, new { @class = "form-control" })
-                    <span id="vinylErrorMessage" class="text-danger" style="display:none">Please enter Linear footage for Vinyl/Other Skirting</span>
-                </div>
-                
-                <div class="form-group" id="areaOfDecksPorches" style="display:none">
-                    @Html.LabelFor(x => x.AreaOfDeckPorche)
-                    @Html.TextBoxFor(x => x.AreaOfDeckPorche, new { @class = "form-control" })
-                    <span id="deckporcheErrorMessage" class="text-danger" style="display:none">Please enter the area of Decks / Porches</span>
-                </div>
 
-                 <div class="form-group" id="divAreaOfAdditions" style="display:none">
-                    @Html.LabelFor(x => x.AreaOfAdditions)
-                    @Html.TextBoxFor(x => x.AreaOfAdditions, new { @class = "form-control" })
-                    <span id="additionsErrorMessage" class="text-danger" style="display:none">Please enter the area of Additions</span>
-                </div>
-                 <div class="form-action">
-                   <button class="btn btn-default" id="btnApprisal">Calculate</button>
-                </div>
-
-               
-            </div>
-            <div class="col-md-4">
-                            
-                <div class="page-header text-center">
-                    <span>Estimated Appraisal Value</span>
-                    <h2><span id="txtEstApp">$0.00</span></h2>
-                </div>
-            </div>
-
-
-        </div>
-
-        <div style="margin-top:10px">&nbsp;</div>
-
-        <div class="col-md-12">
-            @*<div class="panel panel-default">
-                <div class="panel-heading">
-                    Additions
-                </div>
-                <div class="panel-body">
-                    <div class="col-md-4">Central Air Conditioning</div>
-                    <div class="col-md-8">$2800.00</div>
-                    <div class="col-md-4">Decks/Porches</div>
-                    <div class="col-md-8">$9.00 per square foot</div>
-                    <div class="col-md-4">Skirting/Underpinning</div>
-                    <div class="col-md-8">Brick: $32 Per Linear Foot, Vinyl/Other: $7 Per Linear Foot</div>
-                    <div class="col-md-4">Added Rooms/Additions</div>
-                    <div class="col-md-8">$35.00 Per Square Foot</div>
-                </div>
-
-            </div>*@
-
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    *Note
-                </div>
-                <div class="panel-body">
-                    The above information is intended to present an estimated value only. Additions to the home, conditon of the home, and location of the home may alter the valuation. The Colonial Group, Inc. makes no representation to the actual value of the home above. An accurate valuation could be obtained with an on site appraisal. The Colonial Group, Inc. shall have no liability as a result of any inaccuracies of the information above.
-                </div>
-            </div>
-
-        </div>
+            @Html.ValidationSummary(true)
+        }
     </div>
 </div>
-@Html.ValidationSummary(true)
-}
 @section scripts{
     <script type="text/javascript">
         $(document).ready(function () {
@@ -137,13 +142,13 @@
             .on("change", function (e) {
                 if ($.inArray("2", e.val.toString().split(",")) != -1)
                     $("#brickSkirtingFootage").show();
-                 if ($.inArray("3", e.val.toString().split(",")) != -1)
-                     $("#vinylSkirtingFootage").show();
-                 if ($.inArray("4", e.val.toString().split(",")) != -1)
-                     $("#areaOfDecksPorches").show();
-                 if ($.inArray("5", e.val.toString().split(",")) != -1)
-                     $("#divAreaOfAdditions").show();
-                
+                if ($.inArray("3", e.val.toString().split(",")) != -1)
+                    $("#vinylSkirtingFootage").show();
+                if ($.inArray("4", e.val.toString().split(",")) != -1)
+                    $("#areaOfDecksPorches").show();
+                if ($.inArray("5", e.val.toString().split(",")) != -1)
+                    $("#divAreaOfAdditions").show();
+
 
             })
             .on("select2-removed", function (e) {
@@ -164,16 +169,16 @@
                     $("#AreaOfAdditions").empty();
                 }
             });
-            
+
 
             $('#dvLoading').hide();
             $("#btnApprisal").click(function (evt) {
                 evt.preventDefault();
                 var $form = $('form');
 
-                 if ($form.valid()) {
+                if ($form.valid()) {
                     $('#dvLoading').show();
-                  
+
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
                         StateId: $('#State').val(), ManafacturerId: $('#Manufacturer').val(), Length: $('#Length').val(), width: $('#Width').val(),
@@ -197,9 +202,9 @@
                     request.fail(function (jqXHR, textStatus) {
                         alert("Request failed: " + textStatus);
                     });
-                    
 
-                    
+
+
                 }
             });
         });

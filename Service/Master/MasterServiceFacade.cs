@@ -107,7 +107,7 @@ namespace MobileHome.Insure.Service.Master
 
              foreach (var opt in listOptionTypes)
              {
-                 optionTypes.Add(opt.Id, opt.Name);
+                 optionTypes.Add((int)opt.Id, opt.Name);
              }
              return optionTypes;
          }

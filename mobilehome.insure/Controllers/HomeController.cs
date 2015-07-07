@@ -27,6 +27,12 @@ namespace MobileHome.Insure.Web.Controllers
             return View();
         }
 
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public ContentResult Contact(ContactViewModel objContact)
         {

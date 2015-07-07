@@ -1,0 +1,48 @@
+﻿using MobileHome.Insure.Model;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MobileHome.Insure.DAL.EF.Mapping
+{
+    public class CustomerMap : EntityTypeConfiguration<Customer>
+    {
+
+        public CustomerMap()
+        {
+            // Primary Key
+            this.HasKey(t => t.Id);
+
+            // Properties
+            this.Property(t => t.Name)
+                .HasMaxLength(100);
+
+            this.Property(t => t.Address)
+                .HasMaxLength(200);
+
+            this.Property(t => t.Zip)
+                .HasMaxLength(10);
+
+            this.Property(t => t.Phone)
+                .HasMaxLength(20);
+
+            this.Property(t => t.Email)
+                .HasMaxLength(100);
+
+            // Table & Column Mappings
+            this.ToTable("Customer");
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.Address).HasColumnName("Address");
+            this.Property(t => t.Zip).HasColumnName("Zip");
+            this.Property(t => t.Phone).HasColumnName("Phone");
+            this.Property(t => t.Email).HasColumnName("Email");
+            this.Property(t => t.CreationDate).HasColumnName("CreationDate");
+
+        }
+
+    }
+}

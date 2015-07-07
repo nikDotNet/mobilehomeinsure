@@ -65,8 +65,13 @@
     <Compile Include="Configuration\NinjectConfiguration.cs" />
     <Compile Include="EF\EFDBContext.cs" />
     <Compile Include="EF\EFUnitOfWork.cs" />
+    <Compile Include="EF\Mapping\CompanyMap.cs" />
+    <Compile Include="EF\Mapping\CustomerMap.cs" />
     <Compile Include="EF\Mapping\OptionsFactorMap.cs" />
     <Compile Include="EF\Mapping\OptionsTypeMap.cs" />
+    <Compile Include="EF\Mapping\PaymentMap.cs" />
+    <Compile Include="EF\Mapping\QuoteMap.cs" />
+    <Compile Include="EF\mhRentalContext.cs" />
     <Compile Include="IAuditableEntity.cs" />
     <Compile Include="IDBContext.cs" />
     <Compile Include="IUnitOfWork.cs" />

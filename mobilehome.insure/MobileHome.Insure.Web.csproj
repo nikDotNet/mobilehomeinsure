@@ -154,11 +154,15 @@
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
     <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
+    <Compile Include="Controllers\OwnedController.cs" />
+    <Compile Include="Controllers\RentalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CustomFilters\RenderAjaxPartialScriptsResponseFilter.cs" />
+    <Compile Include="Helper\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Models\Admin\ListManufacturerViewModel.cs" />
     <Compile Include="Models\Admin\ListOptionsFactorViewModel.cs" />
     <Compile Include="Models\Admin\ListStateViewModel.cs" />
@@ -169,6 +173,7 @@
     <Compile Include="Models\Appraisal\MobileHomeAppraisalViewModel.cs" />
     <Compile Include="Models\ContactViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\Rental\RentalViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1017,6 +1022,27 @@
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\custom.css" />
+    <Content Include="Content\css\images\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Content\css\images\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Content\css\images\ui-bg_glass_20_00aeed_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_40_0078a3_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Content\css\images\ui-bg_gloss-wave_0_fff_500x100.png" />
+    <Content Include="Content\css\images\ui-bg_highlight-soft_0_000_1x100.png" />
+    <Content Include="Content\css\images\ui-bg_inset-soft_0_fff_1x100.png" />
+    <Content Include="Content\css\images\ui-bg_inset-soft_30_f6f6f6_1x100.png" />
+    <Content Include="Content\css\images\ui-icons_000_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_a83300_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_cccccc_256x240.png" />
+    <Content Include="Content\css\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\css\jquery-ui.css" />
+    <Content Include="Content\css\jquery-ui.min.css" />
+    <Content Include="Content\css\jquery-ui.structure.css" />
+    <Content Include="Content\css\jquery-ui.structure.min.css" />
+    <Content Include="Content\css\jquery-ui.theme.css" />
+    <Content Include="Content\css\jquery-ui.theme.min.css" />
     <Content Include="Content\css\prettyphoto.css" />
     <Content Include="Content\css\style-responsive.css" />
     <Content Include="Content\css\style.css" />
@@ -1323,6 +1349,8 @@
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <None Include="Properties\PublishProfiles\mobilehomeinsureprofile.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Custom\contact.js" />
@@ -1338,6 +1366,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.appear.js" />
     <Content Include="Scripts\jquery.easing.min.js" />
     <Content Include="Scripts\jquery.inview.js" />
@@ -1381,6 +1411,12 @@
     <Content Include="Views\Appraisal\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_contact.cshtml" />
+    <Content Include="Views\Rental\Index.cshtml" />
+    <Content Include="Views\Home\AboutUs.cshtml" />
+    <Content Include="Views\Owned\Index.cshtml" />
+    <Content Include="Views\Rental\_Step1.cshtml" />
+    <Content Include="Views\Rental\_Step2.cshtml" />
+    <Content Include="Views\Rental\_Step3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,7 +12,11 @@ namespace MobileHome.Insure.Web
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-{version}.js"));
+                        "~/Scripts/jquery-ui.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/jqueryui/css")
+            .Include("~/Content/css/jquery-ui*"));
+                
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -58,6 +62,8 @@ namespace MobileHome.Insure.Web
                 "~/Scripts/Custom/contact.js",
                 "~/Scripts/Custom/main.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/Scripts/bootbox")
+                .Include("~/Scripts/bootbox.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrapscript").Include(
                 "~/Scripts/bootstrap*"));

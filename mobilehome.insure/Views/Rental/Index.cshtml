@@ -1,0 +1,76 @@
+﻿@model mobilehome.insure.Models.Rental.RentalViewModel
+@{
+    ViewBag.Title = "Mobile Home Insure for Rental Homes - MobileHome.Insure";
+    
+}
+
+
+<div class="col-md-9 m-right">
+
+    <div id="rightContainer">
+        <div class="row" data-animated="0">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1>For Rental</h1>
+                </div>
+
+          
+                
+                <div id="accordion">
+                    <h3>Customer Information</h3>
+                    <div>
+                        <p>
+                            @{Html.RenderPartial("_Step1", Model.customer);}
+                        </p>
+                    </div>
+
+                    <h3>Generate Quote</h3>
+                    <div >
+                        <p>
+                            @{Html.RenderPartial("_Step2", Model.quote);}
+                        </p>
+                    </div>
+                    <h3>Make Payment</h3>
+                     <div>
+                        <p>
+                            @{Html.RenderPartial("_Step3", Model.payment);}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    
+<script>
+    $(document).ready(function () {
+
+       var ac =  $("#accordion").accordion({
+            heightStyle: "content",
+            disabled: 1,
+           
+            
+        });
+        
+       $("#accordion").accordion("option", "disabled", 2);
+       $("#accordion").accordion("option", "active", 1);
+        //$("#accordion").accordion({ active: "h3:last" })
+
+       var success = '@TempData["Success"]';
+
+       if(success == "true")
+           bootbox.alert("Your Payment has been made successfully!");
+        
+        @{ TempData.Clear(); }
+    });
+
+
+
+  
+</script>
+
+
+}
