@@ -14,6 +14,16 @@
                     <h1>For Rental</h1>
                 </div>
 
+                <div class="rigthContainerCentered" id="parkSeclection">
+                   @Html.BeginForm(){
+                    
+                    @Html.TextBoxFor(x => x.payment, new { value="Enter you zip"})
+                    <div class="form-action">
+                        <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
+                    </div>
+
+                    }
+                </div>
           
                 
                 <div id="accordion">
@@ -50,7 +60,7 @@
 
        var ac =  $("#accordion").accordion({
             heightStyle: "content",
-            disabled: 1,
+            disabled: 1
            
             
         });

@@ -6,3 +6,10 @@
     background-color:white !important;
     
 }
+
+#rigthContainerCentered {
+    display:table-cell;
+    height:600px;
+    vertical-align:middle;
+    text-align:center;
+}

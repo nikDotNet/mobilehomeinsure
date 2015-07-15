@@ -12,6 +12,8 @@ namespace mobilehome.insure.Models.Rental
         public Quote quote { get; set; }
         public Payment payment { get; set; }
 
+
+
         public RentalViewModel()
         {
             customer = new Customer();

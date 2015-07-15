@@ -27,6 +27,8 @@ namespace MobileHome.Insure.DAL.EF
         public DbSet<OptionsFactor> OptionsFactors { get; set; }
         public DbSet<OptionsType> OptionsTypes { get; set; }
 
+        public DbSet<Park> Parks { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new AgeFactorMap());
@@ -37,6 +39,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new StateMap());
             modelBuilder.Configurations.Add(new OptionsFactorMap() );
             modelBuilder.Configurations.Add(new OptionsTypeMap());
+            modelBuilder.Configurations.Add(new ParkMap());
         }
     }
 }

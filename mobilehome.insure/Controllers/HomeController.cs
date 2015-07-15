@@ -50,5 +50,24 @@ namespace MobileHome.Insure.Web.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult UploadPart(HttpPostedFile file)
+        {
+
+        }
+
+        [HttpPost]
+        public ActionResult UploadPart(HttpPostedFile file)
+        {
+            if(file != null)
+            {
+                file.SaveAs("");
+            }
+            return View();
+        }
+
+
+
+
     }
 }

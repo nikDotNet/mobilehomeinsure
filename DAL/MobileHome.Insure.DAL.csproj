@@ -69,6 +69,7 @@
     <Compile Include="EF\Mapping\CustomerMap.cs" />
     <Compile Include="EF\Mapping\OptionsFactorMap.cs" />
     <Compile Include="EF\Mapping\OptionsTypeMap.cs" />
+    <Compile Include="EF\Mapping\ParkMap.cs" />
     <Compile Include="EF\Mapping\PaymentMap.cs" />
     <Compile Include="EF\Mapping\QuoteMap.cs" />
     <Compile Include="EF\mhRentalContext.cs" />

@@ -14,7 +14,7 @@ namespace MobileHome.Insure.Web
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui.js"));
 
-            bundles.Add(new StyleBundle("~/bundles/jqueryui/css")
+            bundles.Add(new StyleBundle("~/Content/css/jqueryui")
             .Include("~/Content/css/jquery-ui*"));
                 
 
