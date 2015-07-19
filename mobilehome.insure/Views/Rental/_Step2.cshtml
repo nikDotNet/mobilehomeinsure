@@ -1,54 +1,44 @@
-﻿@using  mobilehome.insure.Helper.Extensions
+﻿@using mobilehome.insure.Helper.Extensions
 @model mobilehome.insure.Models.Rental.RentalViewModel.Quote
 @{
     Layout = null;
 }
-
 <div class="col-md-9 m-right">
     <div id="rightcontainer">
         @using (Html.BeginForm("_Step2", "Rental"))
         {
             <div class="col-md-8">
                 <div class="row" data-animated="0">
-
                     @Html.HiddenFor(x => x.CustomerId)
-
                     <div class="form-group">
                         @Html.LabelFor(x => x.EffectiveDate)
-                        @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "form-control", value="" })
+                        @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "form-control", value = "" })
                         @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
                     </div>
-
                     <div class="form-group">
                         @Html.LabelFor(x => x.PersonalProperty)
                         @Html.TextBoxFor(x => x.PersonalProperty, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
                     </div>
-
                     <div class="form-group">
                         @Html.LabelFor(x => x.Liability)
-                        @Html.TextBoxFor(x => x.Liability, new { @class = "form-control" })
+                        @*@Html.TextBoxFor(x => x.Liability, new { @class = "form-control" })*@
+                        @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
                     </div>
-
                     @*<div class="form-group">
-                        @Html.LabelFor(x => x.Deductible)
-                        @Html.HiddenFor(x => x.Deductible, new { @class = "form-control" })
+                            @Html.LabelFor(x => x.Deductible)
+                            @Html.HiddenFor(x => x.Deductible, new { @class = "form-control" })
 
-                    </div>*@
-
+                        </div>*@
                     <div class="form-group">
                         @Html.LabelFor(x => x.NumberOfInstallments)
-                        @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "Please Select", new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
                     </div>
-
                     <div class="form-group">
-
                         Premium: <label id="lblPremium" />
-
                     </div>
-
                     <div class="form-action" style="float:left">
                         <button class="btn btn-default" id="btnQuote">Calculate</button>
                     </div>
@@ -61,13 +51,23 @@
         }
     </div>
 </div>
-
 @Html.Script(
 
     @<script>
         $(document).ready(function () {
 
-            $("#EffectiveDate").datepicker();
+            $("#ddlLiabilities, #NumberOfInstallments").select2(
+               {
+                   //placeholder: "Select a State",
+                   allowClear: true
+               })
+               .on("change", function (e) {
+
+               });
+
+            //var effectiveDate = $("#EffectiveDate").datepicker("getDate");
+            //$.datepicker.formatDate('mm/dd/yyyy', effectiveDate);
+            $("#EffectiveDate").datepicker({ dateFormate: "mm/dd/yyyy" }).datepicker('setDate', new Date());
             $("#btnContinuePayment").prop('disabled', true);
 
             $("#btnContinuePayment").click(function (evt) {
@@ -89,10 +89,10 @@
 
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
-                        EffectiveDate: $("#EffectiveDate").val(),
+                        EffectiveDate: new moment("mm/dd/yyyy", $("#EffectiveDate").val()),
                         PersonalProperty: $("#PersonalProperty").val(),
-                        Liability: $("#Liability").val()
-
+                        Liability: $("#s2id_ddlLiabilities").select2("data").id,
+                        NumberOfInstallments: $("#s2id_NumberOfInstallments").select2("data").text
                     });
                     ajaxOptions.url = "/Rental/_Step2";
                     ajaxOptions.method = "POST";
@@ -119,4 +119,4 @@
         });
 
     </script>
-)
+                                    )

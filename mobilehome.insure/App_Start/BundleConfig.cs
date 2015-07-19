@@ -37,7 +37,8 @@ namespace MobileHome.Insure.Web
                 "~/Scripts/jquery.appear.js",
                 "~/Scripts/jquery.inview.js",
                 "~/Scripts/jquery.prettyphoto.js",
-                "~/Scripts/jquery.nicescroll.js"
+                "~/Scripts/jquery.nicescroll.js",
+                "~/Scripts/moment.min.js"
                 //,"~/Scripts/gmaps.js"
                 ));
 

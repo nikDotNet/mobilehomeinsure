@@ -32,10 +32,9 @@ namespace MobileHome.Insure.Web.Controllers
         {
             RentalViewModel model = new RentalViewModel();
             model.customer.States = _masterServiceFacade.GetStates();
+            model.quote.Liabilities = GetLiabilities();
             return View(model);
         }
-
-
 
 
         [HttpGet]
@@ -69,6 +68,8 @@ namespace MobileHome.Insure.Web.Controllers
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]); ;
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
 
+            var itemLia = GetLiabilities().Find(l => l.Id == Convert.ToInt32(model.Liability));
+            model.Liability = itemLia != null ? Convert.ToDecimal(itemLia.Text.Replace("$", "")) : model.Liability;
             model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, ref quoteId);
 
             TempData["QuoteId"] = quoteId;
@@ -122,5 +123,14 @@ namespace MobileHome.Insure.Web.Controllers
         }
 
 
+        [NonAction]
+        private List<OptionListItem> GetLiabilities()
+        {
+            return new List<OptionListItem>() 
+                {
+                    new OptionListItem{Id=1, Text="$ 25,000"},
+                    new OptionListItem{Id=2, Text="$ 50,000"}
+                };
+        }
     }
 }

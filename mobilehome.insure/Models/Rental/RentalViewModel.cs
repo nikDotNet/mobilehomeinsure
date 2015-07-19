@@ -21,7 +21,7 @@ namespace mobilehome.insure.Models.Rental
             quote = new Quote();
             payment = new Payment();
         }
-        
+
         public class Customer
         {
             public int CustomerId { get; set; }
@@ -69,6 +69,7 @@ namespace mobilehome.insure.Models.Rental
 
             public List<int> InstallmentList { get; set; }
 
+            public List<OptionListItem> Liabilities { get; set; }
         }
 
         public class Payment
