@@ -1,6 +1,7 @@
 ﻿using MobileHome.Insure.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -32,6 +33,10 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.Email)
                 .HasMaxLength(100);
 
+            this.Property(t => t.City)
+                .HasMaxLength(50);
+
+
             // Table & Column Mappings
             this.ToTable("Customer");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -41,7 +46,17 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.Phone).HasColumnName("Phone");
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.CreationDate).HasColumnName("CreationDate");
+            this.Property(t => t.UserId).HasColumnName("UserId");
+            this.Property(t => t.StateId).HasColumnName("StateId");
+            this.Property(t => t.City).HasColumnName("City");
 
+            // Relationships
+            this.HasOptional(t => t.State)
+                .WithMany(t => t.Customers)
+                .HasForeignKey(d => d.StateId);
+            this.HasOptional(t => t.User)
+                .WithMany(t => t.Customers)
+                .HasForeignKey(d => d.UserId);
         }
 
     }

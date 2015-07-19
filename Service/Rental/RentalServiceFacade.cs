@@ -9,27 +9,41 @@ using System.Threading.Tasks;
 
 namespace MobileHome.Insure.Service.Rental
 {
-   public class RentalServiceFacade:IRentalServiceFacade
+    public class RentalServiceFacade : IRentalServiceFacade
     {
-        private readonly mhRentalContext  _context;
-       
+        private readonly mhRentalContext _context;
+
 
         public RentalServiceFacade()
         {
             _context = new mhRentalContext();
         }
 
-        public int saveCustomerInformation(string Name, string Address, string Phone, string email, string Zip)
+        public int saveCustomerInformation(string Name, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone)
         {
+            var user = new User
+            {
+                EmailId = Email,
+                Password = Password,
+                CreatedDate = DateTime.Now,
+                CreatedBy = "admin", //it should be according to logged in user
+                IsActive = true
+            };
+
             Customer customerObj = new Customer
             {
                 Name = Name,
-                Email = email,
-                Phone = Phone,
+                Email = Email,
                 Address = Address,
+                StateId = StateId,
+                City = City,
                 Zip = Zip,
-                CreationDate = DateTime.Now
+                Phone = Phone,
+                CreationDate = DateTime.Now,
+                User = user
             };
+
+            _context.Users.Add(user);
             _context.Customers.Add(customerObj);
             _context.SaveChanges();
 
@@ -41,28 +55,28 @@ namespace MobileHome.Insure.Service.Rental
             //Generating proposal number
 
             string ProposalNo = "ABCD1234";
-            
+
             //Process to generate code, calling service 
 
             decimal Premium = 100;
 
             Quote quoteObj = null;
 
-            if(quoteId == 0)
-            { 
-            //saving quote generated
-             quoteObj = new Quote
+            if (quoteId == 0)
             {
-                EffectiveDate = EffectiveDate,
-                PersonalProperty = PersonalProperty,
-                Deductible = Deductible,
-                ProposalNumber = ProposalNo,
-                Liability = Liability,
-                Premium = Premium,
-                NoOfInstallments = NoOfInstallments,
-                CreationDate = DateTime.Now
-            };
-            _context.Quotes.Add(quoteObj);
+                //saving quote generated
+                quoteObj = new Quote
+               {
+                   EffectiveDate = EffectiveDate,
+                   PersonalProperty = PersonalProperty,
+                   Deductible = Deductible,
+                   ProposalNumber = ProposalNo,
+                   Liability = Liability,
+                   Premium = Premium,
+                   NoOfInstallments = NoOfInstallments,
+                   CreationDate = DateTime.Now
+               };
+                _context.Quotes.Add(quoteObj);
             }
             else
             {
@@ -79,12 +93,12 @@ namespace MobileHome.Insure.Service.Rental
                 _context.Entry(quoteObj).State = System.Data.Entity.EntityState.Modified;
 
             }
-            
+
             _context.SaveChanges();
 
             quoteId = quoteObj.Id;
             return Premium;
-            
+
         }
 
 

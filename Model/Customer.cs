@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MobileHome.Insure.Model
 {
-    public  class Customer : Base.BaseEntity
+    public class Customer : Base.BaseEntity
     {
         public Customer()
         {
@@ -15,15 +15,21 @@ namespace MobileHome.Insure.Model
             this.Quotes = new HashSet<Quote>();
         }
 
-      
+
         public string Name { get; set; }
+        public string Email { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public Nullable<int> StateId { get; set; }
         public string Address { get; set; }
+        public string City { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
-        public string Email { get; set; }
         public Nullable<System.DateTime> CreationDate { get; set; }
 
+        public virtual State State { get; set; }
+        public virtual User User { get; set; }
         public virtual ICollection<MobileHome.Insure.Model.Payment> Payments { get; set; }
         public virtual ICollection<Quote> Quotes { get; set; }
+
     }
 }

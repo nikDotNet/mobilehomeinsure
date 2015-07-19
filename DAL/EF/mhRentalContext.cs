@@ -28,6 +28,7 @@ namespace MobileHome.Insure.DAL.EF
         public virtual DbSet<Company> Companies { get; set; }
 
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -35,7 +36,9 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new PaymentMap());
             modelBuilder.Configurations.Add(new CompanyMap());
             modelBuilder.Configurations.Add(new CustomerMap());
-            
+            modelBuilder.Configurations.Add(new UserMap());
+
+            //modelBuilder.Entity<Customer>().HasRequired(p => p.User);
         }
     }
 }

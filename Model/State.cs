@@ -11,6 +11,7 @@ namespace MobileHome.Insure.Model
         {
             this.StateFactors = new List<StateFactor>();
             this.OptionsFactors = new List<OptionsFactor>();
+            this.Customers = new List<Customer>();
             this.Parks = new List<Park>();
         }
 
@@ -28,7 +29,7 @@ namespace MobileHome.Insure.Model
 
         public virtual ICollection<StateFactor> StateFactors { get; set; }
         public virtual ICollection<OptionsFactor> OptionsFactors { get; set; }
-
+        public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Park> Parks { get; set; }
        
     }

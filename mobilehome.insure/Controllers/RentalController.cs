@@ -8,6 +8,7 @@ using MobileHome.Insure.Service;
 using mobilehome.insure.Models.Rental;
 using MobileHome.Insure.Service.Rental;
 using MobileHome.Insure.Model.PaymentGateway;
+using MobileHome.Insure.Service.Master;
 using MobileHome.Insure.Service.Payment;
 
 namespace MobileHome.Insure.Web.Controllers
@@ -19,21 +20,22 @@ namespace MobileHome.Insure.Web.Controllers
 
         private IRentalServiceFacade _serviceFacade;
         private IPaymentService _paymentServiceFacade;
-
+        private readonly MasterServiceFacade _masterServiceFacade;
         public RentalController()
         {
             _serviceFacade = new RentalServiceFacade();
             _paymentServiceFacade = new PayTracePaymentService();
+            _masterServiceFacade = new MasterServiceFacade();
         }
 
         public ActionResult Index()
         {
             RentalViewModel model = new RentalViewModel();
-            
+            model.customer.States = _masterServiceFacade.GetStates();
             return View(model);
         }
 
-        
+
 
 
         [HttpGet]
@@ -45,7 +47,11 @@ namespace MobileHome.Insure.Web.Controllers
         [HttpPost]
         public ActionResult _Step1(RentalViewModel.Customer model)
         {
-            TempData["CustomerId"] = _serviceFacade.saveCustomerInformation(model.Name, model.Address, model.Phone, model.Email, model.Zip);
+            TempData["CustomerId"] = _serviceFacade.saveCustomerInformation(
+                                                    model.Name, model.Email,
+                                                    model.Password, model.Address,
+                                                    model.StateId, model.City,
+                                                    model.Zip, model.Phone);
 
             return Json(true);
         }
@@ -53,7 +59,7 @@ namespace MobileHome.Insure.Web.Controllers
         [HttpGet]
         public ActionResult _Step2()
         {
-           
+
             return View();
         }
 
@@ -62,10 +68,10 @@ namespace MobileHome.Insure.Web.Controllers
         {
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]); ;
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
-            
+
             model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, ref quoteId);
-            
-            TempData["QuoteId"] = quoteId; 
+
+            TempData["QuoteId"] = quoteId;
             TempData["Premium"] = model.Premium;
             TempData.Keep();
 
@@ -98,7 +104,7 @@ namespace MobileHome.Insure.Web.Controllers
                 InvoiceNumber = InvoiceNumber.ToString()
             };
 
-            
+
             PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
 
             bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage);
@@ -111,7 +117,7 @@ namespace MobileHome.Insure.Web.Controllers
             }
             else
                 TempData.Keep();
-            
+
             return Json("Success");
         }
 

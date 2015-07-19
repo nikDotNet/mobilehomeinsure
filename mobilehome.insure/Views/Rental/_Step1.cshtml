@@ -3,37 +3,17 @@
 @{
     Layout = null;
 }
-
 <div class="col-md-9 m-right">
     <div id="rightcontainer">
-        @using (Html.BeginForm("_Step1", "Rental", FormMethod.Post, new { name = "frmCustomerInfo" }))
-        {
+        @*@using (Html.BeginForm("_Step1", "Rental", FormMethod.Post, new { name = "frmCustomerInfo" }))
+            {*@
+        <form>
             <div class="col-md-8">
                 <div class="row" data-animated="0">
-                   
-                        <div class="form-group">
-                            @Html.LabelFor(x => x.Name)
-                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(x => x.Address)
-                            @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(x => x.Zip)
-                            @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-                        </div>
-
-
                     <div class="form-group">
-                        @Html.LabelFor(x => x.Phone)
-                        @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+                        @Html.LabelFor(x => x.Name)
+                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
@@ -41,29 +21,84 @@
                         @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
                     </div>
-
-                    
-                    <div class="form-action">
-                            <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Password)
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                        <a href="#" style="color: cadetblue;text-decoration: underline;font-size:smaller;" id="linkShowPwd">Show Password</a>
                     </div>
-                    
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Address)
+                        @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.StateId)
+                        @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(x => x.StateId)
+                            @Html.TextBoxFor(x => x.StateId, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
+                        </div>*@
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.City)
+                        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Zip)
+                        @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.Phone)
+                        @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-action">
+                        <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
+                    </div>
 
                 </div>
             </div>
             @Html.ValidationSummary(true)
-        }
+        </form>
+        @*}*@
     </div>
 </div>
-
 @Html.Script(
 
     @<script>
         $(document).ready(function () {
+            var pwdBox = $("#Password");
+
+            $("#linkShowPwd").off("mouseover").off("mouseout");
+            $("#linkShowPwd").on("mouseover", function (e) {
+                pwdBox.attr("type", "text");
+                pwdBox.attr("disabled", "true");
+            }).on("mouseout", function (e) {
+                pwdBox.attr("type", "password");
+                pwdBox.removeAttr("disabled");
+            });
+
+            $("#ddlStateId").select2(
+                {
+                    //placeholder: "Select a State",
+                    allowClear: true
+                })
+                .on("change", function (e) {
+
+                });
 
             $("#EffectiveDate").datepicker();
 
 
-            $("#btnCustomerInfo").click(function (evt) {
+            $("#btnCustomerInfo").off("click");
+            $("#btnCustomerInfo").on("click", function (evt) {
+                //debugger;
                 evt.preventDefault();
                 var $form = $('form');
 
@@ -74,18 +109,20 @@
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
                         Name: $("#Name").val(),
+                        Email: $("#Email").val(),
+                        Password: $("#Password").val(),
                         Address: $("#Address").val(),
-                        Zip: $("#Liability").val(),
-                        Phone: $("#Phone").val(),
-                        Email: $("#Email").val()
-
+                        StateId: $("#s2id_ddlStateId").select2("data").id,
+                        City: $("#City").val(),
+                        Zip: $("#Zip").val(),
+                        Phone: $("#Phone").val()
                     });
                     ajaxOptions.url = "/Rental/_Step1";
                     ajaxOptions.method = "POST";
                     ajaxOptions.dataType = "JSON";
                     ajaxOptions.contentType = 'application/json';
-                    var request = $.ajax(ajaxOptions);
 
+                    var request = $.ajax(ajaxOptions);
                     request.done(function (result) {
                         $("#accordion").accordion("destroy");
                         $("#accordion").accordion({
@@ -93,22 +130,16 @@
                             active: 1,
                             heightStyle: "content"
                         });
-                        
+
                         $('#dvLoading').hide();
                     });
 
                     request.fail(function (jqXHR, textStatus) {
                         alert("Request failed: " + textStatus);
                     });
-
-
-
                 }
-
-
             });
         });
 
     </script>
-    )
-
+                                                                            )
