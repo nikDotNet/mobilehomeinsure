@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MobileHome.Insure.Model
 {
-    public partial class Park
+    public partial class Park : Base.BaseEntity
     {
-        public int Id { get; set; }
         public int StateId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
@@ -21,5 +20,9 @@ namespace MobileHome.Insure.Model
         public string ContactName { get; set; }
         public string Position { get; set; }
         public virtual State State { get; set; }
+
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }

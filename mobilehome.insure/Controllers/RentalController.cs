@@ -10,6 +10,8 @@ using MobileHome.Insure.Service.Rental;
 using MobileHome.Insure.Model.PaymentGateway;
 using MobileHome.Insure.Service.Master;
 using MobileHome.Insure.Service.Payment;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -33,6 +35,7 @@ namespace MobileHome.Insure.Web.Controllers
             RentalViewModel model = new RentalViewModel();
             model.customer.States = _masterServiceFacade.GetStates();
             model.quote.Liabilities = GetLiabilities();
+            model.quote.PersonalProperties = GetPersonalProperties();
             return View(model);
         }
 
@@ -47,7 +50,7 @@ namespace MobileHome.Insure.Web.Controllers
         public ActionResult _Step1(RentalViewModel.Customer model)
         {
             TempData["CustomerId"] = _serviceFacade.saveCustomerInformation(
-                                                    model.Name, model.Email,
+                                                    model.FirstName, model.LastName, model.Email,
                                                     model.Password, model.Address,
                                                     model.StateId, model.City,
                                                     model.Zip, model.Phone);
@@ -70,8 +73,11 @@ namespace MobileHome.Insure.Web.Controllers
 
             var itemLia = GetLiabilities().Find(l => l.Id == Convert.ToInt32(model.Liability));
             model.Liability = itemLia != null ? Convert.ToDecimal(itemLia.Text.Replace("$", "")) : model.Liability;
-            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, ref quoteId);
 
+            var itemPProperty = GetPersonalProperties().Find(l => l.Id == Convert.ToInt32(model.PersonalProperty));
+            model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
+
+            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, ref quoteId);
             TempData["QuoteId"] = quoteId;
             TempData["Premium"] = model.Premium;
             TempData.Keep();
@@ -122,6 +128,26 @@ namespace MobileHome.Insure.Web.Controllers
             return Json("Success");
         }
 
+        public ActionResult FindZip(int zip)
+        {
+            var parks = _serviceFacade.FindParkByZip(zip);
+
+            return Json(
+                    new
+                    {
+                        //Result = (parks == null ? null : JsonConvert.SerializeObject(parks.Select(p => new OptionListItem
+                        //{
+                        //    Id = p.Id,
+                        //    Text = p.Name
+                        //}).ToList(),
+                        //new JsonSerializerSettings
+                        //{
+                        //    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                        //})),
+                        Result = (parks == null ? null : parks),
+                        Message = (parks == null ? string.Format("Unable to find Park(s) at Zip: {0}", zip) : string.Empty)
+                    }, JsonRequestBehavior.AllowGet);
+        }
 
         [NonAction]
         private List<OptionListItem> GetLiabilities()
@@ -130,6 +156,17 @@ namespace MobileHome.Insure.Web.Controllers
                 {
                     new OptionListItem{Id=1, Text="$ 25,000"},
                     new OptionListItem{Id=2, Text="$ 50,000"}
+                };
+        }
+
+        [NonAction]
+        private List<OptionListItem> GetPersonalProperties()
+        {
+            return new List<OptionListItem>() 
+                {
+                    new OptionListItem{Id=1, Text="$ 15,000"},
+                    new OptionListItem{Id=2, Text="$ 20,000"},
+                    new OptionListItem{Id=3, Text="$ 25,000"}
                 };
         }
     }

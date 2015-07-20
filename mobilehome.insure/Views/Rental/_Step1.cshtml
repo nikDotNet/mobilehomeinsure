@@ -8,12 +8,17 @@
         @*@using (Html.BeginForm("_Step1", "Rental", FormMethod.Post, new { name = "frmCustomerInfo" }))
             {*@
         <form>
-            <div class="col-md-8">
-                <div class="row" data-animated="0">
+            <div class="row" data-animated="0">
+                <div class="col-md-8">
                     <div class="form-group">
-                        @Html.LabelFor(x => x.Name)
-                        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+                        @Html.LabelFor(x => x.FirstName)
+                        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.LastName)
+                        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
@@ -34,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.StateId)
-                        @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", @class = "form-control" })
+                        @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", @class = "form-control", style = "width: 100%" })
                         @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
                     </div>
                     @*<div class="form-group">
@@ -108,14 +113,16 @@
 
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
-                        Name: $("#Name").val(),
+                        FirstName: $("#FirstName").val(),
+                        LastName: $("#LastName").val(),
                         Email: $("#Email").val(),
                         Password: $("#Password").val(),
                         Address: $("#Address").val(),
-                        StateId: $("#s2id_ddlStateId").select2("data").id,
+                        StateId: $("#ddlStateId").val(),
                         City: $("#City").val(),
                         Zip: $("#Zip").val(),
-                        Phone: $("#Phone").val()
+                        Phone: $("#Phone").val(),
+                        ParkId: parkId
                     });
                     ajaxOptions.url = "/Rental/_Step1";
                     ajaxOptions.method = "POST";
@@ -136,10 +143,11 @@
 
                     request.fail(function (jqXHR, textStatus) {
                         alert("Request failed: " + textStatus);
+                        $('#dvLoading').hide();
                     });
                 }
             });
         });
 
     </script>
-                                                                                )
+                                                                                        )

@@ -18,8 +18,11 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Name)
-                .HasMaxLength(100);
+            this.Property(t => t.FirstName)
+                .HasMaxLength(70);
+
+            this.Property(t => t.LastName)
+                .HasMaxLength(70);
 
             this.Property(t => t.Address)
                 .HasMaxLength(200);
@@ -40,7 +43,8 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             // Table & Column Mappings
             this.ToTable("Customer");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.FirstName).HasColumnName("FirstName");
+            this.Property(t => t.LastName).HasColumnName("LastName");
             this.Property(t => t.Address).HasColumnName("Address");
             this.Property(t => t.Zip).HasColumnName("Zip");
             this.Property(t => t.Phone).HasColumnName("Phone");
