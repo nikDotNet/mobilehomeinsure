@@ -51,9 +51,9 @@ namespace MobileHome.Insure.Web.Controllers
 
 
         [HttpGet]
-        public ActionResult UploadPart(HttpPostedFile file)
+        public ActionResult UploadPart()
         {
-
+            return View();   
         }
 
         [HttpPost]
