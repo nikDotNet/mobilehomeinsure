@@ -13,6 +13,8 @@ namespace mobilehome.insure.Models.Rental
         public Quote quote { get; set; }
         public Payment payment { get; set; }
 
+        public int Zip { get; set; }
+
 
 
         public RentalViewModel()
@@ -25,7 +27,8 @@ namespace mobilehome.insure.Models.Rental
         public class Customer
         {
             public int CustomerId { get; set; }
-            public string Name { get; set; }
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
             public string Address { get; set; }
@@ -37,6 +40,7 @@ namespace mobilehome.insure.Models.Rental
             public string City { get; set; }
             public string Zip { get; set; }
             public string Phone { get; set; }
+            public int ParkId { get; set; }
         }
 
         public class Quote
@@ -70,6 +74,8 @@ namespace mobilehome.insure.Models.Rental
             public List<int> InstallmentList { get; set; }
 
             public List<OptionListItem> Liabilities { get; set; }
+
+            public List<OptionListItem> PersonalProperties { get; set; }
         }
 
         public class Payment

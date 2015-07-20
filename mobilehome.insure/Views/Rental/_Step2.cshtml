@@ -15,15 +15,19 @@
                         @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "form-control", value = "" })
                         @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
                     </div>
+                    @*<div class="form-group">
+                            @Html.LabelFor(x => x.PersonalProperty)
+                            @Html.TextBoxFor(x => x.PersonalProperty, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
+                        </div>*@
                     <div class="form-group">
                         @Html.LabelFor(x => x.PersonalProperty)
-                        @Html.TextBoxFor(x => x.PersonalProperty, new { @class = "form-control" })
+                        @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "form-control", style = "width: 100%" })
                         @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(x => x.Liability)
-                        @*@Html.TextBoxFor(x => x.Liability, new { @class = "form-control" })*@
-                        @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "form-control" })
+                        @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "form-control", style = "width: 100%" })
                         @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
                     </div>
                     @*<div class="form-group">
@@ -33,7 +37,7 @@
                         </div>*@
                     <div class="form-group">
                         @Html.LabelFor(x => x.NumberOfInstallments)
-                        @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "form-control" })
+                        @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "form-control", style = "width: 100%" })
                         @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group">
@@ -56,7 +60,7 @@
     @<script>
         $(document).ready(function () {
 
-            $("#ddlLiabilities, #NumberOfInstallments").select2(
+            $("#ddlLiabilities, #NumberOfInstallments, #ddlPersonalProperties").select2(
                {
                    //placeholder: "Select a State",
                    allowClear: true
@@ -90,9 +94,9 @@
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
                         EffectiveDate: new moment("mm/dd/yyyy", $("#EffectiveDate").val()),
-                        PersonalProperty: $("#PersonalProperty").val(),
-                        Liability: $("#s2id_ddlLiabilities").select2("data").id,
-                        NumberOfInstallments: $("#s2id_NumberOfInstallments").select2("data").text
+                        PersonalProperty: $("#ddlPersonalProperties").val(),
+                        Liability: $("#ddlLiabilities").val(),
+                        NumberOfInstallments: $("#NumberOfInstallments").val()
                     });
                     ajaxOptions.url = "/Rental/_Step2";
                     ajaxOptions.method = "POST";
@@ -108,15 +112,13 @@
 
                     request.fail(function (jqXHR, textStatus) {
                         alert("Request failed: " + textStatus);
+                        $('#dvLoading').hide();
                     });
 
-
-
                 }
-
 
             });
         });
 
     </script>
-                                    )
+                                        )

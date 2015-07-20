@@ -1,12 +1,10 @@
 ﻿@model mobilehome.insure.Models.Rental.RentalViewModel
 @{
     ViewBag.Title = "Mobile Home Insure for Rental Homes - MobileHome.Insure";
-    
+
 }
 
-
 <div class="col-md-9 m-right">
-
     <div id="rightContainer">
         <div class="row" data-animated="0">
             <div class="col-md-12">
@@ -14,19 +12,33 @@
                     <h1>For Rental</h1>
                 </div>
 
-                @*Might use in future operation*@
-                @*<div class="rigthContainerCentered" id="parkSeclection">
-                   @Html.BeginForm(){
-                    
-                    @Html.TextBoxFor(x => x.payment, new { value="Enter you zip"})
-                    <div class="form-action">
-                        <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
-                    </div>
+                <div id="parkSeclection">
+                    <br />
+                    <br />
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="row" data-animated="0">
+                            <form>
+                                <div class="form-group">
+                                    @Html.LabelFor(x => x.Zip)
+                                    @Html.TextBoxFor(x => x.Zip, new { id = "findZip", @class = "form-control", @placeholder = "Please enter zip" })
+                                    @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+                                </div>
 
-                    }
-                </div>*@
-          
-                
+                                <div class="form-group" id="divParks">
+                                    <label for="ddlParks">Parks</label>
+                                    <select id="ddlParks" class="form-control" placeholder="Select Park"></select>
+                                </div>
+                                <div class="form-action" style="float:left">
+                                    <button class="btn btn-default" id="btnParkSelection">Submit</button>
+                                </div>
+                                <div style="margin-top: -20px; margin-left: 10px; float: left;">
+                                    &nbsp;<button class="btn btn-default" id="btnParkSelContinue">Continue</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="accordion">
                     <h3>Customer Information</h3>
                     <div>
@@ -34,15 +46,14 @@
                             @{Html.RenderPartial("_Step1", Model.customer);}
                         </p>
                     </div>
-
                     <h3>Generate Quote</h3>
-                    <div >
+                    <div>
                         <p>
                             @{Html.RenderPartial("_Step2", Model.quote);}
                         </p>
                     </div>
                     <h3>Make Payment</h3>
-                     <div>
+                    <div>
                         <p>
                             @{Html.RenderPartial("_Step3", Model.payment);}
                         </p>
@@ -52,36 +63,118 @@
         </div>
     </div>
 </div>
-
 @section scripts
 {
-    
-<script>
-    $(document).ready(function () {
 
-       var ac =  $("#accordion").accordion({
-            heightStyle: "content",
-            disabled: 1
-           
-            
+    <script>
+        var zipCode = null;
+        var parkId = null;
+
+        $(document).ready(function () {
+            $("#accordion").css("display", "none"); //initially it would be display=none
+            $("#divParks").css("display", "none");
+            $("#btnParkSelContinue").css("display", "none");
+            $("#findZip").focus();
+
+            $("#btnParkSelContinue").off("click");
+            $("#btnParkSelContinue").on("click", function (e) {
+                e.preventDefault();
+
+                if ($("#ddlParks").val() > 0) {
+                    zipCode = $("#findZip").val(); //zip for reference
+                    parkId = $("#ddlParks").val();
+
+                    $("#Zip").val(zipCode);
+                    $("#parkSeclection").css("display", "none");
+                    $("#accordion").css("display", "block");
+                    $("#FirstName").focus();
+                }
+            });
+
+            $("#btnParkSelection").off("click");
+            $("#btnParkSelection").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $('form');
+                if ($form.valid()) {
+                    $('#dvLoading').show();
+
+                    var ajaxOptions = {};
+                    ajaxOptions.data = { zip: $("#findZip").val() }
+                    ajaxOptions.url = "/Rental/FindZip";
+                    ajaxOptions.contentType = 'application/json';
+                    var request = $.ajax(ajaxOptions);
+
+                    request.done(function (data2) {
+                        if (data2.Result !== null && data2.Result !== "undefined") {
+                            $("#btnParkSelContinue").css("display", "block");
+                            $("#divParks").css("display", "block");
+
+                            var datatmp = [];
+                            $.each(data2.Result, function (index, item) {
+                                datatmp.push({
+                                    id: item.Id, text: item.Name, address: item.Address, city: item.City
+                                });
+                            });
+                            $("#ddlParks").select2({
+                                //initSelection: function (element, callback) {
+                                //    var datatmp = [];
+                                //    $.each(data.Result, function (index, item) {
+                                //        datatmp.push({
+                                //            id: item.Id, text: item.Name
+                                //        });
+                                //    });
+                                //    callback(datatmp);
+                                //},
+                                data: datatmp, //{ results: data2.Result, text: function (item) { return item.Name; } },
+                                placeholder: "Select a Park",
+                                allowChar: true,
+                                templateResult: function (item) {
+                                    if (!item.id) { return item.text; }
+
+                                    return $(
+                                           '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">Name:</span></div><div class="col-md-8">' + item.text + '</div></div></div>' +
+                                           '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">Address:</span></div><div class="col-md-8">' + item.address + '</div></div></div>' +
+                                           '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">City:</span></div><div class="col-md-8">' + item.city + '</div></div></div>');
+                                }
+                            });
+                        }
+                        else {
+                            $("#btnParkSelContinue").css("display", "none");
+                            $("#divParks").css("display", "none");
+                            bootbox.alert(data2.Message);
+                        }
+
+
+                        $('#dvLoading').hide();
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        alert("Request failed: " + textStatus);
+                        $('#dvLoading').hide();
+                    });
+                }
+            });
+
+            var ac = $("#accordion").accordion({
+                heightStyle: "content",
+                disabled: 1
+            });
+
+            $("#accordion").accordion("option", "disabled", 2);
+            $("#accordion").accordion("option", "active", 1);
+            //$("#accordion").accordion({ active: "h3:last" })
+
+            var success = '@TempData["Success"]';
+
+            if (success == "true")
+                bootbox.alert("Your Payment has been made successfully!");
+
+            @{ TempData.Clear(); }
         });
-        
-       $("#accordion").accordion("option", "disabled", 2);
-       $("#accordion").accordion("option", "active", 1);
-        //$("#accordion").accordion({ active: "h3:last" })
-
-       var success = '@TempData["Success"]';
-
-       if(success == "true")
-           bootbox.alert("Your Payment has been made successfully!");
-        
-        @{ TempData.Clear(); }
-    });
 
 
 
-  
-</script>
 
-
+    </script>
 }

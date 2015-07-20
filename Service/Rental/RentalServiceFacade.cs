@@ -19,7 +19,7 @@ namespace MobileHome.Insure.Service.Rental
             _context = new mhRentalContext();
         }
 
-        public int saveCustomerInformation(string Name, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone)
+        public int saveCustomerInformation(string FirstName, string LastName, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone)
         {
             var user = new User
             {
@@ -32,7 +32,8 @@ namespace MobileHome.Insure.Service.Rental
 
             Customer customerObj = new Customer
             {
-                Name = Name,
+                FirstName = FirstName,
+                LastName = LastName,
                 Email = Email,
                 Address = Address,
                 StateId = StateId,
@@ -136,6 +137,15 @@ namespace MobileHome.Insure.Service.Rental
         public bool saveInvoice(string ResponseCode, string TransactionId, string ApprovalCode, string ErrorMessage)
         {
             throw new NotImplementedException();
+        }
+
+        public List<Park> FindParkByZip(int zip)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            var parks = _context.Parks.Where(p => p.Zip == zip).ToList();
+            if (parks != null)
+                parks = parks.Where(p => p.IsActive == true).ToList();
+            return ((parks != null && parks.Count > 0) ? parks : null);
         }
     }
 }
