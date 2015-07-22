@@ -8,111 +8,113 @@
         <div class="form-body">
             <div class="row" style="margin-bottom: 15px;">
                 @Html.HiddenFor(x => x.CurrentPark.Id)
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Name, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.Name, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Name, "", new { @class = "text-danger" })
-                        </div>
+                @*<div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Name, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.Name, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Phone, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.Phone, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Phone, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Phone, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.Phone, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Phone, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Spaces, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.Spaces, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Spaces, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Spaces, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.Spaces, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Spaces, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @*</div>*@
             </div>
             <div class="row" style="margin-bottom: 15px;">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Position, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.Position, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Position, "", new { @class = "text-danger" })
-                        </div>
+                @*<div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Position, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.Position, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Position, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.ContactName, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.ContactName, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.ContactName, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.ContactName, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.ContactName, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.ContactName, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Zip4, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.Zip4, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Zip4, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Zip4, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.Zip4, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Zip4, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @*</div>*@
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Address, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextAreaFor(x => x.CurrentPark.Address, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Address, "", new { @class = "text-danger" })
-                        </div>
+                @*<div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Address, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(x => x.CurrentPark.Address, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.StateId, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.DropDownListFor(x => x.CurrentPark.StateId, new SelectList(Model.States, "Id", "Name"), new { @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.StateId, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.StateId, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(x => x.CurrentPark.StateId, new SelectList(Model.States, "Id", "Name"), new { @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.StateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.City, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.City, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.City, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.City, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.City, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.City, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @*</div>*@
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.Zip, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextBoxFor(x => x.CurrentPark.Zip, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.Zip, "", new { @class = "text-danger" })
-                        </div>
+                @*<div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.Zip, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(x => x.CurrentPark.Zip, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Zip, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentPark.IsActive, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.CheckBoxFor(x => x.CurrentPark.IsActive, new { @class = "form-control input-medium" })
-                            @Html.ValidationMessageFor(x => x.CurrentPark.IsActive, "", new { @class = "text-danger" })
-                        </div>
+                @*</div>
+                    <div class="col-md-4">*@
+                <div class="form-group">
+                    @Html.LabelFor(x => x.CurrentPark.IsActive, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <label>
+                            @Html.CheckBoxFor(x => x.CurrentPark.IsActive, new { @class = "form-control" })
+                        </label>
+                        @Html.ValidationMessageFor(x => x.CurrentPark.IsActive, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                @*</div>*@
             </div>
         </div>
         <div class="row">
@@ -140,6 +142,7 @@
                 $('#modal-container').modal('hide');
         });
 
+        //$("#CurrentPark_StateId").select2({
         $("#StateId").select2({
             allowClear: true
         });

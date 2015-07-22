@@ -1,4 +1,5 @@
 ﻿using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.Rental;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,12 @@ namespace MobileHome.Insure.Service.Rental
 
         bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage);
 
+        List<Customer> GetCustomers();
+
+        List<Quote> GetQuotes();
+
+        List<MobileHome.Insure.Model.Payment> GetPayments();
+
+        bool SaveCustomerInfo(int id, string delType);
     }
 }

@@ -117,7 +117,7 @@
                 //debugger;
                 //Need some customization, we can write here
 
-                $('td:eq(7)', nRow).find('a').each(function (index, element) {
+                $('td:eq(6)', nRow).find('a').each(function (index, element) {
                     //debugger;
                     if ($(element).hasClass("edit-link")) {
                         $(element).attr('href', $(element).attr('href') + aData.Id);

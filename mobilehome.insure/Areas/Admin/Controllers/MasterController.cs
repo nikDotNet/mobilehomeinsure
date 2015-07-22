@@ -164,10 +164,12 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         #region Park
         public ActionResult Park()
         {
-            var model = new ParkViewModel();
-            model.Parks = _serviceFacade.GetParks();
+            //var model = new ParkViewModel();
+            //model.Parks = _serviceFacade.GetParks();
 
-            return View("../Park/Index", model);
+            //return View("../Park/Index", model);
+
+            return View("../Park/Index");
         }
         #endregion
     }

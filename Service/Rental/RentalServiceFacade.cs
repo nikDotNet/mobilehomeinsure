@@ -139,5 +139,54 @@ namespace MobileHome.Insure.Service.Rental
             throw new NotImplementedException();
         }
 
+
+        public List<Customer> GetCustomers()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Customers.AsNoTracking().Where(c => c.IsActive == true).ToList();
+        }
+
+        public List<Quote> GetQuotes()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true).ToList();
+        }
+
+        public List<Model.Payment> GetPayments()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Payments.AsNoTracking().Where(c => c.IsActive == true).ToList();
+        }
+
+        public bool SaveCustomerInfo(int id, string delType)
+        {
+            bool result = false;
+            switch (delType)
+            {
+                case "customer":
+                    var entityCust = _context.Customers.Where(x => x.Id == id).SingleOrDefault();
+                    entityCust.IsActive = false;
+                    _context.Entry(entityCust).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                    result = true;
+                    break;
+                case "quote":
+                    var entityQuot = _context.Quotes.Where(x => x.Id == id).SingleOrDefault();
+                    entityQuot.IsActive = false;
+                    _context.Entry(entityQuot).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                    result = true;
+                    break;
+                case "payment":
+                    var entityPaym = _context.Payments.Where(x => x.Id == id).SingleOrDefault();
+                    entityPaym.IsActive = false;
+                    _context.Entry(entityPaym).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                    result = true;
+                    break;
+            }
+
+            return result;
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             else
             {
                 model = new ParkViewModel();
+                model.CurrentPark = new Park { IsActive = true };
                 model.States = _masterServiceFacade.GetStates();
             }
 
@@ -72,7 +73,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             {
                 TempData["Success"] = false;
             }
-            return RedirectToAction("State");
+
+            return RedirectToAction("Park", "Master", new { area = "admin" });
         }
 
         public ActionResult Export(bool? export) //any format like CSV/PDF/EXCEL etc
@@ -89,9 +91,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             int totalRecordCount = 0;
             int searchRecordCount = 0;
-            //var parks = GenericFilterHelper<Park, MobileHome.Insure.DAL.EF.mhappraisalContext>.GetFilteredRecords(startIndex: jQueryDataTablesModel.iDisplayStart,
-            //    pageSize: jQueryDataTablesModel.iDisplayLength, sortedColumns: jQueryDataTablesModel.GetSortedColumns(),
-            //    totalRecordCount: out totalRecordCount, searchRecordCount: out searchRecordCount, searchString: jQueryDataTablesModel.sSearch);
+
             var parks = GenericFilterHelper<Park>.GetFilteredRecords(
                 runTimeMethod: _masterServiceFacade.GetParks,
                 startIndex: jQueryDataTablesModel.iDisplayStart,

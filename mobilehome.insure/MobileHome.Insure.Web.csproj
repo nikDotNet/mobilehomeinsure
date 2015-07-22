@@ -151,6 +151,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AppraisalController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ParkController.cs">
@@ -193,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Script\AgeFactor.js" />
+    <Content Include="Areas\Admin\Script\customer.js" />
     <Content Include="Areas\Admin\Script\park.js" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls.swf" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls_pdf.swf" />
@@ -1296,6 +1298,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\Admin\Views\Customer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Quote.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Payment.cshtml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Content\assets\global\plugins\uniform\README.md" />

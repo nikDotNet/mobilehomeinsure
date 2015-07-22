@@ -26,6 +26,10 @@ namespace MobileHome.Insure.Model.Rental
         public Nullable<int> NoOfInstallments { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Company Company { get; set; }
+
+        public string CreatedBy { get; set; }
+        public bool IsActive { get; set; }
+
         public virtual ICollection<Payment> Payments { get; set; }
     }
 }

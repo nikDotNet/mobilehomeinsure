@@ -103,5 +103,38 @@
         </ul>
     </li>
    
+     @if (controller == "customer")
+    {
+        @:<li class="active open">
+    }
+    else
+    {
+        @:<li>
+    }
+     <a href="javascript:;">
+            <i class="icon-basket"></i>
+            <span class="title">Customer Management</span>
+            <span class="selected"></span>
+            <span class="arrow "></span>
+     </a>
+     <ul class="sub-menu">
+            <li>
+                <a href="~/Admin/Customer/Index">
+                    <i class="icon-user"></i>
+                    Customer</a>
+            </li>
+            <li>
+                <a href="~/Admin/Customer/Quote">
+                    <i class="icon-basket"></i>
+                    Quote</a>
+            </li>
+            <li>
+                <a href="~/Admin/Customer/Payment">
+                    <i class="glyphicon glyphicon-usd"></i>
+                    Payment
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>
 <!-- END SIDEBAR MENU -->

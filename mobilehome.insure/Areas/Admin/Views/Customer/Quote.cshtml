@@ -1,13 +1,11 @@
-﻿@model mobilehome.insure.Areas.Admin.Models.ParkViewModel
-
-@{
-    ViewBag.Title = "List of Parks";
+﻿@{
+    ViewBag.Title = "List of Quotes";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 <!-- BEGIN PAGE HEADER-->
 <h3 class="page-title">
-    Parks
+    Quotes
 </h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -21,11 +19,11 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="#">Master</a>
+            <a href="#">Customer Management</a>
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="#">Park</a>
+            <a href="#">Quote</a>
         </li>
     </ul>
 </div>
@@ -37,11 +35,11 @@
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-edit"></i>Parks Data
+                    <i class="fa fa-edit"></i>Quotes Data
                 </div>
             </div>
             <div class="portlet-body">
-                <div class="table-toolbar">
+                @*<div class="table-toolbar">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
@@ -49,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>*@
                 <table class="table table-striped table-hover table-bordered" id="tblLists">
                     <thead>
                         <tr>
@@ -57,66 +55,28 @@
                                 ID
                             </th>
                             <th>
-                                Name
-                            </th>
-                            @*<th>
-                                Position
-                            </th>*@
-                            <th>
-                                Phone
+                                Proposal Number
                             </th>
                             <th>
-                                Spaces
+                                Personal Property
                             </th>
                             <th>
-                                Address
+                                Liability
                             </th>
                             <th>
-                                Zip
+                                Preminum
+                            </th>
+                            <th>
+                                Effective Date
+                            </th>
+                            <th>
+                                No Of Installments
                             </th>
                             <th>
                                 Action
-                                @*Edit
-                            </th>
-                            <th>
-                                Delete*@
                             </th>
                         </tr>
-                    </thead>
-                    @*<tbody>
-                            @foreach (var item in Model.Parks)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Id
-                                    </td>
-                                    <td>
-                                        @item.Name
-                                    </td>
-                                    <td>
-                                        @item.Position
-                                    </td>
-                                    <td>
-                                        @item.Phone
-                                    </td>
-                                    <td>
-                                        @item.Spaces
-                                    </td>
-                                    <td>
-                                        @item.Address
-                                    </td>
-                                    <td>
-                                        @item.Zip
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", "Park", new { Id = item.Id }, new { @class = "modal-link" })
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Delete", "Delete", "Park", new { Id = item.Id }, new { @class = "delete-link" })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>*@
+                    </thead>                    
                 </table>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
@@ -126,7 +86,7 @@
 <!-- END PAGE CONTENT -->
 @section scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script src="~/Areas/Admin/Script/park.js"></script>
+    <script src="~/Areas/Admin/Script/customer.js"></script>
     <script>
         jQuery(document).ready(function () {
             Metronic.init(); // init metronic core components
@@ -162,19 +122,19 @@
                     "bSortable": false,
                     //"bVisible": false
                 },
-                { "mDataProp": "Name" },
-                //{ "mDataProp": "Position" },
-                { "mDataProp": "Phone" },
-                { "mDataProp": "Spaces" },
-                { "mDataProp": "Address" },
-                { "mDataProp": "Zip" },
+                { "mDataProp": "ProposalNumber" },
+                { "mDataProp": "PersonalProperty" },
+                { "mDataProp": "Liability" },
+                { "mDataProp": "Premium" },
+                { "mDataProp": "EffectiveDate" },
+                { "mDataProp": "NoOfInstallments" },
                 {
                     data: null,
                     className: "center",
-                    defaultContent: '<a href="/admin/park/edit?id=" class="modal-link edit-link">Edit</a> / <a href="/admin/park/delete?id=" class="delete-link">Delete</a>'
+                    defaultContent: '<a href="/admin/customer/delete?id=" class="delete-link" data-type="quote">Delete</a>'
                 }
             ];
-            ParkActions.init("/Admin/Park/Loading", tableColumns);
+            CustomerActions.init("/Admin/Customer/LoadingQuote", tableColumns);
         });
     </script>
 }
