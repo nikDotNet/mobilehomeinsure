@@ -139,13 +139,5 @@ namespace MobileHome.Insure.Service.Rental
             throw new NotImplementedException();
         }
 
-        public List<Park> FindParkByZip(int zip)
-        {
-            _context.Configuration.ProxyCreationEnabled = false;
-            var parks = _context.Parks.Where(p => p.Zip == zip).ToList();
-            if (parks != null)
-                parks = parks.Where(p => p.IsActive == true).ToList();
-            return ((parks != null && parks.Count > 0) ? parks : null);
-        }
     }
 }

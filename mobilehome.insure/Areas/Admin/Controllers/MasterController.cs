@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using MobileHome.Insure.Web.Models.Admin;
 using MobileHome.Insure.Service.Master;
 using mobilehome.insure.Areas.Admin.Helpers;
+using mobilehome.insure.Areas.Admin.Models;
 
 
 namespace mobilehome.insure.Areas.Admin.Controllers
@@ -48,7 +49,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         public ActionResult _partialEditState(int? id)
         {
             ListStateViewModel model = new ListStateViewModel();
-            
+
             if (id.HasValue)
                 model.stateObj = _serviceFacade.GetStateById(id.Value);
 
@@ -115,8 +116,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         public ActionResult _partialEditManufacturer(int? id)
         {
             ListManufacturerViewModel model = new ListManufacturerViewModel();
-            
-        //    model.ListManufacturer = _serviceFacade.GetManufacturer();
+
+            //    model.ListManufacturer = _serviceFacade.GetManufacturer();
             if (id.HasValue)
                 model.manufacturerObj = _serviceFacade.GetManufacturerById(id.Value);
             else
@@ -160,9 +161,14 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         #endregion
 
+        #region Park
+        public ActionResult Park()
+        {
+            var model = new ParkViewModel();
+            model.Parks = _serviceFacade.GetParks();
 
-
-
-
+            return View("../Park/Index", model);
+        }
+        #endregion
     }
 }
