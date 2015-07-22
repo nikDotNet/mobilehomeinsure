@@ -16,6 +16,5 @@ namespace MobileHome.Insure.Service.Rental
 
         bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage);
 
-        List<Park> FindParkByZip(int zip);
     }
 }

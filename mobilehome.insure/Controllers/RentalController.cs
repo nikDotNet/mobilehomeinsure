@@ -130,20 +130,11 @@ namespace MobileHome.Insure.Web.Controllers
 
         public ActionResult FindZip(int zip)
         {
-            var parks = _serviceFacade.FindParkByZip(zip);
+            var parks = _masterServiceFacade.FindParkByZip(zip);
 
             return Json(
                     new
                     {
-                        //Result = (parks == null ? null : JsonConvert.SerializeObject(parks.Select(p => new OptionListItem
-                        //{
-                        //    Id = p.Id,
-                        //    Text = p.Name
-                        //}).ToList(),
-                        //new JsonSerializerSettings
-                        //{
-                        //    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                        //})),
                         Result = (parks == null ? null : parks),
                         Message = (parks == null ? string.Format("Unable to find Park(s) at Zip: {0}", zip) : string.Empty)
                     }, JsonRequestBehavior.AllowGet);
