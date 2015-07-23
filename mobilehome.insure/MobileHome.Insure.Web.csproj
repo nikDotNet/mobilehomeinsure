@@ -1314,6 +1314,10 @@
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <None Include="Properties\PublishProfiles\mobilehomeinsureprofile.pubxml" />
+    <None Include="Scripts\jquery-1.11.3.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.js" />
+    <Content Include="Scripts\jquery-1.11.3.min.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
@@ -1326,9 +1330,6 @@
     <Content Include="Scripts\jCProgress-1.0.3.js" />
     <Content Include="Content\Plugins\jflickrfeed\jflickrfeed.js" />
     <Content Include="Content\Plugins\jflickrfeed\jflickrfeed.min.js" />
-    <None Include="Scripts\jquery-2.1.4.intellisense.js" />
-    <Content Include="Scripts\jquery-2.1.4.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
@@ -1338,7 +1339,6 @@
     <Content Include="Scripts\jquery.inview.js" />
     <Content Include="Scripts\jquery.nicescroll.js" />
     <Content Include="Scripts\jquery.prettyphoto.js" />
-    <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
