@@ -116,9 +116,15 @@
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 //debugger;
                 //Need some customization, we can write here
-
+                
                 $('td:eq(7)', nRow).find('a').each(function (index, element) {
                     //debugger;
+                    //resolving date problem
+                    if ($(element).data("type") == "quote") {
+                        var effectiveDate = new Date(parseInt(aData.EffectiveDate.replace("/Date(", "").replace(")/", ""), 10));
+                        $('td:eq(5)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
+                    }
+
                     if ($(element).hasClass("delete-link")) {
                         $(element).attr('href', $(element).attr('href') + aData.Id + "&delType=" + $(element).data('type'));
                     }
