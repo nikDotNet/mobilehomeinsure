@@ -6,6 +6,7 @@ using MobileHome.Insure.Service.Master;
 using System;
 using System.Web.Mvc;
 using mobilehome.insure.Models.JQDataTable;
+using System.Collections.Generic;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
@@ -77,14 +78,14 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return RedirectToAction("Park", "Master", new { area = "admin" });
         }
 
-        public ActionResult Export(bool? export) //any format like CSV/PDF/EXCEL etc
-        {
-            var exportList = _masterServiceFacade.GetParks();
-            if (export.HasValue)
-                exportList.ExportCSV("ParksList_" + DateTime.Now.ToString());
+        //public ActionResult Export(bool? export) //any format like CSV/PDF/EXCEL etc
+        //{
+        //    var exportList = _masterServiceFacade.GetParks();
+        //    if (export.HasValue)
+        //        exportList.ExportCSV("ParksList_" + DateTime.Now.ToString());
 
-            return View(exportList);
-        }
+        //    return View(exportList);
+        //}
 
         //[HttpPost]
         public JsonResult Loading(JQueryDataTablesModel jQueryDataTablesModel)
@@ -95,8 +96,13 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             var parks = GenericFilterHelper<Park>.GetFilteredRecords(
                 runTimeMethod: _masterServiceFacade.GetParks,
                 startIndex: jQueryDataTablesModel.iDisplayStart,
-                pageSize: jQueryDataTablesModel.iDisplayLength, sortedColumns: jQueryDataTablesModel.GetSortedColumns(),
-                totalRecordCount: out totalRecordCount, searchRecordCount: out searchRecordCount, searchString: jQueryDataTablesModel.sSearch);
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(),
+                totalRecordCount: out totalRecordCount,
+                searchRecordCount: out searchRecordCount,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "Name", "Phone", "Spaces", "Address", "Zip" });
 
             return Json(new JQueryDataTablesResponse<Park>(
                 items: parks,

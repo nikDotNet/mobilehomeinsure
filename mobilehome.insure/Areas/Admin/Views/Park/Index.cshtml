@@ -60,8 +60,8 @@
                                 Name
                             </th>
                             @*<th>
-                                Position
-                            </th>*@
+                                    Position
+                                </th>*@
                             <th>
                                 Phone
                             </th>
@@ -76,47 +76,35 @@
                             </th>
                             <th>
                                 Action
-                                @*Edit
+                            </th>
+                        </tr>
+                        <tr id="filterrow">
+                            <th>
+                                ID
                             </th>
                             <th>
-                                Delete*@
+                                Name
+                            </th>
+                            @*<th>
+                                    Position
+                                </th>*@
+                            <th>
+                                Phone
+                            </th>
+                            <th>
+                                Spaces
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Zip
+                            </th>
+                            <th>
+                                Action
                             </th>
                         </tr>
                     </thead>
-                    @*<tbody>
-                            @foreach (var item in Model.Parks)
-                            {
-                                <tr>
-                                    <td>
-                                        @item.Id
-                                    </td>
-                                    <td>
-                                        @item.Name
-                                    </td>
-                                    <td>
-                                        @item.Position
-                                    </td>
-                                    <td>
-                                        @item.Phone
-                                    </td>
-                                    <td>
-                                        @item.Spaces
-                                    </td>
-                                    <td>
-                                        @item.Address
-                                    </td>
-                                    <td>
-                                        @item.Zip
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", "Park", new { Id = item.Id }, new { @class = "modal-link" })
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Delete", "Delete", "Park", new { Id = item.Id }, new { @class = "delete-link" })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>*@
                 </table>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
@@ -174,7 +162,30 @@
                     defaultContent: '<a href="/admin/park/edit?id=" class="modal-link edit-link">Edit</a> / <a href="/admin/park/delete?id=" class="delete-link">Delete</a>'
                 }
             ];
+
+            $('#tblLists thead tr#filterrow th').each(function () {
+                //debugger;
+                var title = $('#tblLists thead th').eq($(this).index()).text();
+                title = title.replace("\n", "").replace("\n", "").trim();
+                if (title !== "Action") {
+                    $(this).html('<input type="text" onclick="stopPropagation(event);" class="form-control" placeholder="Search ' + title + '" />');
+                }
+                else {
+                    $('#tblLists thead tr#filterrow th').eq($(this).index()).text("");
+                }
+            });
+
+
             ParkActions.init("/Admin/Park/Loading", tableColumns);
+            $("#tblLists_filter").css("display", "none"); //hide common/global filter
         });
+
+        function stopPropagation(evt) {
+            if (evt.stopPropagation !== undefined) {
+                evt.stopPropagation();
+            } else {
+                evt.cancelBubble = true;
+            }
+        }
     </script>
 }

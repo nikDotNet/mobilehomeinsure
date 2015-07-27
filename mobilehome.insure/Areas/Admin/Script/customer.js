@@ -69,7 +69,7 @@
 
 
         var table = $('#tblLists');
-        var oTable = table.dataTable({
+        var oTable = table.DataTable({
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -108,6 +108,7 @@
 
             //Vikas did generic modification for all table initialisation
             //"bFilter": false, //disabled common search 
+            orderCellsTop: true,
             "bProcessing": true,
             "bServerSide": true,
             "sServerMethod": "POST",
@@ -116,7 +117,7 @@
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 //debugger;
                 //Need some customization, we can write here
-                
+
                 $('td:eq(7)', nRow).find('a').each(function (index, element) {
                     //debugger;
                     //resolving date problem
@@ -133,13 +134,22 @@
         });
 
 
+        // Apply the filter with header textbox
+        $("#tblLists thead input").on('keyup change', function () {
+            //debugger;
+            oTable
+                .column($(this).parent().index() + ':visible')
+                .search(this.value)
+                .draw();
+        });
+        
+
         //var tt = new $.fn.dataTable.TableTools(oTable);
         //tt.sSwfPath = "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf";
-
         //$(tt.fnContainer()).insertBefore('div.dataTables_wrapper');
 
-        var tableWrapper = $("#sample_editable_1_wrapper");
 
+        var tableWrapper = $("#sample_editable_1_wrapper");
         tableWrapper.find(".dataTables_length select").select2({
             showSearchInput: false //hide search box with special css class
         }); // initialize select2 dropdown

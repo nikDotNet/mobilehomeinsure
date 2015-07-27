@@ -11,7 +11,7 @@ namespace mobilehome.insure.Models.JQDataTable
     /// </summary>
     public static class CollectionHelper
     {
-        public static IOrderedEnumerable<TSource> CustomSort<TSource, TKey>(this IEnumerable<TSource> items, SortingDirection direction, Func<TSource, TKey> keySelector)
+        public static IOrderedEnumerable<TSource> Sort<TSource, TKey>(this IEnumerable<TSource> items, SortingDirection direction, Func<TSource, TKey> keySelector)
         {
             if (direction == SortingDirection.Ascending)
             {
@@ -21,7 +21,7 @@ namespace mobilehome.insure.Models.JQDataTable
             return items.OrderByDescending(keySelector);
         }
 
-        public static IOrderedEnumerable<TSource> CustomSort<TSource, TKey>(this IOrderedEnumerable<TSource> items, SortingDirection direction, Func<TSource, TKey> keySelector)
+        public static IOrderedEnumerable<TSource> Sort<TSource, TKey>(this IOrderedEnumerable<TSource> items, SortingDirection direction, Func<TSource, TKey> keySelector)
         {
             if (direction == SortingDirection.Ascending)
             {
@@ -37,31 +37,71 @@ namespace mobilehome.insure.Models.JQDataTable
     {
         private static T entity;
 
-        public static IList<T> GetFilteredRecords(Func<List<T>> runTimeMethod, int startIndex, int pageSize,
+        public static IList<T> GetFilteredRecords(
+            Func<List<T>> runTimeMethod,
+            int startIndex, int pageSize,
             ReadOnlyCollection<SortedColumn> sortedColumns,
-            out int totalRecordCount, out int searchRecordCount, string searchString)
+            out int totalRecordCount,
+            out int searchRecordCount,
+            string searchString,
+            ReadOnlyCollection<string> searchColumnValues,
+            List<string> properties)
         {
             var types = runTimeMethod();
             totalRecordCount = types.Count;
 
-            //if (!string.IsNullOrWhiteSpace(searchString))
+
+            var isFilterValue = searchColumnValues.Any(e => !string.IsNullOrWhiteSpace(e));
+            if ((properties != null && properties.Count > 0) && properties.Count == searchColumnValues.Count - 1 && isFilterValue) // minus -1 means, skipping action column from search list
+            {
+                var filterValueProp = new Dictionary<string, string>();
+                for (int idx = 0; idx < searchColumnValues.Count - 1; idx++)
+                {
+                    if (!string.IsNullOrWhiteSpace(searchColumnValues[idx]))
+                    {
+                        filterValueProp.Add(properties[idx], searchColumnValues[idx]);
+                    }
+                }
+
+                foreach (var item in filterValueProp)
+                {
+                    var result = WhereQuery<T>(types, item.Key, item.Value);
+                    if (result != null && result.Count() > 0)
+                    {
+                        types = result.ToList();
+                        break;
+                    }
+                }
+            }
+
+            //if (!string.IsNullOrWhiteSpace(searchString) && (properties != null && properties.Count > 0))
             //{
-            //    types = types.Where(c => c.FirstName.ToLower().Contains(searchString.ToLower())
-            //        || c.LastName.ToLower().Contains(searchString.ToLower())).ToList();
+            //    foreach (string prop in properties)
+            //    {
+            //        var result = WhereQuery<T>(types, prop, searchString);
+            //        if (result != null && result.Count() > 0)
+            //        {
+            //            types = result.ToList();
+            //            break;
+            //        }
+            //    }
             //}
 
             searchRecordCount = types.Count;
             IOrderedEnumerable<T> sortedEntityTypes = null;
             foreach (var sortedColumn in sortedColumns)
             {
-                //switch (sortedColumn.PropertyName)
-                //{
-
-                //}
+                sortedEntityTypes = sortedEntityTypes == null ? types.Sort(sortedColumn.Direction, entity => { return entity.GetType().GetProperty(sortedColumn.PropertyName).Name; })
+                                                              : sortedEntityTypes.Sort(sortedColumn.Direction, entity => { return entity.GetType().GetProperty(sortedColumn.PropertyName).Name; });
             }
 
-            //return sortedEntityTypes.Skip(startIndex).Take(pageSize).ToList();
-            return types.Skip(startIndex).Take(pageSize).ToList();
+            return sortedEntityTypes.Skip(startIndex).Take(pageSize).ToList();
+            //return types.Skip(startIndex).Take(pageSize).ToList();
+        }
+
+        public static IEnumerable<T> WhereQuery<T>(IEnumerable<T> source, string columnName, string propertyValue)
+        {
+            return source.Where(m => { return m.GetType().GetProperty(columnName).GetValue(m, null).ToString().StartsWith(propertyValue); });
         }
     }
 
