@@ -13,7 +13,8 @@ namespace mobilehome.insure.Models.Rental
         public Quote quote { get; set; }
         public Payment payment { get; set; }
 
-        public int Zip { get; set; }
+        [Display(Name = "Enter your Zip Code")]
+        public string Zip { get; set; }
 
 
 
@@ -27,12 +28,15 @@ namespace mobilehome.insure.Models.Rental
         public class Customer
         {
             public int CustomerId { get; set; }
+            [Display(Name="First Name")]
             public string FirstName { get; set; }
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
+            [Display(Name = "Email")]
             public string Email { get; set; }
             public string Password { get; set; }
+            [Display(Name = "Address")]
             public string Address { get; set; }
-
             [Display(Name = "State")]
             public int StateId { get; set; }
             public List<State> States { get; set; }

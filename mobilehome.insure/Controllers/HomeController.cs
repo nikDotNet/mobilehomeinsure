@@ -32,6 +32,10 @@ namespace MobileHome.Insure.Web.Controllers
             return View();
         }
 
+        public ActionResult Contact()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ContentResult Contact(ContactViewModel objContact)
@@ -45,10 +49,7 @@ namespace MobileHome.Insure.Web.Controllers
             {
                 return Content("Failed");
             }
-
-
         }
-
 
         [HttpGet]
         public ActionResult UploadPart()

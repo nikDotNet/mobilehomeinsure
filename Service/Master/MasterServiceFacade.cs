@@ -62,7 +62,7 @@ namespace MobileHome.Insure.Service.Master
         public List<State> GetStates()
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.States.AsNoTracking().Where(x => x.isActive == true).ToList();
+            return _context.States.AsNoTracking().Where(x => x.isActive == true).OrderBy(x => x.Name).ToList();
         }
 
         public State GetStateById(int id)

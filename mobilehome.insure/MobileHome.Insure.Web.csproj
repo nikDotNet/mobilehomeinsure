@@ -161,11 +161,13 @@
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
     <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ParkViewModel.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
     <Compile Include="Controllers\OwnedController.cs" />
     <Compile Include="Controllers\RentalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1392,6 +1394,12 @@
     <Content Include="Views\Rental\_Step2.cshtml" />
     <Content Include="Views\Rental\_Step3.cshtml" />
     <Content Include="Views\Home\UploadPark.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\About\LowestCost.cshtml" />
+    <Content Include="Views\About\ExpertAdvice.cshtml" />
+    <Content Include="Views\About\HavingPeace.cshtml" />
+    <Content Include="Views\Support\Index.cshtml" />
+    <Content Include="Views\Support\StraightTalk.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

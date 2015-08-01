@@ -26,12 +26,12 @@
                         @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         @Html.LabelFor(x => x.Password)
                         @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
                         <a href="#" style="color: cadetblue;text-decoration: underline;font-size:smaller;" id="linkShowPwd">Show Password</a>
-                    </div>
+                    </div>*@
                     <div class="form-group">
                         @Html.LabelFor(x => x.Address)
                         @Html.TextBoxFor(x => x.Address, new { @class = "form-control" })

@@ -1,0 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace mobilehome.insure.Controllers
+{
+    public class AboutController : Controller
+    {
+        //
+        // GET: /About/
+        public ActionResult LowestCost()
+        {
+            return View();
+        }
+        public ActionResult ExpertAdvice()
+        {
+            return View();
+        }
+        public ActionResult HavingPeace()
+        {
+            return View();
+        }
+	}
+}
