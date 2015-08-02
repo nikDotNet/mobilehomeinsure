@@ -34,6 +34,7 @@ namespace MobileHome.Insure.Web.Controllers
 
         public ActionResult Contact()
         {
+            ViewBag.ContactSent = false;
             return View();
         }
 
