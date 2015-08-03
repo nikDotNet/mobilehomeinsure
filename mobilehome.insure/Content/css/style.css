@@ -3292,3 +3292,17 @@ aside {
 .page-header h1{
     padding-left:10px;
 }
+
+ul.x-dropdown {
+    background: rgba(0,0,0,0.7);
+    display: none;
+}
+
+ul.x-dropdown li {
+    list-style: none;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+ul.x-dropdown li a {
+    padding-top:0;
+}

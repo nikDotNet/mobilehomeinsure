@@ -18,12 +18,12 @@
 
                     <div class="form-group">
                         @Html.LabelFor(x => x.CreditCardNumber)
-                        @Html.TextBoxFor(x => x.CreditCardNumber)
+                        @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "form-control" })
                         @Html.ValidationMessageFor(x => x.CreditCardNumber, "", new { @class = "text-danger" })
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Expiry Date:", new { @class = "form-control small" })
+                        @Html.Label("Expiry Date:", new {@style="display:block"})
                         @Html.DropDownListFor(x => x.ExpiryMonth, new SelectList(Model.MonthList), "MM", new { @class = "form-control small" })
                         @Html.DropDownListFor(x => x.ExpiryYear, new SelectList(Model.YearList), "YYYY", new { @class = "form-control small" })
                         @Html.ValidationMessageFor(x => x.ExpiryMonth, "", new { @class = "text-danger" })

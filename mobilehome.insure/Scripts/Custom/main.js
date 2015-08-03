@@ -1,6 +1,12 @@
 // Intro Slider
 $(document).ready(function () {
     "use strict";
+    $("ul.x-dropdown").hide();
+
+    $("a.x-dropdown").click(function () {
+        $("ul.x-dropdown").toggle();
+    });
+
     $("#intro-slider").owlCarousel({
         navigation: true, 
         slideSpeed: 600,
