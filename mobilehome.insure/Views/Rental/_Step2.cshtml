@@ -40,9 +40,9 @@
                         @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "form-control", style = "width: 100%" })
                         @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group">
+                    @*<div class="form-group">
                         Premium: <label id="lblPremium" />
-                    </div>
+                    </div>*@
                     <div class="form-action" style="float:left">
                         <button class="btn btn-default" id="btnQuote">Calculate</button>
                     </div>
@@ -51,6 +51,13 @@
                     </div>
                 </div>
             </div>
+<div class="col-md-4">
+
+    <div class="page-header text-center">
+        <span>Premium</span>
+        <h2><span id="lblPremium">$0.00</span></h2>
+    </div>
+</div>
             @Html.ValidationSummary(true)
         }
     </div>

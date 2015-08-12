@@ -4,23 +4,30 @@
     ViewBag.Title = "Mobile Home Contact - MobileHome.Insure";
 }
 
-    <div class="col-md-9 m-right" id="m-contact" data-animated="0">
-        @{Html.RenderPartial("_contact"); }
+<div class="col-md-9 m-right">
+    <div id="rightcontainer" style="background-color:white">
+        <div class="row" data-animated="0">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1>Contact Us</h1>
+                </div>
+            </div>
+            <div class="col-md-12" id="m-contact" style="width:840px; left:15px">
+                @{Html.RenderPartial("_contact"); }
 
-        <div class="contact-info" data-animated="0">
-            <h4>Contact Info</h4>
-            <ul>
-                <li><i class="fa fa-phone"></i> 800.928.7244</li>
-                <li><i class="fa fa-fax"></i> 303.379.6606</li>
-                <li><i class="fa fa-envelope"></i> info@mobilehome.insure</li>
-            </ul>
+                <div class="contact-info" data-animated="0">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fa fa-phone"></i> 800.928.7244</li>
+                        <li><i class="fa fa-fax"></i> 303.379.6606</li>
+                        <li><i class="fa fa-envelope"></i> info@mobilehome.insure</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <!--						<div class="flickr-widget" data-animated="0">
-                                    <h4>Flickr Gallery</h4>
-                                    <ul id="flickr" class="thumbs"></ul>
-                                </div>
-        -->
     </div>
+</div>
+    
 @if (ViewBag.ContactSent)
 {
     <script type="text/javascript">
