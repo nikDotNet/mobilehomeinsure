@@ -5,7 +5,7 @@
 <policynbr>4200001254</policynbr>
 <progmode>A</progmode>
 <effdate>06/14/2015</effdate>
-<productcde>42MT</productcde>
+<productcde>42DT</productcde>
 <lstate>SC</lstate>
 <polterm>12</polterm>
 </rtninfo>
@@ -34,7 +34,7 @@
 <loccountynb>64</loccountynb>
 <locterritory>1</locterritory>
 <loczip>18417</loczip>
-<ratingbase>30000</ratingbase>
+<ratingbase>25000</ratingbase>
 <parkcode></parkcode>
 <ftfmhyd>500</ftfmhyd>
 <milfmfde>5</milfmfde>
@@ -50,23 +50,31 @@
 <covinfo>
 
 <cov_item>
-
-<cov_name>persprop</cov_name>
-
-<deductible/>
-
-<limit>25000</limit>
-
-<written_premium>235</written_premium>
-
-<inforce_premium>235</inforce_premium>
-
+  <cov_name>persprop</cov_name>
+  <limit>25000</limit>
+  <deductible />
+  <written_premium>235</written_premium> -- 
+  <inforce_premium>235</inforce_premium> --
 </cov_item>
 
 
+  <cov_item>
+    <cov_name>deductible</cov_name>
+    <deductible>500</deductible>
+    <limit />
+    <written_premium></written_premium>
+    <inforce_premium></inforce_premium>
+  </cov_item>
 
+<cov_item>
+    <cov_name>lou</cov_name>
+    <limit>5000</limit>
+    <deductible />
+    <written_premium></written_premium>
+    <inforce_premium></inforce_premium>
+</cov_item>
 
-
+  
 </covinfo>
 
 </unitinfo>
