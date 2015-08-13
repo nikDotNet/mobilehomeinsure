@@ -131,6 +131,14 @@ namespace MobileHome.Insure.Web
                 "~/Content/assets/admin/layout/css/themes/darkblue.css",
                 "~/Content/assets/admin/layout/css/custom.css"
                 ));
+
+            //dropzone configuration styles and scripts
+            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
+                       "~/Content/assets/global/plugins/dropzone/dropzone.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/dropzonecss").Include(
+                      //"~/Content/assets/global/plugins/dropzone/basic.min.css",
+                      "~/Content/assets/global/plugins/dropzone/dropzone.min.css"));
         }
     }
 }

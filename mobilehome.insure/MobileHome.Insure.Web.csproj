@@ -159,6 +159,7 @@
     </Compile>
     <Compile Include="Areas\Admin\Helpers\CSVExportExtension.cs" />
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
+    <Compile Include="Areas\Admin\Models\ImportCsvStatus.cs" />
     <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ParkViewModel.cs" />
     <Compile Include="Controllers\AboutController.cs" />
@@ -172,7 +173,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CustomFilters\RenderAjaxPartialScriptsResponseFilter.cs" />
-    <Compile Include="Helper\DataImport\ParkCsvImport.cs" />
+    <Compile Include="Helper\DataImport\ParkCsvImport.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helper\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Models\Admin\ListManufacturerViewModel.cs" />
     <Compile Include="Models\Admin\ListOptionsFactorViewModel.cs" />
@@ -826,6 +829,10 @@
     <Content Include="Content\assets\global\plugins\datatables\media\js\jquery.dataTables.min.js" />
     <Content Include="Content\assets\global\plugins\datatables\plugins\bootstrap\dataTables.bootstrap.css" />
     <Content Include="Content\assets\global\plugins\datatables\plugins\bootstrap\dataTables.bootstrap.js" />
+    <Content Include="Content\assets\global\plugins\dropzone\dropzone.min.css" />
+    <Content Include="Content\assets\global\plugins\dropzone\dropzone.min.js" />
+    <Content Include="Content\assets\global\plugins\dropzone\images\spritemap%402x.png" />
+    <Content Include="Content\assets\global\plugins\dropzone\images\spritemap.png" />
     <Content Include="Content\assets\global\plugins\font-awesome\css\font-awesome.css" />
     <Content Include="Content\assets\global\plugins\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\assets\global\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -1377,7 +1384,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
