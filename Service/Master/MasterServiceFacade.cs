@@ -135,7 +135,7 @@ namespace MobileHome.Insure.Service.Master
         public List<Park> FindParkByZip(int zip)
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            var parks = _context.Parks.Where(p => p.Zip == zip).ToList();
+            var parks = _context.Parks.Where(p => p.PhysicalZip == zip).ToList(); //TODO: Filter should  be based on PhysicalZip
             if (parks != null)
                 parks = parks.Where(p => p.IsActive == true).ToList();
             return ((parks != null && parks.Count > 0) ? parks : null);
@@ -152,16 +152,36 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.IsActive = false;
                     else
                     {
-                        existingObj.StateId = parkObj.StateId;
-                        existingObj.Name = parkObj.Name;
-                        existingObj.Address = parkObj.Address;
-                        existingObj.City = parkObj.City;
-                        existingObj.Zip = parkObj.Zip;
-                        existingObj.Zip4 = parkObj.Zip4;
-                        existingObj.County = parkObj.County;
-                        existingObj.Phone = parkObj.Phone;
-                        existingObj.Spaces = parkObj.Spaces;
-                        existingObj.ContactName = parkObj.ContactName;
+                        //existingObj.StateId = parkObj.StateId;
+                        //existingObj.Name = parkObj.Name;
+                        //existingObj.Address = parkObj.Address;
+                        //existingObj.City = parkObj.City;
+                        //existingObj.Zip = parkObj.Zip;
+                        //existingObj.Zip4 = parkObj.Zip4;
+                        //existingObj.County = parkObj.County;
+                        //existingObj.Phone = parkObj.Phone;
+                        //existingObj.Spaces = parkObj.Spaces;
+                        //existingObj.ContactName = parkObj.ContactName;
+                        //existingObj.Position = parkObj.Position;
+                        //existingObj.IsActive = parkObj.IsActive;
+
+
+                        existingObj.ParkName = parkObj.ParkName;
+                        existingObj.PhysicalAddress = parkObj.PhysicalAddress;
+                        existingObj.PhysicalAddress2 = parkObj.PhysicalAddress2;
+                        existingObj.PhysicalCity = parkObj.PhysicalCity;
+                        existingObj.PhysicalZip = parkObj.PhysicalZip;
+                        existingObj.PhysicalStateId = parkObj.PhysicalStateId;
+                        existingObj.PhysicalCounty = parkObj.PhysicalCounty;
+
+                        existingObj.OfficePhone = parkObj.OfficePhone;
+                        existingObj.OfficeFax = parkObj.OfficeFax;
+                        existingObj.OfficeMail = parkObj.OfficeMail;
+                        existingObj.Website = parkObj.Website;
+
+                        existingObj.SpacesToRent = parkObj.SpacesToRent;
+                        existingObj.SpacesToOwn = parkObj.SpacesToOwn;
+                        existingObj.Contact = parkObj.Contact;
                         existingObj.Position = parkObj.Position;
                         existingObj.IsActive = parkObj.IsActive;
                     }
@@ -177,6 +197,22 @@ namespace MobileHome.Insure.Service.Master
                 _context.Parks.Add(parkObj);
                 _context.SaveChanges();
             }
+        }
+
+        /// <summary>
+        /// Bulk save multiple Parks while importing from external.
+        /// </summary>
+        /// <param name="importParks">Pass List of parks for saving.</param>
+        public void SavePark(List<Park> importParks)
+        {
+            importParks.ForEach(item => 
+            {
+                item.CreatedBy = "admin";
+                item.CreatedDate = DateTime.Now;
+                item.IsActive = true;
+            });            
+            _context.Parks.AddRange(importParks);
+            _context.SaveChanges();
         }
         #endregion
     }

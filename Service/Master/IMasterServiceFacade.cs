@@ -21,6 +21,8 @@ namespace MobileHome.Insure.Service.Master
         List<Park> FindParkByZip(int zip);
 
         void SavePark(Park parkObj, bool toDelete = false);
+
+        void SavePark(List<Park> importParks);
         #endregion
     }
 }

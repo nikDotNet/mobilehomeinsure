@@ -44,8 +44,12 @@
                 <div class="table-toolbar">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="btn-group">
+                            <div class="">
                                 @Html.ActionLink("Add New ", "Edit", "Park", null, new { @class = "modal-link btn green" })
+                                <button class="btn green" data-toggle="modal" data-target="#importPark" type="button" data-backdrop="static" data-keyboard="false">
+                                    Import Parks
+                                </button>
+                                @*@Html.ActionLink("Import Parks", "Import", "Park", null, new { @class = "modal-link btn green" })*@
                             </div>
                         </div>
                     </div>
@@ -63,16 +67,16 @@
                                     Position
                                 </th>*@
                             <th>
-                                Phone
+                                Office Phone
                             </th>
                             <th>
-                                Spaces
+                                Spaces to Rent
                             </th>
                             <th>
-                                Address
+                                Physical Address
                             </th>
                             <th>
-                                Zip
+                                Physical Zip
                             </th>
                             <th>
                                 Action
@@ -89,16 +93,16 @@
                                     Position
                                 </th>*@
                             <th>
-                                Phone
+                                Office Phone
                             </th>
                             <th>
-                                Spaces
+                                Spaces to rent
                             </th>
                             <th>
-                                Address
+                                Physical Address
                             </th>
                             <th>
-                                Zip
+                                Physical Zip
                             </th>
                             <th>
                                 Action
@@ -111,6 +115,49 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="importPark" role="dialog" tabindex="-1" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Import Parks</h4>
+            </div>
+            <div class="modal-body">
+                <br />
+
+                <div class="form-group">
+                    <form action="/Admin/Park/Import" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneJsForm">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                            <input type="submit" value="Upload" />
+                        </div>
+                    </form>
+                    @*<form action="/Admin/Park/Import" class="dropzone" id="dropzoneJsForm"></form>*@
+                    <p class="help-block">Example upload only .CSV file format.</p>
+                    <br />
+                    <table class="table table-bordered table-striped" id="completedStatuMsg">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>File Name</th>
+                                <th>Duplicate Counts</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="clearDropzone">Clear Files</button>
+                <button type="button" class="btn btn-primary" id="uploadFiles">Upload File(s)</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 <!-- END PAGE CONTENT -->
 @section scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
@@ -148,17 +195,19 @@
                     "mDataProp": "Id",
                     "bSearchable": false,
                     "bSortable": false,
+                    "sWidth": "9%"
                     //"bVisible": false
                 },
-                { "mDataProp": "Name" },
+                { "mDataProp": "ParkName" },
                 //{ "mDataProp": "Position" },
-                { "mDataProp": "Phone" },
-                { "mDataProp": "Spaces" },
-                { "mDataProp": "Address" },
-                { "mDataProp": "Zip" },
+                { "mDataProp": "OfficePhone" },
+                { "mDataProp": "SpacesToRent" },
+                { "mDataProp": "PhysicalAddress" },
+                { "mDataProp": "PhysicalZip" },
                 {
                     data: null,
                     className: "center",
+                    "sWidth": "8%",
                     defaultContent: '<a href="/admin/park/edit?id=" class="modal-link edit-link">Edit</a> / <a href="/admin/park/delete?id=" class="delete-link">Delete</a>'
                 }
             ];
@@ -178,6 +227,93 @@
 
             ParkActions.init("/Admin/Park/Loading", tableColumns);
             $("#tblLists_filter").css("display", "none"); //hide common/global filter
+            $("#completedStatuMsg").hide();//By default will be hide status table
+
+
+            //initialize Dropzone for file uploader
+            Dropzone.options.dropzoneJsForm = {
+                //prevents Dropzone from uploading dropped files immediately
+                autoProcessQueue: false,
+                //maxFilesize: 1,
+                acceptedFiles: ".csv", //".png, .jpg";
+
+                init: function () {
+                    this.on("error", function (file, message) {
+                        //debugger;
+                        alert(message);
+                    });
+
+                    this.on("complete", function (data) {
+                        //var res = eval('(' + data.xhr.responseText + ')');
+                        //debugger;
+                        var result = JSON.parse(data.xhr.responseText);
+                        $("#uploadFiles").attr("disabled", "disabled");
+                        $("#uploadFiles").addClass("disabled");
+
+                        // build the table from JSON
+                        if (result.Result) {
+                            var tr;
+                            for (var i = 0; i < result.Result.length; i++) {
+                                tr = $('<tr/>');
+                                tr.append("<td>" + result.Result[i].Id + "</td>");
+                                tr.append("<td>" + result.Result[i].FileName + "</td>");
+                                tr.append("<td>" + result.Result[i].CountDuplicates + "</td>");
+                                tr.append("<td><span class='" + result.Result[i].ClassName + "'>" + result.Result[i].Message + "</span></td>");// editable
+                                $('#tblBody').append(tr);
+                            }
+                            $("#completedStatuMsg").show();
+                        }
+                    });
+
+                    // Using a closure. clear or remove all selected files from dropzone box.
+                    var _this = this;
+                    // Setup the observer for the button.
+                    document.querySelector("button#clearDropzone").addEventListener("click", function () {
+                        // Using "_this" here, because "this" doesn't point to the dropzone anymore
+                        _this.removeAllFiles();
+                        // If you want to cancel uploads as well, you
+                        // could also call _this.removeAllFiles(true);
+
+                        //enable upload button
+                        $("#uploadFiles").removeAttr("disabled");
+                        $("#uploadFiles").removeClass("disabled");
+                        $('#tblBody').html('');
+                        $("#completedStatuMsg").hide();
+                    });
+
+                    //adding remove button for individual item
+                    this.on("addedfile", function (file) {
+                        // Create the remove button
+                        var removeButton = Dropzone.createElement("<button class='btn btn-sm btn-block'>Remove file</button>");
+
+                        // Capture the Dropzone instance as closure.
+                        var _this = this;
+
+                        // Listen to the click event
+                        removeButton.addEventListener("click", function (e) {
+                            // Make sure the button click doesn't submit the form:
+                            e.preventDefault();
+                            e.stopPropagation();
+
+                            // Remove the file preview.
+                            _this.removeFile(file);
+                            // If you want to the delete the file on the server as well,
+                            // you can do the AJAX request here.
+                        });
+
+                        // Add the button to the file preview element.
+                        file.previewElement.appendChild(removeButton);
+                    });
+
+                    var submitButton = document.querySelector("#uploadFiles");
+                    var myDropzone = this; //closure
+                    submitButton.addEventListener("click", function () {
+
+                        //tell Dropzone to process all queued files
+                        myDropzone.processQueue();
+                    });
+                }
+            };
         });
 
         function stopPropagation(evt) {
