@@ -1,17 +1,16 @@
 ﻿@model mobilehome.insure.Models.Rental.RentalViewModel
 @{
     ViewBag.Title = "Mobile Home Insure for Rental Homes - MobileHome.Insure";
-
 }
 
 <style>
-    #accordion {
+    /*#accordion {
         padding: 10px;
     }
     .ui-accordion-content {
         overflow-x: hidden !important;
         border: 0;
-    }
+    }*/
     #ExpiryMonth, #ExpiryYear {
         width: 100px;
         display: inline-block;
@@ -26,53 +25,87 @@
                     <h1>Mobile Home Renters Insurance</h1>
                 </div>
 
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3" id="divPark" style="display:none">
+                            <a href="#"><span class="badge">1</span> Selected Park</a>
+                            <address>
+
+                            </address>
+                        </div>
+                        <div class="col-md-3" id="divCustomer" style="display:none">
+                            <a href="#"><span class="badge">2</span> Customer Information</a>
+                            <address>
+
+                            </address>
+                        </div>
+                        <div class="col-md-3" id="divPremium" style="display:none">
+                            <a href="#"><span class="badge">3</span> Premium</a>
+                            <div class="well"></div>
+                        </div>
+                        <div class="col-md-3" id="divPayment" style="display:none">
+                            <a href="#"><span class="badge">4</span> Payment</a>
+                            <div class="well"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="parkSeclection">
                     <br />
                     <br />
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-12">
                         <div class="row" data-animated="0">
                             <form>
-                                <div class="form-group">
-                                    @Html.LabelFor(x => x.Zip)
-                                    @Html.TextBoxFor(x => x.Zip, new { id = "findZip", @class = "form-control" })
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(x => x.Zip, new { id = "findZip", @class = "form-control", @placeholder = "Enter your Zip Code" })
+                                        <span class="input-group-btn">
+                                            <button id="btnParkSelection" class="btn btn-primary" type="button">Submit</button>
+                                        </span>
+                                    </div>
                                     @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-                                </div>
-
-                                <div class="form-group" id="divParks">
-                                    <label for="ddlParks">Choose your mobile home park</label>
-                                    <select id="ddlParks" class="form-control" placeholder="Select Park"></select>
-                                </div>
-                                <div class="form-action" style="float:left">
-                                    <button class="btn btn-default" id="btnParkSelection">Submit</button>
-                                </div>
-                                <div style="margin-top: -20px; margin-left: 10px; float: left;">
-                                    &nbsp;<button class="btn btn-default" id="btnParkSelContinue">Continue</button>
+                                    <div class="form-group" id="divParks" style="display:none">
+                                        <label for="ddlParks">Choose your mobile home park</label>
+                                        <select id="ddlParks" class="form-control" placeholder="Select Park"></select>
+                                    </div>
+                                    <div>
+                                        &nbsp;<button class="btn btn-default" id="btnParkSelContinue" style="display:none">Continue</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
 
-                <div id="accordion">
-                    <h3>Customer Information</h3>
+                <div id="step1" style="display:none">
+                    <blockquote>
+                        <h3>Customer Information.</h3>
+                    </blockquote>
                     <div>
                         <p>
                             @{Html.RenderPartial("_Step1", Model.customer);}
                         </p>
                     </div>
-                    <h3>Generate Quote</h3>
-                    <div>
-                        <p>
-                            @{Html.RenderPartial("_Step2", Model.quote);}
-                        </p>
                     </div>
-                    <h3>Make Payment</h3>
-                    <div>
-                        <p>
-                            @{Html.RenderPartial("_Step3", Model.payment);}
-                        </p>
-                    </div>
-                </div>
+                <div id="step2" style="display:none">
+                    <blockquote>
+                        <h3>Generate Quote</h3>
+                    </blockquote>
+                        <div>
+                            <p>
+                                @{Html.RenderPartial("_Step2", Model.quote);}
+                            </p>
+                        </div>
+</div>
+                <div id="step3" style="display:none">
+                    <blockquote>
+                        <h3>Make Payment</h3></blockquote>
+    <div>
+        <p>
+            @{Html.RenderPartial("_Step3", Model.payment);}
+        </p>
+    </div>
+</div>
             </div>
         </div>
     </div>
@@ -85,7 +118,7 @@
         var parkId = null;
 
         $(document).ready(function () {
-            $("#accordion").css("display", "none"); //initially it would be display=none
+            //$("#accordion").css("display", "none"); //initially it would be display=none
             $("#divParks").css("display", "none");
             $("#btnParkSelContinue").css("display", "none");
             $("#findZip").focus();
@@ -97,10 +130,12 @@
                 if ($("#ddlParks").val() > 0) {
                     zipCode = $("#findZip").val(); //zip for reference
                     parkId = $("#ddlParks").val();
-
                     $("#Zip").val(zipCode);
+                    $("#divPark").show();
+                    $("#divPark address").html("<strong id=\"ParkName\">Twitter, Inc.</strong><br>795 Folsom Ave, Suite 600<br>San Francisco, CA 94107<br><abbr title=\"Phone\">P:</abbr> (123) 456-7890");
                     $("#parkSeclection").css("display", "none");
-                    $("#accordion").css("display", "block");
+                    //$("#accordion").css("display", "block");
+                    $("#step1").css("display", "block");
                     $("#FirstName").focus();
                 }
             });

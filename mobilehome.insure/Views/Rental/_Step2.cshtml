@@ -3,67 +3,53 @@
 @{
     Layout = null;
 }
-<div class="col-md-9 m-right">
-    <div id="rightcontainer">
         @using (Html.BeginForm("_Step2", "Rental"))
         {
-            <div class="col-md-8">
-                <div class="row" data-animated="0">
-                    @Html.HiddenFor(x => x.CustomerId)
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.EffectiveDate)
-                        @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "form-control", value = "" })
-                        @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
-                    </div>
-                    @*<div class="form-group">
-                            @Html.LabelFor(x => x.PersonalProperty)
-                            @Html.TextBoxFor(x => x.PersonalProperty, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
-                        </div>*@
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.PersonalProperty)
-                        @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "form-control", style = "width: 100%" })
-                        @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Liability)
-                        @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "form-control", style = "width: 100%" })
-                        @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
-                    </div>
-                    @*<div class="form-group">
-                            @Html.LabelFor(x => x.Deductible)
-                            @Html.HiddenFor(x => x.Deductible, new { @class = "form-control" })
-
-                        </div>*@
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.NumberOfInstallments)
-                        @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "form-control", style = "width: 100%" })
-                        @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
-                    </div>
-                    @*<div class="form-group">
-                        Premium: <label id="lblPremium" />
-                    </div>*@
-                    <div class="form-action" style="float:left">
-                        <button class="btn btn-default" id="btnQuote">Calculate</button>
-                    </div>
-                    <div style="float:left">
-                        &nbsp;<button class="btn btn-default" id="btnContinuePayment">Continue</button>
-                    </div>
-                </div>
+            <div class="col-xs-12 col-md-8 no-margin">
+                    <div class="billing-address">
+                        @Html.HiddenFor(x => x.CustomerId)
+                        <div class="row field-row">
+                            <div class="col-xs-12 col-sm-6">
+                                @Html.LabelFor(x => x.EffectiveDate)
+                                @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "le-input", value = "" })
+                                @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                @Html.LabelFor(x => x.PersonalProperty)
+                                @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "le-input", style = "width: 100%" })
+                                @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row field-row">
+                            <div class="col-xs-12 col-sm-6">
+                                @Html.LabelFor(x => x.Liability)
+                                @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "le-input", style = "width: 100%" })
+                                @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
+                            </div>
+                            
+                            <div class="col-xs-12 col-sm-6">
+                                @Html.LabelFor(x => x.NumberOfInstallments)
+                                @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })
+                                @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="pull-left">
+                            <button class="btn btn-default" id="btnQuote">Calculate</button>
+                        </div>
+                        <div class="pull-right">
+                            <button class="btn btn-default" id="btnContinuePayment">Continue</button>
+                        </div>
+                        </div>
             </div>
-<div class="col-md-4">
-
-    <div class="page-header text-center">
-        <span>Premium</span>
-        <h2><span id="lblPremium">$0.00</span></h2>
+            <div class="col-xs-12 col-md-4">
+        <div class="page-header text-center">
+            <span>Premium</span>
+            <h2><span id="lblPremium">$0.00</span></h2>
+        </div>
     </div>
-</div>
             @Html.ValidationSummary(true)
         }
-    </div>
-</div>
 @Html.Script(
-
     @<script>
         $(document).ready(function () {
 
@@ -73,7 +59,6 @@
                    allowClear: true
                })
                .on("change", function (e) {
-
                });
 
             //var effectiveDate = $("#EffectiveDate").datepicker("getDate");
@@ -83,18 +68,20 @@
 
             $("#btnContinuePayment").click(function (evt) {
                 evt.preventDefault();
-                $("#accordion").accordion("destroy");
-                $("#accordion").accordion({
-                    heightStyle: "content",
-                    active: 2
-                });
+                //$("#accordion").accordion("destroy");
+                //$("#accordion").accordion({
+                //    heightStyle: "content",
+                //    active: 2
+                //});
+                $("#divPremium div.well").html($("#lblPremium").text());
+                $("#divPremium").show();
+                $("#step2").hide();
+                $("#step3").show();
             });
 
             $("#btnQuote").click(function (evt) {
                 evt.preventDefault();
                 var $form = $('form');
-
-
                 if ($form.valid()) {
                     $('#dvLoading').show();
 
