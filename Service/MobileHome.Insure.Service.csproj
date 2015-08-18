@@ -88,6 +88,10 @@
       <Project>{6964c27a-078c-44dc-b89d-39de700d03b6}</Project>
       <Name>MobileHome.Insure.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MobileHoome.Insure.ExtService\MobileHoome.Insure.ExtService.csproj">
+      <Project>{1c6fe8b4-f54f-42fe-b8fb-96a3576ecd14}</Project>
+      <Name>MobileHoome.Insure.ExtService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\MobileHome.Insure.Model.csproj">
       <Project>{e16f7a35-ab75-482f-b37d-48eab4fcc7c2}</Project>
       <Name>MobileHome.Insure.Model</Name>

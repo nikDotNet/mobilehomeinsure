@@ -54,13 +54,9 @@ namespace MobileHome.Insure.Service.Rental
         public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, ref int quoteId)
         {
             //Generating proposal number
-
             string ProposalNo = "ABCD1234";
 
-            //Process to generate code, calling service 
-
-            decimal Premium = 100;
-
+            decimal Premium = 0;
             Quote quoteObj = null;
 
             if (quoteId == 0)
@@ -74,6 +70,7 @@ namespace MobileHome.Insure.Service.Rental
                    ProposalNumber = ProposalNo,
                    Liability = Liability,
                    Premium = Premium,
+                   CustomerId = CustomerId,
                    NoOfInstallments = NoOfInstallments,
                    CreationDate = DateTime.Now
                };
@@ -88,18 +85,21 @@ namespace MobileHome.Insure.Service.Rental
                 quoteObj.ProposalNumber = ProposalNo;
                 quoteObj.Liability = Liability;
                 quoteObj.Premium = Premium;
+                quoteObj.CustomerId = CustomerId;
                 quoteObj.NoOfInstallments = NoOfInstallments;
                 quoteObj.CreationDate = DateTime.Now;
 
                 _context.Entry(quoteObj).State = System.Data.Entity.EntityState.Modified;
-
             }
 
+            //Get Premium calculation service result
+            var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
+            quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
             _context.SaveChanges();
+
 
             quoteId = quoteObj.Id;
             return Premium;
-
         }
 
 

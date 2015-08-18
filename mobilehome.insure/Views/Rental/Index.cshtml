@@ -127,7 +127,7 @@
                             var datatmp = [];
                             $.each(data2.Result, function (index, item) {
                                 datatmp.push({
-                                    id: item.Id, text: item.Name, address: item.Address, city: item.City
+                                    id: item.Id, text: item.ParkName, address: item.PhysicalAddress, city: item.PhysicalCity
                                 });
                             });
                             $("#ddlParks").select2({
