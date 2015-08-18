@@ -3305,3 +3305,36 @@ ul.n-dropdown li {
 ul.n-dropdown li a {
     padding-top:0;
 }
+
+
+.billing-address .field-row {
+    margin-bottom: 25px;
+}
+
+.field-row label {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    color: #3d3d3d;
+    text-transform: capitalize;
+    margin-bottom: 5px;
+}
+
+.le-input {
+    border-radius: 3px;
+    background-color: #ececec;
+    border: none;
+    color: #3d3d3d;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.billing-address .le-input {
+    padding: 9px;
+}
+
+.field-row input {
+    width: 100%;
+}

@@ -3,66 +3,64 @@
 @{
     Layout = null;
 }
-<div class="col-md-9 m-right">
-    <div id="rightcontainer">
-        @using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name="frmPayment" }))
-        {
-            <div class="col-md-8">
-                <div class="row" data-animated="0">
 
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.NameOnCard)
-                        @Html.TextBoxFor(x => x.NameOnCard, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.NameOnCard, "", new { @class = "text-danger" })
-                    </div>
+@using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name = "frmPayment" }))
+{
+    <div class="col-xs-12 no-margin">
+        <div class="billing-address">
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.NameOnCard)
+                    @Html.TextBoxFor(x => x.NameOnCard, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.NameOnCard, "", new { @class = "text-danger" })
+                </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.CreditCardNumber)
-                        @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.CreditCardNumber, "", new { @class = "text-danger" })
-                    </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.CreditCardNumber)
+                    @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.CreditCardNumber, "", new { @class = "text-danger" })
+                </div>
 
-                    <div class="form-group">
-                        @Html.Label("Expiry Date:", new {@style="display:block"})
-                        @Html.DropDownListFor(x => x.ExpiryMonth, new SelectList(Model.MonthList), "MM", new { @class = "form-control small" })
-                        @Html.DropDownListFor(x => x.ExpiryYear, new SelectList(Model.YearList), "YYYY", new { @class = "form-control small" })
-                        @Html.ValidationMessageFor(x => x.ExpiryMonth, "", new { @class = "text-danger" })
-                        @Html.ValidationMessageFor(x => x.ExpiryYear, "", new { @class = "text-danger" })
-                    </div>
-
-                    
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.BillingAddressLine1)
-                        @Html.TextBoxFor(x => x.BillingAddressLine1, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.BillingAddressLine2)
-                        @Html.TextBoxFor(x => x.BillingAddressLine2, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
-                    </div>
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Zip)
-                        @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-
-                    </div>
-
-                  
-
-                    <div class="form-action">
-                        <button class="btn btn-default" id="btnPayment">Submit</button>
-                    </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.Label("Expiry Date:", new { @style = "display:block" })
+                    @Html.DropDownListFor(x => x.ExpiryMonth, new SelectList(Model.MonthList), "MM", new { @class = "le-input small" })
+                    @Html.DropDownListFor(x => x.ExpiryYear, new SelectList(Model.YearList), "YYYY", new { @class = "le-input small" })
+                    @Html.ValidationMessageFor(x => x.ExpiryMonth, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(x => x.ExpiryYear, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @Html.ValidationSummary(true)
-        }
+
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.BillingAddressLine1)
+                    @Html.TextBoxFor(x => x.BillingAddressLine1, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.BillingAddressLine2)
+                    @Html.TextBoxFor(x => x.BillingAddressLine2, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
+                </div>
+
+
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.Zip)
+                    @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+
+                </div>
+
+            </div>
+
+            <div class="pull-right">
+                <button class="btn btn-default" id="btnPayment">Submit</button>
+            </div>
+        </div>
+        @Html.ValidationSummary(true)
     </div>
-</div>
+}
+
 
 @Html.Script(
 
@@ -99,9 +97,9 @@
                     var request = $.ajax(ajaxOptions);
 
                     request.done(function (result) {
-                        
+
                         $('#dvLoading').hide();
-                        
+
                         window.location.href = "http://localhost:43517/Rental";
                     });
 
@@ -118,5 +116,4 @@
         });
 
     </script>
-        )
-
+            )
