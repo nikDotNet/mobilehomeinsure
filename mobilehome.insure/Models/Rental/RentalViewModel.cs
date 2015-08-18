@@ -15,8 +15,8 @@ namespace mobilehome.insure.Models.Rental
 
         [Display(Name = "Enter your Zip Code")]
         public string Zip { get; set; }
-
-
+        
+        public int currentStep { get; set; }
 
         public RentalViewModel()
         {

@@ -10,6 +10,10 @@ namespace mobilehome.insure.Controllers
     {
         //
         // GET: /About/
+        public ActionResult Index()
+        {
+            return View();
+        }
         public ActionResult LowestCost()
         {
             return View();

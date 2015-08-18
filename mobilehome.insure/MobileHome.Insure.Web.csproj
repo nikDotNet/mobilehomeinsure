@@ -1410,6 +1410,7 @@
     <Content Include="Views\About\HavingPeace.cshtml" />
     <Content Include="Views\Support\Index.cshtml" />
     <Content Include="Views\Support\StraightTalk.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

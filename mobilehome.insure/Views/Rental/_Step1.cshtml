@@ -3,77 +3,63 @@
 @{
     Layout = null;
 }
-<div class="col-md-9 m-right">
-    <div id="rightcontainer">
-        @*@using (Html.BeginForm("_Step1", "Rental", FormMethod.Post, new { name = "frmCustomerInfo" }))
-            {*@
-        <form>
-            <div class="row" data-animated="0">
-                <div class="col-md-8">
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.FirstName)
-                        @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.LastName)
-                        @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Email)
-                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
-                    </div>
-                    @*<div class="form-group">
-                        @Html.LabelFor(x => x.Password)
-                        @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
-                        <a href="#" style="color: cadetblue;text-decoration: underline;font-size:smaller;" id="linkShowPwd">Show Password</a>
-                    </div>*@
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Address)
-                        @Html.TextAreaFor(x => x.Address, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.StateId)
-                        @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", @class = "form-control", style = "width: 100%" })
-                        @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
-                    </div>
-                    @*<div class="form-group">
-                            @Html.LabelFor(x => x.StateId)
-                            @Html.TextBoxFor(x => x.StateId, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
-                        </div>*@
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.City)
-                        @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Zip)
-                        @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.Phone)
-                        @Html.TextBoxFor(x => x.Phone, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="form-action">
-                        <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
-                    </div>
-
-                </div>
-            </div>
-            @Html.ValidationSummary(true)
-        </form>
-        @*}*@
+       
+<form>
+<div class="col-xs-12 no-margin">
+<div class="billing-address">
+    <div class="row field-row">
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.FirstName)
+            @Html.TextBoxFor(x => x.FirstName, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.LastName)
+            @Html.TextBoxFor(x => x.LastName, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.Email)
+            @Html.TextBoxFor(x => x.Email, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row field-row">
+        <div class="col-xs-12 col-sm-6">
+            @Html.LabelFor(x => x.Address)
+            @Html.TextAreaFor(x => x.Address, new { @class = "le-input", style = "width: 100%" })
+            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-6">
+            @Html.LabelFor(x => x.StateId)
+            @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", @class = "le-input", style = "width: 100%" })
+            @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row field-row">
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.City)
+            @Html.TextBoxFor(x => x.City, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.Zip)
+            @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.Phone)
+            @Html.TextBoxFor(x => x.Phone, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="pull-right">
+        <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
     </div>
 </div>
+</div>
+@Html.ValidationSummary(true)
+</form>
 @Html.Script(
 
     @<script>
@@ -116,7 +102,7 @@
                         FirstName: $("#FirstName").val(),
                         LastName: $("#LastName").val(),
                         Email: $("#Email").val(),
-                        Password: $("#Password").val(),
+                        //Password: $("#Password").val(),
                         Address: $("#Address").val(),
                         StateId: $("#ddlStateId").val(),
                         City: $("#City").val(),
@@ -131,12 +117,17 @@
 
                     var request = $.ajax(ajaxOptions);
                     request.done(function (result) {
-                        $("#accordion").accordion("destroy");
-                        $("#accordion").accordion({
-                            disabled: 2,
-                            active: 1,
-                            heightStyle: "content"
-                        });
+                        //$("#accordion").accordion("destroy");
+                        //$("#accordion").accordion({
+                        //    disabled: 2,
+                        //    active: 1,
+                        //    heightStyle: "content"
+                        //});
+
+                        $("#divCustomer address").html("<strong>" + $("#FirstName").val() + " " + $("#LastName").val() + "</strong><br>" + $("#Email").val() + "<br>" + $("#ddlStateId option:selected").text() + ", " + $("#City").val() + "<br><abbr title=\"Phone\">P:</abbr>" + $("#Phone").val());
+                        $("#divCustomer").show();
+                        $("#step1").hide();
+                        $("#step2").show();
 
                         $('#dvLoading').hide();
                     });
