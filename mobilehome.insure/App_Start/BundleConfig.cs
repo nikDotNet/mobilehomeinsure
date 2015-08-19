@@ -52,11 +52,11 @@ namespace MobileHome.Insure.Web
                 );
 
             bundles.Add(new ScriptBundle("~/Content/Assets/Global/Plugins/select2/scripts").Include(
-                "~/Content/Assets/Global/Plugins/select2/*.js"
+                "~/Content/Assets/Global/Plugins/select2/select2.min.js"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/Assets/Global/Plugins/select2/css").Include(
-                 "~/Content/Assets/Global/Plugins/select2/*.css"
+                 "~/Content/Assets/Global/Plugins/select2/select2.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/Custom/customScripts").Include(
