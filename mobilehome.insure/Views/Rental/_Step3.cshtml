@@ -100,7 +100,7 @@
 
                         $('#dvLoading').hide();
 
-                        window.location.href = "http://localhost:43517/Rental";
+                        window.location.href = "http://" + @Request.Url.Host + ":" + @Request.Url.Port  + "/Rental";
                     });
 
                     request.fail(function (jqXHR, textStatus) {
