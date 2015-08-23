@@ -27,25 +27,26 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="col-md-3" id="divPark" style="display:none">
+                        <div class="col-md-3" id="divPark">
                             <a href="#"><span class="badge">1</span> Selected Park</a>
                             <address>
 
                             </address>
                         </div>
-                        <div class="col-md-3" id="divCustomer" style="display:none">
+                        <div class="col-md-3" id="divCustomer">
                             <a href="#"><span class="badge">2</span> Customer Information</a>
                             <address>
 
                             </address>
                         </div>
-                        <div class="col-md-3" id="divPremium" style="display:none">
+                        <div class="col-md-3" id="divPremium">
                             <a href="#"><span class="badge">3</span> Premium</a>
-                            <div class="well"></div>
+                            <address>
+
+                            </address>
                         </div>
-                        <div class="col-md-3" id="divPayment" style="display:none">
+                        <div class="col-md-3" id="divPayment">
                             <a href="#"><span class="badge">4</span> Payment</a>
-                            <div class="well"></div>
                         </div>
                     </div>
                 </div>
@@ -131,10 +132,13 @@
                     zipCode = $("#findZip").val(); //zip for reference
                     parkId = $("#ddlParks").val();
                     $("#Zip").val(zipCode);
-                    $("#divPark").show();
-                    $("#divPark address").html("<strong id=\"ParkName\">Twitter, Inc.</strong><br>795 Folsom Ave, Suite 600<br>San Francisco, CA 94107<br><abbr title=\"Phone\">P:</abbr> (123) 456-7890");
+                    $.ajax({
+                        url: "/Rental/GetParkDetail/" + $("#ddlParks").val(),
+                        dataType: "json"
+                    }).done(function (data) {
+                        $("#divPark address").html("<strong id=\"" + data.ParkName + "\">" + data.PhysicalAddress + "</strong><br>" + data.PhysicalCity + "<br>" + data.PhysicalCountry + "<br><abbr title=\"Phone\">P:</abbr> " + data.OfficePhone);
+                    });
                     $("#parkSeclection").css("display", "none");
-                    //$("#accordion").css("display", "block");
                     $("#step1").css("display", "block");
                     $("#FirstName").focus();
                 }
@@ -158,7 +162,6 @@
                         if (data2.Result !== null && data2.Result !== "undefined") {
                             $("#btnParkSelContinue").css("display", "block");
                             $("#divParks").css("display", "block");
-
                             var datatmp = [];
                             $.each(data2.Result, function (index, item) {
                                 datatmp.push({
@@ -193,8 +196,6 @@
                             $("#divParks").css("display", "none");
                             bootbox.alert(data2.Message);
                         }
-
-
                         $('#dvLoading').hide();
                     });
 
@@ -220,10 +221,7 @@
                 bootbox.alert("Your Payment has been made successfully!");
 
             @{ TempData.Clear(); }
+
         });
-
-
-
-
     </script>
 }

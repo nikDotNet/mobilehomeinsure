@@ -63,21 +63,14 @@
 
 
 @Html.Script(
-
     @<script>
         $(document).ready(function () {
-
             $("#EffectiveDate").datepicker();
-
-
             $("#btnPayment").click(function (evt) {
                 evt.preventDefault();
                 var $form = $('form');
-
-
                 if ($form.valid()) {
                     $('#dvLoading').show();
-
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
                         NameOnCard: $("#NameOnCard").val(),
@@ -106,14 +99,8 @@
                     request.fail(function (jqXHR, textStatus) {
                         alert("Request failed: " + textStatus);
                     });
-
-
-
                 }
-
-
             });
         });
-
     </script>
-            )
+)
