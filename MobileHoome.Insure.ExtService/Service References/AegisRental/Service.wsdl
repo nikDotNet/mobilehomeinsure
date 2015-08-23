@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://aegisfirst.com/ws" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://aegisfirst.com/ws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://aegisfirst.com/ws">
+      <s:element name="GetAstecDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="company" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="policy" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="endonumber" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="report_type" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAstecDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAstecDocumentResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAppointedAgents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="agentId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAppointedAgentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAppointedAgentsResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BlindQuotePolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="input">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="productCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="mode" type="tns:AstecProcessingMode" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="AstecProcessingMode">
+        <s:restriction base="s:string">
+          <s:enumeration value="Default" />
+          <s:enumeration value="QuoteOverride" />
+          <s:enumeration value="SubmitOverride" />
+          <s:enumeration value="IssueOverride" />
+          <s:enumeration value="RemitOverride" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="BlindQuotePolicyResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="QuotePolicy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="input">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+            <s:element minOccurs="0" maxOccurs="1" name="productCode" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="mode" type="tns:AstecProcessingMode" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QuotePolicyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QuotePolicyResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AstecQuery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="apiKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="query" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="formName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AstecQueryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AstecQueryResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAstecDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAstecDocument" />
+  </wsdl:message>
+  <wsdl:message name="GetAstecDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAstecDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAppointedAgentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAppointedAgents" />
+  </wsdl:message>
+  <wsdl:message name="GetAppointedAgentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAppointedAgentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="BlindQuotePolicySoapIn">
+    <wsdl:part name="parameters" element="tns:BlindQuotePolicy" />
+  </wsdl:message>
+  <wsdl:message name="BlindQuotePolicySoapOut">
+    <wsdl:part name="parameters" element="tns:BlindQuotePolicyResponse" />
+  </wsdl:message>
+  <wsdl:message name="QuotePolicySoapIn">
+    <wsdl:part name="parameters" element="tns:QuotePolicy" />
+  </wsdl:message>
+  <wsdl:message name="QuotePolicySoapOut">
+    <wsdl:part name="parameters" element="tns:QuotePolicyResponse" />
+  </wsdl:message>
+  <wsdl:message name="AstecQuerySoapIn">
+    <wsdl:part name="parameters" element="tns:AstecQuery" />
+  </wsdl:message>
+  <wsdl:message name="AstecQuerySoapOut">
+    <wsdl:part name="parameters" element="tns:AstecQueryResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="GetAstecDocument">
+      <wsdl:input message="tns:GetAstecDocumentSoapIn" />
+      <wsdl:output message="tns:GetAstecDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAppointedAgents">
+      <wsdl:input message="tns:GetAppointedAgentsSoapIn" />
+      <wsdl:output message="tns:GetAppointedAgentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BlindQuotePolicy">
+      <wsdl:input message="tns:BlindQuotePolicySoapIn" />
+      <wsdl:output message="tns:BlindQuotePolicySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="QuotePolicy">
+      <wsdl:input message="tns:QuotePolicySoapIn" />
+      <wsdl:output message="tns:QuotePolicySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AstecQuery">
+      <wsdl:input message="tns:AstecQuerySoapIn" />
+      <wsdl:output message="tns:AstecQuerySoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAstecDocument">
+      <soap:operation soapAction="http://aegisfirst.com/ws/GetAstecDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppointedAgents">
+      <soap:operation soapAction="http://aegisfirst.com/ws/GetAppointedAgents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BlindQuotePolicy">
+      <soap:operation soapAction="http://aegisfirst.com/ws/BlindQuotePolicy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuotePolicy">
+      <soap:operation soapAction="http://aegisfirst.com/ws/QuotePolicy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AstecQuery">
+      <soap:operation soapAction="http://aegisfirst.com/ws/AstecQuery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAstecDocument">
+      <soap12:operation soapAction="http://aegisfirst.com/ws/GetAstecDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppointedAgents">
+      <soap12:operation soapAction="http://aegisfirst.com/ws/GetAppointedAgents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BlindQuotePolicy">
+      <soap12:operation soapAction="http://aegisfirst.com/ws/BlindQuotePolicy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="QuotePolicy">
+      <soap12:operation soapAction="http://aegisfirst.com/ws/QuotePolicy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AstecQuery">
+      <soap12:operation soapAction="http://aegisfirst.com/ws/AstecQuery" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://test.aegisfirst.net/ws/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://test.aegisfirst.net/ws/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

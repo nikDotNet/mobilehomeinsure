@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -71,6 +72,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -203,6 +206,7 @@
     <Content Include="Areas\Admin\Script\park.js" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls.swf" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="CalcHomePremiumService.svc" />
     <Content Include="Content\assets\admin\layout\css\custom.css" />
     <Content Include="Content\assets\admin\layout\css\layout.css" />
     <Content Include="Content\assets\admin\layout\css\themes\blue.css" />
@@ -1323,6 +1327,7 @@
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
     <None Include="Properties\PublishProfiles\mobilehomeinsureprofile.pubxml" />
+    <None Include="Properties\PublishProfiles\web_publish_mobinsure.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
@@ -1423,6 +1428,10 @@
     <ProjectReference Include="..\DAL\MobileHome.Insure.DAL.csproj">
       <Project>{6964c27a-078c-44dc-b89d-39de700d03b6}</Project>
       <Name>MobileHome.Insure.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MobileHoome.Insure.ExtService\MobileHoome.Insure.ExtService.csproj">
+      <Project>{1c6fe8b4-f54f-42fe-b8fb-96a3576ecd14}</Project>
+      <Name>MobileHoome.Insure.ExtService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Model\MobileHome.Insure.Model.csproj">
       <Project>{e16f7a35-ab75-482f-b37d-48eab4fcc7c2}</Project>

@@ -71,7 +71,7 @@ namespace mobilehome.insure.Helper.DataImport
             Map(m => m.PhysicalCity).Name("PHYSICAL CITY");
             Map(m => m.PhysicalCsvState).Name("PHYSICAL STATE");
             Map(m => m.PhysicalZip).Name("PHYSICAL ZIP");
-            Map(m => m.PhysicalCounty).Name("PHYSICAL COUNTRY");
+            Map(m => m.PhysicalCounty).Name("PHYSICAL COUNTY");
 
             Map(m => m.OfficePhone).Name("OFFICE PHONE");
             Map(m => m.OfficeFax).Name("OFFICE FAX");
