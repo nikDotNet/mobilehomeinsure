@@ -12,6 +12,8 @@ using MobileHome.Insure.Service.Master;
 using MobileHome.Insure.Service.Payment;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using mobilehome.insure.Areas.Admin.Models;
+using MobileHome.Insure.Model;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -138,6 +140,24 @@ namespace MobileHome.Insure.Web.Controllers
                         Result = (parks == null ? null : parks),
                         Message = (parks == null ? string.Format("Unable to find Park(s) at Zip: {0}", zip) : string.Empty)
                     }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetParkDetail(int id)
+        {
+            Park model = null;
+            if (id > 0)
+            {
+                model = _masterServiceFacade.GetParkById(id);
+            }
+
+            return Json(new
+            {
+                ParkName = model.ParkName,
+                PhysicalAddress = model.PhysicalAddress,
+                PhysicalCity = model.PhysicalCity,
+                PhysicalCountry = model.PhysicalCounty,
+                OfficePhone = model.OfficePhone
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [NonAction]

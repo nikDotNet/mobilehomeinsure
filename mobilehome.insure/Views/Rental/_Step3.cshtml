@@ -63,21 +63,14 @@
 
 
 @Html.Script(
-
     @<script>
         $(document).ready(function () {
-
             $("#EffectiveDate").datepicker();
-
-
             $("#btnPayment").click(function (evt) {
                 evt.preventDefault();
                 var $form = $('form');
-
-
                 if ($form.valid()) {
                     $('#dvLoading').show();
-
                     var ajaxOptions = {};
                     ajaxOptions.data = JSON.stringify({
                         NameOnCard: $("#NameOnCard").val(),
@@ -100,20 +93,14 @@
 
                         $('#dvLoading').hide();
 
-                        window.location.href = "http://localhost:43517/Rental";
+                        window.location.href = "http://" + @Request.Url.Host + ":" + @Request.Url.Port  + "/Rental";
                     });
 
                     request.fail(function (jqXHR, textStatus) {
                         alert("Request failed: " + textStatus);
                     });
-
-
-
                 }
-
-
             });
         });
-
     </script>
-            )
+)
