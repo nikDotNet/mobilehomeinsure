@@ -80,12 +80,28 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return RedirectToAction("Park", "Master", new { area = "admin" });
         }
 
+        //it's also using for On/Off feature.
+        public ActionResult OnOffPark(int id, bool isOnOrOff)
+        {
+            try
+            {
+                _masterServiceFacade.OnOrOffPark(id, isOnOrOff);
+                TempData["Success"] = true;
+            }
+            catch (Exception ex)
+            {
+                TempData["Success"] = false;
+            }
+
+            return RedirectToAction("Park", "Master", new { area = "admin" });
+        }
+
         //[HttpPost]
         public ActionResult Import()//HttpPostedFileBase csvFile = null)
         {
             bool isSavedSuccessfully = false;
             List<ImportCsvStatus> processFiles = null;
-            bool isProcessed = true;
+            bool isProcessed = true; bool isException = false;
             string errorMsg = string.Empty;
             int idx = 0;
 
@@ -115,7 +131,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
 
                             var records = mobilehome.insure.Helper.DataImport.ParkCsvImport.ParkImport(file.InputStream);
-                            var parks = this._masterServiceFacade.GetParks();
+                            var parks = this._masterServiceFacade.GetParksWithOnOff();
 
                             var findDuplicateRec = records.Where(dup => parks.Any(chk => chk.ParkName.Trim().Equals(dup.ParkName.Trim(), StringComparison.OrdinalIgnoreCase))).ToList();
                             records.RemoveAll(rem => findDuplicateRec.Any(item => item.ParkName.Trim().Equals(rem.ParkName.Trim())));
@@ -141,6 +157,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                     isSavedSuccessfully = false;
                     errorMsg = ex.Message;
                     isProcessed = false;
+                    isException = !isProcessed;
                 }
             }
             else
@@ -151,7 +168,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             {
                 return Json(new { Result = processFiles, Message = string.Empty, IsProcessed = isProcessed });
             }
-            else if (!isProcessed)
+            else if (!isProcessed && !isException)
             {
                 return Json(new { Message = "file(s) not found for upload.", IsProcessed = isProcessed });
             }
@@ -177,7 +194,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             int searchRecordCount = 0;
 
             var parks = GenericFilterHelper<Park>.GetFilteredRecords(
-                runTimeMethod: _masterServiceFacade.GetParks,
+                runTimeMethod: _masterServiceFacade.GetParksWithOnOff, //Updating bcos, on/off feature has to implement
                 startIndex: jQueryDataTablesModel.iDisplayStart,
                 pageSize: jQueryDataTablesModel.iDisplayLength,
                 sortedColumns: jQueryDataTablesModel.GetSortedColumns(),
@@ -185,7 +202,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ParkName", "OfficePhone", "SpacesToRent", "PhysicalAddress", "PhysicalZip" });
+                properties: new List<string> { "Id", "ParkName", "OfficePhone", "SpacesToRent", "PhysicalAddress", "PhysicalZip", "IsActive" });
 
             return Json(new JQueryDataTablesResponse<Park>(
                 items: parks,

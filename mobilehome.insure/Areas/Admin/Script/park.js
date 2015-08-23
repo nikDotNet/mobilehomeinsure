@@ -68,6 +68,8 @@
         //}
 
 
+        var currentState;
+        var currentElement;
         var table = $('#tblLists');
         var oTable = table.DataTable({
 
@@ -78,6 +80,7 @@
             dom: 'T<"clearfix">lfrtip',
             tableTools: {
                 "sSwfPath": "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf"
+                //"sSwfPath": "http://cdn.datatables.net/tabletools/2.2.4/swf/copy_csv_xls_pdf.swf"
             },
             "lengthMenu": [
                 [5, 15, 20, -1],
@@ -108,6 +111,7 @@
 
             //Vikas did generic modification for all table initialisation
             //"bFilter": false, //disabled common search 
+
             orderCellsTop: true,
             "bProcessing": true,
             "bServerSide": true,
@@ -118,7 +122,23 @@
                 //debugger;
                 //Need some customization, we can write here
 
-                $('td:eq(6)', nRow).find('a').each(function (index, element) {
+                //appending checkbox for on and off
+                $('td:eq(6)', nRow).append(function (index, html) {
+                    //debugger;
+                    var inputCheckbox = $('<input />',
+                                            {
+                                                type: 'checkbox',
+                                                id: 'cb' + aData.Id,
+                                                checked: aData.IsActive
+                                            }).data('id', aData.Id).addClass('make-switch');
+                    inputCheckbox.data('size', 'small')
+                                 .data('on-text', "<i class='fa fa-check'></i>")
+                                 .data('off-text', "<i class='fa fa-times'></i>");
+
+                    $(this).html('').append(inputCheckbox);
+                });
+
+                $('td:eq(7)', nRow).find('a').each(function (index, element) {
                     //debugger;
                     if ($(element).hasClass("edit-link")) {
                         $(element).attr('href', $(element).attr('href') + aData.Id);
@@ -127,9 +147,44 @@
                         $(element).attr('href', $(element).attr('href') + aData.Id);
                     }
                 });//.html(birthday.getMonth() + 1 + "/" + birthday.getDate() + "/" + birthday.getFullYear());
+            },
+            "fnDrawCallback": function (oSettings) {
+                //debugger;
+                resetBootSwitch();
             }
         });
 
+        //reset Switch control
+        function resetBootSwitch() {
+            //initialise checkbox to bootstrap-switch plugin
+            $("input:checkbox").bootstrapSwitch({
+                "onSwitchChange": function (event, state) {
+                    currentState = state;
+                    currentElement = $(this);
+                    bootbox.confirm({
+                        size: 'small',
+                        message: "Are you sure, do you want to disable selected Park?",
+                        callback: function (result) {
+                            //debugger;
+                            if (result) {
+                                //alert('updating value');
+                               // debugger;
+                                var url = "/admin/park/OnOffPark?id=" + $(currentElement).data('id') + "&isOnOrOff=" + currentState;
+                                location.href = url;
+                            }
+                            else {
+                                if (currentElement !== 'undefined' && currentState !== 'undefined') {
+                                    //debugger;
+                                    $("input:checkbox").bootstrapSwitch('destroy');
+                                    currentElement[0].checked = !currentState;
+                                    resetBootSwitch();
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
         // Apply the filter with header textbox
         $("#tblLists thead input").on('keyup change', function () {

@@ -122,6 +122,12 @@ namespace MobileHome.Insure.Service.Master
             return _context.Parks.AsNoTracking().Where(x => x.IsActive == true).ToList();
         }
 
+        public List<Park> GetParksWithOnOff()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Parks.AsNoTracking().ToList();
+        }
+
         public Park GetParkById(int id)
         {
             return _context.Parks.Where(x => x.Id == id && x.IsActive == true).SingleOrDefault();
@@ -181,8 +187,28 @@ namespace MobileHome.Insure.Service.Master
 
                         existingObj.SpacesToRent = parkObj.SpacesToRent;
                         existingObj.SpacesToOwn = parkObj.SpacesToOwn;
-                        existingObj.Contact = parkObj.Contact;
+                        existingObj.ContactName1 = parkObj.ContactName1;
+                        existingObj.ContactName2 = parkObj.ContactName2;
                         existingObj.Position = parkObj.Position;
+
+                        //Mailing
+                        existingObj.MailingName = parkObj.MailingName;
+                        existingObj.MailingAddress = parkObj.MailingAddress;
+                        existingObj.MailingAddress2 = parkObj.MailingAddress2;
+                        existingObj.MailingCity = parkObj.MailingCity;
+                        existingObj.MailingZip = parkObj.MailingZip;
+                        existingObj.MailingStateId = parkObj.MailingStateId;
+
+
+                        //Owner
+                        existingObj.OwnerAddress = parkObj.OwnerAddress;
+                        existingObj.OwnerAddress2 = parkObj.OwnerAddress2;
+                        existingObj.OwnerCity = parkObj.OwnerCity;
+                        existingObj.OwnerZip = parkObj.OwnerZip;
+                        existingObj.OwnerStateId = parkObj.OwnerStateId;
+                        existingObj.OwnerPhone = parkObj.OwnerPhone;
+
+
                         existingObj.IsActive = parkObj.IsActive;
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
@@ -205,14 +231,33 @@ namespace MobileHome.Insure.Service.Master
         /// <param name="importParks">Pass List of parks for saving.</param>
         public void SavePark(List<Park> importParks)
         {
-            importParks.ForEach(item => 
+            importParks.ForEach(item =>
             {
                 item.CreatedBy = "admin";
                 item.CreatedDate = DateTime.Now;
-                item.IsActive = true;
-            });            
+                //item.IsActive = true;
+            });
             _context.Parks.AddRange(importParks);
             _context.SaveChanges();
+        }
+
+        public bool OnOrOffPark(int id, bool isOff = false)
+        {
+            bool result = false;
+            if (id > 0)
+            {
+                var existingObj = _context.Parks.Where(x => x.Id == id).SingleOrDefault();
+                if (existingObj != null)
+                {
+                    existingObj.IsActive = isOff;
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+
+                    result = true;
+                }
+            }
+
+            return result;
         }
         #endregion
     }

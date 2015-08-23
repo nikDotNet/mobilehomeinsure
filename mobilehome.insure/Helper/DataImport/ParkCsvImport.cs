@@ -32,8 +32,14 @@ namespace mobilehome.insure.Helper.DataImport
                 {
                     record.MailingStateId = GetStateIdByStateAbbr(states, record.MailingCsvState);
                 }
+
+                //for Owner state
+                foreach (var record in listRec.Where(st => !string.IsNullOrWhiteSpace(st.OwnerCsvState)))
+                {
+                    record.OwnerStateId = GetStateIdByStateAbbr(states, record.OwnerCsvState);
+                }
             }
-            
+
             return listRec;
         }
 
@@ -71,7 +77,7 @@ namespace mobilehome.insure.Helper.DataImport
             Map(m => m.PhysicalCity).Name("PHYSICAL CITY");
             Map(m => m.PhysicalCsvState).Name("PHYSICAL STATE");
             Map(m => m.PhysicalZip).Name("PHYSICAL ZIP");
-            Map(m => m.PhysicalCounty).Name("PHYSICAL COUNTRY");
+            Map(m => m.PhysicalCounty).Name("PHYSICAL COUNTY");
 
             Map(m => m.OfficePhone).Name("OFFICE PHONE");
             Map(m => m.OfficeFax).Name("OFFICE FAX");
@@ -80,14 +86,27 @@ namespace mobilehome.insure.Helper.DataImport
 
             Map(m => m.SpacesToRent).Name("SPACES TO RENT");
             Map(m => m.SpacesToOwn).Name("SPACES TO OWN");
-            Map(m => m.Contact).Name("CONTACT");
+            Map(m => m.ContactName1).Name("CONTACT NAME1");
+            Map(m => m.ContactName2).Name("CONTACT NAME2");
             Map(m => m.Position).Name("POSITION");
 
+            //mailing
+            Map(m => m.MailingName).Name("MAILING NAME");
             Map(m => m.MailingAddress).Name("MAILING ADDRESS");
             Map(m => m.MailingAddress2).Name("MAILING ADDRESS 2");
             Map(m => m.MailingCity).Name("MAILING CITY");
             Map(m => m.MailingCsvState).Name("MAILING STATE");
             Map(m => m.MailingZip).Name("MAILING ZIP");
+
+            //Owner
+            Map(m => m.OwnerPhone).Name("OWNER PHONE");
+            Map(m => m.OwnerAddress).Name("OWNER ADDRESS");
+            Map(m => m.OwnerAddress2).Name("OWNER ADDRESS 2");
+            Map(m => m.OwnerCity).Name("OWNER CITY");
+            Map(m => m.OwnerCsvState).Name("OWNER STATE");
+            Map(m => m.OwnerZip).Name("OWNER ZIP");
+
+            Map(m => m.IsActive).Name("IsActive");
         }
     }
     #endregion

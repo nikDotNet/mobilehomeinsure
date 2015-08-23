@@ -36,7 +36,7 @@ namespace MobileHome.Insure.Model
 
         [System.ComponentModel.DataAnnotations.Schema.ForeignKey("PhysicalState")]
         public Nullable<int> PhysicalStateId { get; set; }
-        
+
         public string PhysicalCsvState { get; set; }
 
         public int PhysicalZip { get; set; }
@@ -54,12 +54,16 @@ namespace MobileHome.Insure.Model
 
         public Nullable<int> SpacesToOwn { get; set; }
 
-        public string Contact { get; set; }
+        public string ContactName1 { get; set; }
+
+        public string ContactName2 { get; set; }
 
         public string Position { get; set; }
 
 
         //Mailing address
+        public string MailingName { get; set; }
+
         public string MailingAddress { get; set; }
 
         public string MailingAddress2 { get; set; }
@@ -71,12 +75,33 @@ namespace MobileHome.Insure.Model
 
         public string MailingCsvState { get; set; }
 
-        public Nullable<int> MailingZip { get; set; }
+        public string MailingZip { get; set; }
 
 
+        //Owner Address details
+        public string OwnerPhone { get; set; }
+
+        public string OwnerAddress { get; set; }
+
+        public string OwnerAddress2 { get; set; }
+
+        public string OwnerCity { get; set; }
+
+        [System.ComponentModel.DataAnnotations.Schema.ForeignKey("OwnerState")]
+        public Nullable<int> OwnerStateId { get; set; }
+
+        public string OwnerCsvState { get; set; }
+
+        public string OwnerZip { get; set; }
+
+
+        // Navigation properties
         public virtual State PhysicalState { get; set; }
 
         public virtual State MailingState { get; set; }
+
+        public virtual State OwnerState { get; set; }
+
 
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

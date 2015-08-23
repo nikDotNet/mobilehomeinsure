@@ -35,6 +35,8 @@ namespace MobileHome.Insure.Model
         public virtual ICollection<Park> PhysicalParks { get; set; }
         
         public virtual ICollection<Park> MailingParks { get; set; }
+
+        public virtual ICollection<Park> OwnerParks { get; set; }
        
     }
 }

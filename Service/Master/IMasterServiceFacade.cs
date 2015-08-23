@@ -16,6 +16,8 @@ namespace MobileHome.Insure.Service.Master
         #region Pack Operations
         List<Park> GetParks();
 
+        List<Park> GetParksWithOnOff();
+
         Park GetParkById(int id);
 
         List<Park> FindParkByZip(int zip);
@@ -23,6 +25,8 @@ namespace MobileHome.Insure.Service.Master
         void SavePark(Park parkObj, bool toDelete = false);
 
         void SavePark(List<Park> importParks);
+
+        bool OnOrOffPark(int id, bool isOff = false);
         #endregion
     }
 }

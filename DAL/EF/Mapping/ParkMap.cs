@@ -97,7 +97,9 @@ namespace MobileHome.Insure.DAL.EF.Mapping
                 .HasMaxLength(100);
 
 
-            this.Property(t => t.Contact)
+            this.Property(t => t.ContactName1)
+                .HasMaxLength(100);
+            this.Property(t => t.ContactName2)
                 .HasMaxLength(100);
 
             this.Property(t => t.Position)
@@ -105,6 +107,9 @@ namespace MobileHome.Insure.DAL.EF.Mapping
 
 
             //Mailing Address 
+            this.Property(t => t.MailingName)
+                .HasMaxLength(100);
+
             this.Property(t => t.MailingAddress)
                 .HasMaxLength(200);
 
@@ -112,8 +117,29 @@ namespace MobileHome.Insure.DAL.EF.Mapping
                 .HasMaxLength(200);
 
             this.Property(t => t.MailingCity)
-                .IsRequired()
+                //.IsRequired()
                 .HasMaxLength(100);
+
+            this.Property(t => t.MailingZip)
+               .HasMaxLength(15);
+
+
+            //Owner Address 
+            this.Property(t => t.OwnerPhone)
+                .HasMaxLength(50);
+
+            this.Property(t => t.OwnerAddress)
+                .HasMaxLength(200);
+
+            this.Property(t => t.OwnerAddress2)
+                .HasMaxLength(200);
+
+            this.Property(t => t.OwnerCity)
+                //.IsRequired()
+                .HasMaxLength(100);
+
+            this.Property(t => t.OwnerZip)
+              .HasMaxLength(15);
 
 
             this.Property(t => t.CreatedBy).HasMaxLength(50);
@@ -141,16 +167,29 @@ namespace MobileHome.Insure.DAL.EF.Mapping
 
             this.Property(t => t.SpacesToRent).HasColumnName("SpacesToRent");
             this.Property(t => t.SpacesToOwn).HasColumnName("SpacesToOwn");
-            this.Property(t => t.Contact).HasColumnName("Contact");
+            this.Property(t => t.ContactName1).HasColumnName("ContactName1");
+            this.Property(t => t.ContactName2).HasColumnName("ContactName2");
             this.Property(t => t.Position).HasColumnName("Position");
 
             //Mailing address
+            this.Property(t => t.MailingName).HasColumnName("MailingName");
             this.Property(t => t.MailingAddress).HasColumnName("MailingAddress");
             this.Property(t => t.MailingAddress2).HasColumnName("MailingAddress2");
             this.Property(t => t.MailingCity).HasColumnName("MailingCity");
             this.Property(t => t.MailingZip).HasColumnName("MailingZip");
             this.Property(t => t.MailingStateId).HasColumnName("MailingStateId");
             this.Ignore(p => p.MailingCsvState);
+
+
+
+            //Owner address
+            this.Property(t => t.OwnerPhone).HasColumnName("OwnerPhone");
+            this.Property(t => t.OwnerAddress).HasColumnName("OwnerAddress");
+            this.Property(t => t.OwnerAddress2).HasColumnName("OwnerAddress2");
+            this.Property(t => t.OwnerCity).HasColumnName("OwnerCity");
+            this.Property(t => t.OwnerZip).HasColumnName("OwnerZip");
+            this.Property(t => t.OwnerStateId).HasColumnName("OwnerStateId");
+            this.Ignore(p => p.OwnerCsvState);
 
 
             this.Property(t => t.CreatedDate).HasColumnName("CreatedOn");
@@ -165,6 +204,10 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.HasRequired(t => t.MailingState)
                 .WithMany(t => t.MailingParks)
                 .HasForeignKey(d => d.MailingStateId);
+
+            this.HasRequired(t => t.OwnerState)
+                .WithMany(t => t.OwnerParks)
+                .HasForeignKey(d => d.OwnerStateId);
         }
     }
 }

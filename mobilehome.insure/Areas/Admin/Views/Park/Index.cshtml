@@ -6,8 +6,11 @@
 }
 
 <style type="text/css">
-    .modal-content {
+    .custom-portlet {
         width: 900px !important;
+        /*margin: 30px auto !important;*/
+        left: 20px;
+        /*overflow: auto;*/
     }
 
     .input-medium {
@@ -16,6 +19,11 @@
 
     .form .form-actions {
         padding: 10px !important;
+    }
+
+    .bootstrap-switch .bootstrap-switch-default.bootstrap-switch-handle-on,
+    .bootstrap-switch .bootstrap-switch-default.bootstrap-switch-handle-off {
+        background: #c12424;
     }
 </style>
 
@@ -94,6 +102,9 @@
                                 Physical Zip
                             </th>
                             <th>
+                                On/Off
+                            </th>
+                            <th>
                                 Action
                             </th>
                         </tr>
@@ -118,6 +129,9 @@
                             </th>
                             <th>
                                 Physical Zip
+                            </th>
+                            <th>
+                                On/Off
                             </th>
                             <th>
                                 Action
@@ -163,6 +177,8 @@
                         </thead>
                         <tbody id="tblBody"></tbody>
                     </table>
+                    <div id="bootstrap_alerts_demo">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -215,10 +231,11 @@
                 },
                 { "mDataProp": "ParkName" },
                 //{ "mDataProp": "Position" },
-                { "mDataProp": "OfficePhone" },
-                { "mDataProp": "SpacesToRent" },
+                { "mDataProp": "OfficePhone", "sWidth": "15%" },
+                { "mDataProp": "SpacesToRent", "sWidth": "10%" },
                 { "mDataProp": "PhysicalAddress" },
-                { "mDataProp": "PhysicalZip" },
+                { "mDataProp": "PhysicalZip", "sWidth": "10%" },
+                { "mDataProp": "IsActive", "sWidth": "9%", className: "center" },
                 {
                     data: null,
                     className: "center",
@@ -244,6 +261,11 @@
             $("#tblLists_filter").css("display", "none"); //hide common/global filter
             $("#completedStatuMsg").hide();//By default will be hide status table
 
+            //handler of uploader dialog box
+            $("#importPark").on('hidden.bs.modal', function () {
+                //debugger;
+                location.reload();
+            });
 
             //initialize Dropzone for file uploader
             Dropzone.options.dropzoneJsForm = {
@@ -277,6 +299,19 @@
                                 $('#tblBody').append(tr);
                             }
                             $("#completedStatuMsg").show();
+                        }
+                        else {
+                            Metronic.alert({
+                                container: $('#bootstrap_alerts_demo'), // alerts parent container(by default placed after the page breadcrumbs)
+                                place: 'append', // append or prepent in container
+                                type: 'danger',  // alert's type
+                                message: result.Message,  // alert's message
+                                close: true, // make alert closable
+                                reset: true, // close all previouse alerts first
+                                focus: true, // auto scroll to the alert after shown
+                                closeInSeconds: 10, // auto close after defined seconds
+                                icon: 'warning' // put icon before the message
+                            });
                         }
                     });
 
@@ -329,6 +364,7 @@
                     });
                 }
             };
+
         });
 
         function stopPropagation(evt) {
