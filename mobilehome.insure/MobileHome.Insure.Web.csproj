@@ -1417,6 +1417,8 @@
     <Content Include="Views\Support\Index.cshtml" />
     <Content Include="Views\Support\StraightTalk.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
+    <Content Include="Views\Home\PrivacyPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

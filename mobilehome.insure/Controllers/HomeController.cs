@@ -68,7 +68,15 @@ namespace MobileHome.Insure.Web.Controllers
             return View();
         }
 
+        public ActionResult TermsAndConditions()
+        {
+            return View();
+        }
 
+        public ActionResult PrivacyPolicy()
+        {
+            return View();
+        }
 
 
     }
