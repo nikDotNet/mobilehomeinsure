@@ -1,4 +1,6 @@
-﻿@model mobilehome.insure.Areas.Admin.Models.ParkViewModel
+﻿@using System.Web.WebPages.Html
+@model mobilehome.insure.Areas.Admin.Models.ParkViewModel
+
 
 @*<div class="row">
 
@@ -51,7 +53,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentPark.PhysicalStateId, new { @class = "control-label" })
-                        @Html.DropDownListFor(x => x.CurrentPark.PhysicalStateId, new SelectList(Model.States, "Id", "Name"), new { @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
+                        @Html.DropDownListFor(x => x.CurrentPark.PhysicalStateId, new System.Web.Mvc.SelectList(Model.States, "Id", "Name"), new { id = "ddlPhysicalStateId", @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
                         @Html.ValidationMessageFor(x => x.CurrentPark.PhysicalStateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -105,7 +107,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentPark.MailingStateId, new { @class = "control-label" })
-                        @Html.DropDownListFor(x => x.CurrentPark.MailingStateId, new SelectList(Model.States, "Id", "Name"), new { @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
+                        @Html.DropDownListFor(x => x.CurrentPark.MailingStateId, new SelectList(Model.States, "Id", "Name"), new { id = "ddlMailingStateId", @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
                         @Html.ValidationMessageFor(x => x.CurrentPark.MailingStateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -148,7 +150,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentPark.OwnerStateId, new { @class = "control-label" })
-                        @Html.DropDownListFor(x => x.CurrentPark.OwnerStateId, new SelectList(Model.States, "Id", "Name"), new { @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
+                        @Html.DropDownListFor(x => x.CurrentPark.OwnerStateId, new SelectList(Model.States, "Id", "Name"), new { id="ddlOwnerStateId", @placeholder = "Select a State", @class = "form-control", style = "width:100%" })
                         @Html.ValidationMessageFor(x => x.CurrentPark.OwnerStateId, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -296,7 +298,7 @@
         });
 
         //$("#CurrentPark_StateId").select2({
-        $("#CurrentPark_PhysicalStateId,#CurrentPark_MailingStateId,#CurrentPark_OwnerStateId").select2({
+        $("#ddlPhysicalStateId1").select2({
             allowClear: true
         });
 
