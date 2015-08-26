@@ -95,7 +95,7 @@ namespace mobilehome.insure.Models.JQDataTable
                                                               : sortedEntityTypes.Sort(sortedColumn.Direction, entity => { return entity.GetType().GetProperty(sortedColumn.PropertyName).Name; });
             }
 
-            return sortedEntityTypes.Skip(startIndex).Take(pageSize).ToList();
+            return sortedEntityTypes.Skip(startIndex).Take((pageSize > 0 ? pageSize : totalRecordCount)).ToList();
             //return types.Skip(startIndex).Take(pageSize).ToList();
         }
 
