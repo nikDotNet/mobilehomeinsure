@@ -168,7 +168,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
     <Compile Include="Controllers\OwnedController.cs" />
-    <Compile Include="Controllers\RentalController.cs" />
+    <Compile Include="Controllers\RentersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
@@ -1366,6 +1366,7 @@
     <Content Include="Content\assets\global\plugins\select2\package.json" />
     <Content Include="Content\assets\global\plugins\select2\release.sh" />
     <Content Include="Content\assets\global\plugins\select2\select2_locale_en.js.template" />
+    <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Content\assets\global\plugins\uniform\README.md" />
@@ -1427,7 +1428,6 @@
     <Content Include="Content\Plugins\owl-carousel\grabbing.png" />
     <Content Include="Content\Plugins\owl-carousel\owl.carousel.css" />
     <Content Include="Content\Plugins\owl-carousel\owl.carousel.js" />
-    <Content Include="Content\Plugins\owl-carousel\owl.carousel.min.js" />
     <Content Include="Content\Plugins\owl-carousel\owl.theme.css" />
     <Content Include="Content\Plugins\owl-carousel\owl.transitions.css" />
     <Content Include="Scripts\respond.js" />
@@ -1453,12 +1453,12 @@
     <Content Include="Views\Appraisal\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\_contact.cshtml" />
-    <Content Include="Views\Rental\Index.cshtml" />
+    <Content Include="Views\Renters\Index.cshtml" />
     <Content Include="Views\Home\AboutUs.cshtml" />
     <Content Include="Views\Owned\Index.cshtml" />
-    <Content Include="Views\Rental\_Step1.cshtml" />
-    <Content Include="Views\Rental\_Step2.cshtml" />
-    <Content Include="Views\Rental\_Step3.cshtml" />
+    <Content Include="Views\Renters\_Step1.cshtml" />
+    <Content Include="Views\Renters\_Step2.cshtml" />
+    <Content Include="Views\Renters\_Step3.cshtml" />
     <Content Include="Views\Home\UploadPark.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\About\LowestCost.cshtml" />

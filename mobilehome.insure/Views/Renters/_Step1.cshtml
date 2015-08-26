@@ -1,0 +1,139 @@
+﻿@using mobilehome.insure.Helper.Extensions
+@model mobilehome.insure.Models.Rental.RentalViewModel.Customer
+@{
+    Layout = null;
+}
+       
+<form>
+<div class="col-xs-12" style="padding-bottom:20px;">
+<div class="billing-address">
+    <div class="row field-row">
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.FirstName)
+            @Html.TextBoxFor(x => x.FirstName, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.LastName)
+            @Html.TextBoxFor(x => x.LastName, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.Email)
+            @Html.TextBoxFor(x => x.Email, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row field-row">
+        <div class="col-xs-12 col-sm-6">
+            @Html.LabelFor(x => x.Address)
+            @Html.TextAreaFor(x => x.Address, new { @class = "le-input", style = "width: 100%" })
+            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-6 s2">
+            @Html.LabelFor(x => x.StateId)
+            @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", style = "width: 100%" })
+            @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="row field-row">
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.City)
+            @Html.TextBoxFor(x => x.City, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.Zip)
+            @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.Phone)
+            @Html.TextBoxFor(x => x.Phone, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="pull-right">
+        <button class="btn btn-default" id="btnCustomerInfo">Submit</button>
+    </div>
+</div>
+</div>
+@Html.ValidationSummary(true)
+</form>
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            var pwdBox = $("#Password");
+
+            $("#linkShowPwd").off("mouseover").off("mouseout");
+            $("#linkShowPwd").on("mouseover", function (e) {
+                pwdBox.attr("type", "text");
+                pwdBox.attr("disabled", "true");
+            }).on("mouseout", function (e) {
+                pwdBox.attr("type", "password");
+                pwdBox.removeAttr("disabled");
+            });
+
+            $("#ddlStateId").select2(
+                {
+                    //placeholder: "Select a State",
+                    allowClear: true
+                })
+                .on("change", function (e) {
+
+                });
+
+            $("#EffectiveDate").datepicker();
+
+
+            $("#btnCustomerInfo").off("click");
+            $("#btnCustomerInfo").on("click", function (evt) {
+                //debugger;
+                evt.preventDefault();
+                var $form = $('form');
+                if ($form.valid()) {
+                    $('#dvLoading').show();
+
+                    var ajaxOptions = {};
+                    ajaxOptions.data = JSON.stringify({
+                        FirstName: $("#FirstName").val(),
+                        LastName: $("#LastName").val(),
+                        Email: $("#Email").val(),
+                        //Password: $("#Password").val(),
+                        Address: $("#Address").val(),
+                        StateId: $("#ddlStateId").val(),
+                        City: $("#City").val(),
+                        Zip: $("#Zip").val(),
+                        Phone: $("#Phone").val(),
+                        ParkId: parkId
+                    });
+                    ajaxOptions.url = "/Rental/_Step1";
+                    ajaxOptions.method = "POST";
+                    ajaxOptions.dataType = "JSON";
+                    ajaxOptions.contentType = 'application/json';
+
+                    var request = $.ajax(ajaxOptions);
+                    request.done(function (result) {
+                        //$("#accordion").accordion("destroy");
+                        //$("#accordion").accordion({
+                        //    disabled: 2,
+                        //    active: 1,
+                        //    heightStyle: "content"
+                        //});
+
+                        $("#divCustomer address").html("<strong>" + $("#FirstName").val() + " " + $("#LastName").val() + "</strong><br>" + $("#Email").val() + "<br>" + $("#ddlStateId option:selected").text() + ", " + $("#City").val() + "<br><abbr title=\"Phone\">P:</abbr>" + $("#Phone").val());
+                        $("#step1").hide();
+                        $("#step2").show();
+                        $('#dvLoading').hide();
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        alert("Request failed: " + textStatus);
+                        $('#dvLoading').hide();
+                    });
+                }
+            });
+        });
+
+    </script>
+)

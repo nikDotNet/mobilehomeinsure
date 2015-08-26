@@ -1,0 +1,227 @@
+﻿@model mobilehome.insure.Models.Rental.RentalViewModel
+@{
+    ViewBag.Title = "Mobile Home Insure for Rental Homes - MobileHome.Insure";
+}
+
+<style>
+    /*#accordion {
+        padding: 10px;
+    }
+    .ui-accordion-content {
+        overflow-x: hidden !important;
+        border: 0;
+    }*/
+    #ExpiryMonth, #ExpiryYear {
+        width: 100px;
+        display: inline-block;
+    }
+</style>
+
+<div class="col-md-9 m-right">
+    <div id="rightContainer">
+        <div class="row" data-animated="0">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1>Mobile Home Renters Insurance</h1>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-3" id="divPark">
+                            <a href="#"><span class="badge">1</span> Selected Park</a>
+                            <address>
+
+                            </address>
+                        </div>
+                        <div class="col-md-3" id="divCustomer">
+                            <a href="#"><span class="badge">2</span> Customer Information</a>
+                            <address>
+
+                            </address>
+                        </div>
+                        <div class="col-md-3" id="divPremium">
+                            <a href="#"><span class="badge">3</span> Premium</a>
+                            <address>
+
+                            </address>
+                        </div>
+                        <div class="col-md-3" id="divPayment">
+                            <a href="#"><span class="badge">4</span> Payment</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="parkSeclection">
+                    <br />
+                    <br />
+                    <div class="col-md-12">
+                        <div class="row" data-animated="0">
+                            <form>
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(x => x.Zip, new { id = "findZip", @class = "form-control", @placeholder = "Enter your Zip Code" })
+                                        <span class="input-group-btn">
+                                            <button id="btnParkSelection" class="btn btn-primary" type="button">Submit</button>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+                                    <div class="form-group" id="divParks" style="display:none">
+                                        <label for="ddlParks">Choose your mobile home park</label>
+                                        <select id="ddlParks" class="form-control" placeholder="Select Park"></select>
+                                    </div>
+                                    <div>
+                                        &nbsp;<button class="btn btn-default" id="btnParkSelContinue" style="display:none">Continue</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step1" style="display:none">
+                    <blockquote>
+                        <h3>Customer Information.</h3>
+                    </blockquote>
+                    <div>
+                        <p>
+                            @{Html.RenderPartial("_Step1", Model.customer);}
+                        </p>
+                    </div>
+                    </div>
+                <div id="step2" style="display:none">
+                    <blockquote>
+                        <h3>Generate Quote</h3>
+                    </blockquote>
+                        <div>
+                            <p>
+                                @{Html.RenderPartial("_Step2", Model.quote);}
+                            </p>
+                        </div>
+</div>
+                <div id="step3" style="display:none">
+                    <blockquote>
+                        <h3>Make Payment</h3></blockquote>
+    <div>
+        <p>
+            @{Html.RenderPartial("_Step3", Model.payment);}
+        </p>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts
+{
+
+    <script>
+        var zipCode = null;
+        var parkId = null;
+
+        $(document).ready(function () {
+            //$("#accordion").css("display", "none"); //initially it would be display=none
+            $("#divParks").css("display", "none");
+            $("#btnParkSelContinue").css("display", "none");
+            $("#findZip").focus();
+
+            $("#btnParkSelContinue").off("click");
+            $("#btnParkSelContinue").on("click", function (e) {
+                e.preventDefault();
+
+                if ($("#ddlParks").val() > 0) {
+                    zipCode = $("#findZip").val(); //zip for reference
+                    parkId = $("#ddlParks").val();
+                    $("#Zip").val(zipCode);
+                    $.ajax({
+                        url: "/Rental/GetParkDetail/" + $("#ddlParks").val(),
+                        dataType: "json"
+                    }).done(function (data) {
+                        $("#divPark address").html("<strong id=\"" + data.ParkName + "\">" + data.PhysicalAddress + "</strong><br>" + data.PhysicalCity + "<br>" + data.PhysicalCountry + "<br><abbr title=\"Phone\">P:</abbr> " + data.OfficePhone);
+                    });
+                    $("#parkSeclection").css("display", "none");
+                    $("#step1").css("display", "block");
+                    $("#FirstName").focus();
+                }
+            });
+
+            $("#btnParkSelection").off("click");
+            $("#btnParkSelection").on("click", function (e) {
+                e.preventDefault();
+
+                var $form = $('form');
+                if ($form.valid()) {
+                    $('#dvLoading').show();
+
+                    var ajaxOptions = {};
+                    ajaxOptions.data = { zip: $("#findZip").val() }
+                    ajaxOptions.url = "/Rental/FindZip";
+                    ajaxOptions.contentType = 'application/json';
+                    var request = $.ajax(ajaxOptions);
+
+                    request.done(function (data2) {
+                        if (data2.Result !== null && data2.Result !== "undefined") {
+                            $("#btnParkSelContinue").css("display", "block");
+                            $("#divParks").css("display", "block");
+                            var datatmp = [];
+                            $.each(data2.Result, function (index, item) {
+                                datatmp.push({
+                                    id: item.Id, text: item.ParkName, address: item.PhysicalAddress, city: item.PhysicalCity
+                                });
+                            });
+                            $("#ddlParks").select2({
+                                //initSelection: function (element, callback) {
+                                //    var datatmp = [];
+                                //    $.each(data.Result, function (index, item) {
+                                //        datatmp.push({
+                                //            id: item.Id, text: item.Name
+                                //        });
+                                //    });
+                                //    callback(datatmp);
+                                //},
+                                data: datatmp, //{ results: data2.Result, text: function (item) { return item.Name; } },
+                                placeholder: "Select a Park",
+                                allowChar: true,
+                                templateResult: function (item) {
+                                    if (!item.id) { return item.text; }
+
+                                    return $(
+                                           '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">Name:</span></div><div class="col-md-8">' + item.text + '</div></div></div>' +
+                                           '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">Address:</span></div><div class="col-md-8">' + item.address + '</div></div></div>' +
+                                           '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">City:</span></div><div class="col-md-8">' + item.city + '</div></div></div>');
+                                }
+                            });
+                        }
+                        else {
+                            $("#btnParkSelContinue").css("display", "none");
+                            $("#divParks").css("display", "none");
+                            bootbox.alert(data2.Message);
+                        }
+                        $('#dvLoading').hide();
+                    });
+
+                    request.fail(function (jqXHR, textStatus) {
+                        alert("Request failed: " + textStatus);
+                        $('#dvLoading').hide();
+                    });
+                }
+            });
+
+            var ac = $("#accordion").accordion({
+                heightStyle: "content",
+                disabled: 1
+            });
+
+            $("#accordion").accordion("option", "disabled", 2);
+            $("#accordion").accordion("option", "active", 1);
+            //$("#accordion").accordion({ active: "h3:last" })
+
+            var success = '@TempData["Success"]';
+
+            if (success == "true")
+                bootbox.alert("Your Payment has been made successfully!");
+
+            @{ TempData.Clear(); }
+
+        });
+    </script>
+}

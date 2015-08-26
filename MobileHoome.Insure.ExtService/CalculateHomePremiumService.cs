@@ -122,7 +122,7 @@ namespace MobileHoome.Insure.ExtService
         {
             var property = new PropertyInfo()
             {
-                ppltyp = "1",
+                ppltyp = "I",
                 pplnbr = 1,                     //TODO: update from DB
                 firstname = customer.FirstName,
                 lastname = customer.LastName,

@@ -9,9 +9,9 @@
 				<div class="col-md-12">
 					<div id="intro">
 						<div id="intro-slider" class="owl-carousel owl-theme">
-							<div class="item"><img src="content/img/slider/intro/1.jpg" class="img-responsive" alt=""></div>
-							<div class="item"><img src="content/img/slider/intro/2.jpg" class="img-responsive" alt=""></div>
-							<div class="item"><img src="content/img/slider/intro/3.jpg" class="img-responsive" alt=""></div>
+							<div class="item" style="z-index:1000"><a href="/Renters"><img src="content/img/slider/intro/1.jpg" class="img-responsive" alt=""></a></div>
+                            <div class="item" style="z-index:1000"><a href="/Renters"><img src="content/img/slider/intro/2.jpg" class="img-responsive" alt=""></a></div>
+                            <div class="item" style="z-index:1000"><a href="/Renters"><img src="content/img/slider/intro/3.jpg" class="img-responsive" alt=""></a></div>
 						</div>
 					</div>
 				</div>
@@ -21,8 +21,8 @@
 			<div class="row" data-animated="0">
 				<div class="col-md-12">
 					<div id="welcome">
-						<h3>A place where you can purchase mobile home insurance in minutes</h3>
-						<a href="#" class="btn-default btn-center">Get Started!</a>
+						<h3>A PLACE WHERE YOU CAN PURCHASE MOBILE HOME RENTERS INSURANCE IN MINUTES</h3>
+						<a href="/Renters" class="btn-default btn-center">Get Started!</a>
 					</div>
 				</div>
 			</div>
@@ -565,4 +565,12 @@
         alert("Message Sent Successfully");
         $("#successMessage").show();
     </script>
+}
+
+@*@section scripts{
+    <script type="text/javascript">
+    $('.link').on('click', function(event){
+    location.href='home/renters';
+    });
+    </script>*@
 }
