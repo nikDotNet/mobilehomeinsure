@@ -1,6 +1,7 @@
 // Intro Slider
 $(document).ready(function () {
     "use strict";
+    var currentitem = 0;
     $("ul.x-dropdown").hide();
 
     $("a.x-dropdown").click(function () {
@@ -13,7 +14,17 @@ $(document).ready(function () {
         pagination: false,
         singleItem: true,
         transitionStyle: "fadeUp",
-       autoPlay: 4000
+        autoPlay: 4000,
+        afterAction: afterAction
+    });
+
+    function afterAction() {
+        currentitem = this.owl.visibleItems;
+    }
+
+    $("#intro-slider div").click(function () {
+        var selector = "#intro-slider div.owl-item:nth-child(" + (+currentitem + 1) + ") img";
+        location.href = $(selector).prop("alt");
     });
 
     // blog
