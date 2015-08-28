@@ -53,7 +53,7 @@ namespace MobileHoome.Insure.ExtService.Models
         public string inszip { get; set; }
 
         [DataMember]
-        public DateTime insdob { get; set; }
+        public string insdob { get; set; }
 
         [DataMember]
         public string insfin { get; set; }

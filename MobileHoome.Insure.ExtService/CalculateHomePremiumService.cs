@@ -57,11 +57,13 @@ namespace MobileHoome.Insure.ExtService
                                         GetPolicyReturnInfo(),
                                         GetPropertyDealerInfo(),
                                         GetPropertyInfo(customerInfo),
-                                        new XElement("unitinfo", GetHouseUnitInfo()),
-                                        new XElement("covinfo",
-                                                        GetCoverItemInfo(CoverType.Persprop),
-                                                        GetCoverItemInfo(CoverType.Deductible),
-                                                        GetCoverItemInfo(CoverType.LOU)
+                                        new XElement("unitinfo", GetHouseUnitInfo())
+                                        );
+
+                rootEle.Element("unitinfo").Add(new XElement("covinfo",
+                                                        GetCoverItemInfo(CoverType.Persprop, limit: quote.PersonalProperty),
+                                                        GetCoverItemInfo(CoverType.Deductible, deductible: quote.Deductible),
+                                                        GetCoverItemInfo(CoverType.LOU, limit: quote.Liability)
                                         ));
 
                 //Call service and get the result with Premium
@@ -76,7 +78,7 @@ namespace MobileHoome.Insure.ExtService
                 if (result != null)
                 {
                     var elements = result.SelectSingleNode("rtninfo");
-                    if (elements != null && !string.IsNullOrWhiteSpace(elements["returnc"].InnerText) && elements["returnc"].InnerText == "000")
+                    if (elements != null && elements["returnc"].InnerText != "001")
                     {
                         quote.Premium = premium = Convert.ToDecimal(elements["premwrit"].InnerText);
                     }
@@ -110,7 +112,7 @@ namespace MobileHoome.Insure.ExtService
         {
             var prd = new PropertyDealerInfo()
             {
-                agent = 650000,
+                agent = 2001,
                 agtsb1 = "650000",
                 biltyp = 3
             };
@@ -131,10 +133,10 @@ namespace MobileHoome.Insure.ExtService
                 insaddr2 = string.Empty,          //TODO: update from DB
                 inscity = customer.City,
                 insstate = customer.State.Abbr,
-                inscounty = string.Empty,           //TODO: update from DB
+                inscounty = "DAUPHIN", //string.Empty,           //TODO: update from DB
                 insctycode = "77",
                 inszip = customer.Zip,
-                insdob = DateTime.Parse("12/03/1966"),  //TODO: update from DB
+                insdob = "12/03/1966",  //TODO: update from DB
                 insfin = "794",
                 insssn = "199999200",   //TODO: update from DB
                 insphone = customer.Phone,
@@ -178,29 +180,31 @@ namespace MobileHoome.Insure.ExtService
                 purcdate = "09/2013",
                 tiedown = "Y",
                 woodstov = "N",
-                fndtncod = string.Empty
+                fndtncod = string.Empty,
+
+
             };
 
             return Helpers.Extensions.ToXml(houseUnit);
         }
 
-        private XElement GetCoverItemInfo(CoverType coverType)
+        private XElement GetCoverItemInfo(CoverType coverType, decimal? deductible =0, decimal? limit =0)
         {
             var coverItem = new CoverItemInfo(coverType);
             switch (coverType)
             {
                 case CoverType.Deductible:
-                    coverItem.deductible = "500";
+                    coverItem.deductible = deductible.HasValue ?  deductible.Value.ToString() : "500";
                     coverItem.written_premium = coverItem.inforce_premium = coverItem.limit = string.Empty;
                     break;
                 case CoverType.Persprop:
                     coverItem.deductible = string.Empty;
-                    coverItem.limit = "25000";
+                    coverItem.limit = limit.HasValue ? limit.Value.ToString() : "0";
                     coverItem.written_premium = "235";
                     coverItem.inforce_premium = "235";
                     break;
                 case CoverType.LOU:
-                    coverItem.limit = "5000";
+                    coverItem.limit = limit.HasValue ? limit.Value.ToString() : "0";
                     coverItem.written_premium = coverItem.inforce_premium = coverItem.deductible = string.Empty;
                     break;
             }

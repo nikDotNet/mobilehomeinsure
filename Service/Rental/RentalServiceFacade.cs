@@ -78,7 +78,7 @@ namespace MobileHome.Insure.Service.Rental
             }
             else
             {
-                quoteObj = _context.Quotes.Find(new long[] { quoteId });
+                quoteObj = _context.Quotes.Find(quoteId);
                 quoteObj.EffectiveDate = EffectiveDate;
                 quoteObj.PersonalProperty = PersonalProperty;
                 quoteObj.Deductible = Deductible;

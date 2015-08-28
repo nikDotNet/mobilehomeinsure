@@ -94,7 +94,7 @@
 
                         $('#dvLoading').hide();
 
-                        window.location.href = "http://" + @Request.Url.Host + ":" + @Request.Url.Port  + "/Renters";
+                        window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
                     });
 
                     request.fail(function (jqXHR, textStatus) {

@@ -100,7 +100,7 @@
                     var request = $.ajax(ajaxOptions);
 
                     request.done(function (result) {
-                        $("#lblPremium").text('$' + result);
+                        $("#lblPremium").text('$' + result + ".00");
                         $("#btnContinuePayment").prop('disabled', false);
                         $('#dvLoading').hide();
                     });
