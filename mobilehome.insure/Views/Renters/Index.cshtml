@@ -133,7 +133,7 @@
                     parkId = $("#ddlParks").val();
                     $("#Zip").val(zipCode);
                     $.ajax({
-                        url: "/Rental/GetParkDetail/" + $("#ddlParks").val(),
+                        url: "/Renters/GetParkDetail/" + $("#ddlParks").val(),
                         dataType: "json"
                     }).done(function (data) {
                         $("#divPark address").html("<strong id=\"" + data.ParkName + "\">" + data.PhysicalAddress + "</strong><br>" + data.PhysicalCity + "<br>" + data.PhysicalCountry + "<br><abbr title=\"Phone\">P:</abbr> " + data.OfficePhone);
@@ -154,7 +154,7 @@
 
                     var ajaxOptions = {};
                     ajaxOptions.data = { zip: $("#findZip").val() }
-                    ajaxOptions.url = "/Rental/FindZip";
+                    ajaxOptions.url = "/Renters/FindZip";
                     ajaxOptions.contentType = 'application/json';
                     var request = $.ajax(ajaxOptions);
 

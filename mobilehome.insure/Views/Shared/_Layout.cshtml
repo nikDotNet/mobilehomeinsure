@@ -68,6 +68,24 @@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/Scripts/bootbox")
     <script src="~/Scripts/moment.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".alert-renters-close").fadeTo(15000, 1000).slideUp(500, function () {
+                $(".alert-renters-close").alert('close');
+            });
+            $(".btn-cancel-renters").click(function () {
+                bootbox.confirm("Are you sure you want to Cancel?", function (result) {
+                    if (result) 
+                        location.href = "/?renters=cancel";
+                });
+                $("div.modal-footer .btn-default").removeClass("btn-default");
+            })
+            if (getParameterByName("renters") == 'cancel')
+                $(".alert-renters-close").show();
+            else
+                $(".alert-renters-close").alert('close');
+        });
+    </script>
     @RenderSection("scripts", required: false)
     @Html.RenderPartialViewScripts()
     <script>

@@ -3338,3 +3338,10 @@ ul.n-dropdown li a {
 .field-row input {
     width: 100%;
 }
+
+.btn-cancel-renters{
+    background-color:ButtonFace;
+    color:#333;
+    text-decoration: none;
+    border: 1px solid transparent;
+}

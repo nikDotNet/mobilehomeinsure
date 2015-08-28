@@ -34,10 +34,11 @@
                             </div>
                         </div>
                         <div class="pull-left">
-                            <button class="btn btn-default" id="btnQuote">Calculate</button>
+                            
                         </div>
                         <div class="pull-right">
-                            <button class="btn btn-default" id="btnContinuePayment">Continue</button>
+                            <button class="btn btn-default" id="btnQuote">Calculate</button>
+                            <button class="btn btn-default btn-cancel-renters">Cancel</button>
                         </div>
                         </div>
             </div>
@@ -45,6 +46,7 @@
         <div class="page-header text-center">
             <span>Premium</span>
             <h2><span id="lblPremium">$0.00</span></h2>
+            <button class="btn btn-default" id="btnContinuePayment">Continue</button>
         </div>
     </div>
             @Html.ValidationSummary(true)
@@ -91,7 +93,7 @@
                         Liability: $("#ddlLiabilities").val(),
                         NumberOfInstallments: $("#NumberOfInstallments").val()
                     });
-                    ajaxOptions.url = "/Rental/_Step2";
+                    ajaxOptions.url = "/Renters/_Step2";
                     ajaxOptions.method = "POST";
                     ajaxOptions.dataType = "JSON";
                     ajaxOptions.contentType = 'application/json';

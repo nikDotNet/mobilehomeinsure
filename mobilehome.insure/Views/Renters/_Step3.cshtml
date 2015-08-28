@@ -55,6 +55,7 @@
 
             <div class="pull-right">
                 <button class="btn btn-default" id="btnPayment">Submit</button>
+                <button class="btn btn-default btn-cancel-renters">Cancel</button>
             </div>
         </div>
         @Html.ValidationSummary(true)
@@ -83,7 +84,7 @@
                         NoOfInstallments: $("#NoOfInstallments").val()
 
                     });
-                    ajaxOptions.url = "/Rental/_Step3";
+                    ajaxOptions.url = "/Renters/_Step3";
                     ajaxOptions.method = "POST";
                     ajaxOptions.dataType = "JSON";
                     ajaxOptions.contentType = 'application/json';
