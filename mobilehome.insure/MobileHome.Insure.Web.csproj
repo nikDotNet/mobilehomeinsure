@@ -130,8 +130,10 @@
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http">
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Providers">
       <HintPath>..\packages\Microsoft.AspNet.Providers.Core.1.2\lib\net40\System.Web.Providers.dll</HintPath>
@@ -1091,6 +1093,9 @@
     <Content Include="Content\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\img\about-us-header.png" />
+    <Content Include="Content\img\clients\aegis.jpg" />
+    <Content Include="Content\img\tabs\1.png" />
     <Content Include="Content\img\bg-pattern.jpg" />
     <Content Include="Content\img\bg-patternOLD.png" />
     <Content Include="Content\img\bg-patterntrash.jpg" />
@@ -1130,6 +1135,8 @@
     <Content Include="Content\img\marker.png" />
     <Content Include="Content\img\others\1.jpg" />
     <Content Include="Content\img\others\2.jpg" />
+    <Content Include="Content\img\tabs\owners.png" />
+    <Content Include="Content\img\tabs\parks.png" />
     <Content Include="Content\img\prettyphoto\dark_rounded\btnNext.png" />
     <Content Include="Content\img\prettyphoto\dark_rounded\btnPrevious.png" />
     <Content Include="Content\img\prettyphoto\dark_rounded\contentPattern.png" />
@@ -1194,12 +1201,12 @@
     <Content Include="Content\img\projects\9.jpg" />
     <Content Include="Content\img\promo-banner.png" />
     <Content Include="Content\img\quote\1.png" />
+    <Content Include="Content\img\tabs\renters.png" />
     <Content Include="Content\img\slider\intro\1.jpg" />
     <Content Include="Content\img\slider\intro\2.jpg" />
     <Content Include="Content\img\slider\intro\3.jpg" />
     <Content Include="Content\img\spinner.gif" />
     <Content Include="Content\img\success.png" />
-    <Content Include="Content\img\tabs\1.png" />
     <Content Include="Content\img\tabs\2.png" />
     <Content Include="Content\img\tabs\3.png" />
     <Content Include="Content\img\tabs\4.png" />
@@ -1366,6 +1373,7 @@
     <Content Include="Content\assets\global\plugins\select2\package.json" />
     <Content Include="Content\assets\global\plugins\select2\release.sh" />
     <Content Include="Content\assets\global\plugins\select2\select2_locale_en.js.template" />
+    <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />

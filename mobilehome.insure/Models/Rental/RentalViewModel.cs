@@ -28,8 +28,10 @@ namespace mobilehome.insure.Models.Rental
         public class Customer
         {
             public int CustomerId { get; set; }
+            [Required]
             [Display(Name="First Name")]
             public string FirstName { get; set; }
+            [Required]
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
             [Display(Name = "Email")]
@@ -43,6 +45,8 @@ namespace mobilehome.insure.Models.Rental
 
             public string City { get; set; }
             public string Zip { get; set; }
+            [Required]
+            [RegularExpression("^(?=.*[0-9])[()/-0-9]+$", ErrorMessage="Enter valid phone no.")]
             public string Phone { get; set; }
             public int ParkId { get; set; }
         }
@@ -51,9 +55,12 @@ namespace mobilehome.insure.Models.Rental
         {
             public Quote()
             {
-                InstallmentList = new List<int>();
-                for (int i = 0; i <= 4; i++)
-                    InstallmentList.Add(i);
+                InstallmentList = new Dictionary<int, string>();
+                InstallmentList.Add(0, "");
+                InstallmentList.Add(1, "Full Payment");
+                InstallmentList.Add(2, "2 Payments");
+                InstallmentList.Add(3, "3 Payments");
+                InstallmentList.Add(4, "4 Payments");
             }
 
             public int QuoteId { get; set; }
@@ -69,13 +76,14 @@ namespace mobilehome.insure.Models.Rental
             public decimal Deductible { get; set; }
             public decimal Premium { get; set; }
 
-            [Display(Name = "No Of Installments")]
+            [Display(Name = "Choose Number of Payments")]
+            [Range(1,4, ErrorMessage="Select Installment")]
             public int NumberOfInstallments { get; set; }
 
             [Display(Name = "Installment Fee")]
             public decimal InstallmentFee { get; set; }
 
-            public List<int> InstallmentList { get; set; }
+            public Dictionary<int, string> InstallmentList { get; set; }
 
             public List<OptionListItem> Liabilities { get; set; }
 

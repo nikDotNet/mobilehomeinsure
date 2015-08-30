@@ -3345,3 +3345,5 @@ ul.n-dropdown li a {
     text-decoration: none;
     border: 1px solid transparent;
 }
+
+div.owl-buttons { cursor: pointer; cursor: hand; }

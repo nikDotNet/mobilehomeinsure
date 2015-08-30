@@ -155,6 +155,10 @@ namespace MobileHome.Insure.Web.Controllers
                 ParkName = model.ParkName,
                 PhysicalAddress = model.PhysicalAddress,
                 PhysicalCity = model.PhysicalCity,
+                PhysicalStateAbbr = model.PhysicalState.Abbr,
+                PhysicalStateId = model.PhysicalStateId,
+                PhysicalState = model.PhysicalState.Name,
+                Zip = model.PhysicalZip,
                 PhysicalCountry = model.PhysicalCounty,
                 OfficePhone = model.OfficePhone
             }, JsonRequestBehavior.AllowGet);

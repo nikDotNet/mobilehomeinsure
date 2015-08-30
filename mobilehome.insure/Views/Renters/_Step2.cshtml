@@ -3,117 +3,142 @@
 @{
     Layout = null;
 }
+
         @using (Html.BeginForm("_Step2", "Rental"))
         {
             <div class="col-xs-12 col-md-8 no-margin">
-                    <div class="billing-address">
-                        @Html.HiddenFor(x => x.CustomerId)
-                        <div class="row field-row">
-                            <div class="col-xs-12 col-sm-6">
-                                @Html.LabelFor(x => x.EffectiveDate)
-                                @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "le-input", value = "" })
-                                @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                @Html.LabelFor(x => x.PersonalProperty)
-                                @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "le-input", style = "width: 100%" })
-                                @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
-                            </div>
+                    <h3>Generate Quote</h3>
+                <div class="billing-address">
+                    @Html.HiddenFor(x => x.CustomerId)
+                    <div class="row field-row">
+                        <div class="col-xs-12 col-sm-6">
+                            @Html.LabelFor(x => x.EffectiveDate)
+                            @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "le-input", value = "" })
+                            @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
                         </div>
-                        <div class="row field-row">
-                            <div class="col-xs-12 col-sm-6">
-                                @Html.LabelFor(x => x.Liability)
-                                @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "le-input", style = "width: 100%" })
-                                @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
-                            </div>
-                            
-                            <div class="col-xs-12 col-sm-6">
-                                @Html.LabelFor(x => x.NumberOfInstallments)
-                                @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList), "", new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })
-                                @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
-                            </div>
+                        <div class="col-xs-12 col-sm-6">
+                            @Html.LabelFor(x => x.PersonalProperty)
+                            @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "le-input", style = "width: 100%" })
+                            @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
                         </div>
-                        <div class="pull-left">
-                            
+                    </div>
+                    <div class="row field-row">
+                        <div class="col-xs-12 col-sm-6">
+                            @Html.LabelFor(x => x.Liability)
+                            @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "le-input", style = "width: 100%" })
+                            @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
                         </div>
-                        <div class="pull-right">
-                            <button class="btn btn-default" id="btnQuote">Calculate</button>
-                            <button class="btn btn-default btn-cancel-renters">Cancel</button>
+
+                        <div class="col-xs-12 col-sm-6">
+                            @Html.LabelFor(x => x.NumberOfInstallments)
+                            @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList, "Key", "Value", Model.NumberOfInstallments), "", new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })
+                            @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
                         </div>
-                        </div>
+                    </div>
+                    <div class="pull-left">
+
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-default" id="btnQuote">Calculate</button>
+                        <button class="btn btn-default btn-cancel-renters">Cancel</button>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-12 col-md-4">
-        <div class="page-header text-center">
-            <span>Premium</span>
-            <h2><span id="lblPremium">$0.00</span></h2>
-            <button class="btn btn-default" id="btnContinuePayment">Continue</button>
-        </div>
+                <div class="page-header text-center cal-premium" style="display:none">
+                    <h3>Premium</h3>
+                    <h4>Total Premium: <span id="lblTotalPremium">$0.00</span></h4>
+                    <h4>Charged Today: <span id="lblCurrentPayment">$0.00</span></h4>
+        <p><sup>*</sup>A $500 Deductible applies to Personal Property limit. Some Personal Property subject to certain limitations and/or exclusions. Please review your policy for details.</p>
+        <p class="fraudstatement" style="display:none">
+            <strong>Fraud Statement<sup>*</sup></strong>:It is a crime to knowingly provide false, incomplete or misleading information to an insurance company for the purpose of defrauding the company. Penalties include imprisonment, fines and denial of insurance benefits.
+            <br />(*Applicable to residents of Tennessee and Virginia.)
+        </p>
+        <button class="btn btn-default" id="btnContinuePayment">Pay For My Policy</button>
     </div>
+                    </div>
             @Html.ValidationSummary(true)
         }
-@Html.Script(
-    @<script>
-        $(document).ready(function () {
+        @Html.Script(
+        @<script>
+            $(document).ready(function () {
 
-            $("#ddlLiabilities, #NumberOfInstallments, #ddlPersonalProperties").select2(
-               {
-                   //placeholder: "Select a State",
-                   allowClear: true
-               })
-               .on("change", function (e) {
-               });
+                //$("#ddlLiabilities, #NumberOfInstallments, #ddlPersonalProperties").select2(
+                //   {
+                //       //placeholder: "Select a State",
+                //       allowClear: true
+                //   })
+                //   .on("change", function (e) {
+                //   });
 
-            //var effectiveDate = $("#EffectiveDate").datepicker("getDate");
-            //$.datepicker.formatDate('mm/dd/yyyy', effectiveDate);
-            $("#EffectiveDate").datepicker({ dateFormate: "mm/dd/yyyy" }).datepicker('setDate', new Date());
-            $("#btnContinuePayment").prop('disabled', true);
+                //var effectiveDate = $("#EffectiveDate").datepicker("getDate");
+                //$.datepicker.formatDate('mm/dd/yyyy', effectiveDate);
+                $("#EffectiveDate").datepicker({ dateFormate: "mm/dd/yyyy" }).datepicker('setDate', new Date());
+                $("#btnContinuePayment").prop('disabled', true);
 
-            $("#btnContinuePayment").click(function (evt) {
-                evt.preventDefault();
-                //$("#accordion").accordion("destroy");
-                //$("#accordion").accordion({
-                //    heightStyle: "content",
-                //    active: 2
-                //});
-                $("#divPremium address").html("<strong>" + $("#lblPremium").text() + "</strong>");
-                $("#step2").hide();
-                $("#step3").show();
+                $("#btnContinuePayment").click(function (evt) {
+                    evt.preventDefault();
+                    //$("#accordion").accordion("destroy");
+                    //$("#accordion").accordion({
+                    //    heightStyle: "content",
+                    //    active: 2
+                    //});
+                    $("#divPremium address").html("Personal Property: " + $("#ddlPersonalProperties option:selected").text() + "<br>Liability: " + $("#ddlLiabilities option:selected").text() + "<br>Loss of Use: $" + 5000 + "<br>Medical Payments: $" + 5000 + "<br>Total Premium: " + $("#lblTotalPremium").text());
+                    $("#step2").hide();
+                    $("#step3").show();
+                });
+
+                $("#btnQuote").click(function (evt) {
+                    evt.preventDefault();
+                    if ($("#NumberOfInstallments").val() == "0") {
+                        bootbox.alert("Choose Number of Payments ");
+                        return false;
+                    }
+                    var $form = $('form');
+                    if ($form.valid()) {
+                        $('#dvLoading').show();
+
+                        var ajaxOptions = {};
+                        ajaxOptions.data = JSON.stringify({
+                            EffectiveDate: new moment("mm/dd/yyyy", $("#EffectiveDate").val()),
+                            PersonalProperty: $("#ddlPersonalProperties").val(),
+                            Liability: $("#ddlLiabilities").val(),
+                            NumberOfInstallments: $("#NumberOfInstallments").val()
+                        });
+                        ajaxOptions.url = "/Renters/_Step2";
+                        ajaxOptions.method = "POST";
+                        ajaxOptions.dataType = "JSON";
+                        ajaxOptions.contentType = 'application/json';
+                        var request = $.ajax(ajaxOptions);
+
+                        request.done(function (result) {
+                            $("#lblTotalPremium").text('$ ' + result + ".00");
+                            if ($("#NumberOfInstallments").val() == "1") {
+                                $("#lblCurrentPayment").text('$ ' + result + ".00");
+                            }
+                            else if ($("#NumberOfInstallments").val() == "2") {
+                                $("#lblCurrentPayment").text('$ ' + (+result / 2).toFixed(2));
+                            }
+                            else if ($("#NumberOfInstallments").val() == "3") {
+                                $("#lblCurrentPayment").text('$ ' + (+result / 3).toFixed(2));
+                            }
+                            else if ($("#NumberOfInstallments").val() == "4") {
+                                $("#lblCurrentPayment").text('$ ' + (+result / 4).toFixed(2));
+                            }
+                            $("div.cal-premium").show();
+                            $("#btnContinuePayment").prop('disabled', false);
+                            $('#dvLoading').hide();
+                        });
+
+                        request.fail(function (jqXHR, textStatus) {
+                            alert("Request failed: " + textStatus);
+                            $('#dvLoading').hide();
+                        });
+
+                    }
+
+                });
             });
 
-            $("#btnQuote").click(function (evt) {
-                evt.preventDefault();
-                var $form = $('form');
-                if ($form.valid()) {
-                    $('#dvLoading').show();
-
-                    var ajaxOptions = {};
-                    ajaxOptions.data = JSON.stringify({
-                        EffectiveDate: new moment("mm/dd/yyyy", $("#EffectiveDate").val()),
-                        PersonalProperty: $("#ddlPersonalProperties").val(),
-                        Liability: $("#ddlLiabilities").val(),
-                        NumberOfInstallments: $("#NumberOfInstallments").val()
-                    });
-                    ajaxOptions.url = "/Renters/_Step2";
-                    ajaxOptions.method = "POST";
-                    ajaxOptions.dataType = "JSON";
-                    ajaxOptions.contentType = 'application/json';
-                    var request = $.ajax(ajaxOptions);
-
-                    request.done(function (result) {
-                        $("#lblPremium").text('$' + result + ".00");
-                        $("#btnContinuePayment").prop('disabled', false);
-                        $('#dvLoading').hide();
-                    });
-
-                    request.fail(function (jqXHR, textStatus) {
-                        alert("Request failed: " + textStatus);
-                        $('#dvLoading').hide();
-                    });
-
-                }
-
-            });
-        });
-
-    </script>
-                                        )
+        </script>
+                                                    )

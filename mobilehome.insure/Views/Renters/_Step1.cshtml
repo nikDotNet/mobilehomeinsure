@@ -4,7 +4,7 @@
     Layout = null;
 }
        
-<form>
+<form id="frmCustomer">
 <div class="col-xs-12" style="padding-bottom:20px;">
 <div class="billing-address">
     <div class="row field-row">
@@ -75,14 +75,14 @@
                 pwdBox.removeAttr("disabled");
             });
 
-            $("#ddlStateId").select2(
-                {
-                    //placeholder: "Select a State",
-                    allowClear: true
-                })
-                .on("change", function (e) {
+            //$("#ddlStateId").select2(
+            //    {
+            //        //placeholder: "Select a State",
+            //        allowClear: true
+            //    })
+            //    .on("change", function (e) {
 
-                });
+            //    });
 
             $("#EffectiveDate").datepicker();
 
@@ -91,7 +91,7 @@
             $("#btnCustomerInfo").on("click", function (evt) {
                 //debugger;
                 evt.preventDefault();
-                var $form = $('form');
+                var $form = $('#frmCustomer');
                 if ($form.valid()) {
                     $('#dvLoading').show();
 
@@ -121,8 +121,10 @@
                         //    active: 1,
                         //    heightStyle: "content"
                         //});
-
-                        $("#divCustomer address").html("<strong>" + $("#FirstName").val() + " " + $("#LastName").val() + "</strong><br>" + $("#Email").val() + "<br>" + $("#ddlStateId option:selected").text() + ", " + $("#City").val() + "<br><abbr title=\"Phone\">P:</abbr>" + $("#Phone").val());
+                        if ($("#ddlStateId option:selected").text().toLowerCase() == 'tennessee' || $("#ddlStateId option:selected").text().toLowerCase() == 'virginia)') {
+                            $(".fraudstatement").show();
+                        }
+                        $("#divCustomer address").html("<strong>" + $("#FirstName").val() + " " + $("#LastName").val() + "</strong><br>" + $("#Address").val() + "<br>" + $("#City").val() + ", " + $("#ddlStateId option:selected").text() + ", " + $("#Zip").val() + "<br><abbr title=\"Phone\">P:</abbr>" + $("#Phone").val());
                         $("#step1").hide();
                         $("#step2").show();
                         $('#dvLoading').hide();

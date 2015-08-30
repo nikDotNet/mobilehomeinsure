@@ -40,7 +40,7 @@
                             </address>
                         </div>
                         <div class="col-md-3" id="divPremium">
-                            <a href="#"><span class="badge">3</span> Premium</a>
+                            <a href="#"><span class="badge">3</span> Your Quote</a>
                             <address>
 
                             </address>
@@ -89,15 +89,8 @@
                     </div>
                     </div>
                 <div id="step2" style="display:none">
-                    <blockquote>
-                        <h3>Generate Quote</h3>
-                    </blockquote>
-                        <div>
-                            <p>
-                                @{Html.RenderPartial("_Step2", Model.quote);}
-                            </p>
-                        </div>
-</div>
+                    @{Html.RenderPartial("_Step2", Model.quote);}
+                </div>
                 <div id="step3" style="display:none">
                     <blockquote>
                         <h3>Make Payment</h3></blockquote>
@@ -136,7 +129,18 @@
                         url: "/Renters/GetParkDetail/" + $("#ddlParks").val(),
                         dataType: "json"
                     }).done(function (data) {
-                        $("#divPark address").html("<strong id=\"" + data.ParkName + "\">" + data.PhysicalAddress + "</strong><br>" + data.PhysicalCity + "<br>" + data.PhysicalCountry + "<br><abbr title=\"Phone\">P:</abbr> " + data.OfficePhone);
+                        $("#divPark address").html("<strong>" + data.ParkName + "</strong><br>" + data.PhysicalAddress + "<br>" + data.PhysicalCity + ", " + data.PhysicalStateAbbr + ", " + data.Zip + "<br><abbr title=\"Phone\">P:</abbr> " + data.OfficePhone);
+                        $("#City").val(data.PhysicalCity);
+                        $("#ddlStateId").val(data.PhysicalStateId);
+                        $("#ddlStateId").select2(
+                            {
+                                //placeholder: "Select a State",
+                                allowClear: true
+                            })
+                            .on("change", function (e) {
+
+                            });
+                        //$('#ddlStateId').select2('data', { id: data.PhysicalStateId, a_key: data.PhysicalState })
                     });
                     $("#parkSeclection").css("display", "none");
                     $("#step1").css("display", "block");
