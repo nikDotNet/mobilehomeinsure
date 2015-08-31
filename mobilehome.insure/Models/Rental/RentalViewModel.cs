@@ -46,7 +46,7 @@ namespace mobilehome.insure.Models.Rental
             public string City { get; set; }
             public string Zip { get; set; }
             [Required]
-            [RegularExpression("^(?=.*[0-9])[()/-0-9]+$", ErrorMessage="Enter valid phone no.")]
+            [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Enter valid phone no.")]
             public string Phone { get; set; }
             public int ParkId { get; set; }
         }
