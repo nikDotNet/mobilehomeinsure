@@ -35,9 +35,12 @@ namespace mobilehome.insure.Models.Rental
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
             [Display(Name = "Email")]
+            [Required]
+            [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "Enter valid email.")]
             public string Email { get; set; }
             public string Password { get; set; }
             [Display(Name = "Address")]
+            [Required]
             public string Address { get; set; }
             [Display(Name = "State")]
             public int StateId { get; set; }

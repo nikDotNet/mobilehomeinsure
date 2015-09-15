@@ -5,12 +5,22 @@
 }
 
 <div class="col-md-9 m-right">
+    <!-- Page Header -->
+    <div class="row" data-animated="0">
+        <div class="col-md-12">
+            <img src="~/content/img/about-us-header.png" class="img-responsive" />
+            <div id="page-header">
+                <h3><span>Contact Us</span></h3>
+                <ul class="bread_crumbs">
+                    <li><a href="#">home</a></li>
+                    <li>contact us</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div id="rightcontainer" style="background-color:white">
         <div class="row" data-animated="0">
             <div class="col-md-12">
-                <div class="page-header">
-                    <h1>Contact Us</h1>
-                </div>
             </div>
             <div class="col-md-12" id="m-contact" style="width:840px; left:15px">
                 @{Html.RenderPartial("_contact"); }
