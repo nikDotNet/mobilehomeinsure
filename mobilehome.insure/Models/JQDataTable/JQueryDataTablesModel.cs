@@ -85,7 +85,7 @@ namespace mobilehome.insure.Models.JQDataTable
         /// </summary>
         public ReadOnlyCollection<string> mDataProp_ { get; set; }
 
-        public ReadOnlyCollection<SortedColumn> GetSortedColumns()
+        public ReadOnlyCollection<SortedColumn> GetSortedColumns(string sortDirection)
         {
             if (!iSortingCols.HasValue)
             {
@@ -96,7 +96,7 @@ namespace mobilehome.insure.Models.JQDataTable
             var sortedColumns = new List<SortedColumn>();
             for (int i = 0; i < iSortingCols.Value; i++)
             {
-                sortedColumns.Add(new SortedColumn(mDataProp_[iSortCol_[i]], sSortDir_[i]));
+                sortedColumns.Add(new SortedColumn(mDataProp_[iSortCol_[i]], (string.IsNullOrWhiteSpace(sortDirection) ? sSortDir_[i] : sortDirection)));
             }
 
             return sortedColumns.AsReadOnly();

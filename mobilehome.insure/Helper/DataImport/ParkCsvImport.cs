@@ -20,6 +20,17 @@ namespace mobilehome.insure.Helper.DataImport
                 SetCSVConfiguration(csv);
                 listRec = csv.GetRecords<MobileHome.Insure.Model.Park>().ToList();
 
+                //take five digit for Zip Code
+                listRec.ForEach((MobileHome.Insure.Model.Park item) =>
+                {
+                    if (item.MapPhysicalZip.Length > 5)
+                    {
+                        item.PhysicalZip = Convert.ToInt32(item.MapPhysicalZip.Substring(0, item.MapPhysicalZip.IndexOf("-")));
+                    }
+                    else
+                        item.PhysicalZip = Convert.ToInt32(item.MapPhysicalZip);
+                });
+                
                 var states = new MobileHome.Insure.Service.Master.MasterServiceFacade().GetStates();
                 //for physical state
                 foreach (var record in listRec.Where(st => !string.IsNullOrWhiteSpace(st.PhysicalCsvState)))
@@ -76,7 +87,7 @@ namespace mobilehome.insure.Helper.DataImport
             Map(m => m.PhysicalAddress2).Name("PHYSICAL ADDRESS 2");
             Map(m => m.PhysicalCity).Name("PHYSICAL CITY");
             Map(m => m.PhysicalCsvState).Name("PHYSICAL STATE");
-            Map(m => m.PhysicalZip).Name("PHYSICAL ZIP");
+            Map(m => m.MapPhysicalZip).Name("PHYSICAL ZIP");
             Map(m => m.PhysicalCounty).Name("PHYSICAL COUNTY");
 
             Map(m => m.OfficePhone).Name("OFFICE PHONE");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 
 namespace mobilehome.insure.Models.JQDataTable
@@ -48,6 +49,10 @@ namespace mobilehome.insure.Models.JQDataTable
             List<string> properties)
         {
             var types = runTimeMethod();
+            //if (typeof(T).FullName.Equals("MobileHome.Insure.Model.Customer", StringComparison.OrdinalIgnoreCase))
+            //{
+
+            //}
             totalRecordCount = types.Count;
 
 
@@ -88,11 +93,17 @@ namespace mobilehome.insure.Models.JQDataTable
             //}
 
             searchRecordCount = types.Count;
-            IOrderedEnumerable<T> sortedEntityTypes = null;
+            IEnumerable<T> sortedEntityTypes = null;
             foreach (var sortedColumn in sortedColumns)
             {
-                sortedEntityTypes = sortedEntityTypes == null ? types.Sort(sortedColumn.Direction, entity => { return entity.GetType().GetProperty(sortedColumn.PropertyName).Name; })
-                                                              : sortedEntityTypes.Sort(sortedColumn.Direction, entity => { return entity.GetType().GetProperty(sortedColumn.PropertyName).Name; });
+                if (sortedColumn.Direction == SortingDirection.Ascending)
+                {
+                    sortedEntityTypes = types.OrderBy(sortedColumn.PropertyName);
+                }
+                else
+                {
+                    sortedEntityTypes = types.OrderByDescending(entity => entity.GetType().GetProperty(sortedColumn.PropertyName).GetValue(entity,null));
+                }
             }
 
             return sortedEntityTypes.Skip(startIndex).Take((pageSize > 0 ? pageSize : totalRecordCount)).ToList();

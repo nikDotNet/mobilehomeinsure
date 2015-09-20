@@ -41,7 +41,8 @@ namespace MobileHome.Insure.Service.Rental
                 Zip = Zip,
                 Phone = Phone,
                 CreationDate = DateTime.Now,
-                User = user
+                User = user,
+                IsActive = true
             };
 
             _context.Users.Add(user);
@@ -72,7 +73,8 @@ namespace MobileHome.Insure.Service.Rental
                    Premium = Premium,
                    CustomerId = CustomerId,
                    NoOfInstallments = NoOfInstallments,
-                   CreationDate = DateTime.Now
+                   CreationDate = DateTime.Now,
+                   IsActive = true
                };
                 _context.Quotes.Add(quoteObj);
             }
@@ -88,6 +90,7 @@ namespace MobileHome.Insure.Service.Rental
                 quoteObj.CustomerId = CustomerId;
                 quoteObj.NoOfInstallments = NoOfInstallments;
                 quoteObj.CreationDate = DateTime.Now;
+                quoteObj.IsActive = (quoteObj.IsActive ? quoteObj.IsActive : !quoteObj.IsActive);
 
                 _context.Entry(quoteObj).State = System.Data.Entity.EntityState.Modified;
             }
@@ -124,9 +127,9 @@ namespace MobileHome.Insure.Service.Rental
             paymentObj.ApprovalCode = ApprovalCode;
             paymentObj.ApprovalMessage = "";
             paymentObj.ErrorMessage = ErrorMessage;
+            paymentObj.IsActive = (paymentObj.IsActive ? paymentObj.IsActive : !paymentObj.IsActive);
 
             _context.Entry(paymentObj).State = System.Data.Entity.EntityState.Modified;
-
             _context.SaveChanges();
 
             return true;

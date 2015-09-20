@@ -197,7 +197,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 runTimeMethod: _masterServiceFacade.GetParksWithOnOff, //Updating bcos, on/off feature has to implement
                 startIndex: jQueryDataTablesModel.iDisplayStart,
                 pageSize: jQueryDataTablesModel.iDisplayLength,
-                sortedColumns: jQueryDataTablesModel.GetSortedColumns(),
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
                 totalRecordCount: out totalRecordCount,
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,

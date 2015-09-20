@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,9 @@ namespace MobileHome.Insure.Model
         public string PhysicalCsvState { get; set; }
 
         public int PhysicalZip { get; set; }
+        
+        [NotMapped]
+        public string MapPhysicalZip { get; set; }
 
 
         public string OfficePhone { get; set; }
@@ -106,5 +110,6 @@ namespace MobileHome.Insure.Model
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
+
     }
 }
