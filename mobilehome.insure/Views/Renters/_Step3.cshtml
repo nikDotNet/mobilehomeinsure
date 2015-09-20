@@ -51,12 +51,12 @@
 
             </div>
 
-            <div class="row field-row">
+            @*<div class="row field-row">
                 <div class="col-xs-12 col-sm-12">
                     @Html.CheckBoxFor(x => x.SendLandlond)
                     @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
                 </div>
-            </div>
+            </div>*@
 
             <div class="pull-right">
                 <button class="btn btn-default" id="btnPayment">Submit</button>
@@ -98,8 +98,13 @@
                     request.done(function (result) {
 
                         $('#dvLoading').hide();
-
-                        window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
+                        $("#renterprocess").hide();
+                        $("#renterprint").show();
+                        $.each(result, function (key, data) {
+                            var id = "#" + key;
+                            $(id).html(data);
+                        });
+                        //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
                     });
 
                     request.fail(function (jqXHR, textStatus) {

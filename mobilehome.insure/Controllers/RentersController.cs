@@ -121,8 +121,27 @@ namespace MobileHome.Insure.Web.Controllers
             if (success)
             {
                 ViewBag.Success = true;
+                var rtn = new
+                {
+                    infoName ="Saurav Bhadani",
+                    infoAddress1 = "",
+                    infoAddress2 = "",
+                    infoCity = "",
+                    infoState = "",
+                    infoZipCode = "",
+                    infoPhone = "9155894085",
+                    infoEmail ="",
+                    infopolnbr = "",
+                    infocopcod = "",
+                    infopmtid = "",
+                    infopmtamt = "xxxx",
+                    infopayopt = "",
+                    infotrndat = "",
+                    infotrntim = "zzzz"
+                };
                 TempData.Clear();
-                TempData["Success"] = "true";
+                //TempData["Success"] = "true";
+                return Json(rtn, JsonRequestBehavior.AllowGet);
             }
             else
                 TempData.Keep();
