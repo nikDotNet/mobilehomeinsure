@@ -43,14 +43,19 @@
                     @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
                 </div>
 
-
                 <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.Zip)
                     @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
                     @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-
                 </div>
 
+            </div>
+
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-12">
+                    @Html.CheckBoxFor(x => x.SendLandlond)
+                    @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
+                </div>
             </div>
 
             <div class="pull-right">

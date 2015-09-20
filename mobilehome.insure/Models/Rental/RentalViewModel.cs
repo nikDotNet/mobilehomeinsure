@@ -91,6 +91,8 @@ namespace mobilehome.insure.Models.Rental
             public List<OptionListItem> Liabilities { get; set; }
 
             public List<OptionListItem> PersonalProperties { get; set; }
+
+            public bool SendLandlond { get; set; }
         }
 
         public class Payment
