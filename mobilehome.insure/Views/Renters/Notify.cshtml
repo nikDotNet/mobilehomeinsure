@@ -1,0 +1,64 @@
+﻿@model mobilehome.insure.Models.Rental.NotifyViewModel
+@{
+    ViewBag.Title = "Mobile Home Appraisal - MobileHome.Insure";
+}
+
+<div class="col-md-9 m-right">
+    <!-- Page Header -->
+    <div class="row" data-animated="0">
+        <div class="col-md-12">
+            <img src="~/content/img/header-renters-app.png" class="img-responsive" />
+            <div id="page-header">
+                <h3><span>Mobile Home Renters</span></h3>
+                <ul class="bread_crumbs">
+                    <li><a href="#">home</a></li>
+                    <li><a href="/renters">renters</a></li>
+                    <li>notify</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="rightcontainer" style="background-color:white">
+        @using (Html.BeginForm())
+        {
+            <div class="row" data-animated="0">
+                <div class="col-md-12">
+                    <div class="page-header">
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Name)
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Email)
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.LabelFor(x => x.Zip)
+                            @Html.TextBoxFor(x => x.Zip, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="form-action">
+                                <button class="btn btn-default" id="btnNotify">Notify Me!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @Html.ValidationSummary(true)
+        }
+    </div>
+
+</div>
+ 

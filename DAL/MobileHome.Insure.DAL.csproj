@@ -66,6 +66,7 @@
     <Compile Include="EF\EFDBContext.cs" />
     <Compile Include="EF\EFUnitOfWork.cs" />
     <Compile Include="EF\Mapping\CompanyMap.cs" />
+    <Compile Include="EF\Mapping\ParkMapNotify.cs" />
     <Compile Include="EF\Mapping\UserMap.cs" />
     <Compile Include="EF\Mapping\CustomerMap.cs" />
     <Compile Include="EF\Mapping\OptionsFactorMap.cs" />

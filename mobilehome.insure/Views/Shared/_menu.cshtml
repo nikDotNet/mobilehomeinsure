@@ -16,14 +16,13 @@
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav navbar-right menu-effect">
-							<li class="current"><a href="/" data-hover="Home">Home</a></li>
+							@*<li class="current"><a href="/" data-hover="Home">Home</a></li>*@
                             <!-- Make DropDown Menu Item -->
-							<li>
-                                
+                            <li><a href="/Renters" data-hover="Quote&nbsp;Now">Quote Now</a></li>
                             <li><a href="/Home/AboutUs" data-hover="About">About</a></li>
-							<li><a href="/Renters" data-hover="Renters">Renters</a></li>
-                            <li><a href="/Appraisal" data-hover="Appraisal">Appraisal</a></li>
-                            <li>
+							
+                            @*<li><a href="/Appraisal" data-hover="Appraisal">Appraisal</a></li>*@
+                            @*<li>
                                 <a href="/support" class="x-dropdown" data-hover="Support&nbsp;&#9663;">Support &#9662;</a>
                                 @if(pageName == "support")
                                 {
@@ -31,7 +30,8 @@
                                     <li><a href="/support/StraightTalk" data-hover="straight&nbsp;talk&nbsp;customer&nbsp;service">straight talk customer service</a></li>
                                 </ul>
                                 }
-                            </li>
+                            </li>*@
+                            <li><a href="/support" data-hover="Support">Support</a></li>
                             <li><a href="/home/contact" data-hover="Contact">Contact</a></li>
 						</ul>
 					</div>

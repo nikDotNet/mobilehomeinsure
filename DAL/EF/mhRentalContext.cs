@@ -31,6 +31,8 @@ namespace MobileHome.Insure.DAL.EF
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Park> Parks { get; set; }
 
+        public virtual DbSet<ParkNotify> ParkNotifies { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new QuoteMap());

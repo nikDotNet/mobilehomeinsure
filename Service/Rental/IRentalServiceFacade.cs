@@ -24,5 +24,7 @@ namespace MobileHome.Insure.Service.Rental
         List<MobileHome.Insure.Model.Payment> GetPayments();
 
         bool SaveCustomerInfo(int id, string delType);
+
+        bool SaveParkNotify(ParkNotify notify);
     }
 }

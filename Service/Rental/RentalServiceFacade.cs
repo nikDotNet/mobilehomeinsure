@@ -191,5 +191,15 @@ namespace MobileHome.Insure.Service.Rental
 
             return result;
         }
+
+        public bool SaveParkNotify(ParkNotify notify)
+        {
+            notify.IsNotified = false;
+            notify.CreatedOn = DateTime.Now;
+
+            _context.ParkNotifies.Add(notify);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

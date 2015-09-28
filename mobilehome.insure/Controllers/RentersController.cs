@@ -14,6 +14,7 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 using mobilehome.insure.Areas.Admin.Models;
 using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.Rental;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -202,6 +203,27 @@ namespace MobileHome.Insure.Web.Controllers
                     new OptionListItem{Id=2, Text="$ 20,000"},
                     new OptionListItem{Id=3, Text="$ 25,000"}
                 };
+        }
+
+        public ActionResult Notify()
+        {
+            NotifyViewModel model = new NotifyViewModel();
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult Notify(NotifyViewModel model)
+        {
+            ParkNotify request = new ParkNotify
+            {
+                Name = model.Name,
+                Zip = model.Zip,
+                Email = model.Email
+            };
+
+
+            bool success = _serviceFacade.SaveParkNotify(request);
+
+            return View(model);
         }
     }
 }

@@ -203,6 +203,7 @@
     <Compile Include="Models\JQDataTable\SortingDirection.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\OptionListItem.cs" />
+    <Compile Include="Models\Rental\NotifyViewModel.cs" />
     <Compile Include="Models\Rental\RentalViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1481,6 +1482,7 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Home\TermsAndConditions.cshtml" />
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Renters\Notify.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

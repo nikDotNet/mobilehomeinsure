@@ -41,9 +41,9 @@
                     <div class="col-md-12">
                         <div class="col-md-3" id="divPark">
                             <a href="#"><span class="badge">1</span> Selected Park</a>
-                            <address>
+                                <address>
 
-                            </address>
+                                </address>
                         </div>
                         <div class="col-md-3" id="divCustomer">
                             <a href="#"><span class="badge">2</span> Customer Information</a>
@@ -72,7 +72,7 @@
                                     <div class="input-group">
                                         @Html.TextBoxFor(x => x.Zip, new { id = "findZip", @class = "form-control", @placeholder = "Enter your Zip Code" })
                                         <span class="input-group-btn">
-                                            <button id="btnParkSelection" class="btn btn-primary" type="button">Submit</button>
+                                            <button id="btnParkSelection" class="btn btn-primary" type="button">Start</button>
                                         </span>
                                     </div>
                                     @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
@@ -184,6 +184,33 @@
         var parkId = null;
 
         $(document).ready(function () {
+
+            $("#divPark").click(function () {
+                $("#parkSeclection").css("display", "block");
+                $("#step1").css("display", "none");
+                $("#step2").css("display", "none");
+                $("#step3").css("display", "none");
+
+            });
+            $("#divCustomer").click(function () {
+                $("#parkSeclection").css("display", "none");
+                $("#step1").css("display", "block");
+                $("#step2").css("display", "none");
+                $("#step3").css("display", "none");
+            });
+            $("#divPremium").click(function () {
+                $("#parkSeclection").css("display", "none");
+                $("#step1").css("display", "none");
+                $("#step2").css("display", "block");
+                $("#step3").css("display", "none");
+            });
+
+            $("#divPayment").click(function () {
+                $("#parkSeclection").css("display", "none");
+                $("#step1").css("display", "none");
+                $("#step2").css("display", "none");
+                $("#step3").css("display", "block");
+            });
             //$("#accordion").css("display", "none"); //initially it would be display=none
             $("#divParks").css("display", "none");
             $("#btnParkSelContinue").css("display", "none");
@@ -270,7 +297,7 @@
                         else {
                             $("#btnParkSelContinue").css("display", "none");
                             $("#divParks").css("display", "none");
-                            bootbox.alert(data2.Message);
+                            bootbox.alert("The Zip Code You Are Searching For is Not Available At This time<br/>1.<a href='/renters/notify'>Click Here</a> to be notified when your zip code is available<br/>2.<a href='/renters'>Click Here</a> to Start Over.");
                         }
                         $('#dvLoading').hide();
                     });
