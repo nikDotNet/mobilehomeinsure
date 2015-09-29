@@ -802,6 +802,10 @@ header {
         padding: 10px 10px 3px;
     }
 
+    #rightContainer{
+        padding: 0 15px;
+    }
+
 }
 
 
