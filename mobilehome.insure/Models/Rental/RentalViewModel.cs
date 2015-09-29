@@ -29,15 +29,22 @@ namespace mobilehome.insure.Models.Rental
         {
             public int CustomerId { get; set; }
             [Required]
-            [Display(Name="First Name")]
+            [Display(Name = "Insured First Name")]
             public string FirstName { get; set; }
             [Required]
-            [Display(Name = "Last Name")]
+            [Display(Name = "Insured Last Name")]
             public string LastName { get; set; }
-            [Display(Name = "Email")]
             [Required]
+            [Display(Name = "Email")]
             [RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "Enter valid email.")]
             public string Email { get; set; }
+
+            [Display(Name = "Insured 2 First Name")]
+            public string FirstName2 { get; set; }
+            [Display(Name = "Insured 2 Last Name")]
+            public string LastName2 { get; set; }
+            [Display(Name = "Insured 2 Email")]
+            
             public string Password { get; set; }
             [Display(Name = "Address")]
             [Required]
@@ -64,6 +71,8 @@ namespace mobilehome.insure.Models.Rental
                 InstallmentList.Add(2, "2 Payments");
                 InstallmentList.Add(3, "3 Payments");
                 InstallmentList.Add(4, "4 Payments");
+
+                SendLandlord = true;
             }
 
             public int QuoteId { get; set; }
@@ -92,7 +101,7 @@ namespace mobilehome.insure.Models.Rental
 
             public List<OptionListItem> PersonalProperties { get; set; }
 
-            public bool SendLandlond { get; set; }
+            public bool SendLandlord { get; set; }
         }
 
         public class Payment
@@ -113,14 +122,18 @@ namespace mobilehome.insure.Models.Rental
             public int? QuoteId { get; set; }
 
             [Display(Name = "Name on Card")]
+            [Required]
             public string NameOnCard { get; set; }
 
             [Display(Name = "Credit Card Number")]
+            [Required]
             public string CreditCardNumber { get; set; }
             [Display(Name = "Expiry Month")]
+            [Required]
             public int ExpiryMonth { get; set; }
 
             [Display(Name = "Expiry Year")]
+            [Required]
             public int ExpiryYear { get; set; }
             public decimal Amount { get; set; }
 

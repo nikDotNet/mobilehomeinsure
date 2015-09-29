@@ -4,7 +4,7 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name = "frmPayment" }))
+@using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name = "frmPayment", id = "frmPayment" }))
 {
     <div class="col-xs-12 no-margin">
         <div class="billing-address">
@@ -74,7 +74,7 @@
             $("#EffectiveDate").datepicker();
             $("#btnPayment").click(function (evt) {
                 evt.preventDefault();
-                var $form = $('form');
+                var $form = $('#frmPayment');
                 if ($form.valid()) {
                     $('#dvLoading').show();
                     var ajaxOptions = {};

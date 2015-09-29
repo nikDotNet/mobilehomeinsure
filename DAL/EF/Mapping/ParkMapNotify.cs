@@ -28,6 +28,14 @@ namespace MobileHome.Insure.DAL.EF.Mapping
                 .HasMaxLength(10);
             this.Property(t => t.CreatedOn).HasColumnName("CreatedOn");
             this.Property(t => t.IsNotified).HasColumnName("IsNotified");
+
+            this.ToTable("ParkNotify");
+            this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Name).HasColumnName("Name");
+            this.Property(t => t.Email).HasColumnName("Email");
+            this.Property(t => t.Zip).HasColumnName("Zip");
+            this.Property(t => t.IsNotified).HasColumnName("IsNotified");
+            this.Property(t => t.CreatedOn).HasColumnName("CreatedOn");
         }
     }
 }

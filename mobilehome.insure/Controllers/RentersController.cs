@@ -53,7 +53,7 @@ namespace MobileHome.Insure.Web.Controllers
         public ActionResult _Step1(RentalViewModel.Customer model)
         {
             TempData["CustomerId"] = _serviceFacade.saveCustomerInformation(
-                                                    model.FirstName, model.LastName, model.Email,
+                                                    model.FirstName, model.LastName,model.FirstName2, model.LastName2, model.Email,
                                                     model.Password, model.Address,
                                                     model.StateId, model.City,
                                                     model.Zip, model.Phone);
@@ -80,7 +80,7 @@ namespace MobileHome.Insure.Web.Controllers
             var itemPProperty = GetPersonalProperties().Find(l => l.Id == Convert.ToInt32(model.PersonalProperty));
             model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
 
-            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, ref quoteId);
+            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId);
             TempData["QuoteId"] = quoteId;
             TempData["Premium"] = model.Premium;
             TempData.Keep();

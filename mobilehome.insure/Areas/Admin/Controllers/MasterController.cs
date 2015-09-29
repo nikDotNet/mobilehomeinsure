@@ -8,6 +8,7 @@ using MobileHome.Insure.Web.Models.Admin;
 using MobileHome.Insure.Service.Master;
 using mobilehome.insure.Areas.Admin.Helpers;
 using mobilehome.insure.Areas.Admin.Models;
+using MobileHome.Insure.Model.Rental;
 
 
 namespace mobilehome.insure.Areas.Admin.Controllers
@@ -171,6 +172,70 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
             return View("../Park/Index");
         }
+        #endregion
+
+        #region Notify
+        public ActionResult Notify(bool? exportCsv)
+        {
+            var model = new ListNotifyViewModel();
+            var ParkNotify = _serviceFacade.GetNotifies();
+
+            foreach (var item in ParkNotify)
+            {
+                model.ListNotify.Add(item);
+            }
+
+            if (exportCsv.HasValue)
+                model.ListNotify.ExportCSV("NotifyList_" + DateTime.Now.ToString());
+
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult _partialEditNotify(int? id)
+        {
+            ListNotifyViewModel model = new ListNotifyViewModel();
+
+            if (id.HasValue)
+                model.notifyObj = _serviceFacade.GetNotifyById(id.Value);
+
+            return View(model);
+
+        }
+
+        [HttpPost]
+        public ActionResult _partialEditNotify(ListNotifyViewModel notifyViewModelObj)
+        {
+            try
+            {
+                _serviceFacade.saveNotify(notifyViewModelObj.notifyObj);
+                TempData["Success"] = true;
+            }
+            catch (Exception ex)
+            {
+                TempData["Success"] = false;
+            }
+            return RedirectToAction("Notify");
+        }
+
+
+        public ActionResult deleteNotify(int id)
+        {
+            try
+            {
+                var objNotify = new ParkNotify();
+                objNotify.Id = id;
+                _serviceFacade.saveNotify(objNotify, true);
+                TempData["Success"] = true;
+            }
+            catch (Exception ex)
+            {
+                TempData["Success"] = false;
+            }
+            return RedirectToAction("Notify");
+        }
+
         #endregion
     }
 }

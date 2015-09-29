@@ -34,6 +34,16 @@
                             @Html.DropDownListFor(x => x.NumberOfInstallments, new SelectList(Model.InstallmentList, "Key", "Value", Model.NumberOfInstallments), "", new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })
                             @Html.ValidationMessageFor(x => x.NumberOfInstallments, "", new { @class = "text-danger" })
                         </div>
+
+                        @*<div class="col-xs-12 col-sm-6">
+                            @Html.CheckBoxFor(x => x.SendLandlord, new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%", @checked = "checked" })
+                            Would you like us to send a copy of your policy to your landlord to show proof of insurance?
+                            @Html.ValidationMessageFor(x => x.SendLandlord, "", new { @class = "text-danger" })
+                        </div>*@
+                        <div class="col-xs-12 col-sm-12" style="padding-top:10px;">
+                            <div class="col-xs-1 col-sm-1">@Html.CheckBoxFor(x => x.SendLandlord, new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })</div>
+                            <div class="col-xs-11 col-sm-11">Would you like us to send a copy of your policy to your landlord to show proof of insurance?</div>
+                        </div>
                     </div>
                     <div class="pull-left">
 
@@ -94,6 +104,7 @@
                         bootbox.alert("Choose Number of Payments ");
                         return false;
                     }
+                    alert($("#SendLandlord").checked);
                     var $form = $('form');
                     if ($form.valid()) {
                         $('#dvLoading').show();
@@ -103,7 +114,8 @@
                             EffectiveDate: new moment("mm/dd/yyyy", $("#EffectiveDate").val()),
                             PersonalProperty: $("#ddlPersonalProperties").val(),
                             Liability: $("#ddlLiabilities").val(),
-                            NumberOfInstallments: $("#NumberOfInstallments").val()
+                            NumberOfInstallments: $("#NumberOfInstallments").val(),
+                            SendLandlord: $("#SendLandlord").checked
                         });
                         ajaxOptions.url = "/Renters/_Step2";
                         ajaxOptions.method = "POST";

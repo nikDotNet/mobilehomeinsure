@@ -25,6 +25,21 @@
         </div>
     </div>
     <div class="row field-row">
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.FirstName2)
+            @Html.TextBoxFor(x => x.FirstName2, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.FirstName2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            @Html.LabelFor(x => x.LastName2)
+            @Html.TextBoxFor(x => x.LastName2, new { @class = "le-input" })
+            @Html.ValidationMessageFor(x => x.LastName2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            
+        </div>
+    </div>
+    <div class="row field-row">
         <div class="col-xs-12 col-sm-6">
             @Html.LabelFor(x => x.Address)
             @Html.TextAreaFor(x => x.Address, new { @class = "le-input", style = "width: 100%" })
@@ -50,7 +65,7 @@
         <div class="col-xs-12 col-sm-4">
             @Html.LabelFor(x => x.Phone)
             @Html.TextBoxFor(x => x.Phone, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger" })
+            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger", @placeholder = "(XXX) XXX-XXXX" })
         </div>
     </div>
     <div class="pull-right">
@@ -99,6 +114,8 @@
                     ajaxOptions.data = JSON.stringify({
                         FirstName: $("#FirstName").val(),
                         LastName: $("#LastName").val(),
+                        FirstName2: $("#FirstName2").val(),
+                        LastName2: $("#LastName2").val(),
                         Email: $("#Email").val(),
                         //Password: $("#Password").val(),
                         Address: $("#Address").val(),

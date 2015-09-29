@@ -30,6 +30,8 @@ namespace MobileHome.Insure.Model.Rental
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
 
+        public bool SendLandLord { get; set; }
+
         public virtual ICollection<Payment> Payments { get; set; }
     }
 }

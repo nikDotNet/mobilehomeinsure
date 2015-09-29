@@ -24,6 +24,12 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.LastName)
                 .HasMaxLength(70);
 
+            this.Property(t => t.FirstName2)
+                .HasMaxLength(70);
+
+            this.Property(t => t.LastName2)
+                .HasMaxLength(70);
+
             this.Property(t => t.Address)
                 .HasMaxLength(200);
 
@@ -46,6 +52,8 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.FirstName).HasColumnName("FirstName");
             this.Property(t => t.LastName).HasColumnName("LastName");
+            this.Property(t => t.FirstName2).HasColumnName("FirstName2");
+            this.Property(t => t.LastName2).HasColumnName("LastName2");
             this.Property(t => t.Address).HasColumnName("Address");
             this.Property(t => t.Zip).HasColumnName("Zip");
             this.Property(t => t.Phone).HasColumnName("Phone");

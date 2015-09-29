@@ -18,6 +18,8 @@ namespace MobileHome.Insure.Model
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FirstName2 { get; set; }
+        public string LastName2 { get; set; }
         public string Email { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> StateId { get; set; }

@@ -34,6 +34,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.CreationDate).HasColumnName("CreationDate");
             this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
             this.Property(t => t.IsActive).HasColumnName("IsActive");
+            this.Property(t => t.SendLandLord).HasColumnName("SendLandLord");
 
             // Relationships
             this.HasOptional(t => t.Customer)

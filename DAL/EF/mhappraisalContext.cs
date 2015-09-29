@@ -3,6 +3,7 @@ using System.Data.Entity.Infrastructure;
 using MobileHome.Insure.DAL.EF.Mapping;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.Appraisal;
+using MobileHome.Insure.Model.Rental;
 
 namespace MobileHome.Insure.DAL.EF
 {
@@ -29,6 +30,8 @@ namespace MobileHome.Insure.DAL.EF
 
         public DbSet<Park> Parks { get; set; }
 
+        public DbSet<ParkNotify> ParkNotifies { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new AgeFactorMap());
@@ -40,6 +43,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new OptionsFactorMap() );
             modelBuilder.Configurations.Add(new OptionsTypeMap());
             modelBuilder.Configurations.Add(new ParkMap());
+            modelBuilder.Configurations.Add(new ParkNotifyMap());
         }
     }
 }

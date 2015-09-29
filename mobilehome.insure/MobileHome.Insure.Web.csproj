@@ -188,6 +188,7 @@
     <Compile Include="Helper\Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Models\Admin\ListManufacturerViewModel.cs" />
     <Compile Include="Models\Admin\ListOptionsFactorViewModel.cs" />
+    <Compile Include="Models\Admin\ListNotifyViewModel.cs" />
     <Compile Include="Models\Admin\ListStateViewModel.cs" />
     <Compile Include="Models\Admin\ListStateFactorViewModel.cs" />
     <Compile Include="Models\Admin\ListManufacturerFactorViewModel.cs" />
@@ -1378,6 +1379,8 @@
     <Content Include="Content\assets\global\plugins\select2\package.json" />
     <Content Include="Content\assets\global\plugins\select2\release.sh" />
     <Content Include="Content\assets\global\plugins\select2\select2_locale_en.js.template" />
+    <Content Include="Areas\Admin\Views\Master\Notify.cshtml" />
+    <Content Include="Areas\Admin\Views\Master\_partialEditNotify.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />

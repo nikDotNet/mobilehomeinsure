@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.Rental;
 
 namespace MobileHome.Insure.Service.Master
 {
@@ -260,5 +261,48 @@ namespace MobileHome.Insure.Service.Master
             return result;
         }
         #endregion
+
+        #region state
+        public List<ParkNotify> GetNotifies()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.ParkNotifies.AsNoTracking().OrderBy(x => x.CreatedOn).ToList();
+        }
+
+        public ParkNotify GetNotifyById(int id)
+        {
+            return _context.ParkNotifies.Where(x => x.Id == id).SingleOrDefault();
+        }
+
+        public void saveNotify(ParkNotify notifyObj, bool toDelete = false)
+        {
+            if (notifyObj.Id != 0)
+            {
+                var existingObj = _context.ParkNotifies.Where(x => x.Id == notifyObj.Id).SingleOrDefault();
+                if (existingObj != null)
+                {
+                    if (toDelete)
+                        existingObj.IsNotified = true;
+                    else
+                    {
+                        existingObj.Name = notifyObj.Name;
+                        existingObj.Email = notifyObj.Email;
+                        existingObj.Zip = notifyObj.Zip;
+                    }
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                notifyObj.CreatedOn = DateTime.Now;
+                notifyObj.IsNotified = false;
+                _context.ParkNotifies.Add(notifyObj);
+                _context.SaveChanges();
+            }
+        }
+
+        #endregion
+
     }
 }

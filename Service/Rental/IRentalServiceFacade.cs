@@ -10,8 +10,8 @@ namespace MobileHome.Insure.Service.Rental
 {
     public interface IRentalServiceFacade
     {
-        int saveCustomerInformation(string FirstName, string LastName, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone);
-        decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, ref int quoteId);
+        int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone);
+        decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments,bool SendLandlord, ref int quoteId);
 
         int generateInvoice(decimal amount, int customerId, int quoteId);
 

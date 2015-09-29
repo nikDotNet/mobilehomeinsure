@@ -19,7 +19,7 @@ namespace MobileHome.Insure.Service.Rental
             _context = new mhRentalContext();
         }
 
-        public int saveCustomerInformation(string FirstName, string LastName, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone)
+        public int saveCustomerInformation(string FirstName, string LastName,string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone)
         {
             var user = new User
             {
@@ -34,6 +34,8 @@ namespace MobileHome.Insure.Service.Rental
             {
                 FirstName = FirstName,
                 LastName = LastName,
+                FirstName2 = FirstName2,
+                LastName2 = LastName2,
                 Email = Email,
                 Address = Address,
                 StateId = StateId,
@@ -52,7 +54,7 @@ namespace MobileHome.Insure.Service.Rental
             return customerObj.Id;
         }
 
-        public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, ref int quoteId)
+        public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments,bool SendLandlord, ref int quoteId)
         {
             //Generating proposal number
             string ProposalNo = "ABCD1234";
@@ -74,6 +76,7 @@ namespace MobileHome.Insure.Service.Rental
                    CustomerId = CustomerId,
                    NoOfInstallments = NoOfInstallments,
                    CreationDate = DateTime.Now,
+                   SendLandLord = SendLandlord,
                    IsActive = true
                };
                 _context.Quotes.Add(quoteObj);
@@ -90,6 +93,7 @@ namespace MobileHome.Insure.Service.Rental
                 quoteObj.CustomerId = CustomerId;
                 quoteObj.NoOfInstallments = NoOfInstallments;
                 quoteObj.CreationDate = DateTime.Now;
+                quoteObj.SendLandLord = SendLandlord;
                 quoteObj.IsActive = (quoteObj.IsActive ? quoteObj.IsActive : !quoteObj.IsActive);
 
                 _context.Entry(quoteObj).State = System.Data.Entity.EntityState.Modified;
