@@ -42,10 +42,15 @@ namespace MobileHoome.Insure.ExtService.Models
     public enum CoverType
     {
         [EnumMember]
-        Persprop,
+        persprop,
         [EnumMember]
-        Deductible,
+        deductible,
         [EnumMember]
-        LOU
+        lou,
+        [EnumMember]
+        liability,
+        [EnumMember]
+        medpay
+
     }
 }

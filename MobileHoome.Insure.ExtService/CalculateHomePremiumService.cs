@@ -61,9 +61,12 @@ namespace MobileHoome.Insure.ExtService
                                         );
 
                 rootEle.Element("unitinfo").Add(new XElement("covinfo",
-                                                        GetCoverItemInfo(CoverType.Persprop, limit: quote.PersonalProperty),
-                                                        GetCoverItemInfo(CoverType.Deductible, deductible: quote.Deductible),
-                                                        GetCoverItemInfo(CoverType.LOU, limit: quote.Liability)
+                                                        GetCoverItemInfo(CoverType.persprop, limit: quote.PersonalProperty),
+                                                        GetCoverItemInfo(CoverType.deductible, deductible: quote.Deductible),
+                                                        GetCoverItemInfo(CoverType.lou, limit: quote.LOU),
+                                                        GetCoverItemInfo(CoverType.liability, limit: quote.Liability),
+                                                        GetCoverItemInfo(CoverType.medpay, limit: quote.MedPay)
+
                                         ));
 
                 //Call service and get the result with Premium
@@ -94,7 +97,7 @@ namespace MobileHoome.Insure.ExtService
         {
             var returnInfo = new PolicyReturnInfo()
             {
-                returnc = string.Empty,
+                returnc = "Q",
                 premwrit = "316.00",
                 policynbr = LongBetween(9999999999, 1000000000).ToString(), //"4200001254", //Finding new number
                 progmode = "A",
@@ -193,18 +196,26 @@ namespace MobileHoome.Insure.ExtService
             var coverItem = new CoverItemInfo(coverType);
             switch (coverType)
             {
-                case CoverType.Deductible:
+                case CoverType.deductible:
                     coverItem.deductible = deductible.HasValue ?  deductible.Value.ToString() : "500";
                     coverItem.written_premium = coverItem.inforce_premium = coverItem.limit = string.Empty;
                     break;
-                case CoverType.Persprop:
+                case CoverType.persprop:
                     coverItem.deductible = string.Empty;
                     coverItem.limit = limit.HasValue ? limit.Value.ToString() : "0";
                     coverItem.written_premium = "235";
                     coverItem.inforce_premium = "235";
                     break;
-                case CoverType.LOU:
+                case CoverType.lou:
+                    coverItem.limit = limit.HasValue ? limit.Value.ToString() : "3000";
+                    coverItem.written_premium = coverItem.inforce_premium = coverItem.deductible = string.Empty;
+                    break;
+                case CoverType.liability:
                     coverItem.limit = limit.HasValue ? limit.Value.ToString() : "0";
+                    coverItem.written_premium = coverItem.inforce_premium = coverItem.deductible = string.Empty;
+                    break;
+                case CoverType.medpay:
+                    coverItem.limit = limit.HasValue ? limit.Value.ToString() : "500";
                     coverItem.written_premium = coverItem.inforce_premium = coverItem.deductible = string.Empty;
                     break;
             }

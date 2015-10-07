@@ -18,6 +18,8 @@ namespace MobileHome.Insure.Model.Rental
         public Nullable<decimal> PersonalProperty { get; set; }
         public Nullable<decimal> Liability { get; set; }
         public Nullable<decimal> Deductible { get; set; }
+        public Nullable<decimal> LOU { get; set; }
+        public Nullable<decimal> MedPay { get; set; }
         public Nullable<decimal> Premium { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> CompanyId { get; set; }

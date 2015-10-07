@@ -1,6 +1,6 @@
 <root>
 <rtninfo>
-<returnc></returnc>
+<returnc>Q</returnc> //q / A
 <premwrit>316.00</premwrit>
 <policynbr>4200001254</policynbr>
 <progmode>A</progmode>
@@ -51,7 +51,7 @@
 
 <cov_item>
   <cov_name>persprop</cov_name>
-  <limit>25000</limit>
+  <limit>15000</limit>
   <deductible />
   <written_premium>235</written_premium> -- 
   <inforce_premium>235</inforce_premium> --
@@ -68,13 +68,31 @@
 
 <cov_item>
     <cov_name>lou</cov_name>
-    <limit>5000</limit>
+    <limit>3000</limit>
     <deductible />
     <written_premium></written_premium>
     <inforce_premium></inforce_premium>
 </cov_item>
 
   
+  <cov_item>
+    <cov_name>liability</cov_name>
+    <limit>25000</limit>
+    <deductible></deductible>
+    <written_premium></written_premium>
+    <inforce_premium></inforce_premium>
+  </cov_item>
+
+<cov_item>
+    <cov_name>medpay</cov_name>
+    <limit>500</limit>
+    <deductible></deductible>
+    <written_premium></written_premium>
+    <inforce_premium></inforce_premium>
+  </cov_item>
+  
+  
+
 </covinfo>
 
 </unitinfo>
