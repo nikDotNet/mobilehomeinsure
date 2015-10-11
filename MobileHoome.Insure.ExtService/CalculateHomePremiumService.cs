@@ -84,7 +84,9 @@ namespace MobileHoome.Insure.ExtService
                     if (elements != null && elements["returnc"].InnerText != "001")
                     {
                         quote.Premium = premium = Convert.ToDecimal(elements["premwrit"].InnerText);
+                        quote.ProposalNumber = elements["policynbr"].InnerText;
                     }
+
                 }
             }
             return premium;

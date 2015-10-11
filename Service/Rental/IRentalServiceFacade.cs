@@ -19,7 +19,11 @@ namespace MobileHome.Insure.Service.Rental
 
         List<Customer> GetCustomers();
 
+        Customer GetCustomerById(int Id);
+
         List<Quote> GetQuotes();
+
+        Quote GetQuoteById(int Id);
 
         List<MobileHome.Insure.Model.Payment> GetPayments();
 

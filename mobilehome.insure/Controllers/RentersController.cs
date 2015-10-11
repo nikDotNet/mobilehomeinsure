@@ -101,6 +101,8 @@ namespace MobileHome.Insure.Web.Controllers
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]);
             model.Amount = (decimal)TempData["Premium"];
             int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId);
+            Customer customerObject = _serviceFacade.GetCustomerById(customerId);
+            Quote quoteObject = _serviceFacade.GetQuoteById(quoteId);
 
             PaymentRequest request = new PaymentRequest
             {
@@ -124,21 +126,21 @@ namespace MobileHome.Insure.Web.Controllers
                 ViewBag.Success = true;
                 var rtn = new
                 {
-                    infoName ="Saurav Bhadani",
-                    infoAddress1 = "",
+                    infoName =customerObject.FirstName + " " + customerObject.LastName,
+                    infoAddress1 = customerObject.Address,
                     infoAddress2 = "",
-                    infoCity = "",
-                    infoState = "",
-                    infoZipCode = "",
-                    infoPhone = "9155894085",
-                    infoEmail ="",
-                    infopolnbr = "",
-                    infocopcod = "",
-                    infopmtid = "",
-                    infopmtamt = "xxxx",
-                    infopayopt = "",
-                    infotrndat = "",
-                    infotrntim = "zzzz"
+                    infoCity = customerObject.City,
+                    infoState = customerObject.State.Name,
+                    infoZipCode = customerObject.Zip,
+                    infoPhone = customerObject.Phone,
+                    infoEmail = customerObject.Email,
+                    infopolnbr = quoteObject.ProposalNumber,
+                    infocopcod = "Aegis",
+                    infopmtid = paymentResponse.TransactionId,
+                    infopmtamt = model.Amount,
+                    infopayopt = quoteObject.NoOfInstallments,
+                    infotrndat = DateTime.Now.ToShortDateString(),
+                    infotrntim = DateTime.Now.ToShortTimeString()
                 };
                 TempData.Clear();
                 //TempData["Success"] = "true";

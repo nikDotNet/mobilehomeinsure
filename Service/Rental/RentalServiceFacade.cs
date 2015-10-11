@@ -153,11 +153,24 @@ namespace MobileHome.Insure.Service.Rental
             return _context.Customers.AsNoTracking().Where(c => c.IsActive == true).ToList();
         }
 
+        public Customer GetCustomerById(int Id)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Customers.AsNoTracking().Where(c => c.IsActive == true && c.Id == Id).SingleOrDefault();
+        }
+
         public List<Quote> GetQuotes()
         {
             _context.Configuration.ProxyCreationEnabled = false;
             return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true).ToList();
         }
+
+        public Quote GetQuoteById(int Id)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Quotes.AsNoTracking().Where(q => q.IsActive == true && q.Id == Id).SingleOrDefault();
+        }
+
 
         public List<Model.Payment> GetPayments()
         {

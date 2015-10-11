@@ -51,7 +51,7 @@
 
 <cov_item>
   <cov_name>persprop</cov_name>
-  <limit>15000</limit>
+  <limit>20000</limit>
   <deductible />
   <written_premium>235</written_premium> -- 
   <inforce_premium>235</inforce_premium> --
