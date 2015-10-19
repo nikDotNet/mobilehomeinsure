@@ -66,9 +66,6 @@
 
     </ul>
 </li>
-
-
-
     @if (controller == "master")
     {
         @:<li class="active open">
@@ -109,7 +106,7 @@
         </ul>
     </li>
    
-     @if (controller == "customer")
+    @if (controller == "customer")
     {
         @:<li class="active open">
     }
@@ -142,5 +139,55 @@
             </li>
         </ul>
     </li>
+
+    @if (controller == "reporting")
+    {
+        @:<li class="active open">
+    }
+    else
+    {
+        @:<li>
+    }
+    <a href="javascript:;">
+        <i class="icon-basket"></i>
+        <span class="title">Reporting</span>
+        <span class="selected"></span>
+        <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li>
+            <a href="~/Admin/reporting/order">
+                <i class="icon-user"></i>
+                List of Orders
+            </a>
+        </li>
+        <li>
+            <a href="~/Admin/reporting/customer">
+                <i class="icon-basket"></i>
+                List of Customers
+            </a>
+        </li>
+        <li>
+            <a href="~/Admin/reporting/park">
+                <i class="glyphicon glyphicon-usd"></i>
+                List of Parks
+            </a>
+        </li>
+        <li>
+            <a href="~/Admin/reporting/potentialcustomers">
+                <i class="glyphicon glyphicon-usd"></i>
+                Potential Customers
+            </a>
+        </li>
+        <li>
+            <a href="~/Admin/reporting/premiumreport">
+                <i class="glyphicon glyphicon-usd"></i>
+                Total Premium Report
+            </a>
+        </li>
+        
+    </ul>
+</li>
+
 </ul>
 <!-- END SIDEBAR MENU -->

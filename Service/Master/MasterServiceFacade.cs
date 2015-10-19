@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.Rental;
+using MobileHome.Insure.Model.DTO;
 
 namespace MobileHome.Insure.Service.Master
 {
     public class MasterServiceFacade : IMasterServiceFacade
     {
         private readonly mhappraisalContext _context;
+        private readonly mhRentalContext _rentalcontext;
 
         public MasterServiceFacade()
         {
             _context = new mhappraisalContext();
+            _rentalcontext = new mhRentalContext();
         }
-
 
         #region Manufacturers
         public List<Manufacturer> GetManufacturer()
@@ -127,6 +129,26 @@ namespace MobileHome.Insure.Service.Master
         {
             _context.Configuration.ProxyCreationEnabled = false;
             return _context.Parks.AsNoTracking().ToList();
+        }
+
+        public List<ParkDto> GetListPark()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            var items = _context.Parks.AsNoTracking().ToList();
+            var state = _context.States.ToList();
+            var rtnItems = items.Select(x => new ParkDto()
+            {
+                Id = x.Id,
+                IsActive = x.IsActive,
+                ParkName = x.ParkName,
+                PhysicalAddress = x.PhysicalAddress,
+                PhysicalStateId = x.PhysicalStateId,
+                PhysicalZip = x.PhysicalZip,
+                SpacesToOwn = x.SpacesToOwn,
+                SpacesToRent = x.SpacesToRent,
+                State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""
+            }).ToList();
+            return rtnItems;
         }
 
         public Park GetParkById(int id)
@@ -300,6 +322,39 @@ namespace MobileHome.Insure.Service.Master
                 _context.ParkNotifies.Add(notifyObj);
                 _context.SaveChanges();
             }
+        }
+
+        #endregion
+
+        #region Reporting
+
+        public List<OrderDto> GetListOrder()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            var items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
+            var state = _context.States.ToList();
+            var rtnItems = items.Select(x => new OrderDto()
+            {
+                OrderId = x.Id,
+                
+                ApprovalCode = x.ApprovalCode,
+                ApprovalMessage = x.ApprovalMessage,
+                CreatedBy = x.CreatedBy,
+                CreationDate = x.CreationDate.Value,
+                ErrorMessage = x.ErrorMessage,
+                ResponseCode = x.ResponseCode,
+                TransactionId = x.TransactionId,
+
+                RenterId = x.RentalQuoteId.Value,
+                CompanyId = x.Quote != null ? x.Quote.CompanyId.Value : 0,
+                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
+                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
+
+                CustomerId = x.CustomerId.Value,
+                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : ""
+                
+            }).ToList();
+            return rtnItems;
         }
 
         #endregion

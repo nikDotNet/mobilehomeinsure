@@ -166,6 +166,7 @@
     <Compile Include="Areas\Admin\Controllers\ParkController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Admin\Controllers\ReportingController.cs" />
     <Compile Include="Areas\Admin\Helpers\CSVExportExtension.cs" />
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
     <Compile Include="Areas\Admin\Models\ImportCsvStatus.cs" />
@@ -1381,6 +1382,11 @@
     <Content Include="Content\assets\global\plugins\select2\select2_locale_en.js.template" />
     <Content Include="Areas\Admin\Views\Master\Notify.cshtml" />
     <Content Include="Areas\Admin\Views\Master\_partialEditNotify.cshtml" />
+    <Content Include="Areas\Admin\Views\Reporting\Order.cshtml" />
+    <Content Include="Areas\Admin\Views\Reporting\Customer.cshtml" />
+    <Content Include="Areas\Admin\Views\Reporting\Park.cshtml" />
+    <Content Include="Areas\Admin\Views\Reporting\PotentialCustomers.cshtml" />
+    <Content Include="Areas\Admin\Views\Reporting\PremiumReport.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
