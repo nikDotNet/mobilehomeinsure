@@ -155,7 +155,7 @@ namespace MobileHome.Insure.Service.Rental
 
         public Customer GetCustomerById(int Id)
         {
-            _context.Configuration.ProxyCreationEnabled = false;
+          //  _context.Configuration.ProxyCreationEnabled = false;
             return _context.Customers.AsNoTracking().Where(c => c.IsActive == true && c.Id == Id).SingleOrDefault();
         }
 
@@ -167,7 +167,7 @@ namespace MobileHome.Insure.Service.Rental
 
         public Quote GetQuoteById(int Id)
         {
-            _context.Configuration.ProxyCreationEnabled = false;
+           // _context.Configuration.ProxyCreationEnabled = false;
             return _context.Quotes.AsNoTracking().Where(q => q.IsActive == true && q.Id == Id).SingleOrDefault();
         }
 

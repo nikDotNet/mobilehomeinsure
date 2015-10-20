@@ -79,6 +79,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SampleXML\PaymentProcess.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="SampleXML\xmlnodesample.xml">
       <SubType>Designer</SubType>
     </Content>

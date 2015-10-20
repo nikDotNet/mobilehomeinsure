@@ -1,0 +1,37 @@
+﻿<root>
+  <polnbr>4200001254</polnbr>
+  <cmpcod>01</cmpcod>
+  <pmttyp>SW</pmttyp>
+  <billtype>DIRECT BILL</billtype>
+  <pmtid />
+  <pmtamt>180</pmtamt>
+  <procfee />
+  <latefee />
+  <reinsfee />
+  <payopt>2</payopt>
+  <trndat>01102015</trndat>
+  <trntim>09:36</trntim>
+  <payee>ABC INSURANCE AGENCY</payee>
+  <nsffee />
+  <prcemp />
+  <polact />
+  <proc-by />
+  <proc-status />
+</root>
+
+<!--<rtninfo>
+  <returnc></returnc>
+  <premwrit></premwrit>
+  <policynbr></policynbr>
+  <progmode></progmode>
+  <effdate></effdate>
+  <productcde></productcde>
+  <lstate></lstate>
+  <polterm>12</polterm>
+  <finfactor></finfactor>
+  <finins></finins>
+</rtninfo>
+<prdinfo>
+  <agent></agent>
+  <biltyp></biltyp>
+</prdinfo>-->

@@ -181,6 +181,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Constants\Constants.cs" />
     <Compile Include="Helper\CustomFilters\RenderAjaxPartialScriptsResponseFilter.cs" />
     <Compile Include="Helper\DataImport\ParkCsvImport.cs">
       <SubType>Code</SubType>

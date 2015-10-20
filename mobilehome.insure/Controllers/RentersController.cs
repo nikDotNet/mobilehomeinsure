@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using mobilehome.insure.Areas.Admin.Models;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.Rental;
+using mobilehome.insure.Helper.Constants;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -138,7 +139,7 @@ namespace MobileHome.Insure.Web.Controllers
                     infocopcod = "Aegis",
                     infopmtid = paymentResponse.TransactionId,
                     infopmtamt = model.Amount,
-                    infopayopt = quoteObject.NoOfInstallments,
+                    infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
                     infotrndat = DateTime.Now.ToShortDateString(),
                     infotrntim = DateTime.Now.ToShortTimeString()
                 };
