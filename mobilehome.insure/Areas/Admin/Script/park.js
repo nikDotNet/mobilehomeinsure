@@ -160,10 +160,11 @@
             $("input:checkbox").bootstrapSwitch({
                 "onSwitchChange": function (event, state) {
                     currentState = state;
+                    msg = !currentState ? "Are you sure you want to disable selected Park?" : "Are you sure you want to enable selected Park?"
                     currentElement = $(this);
                     bootbox.confirm({
                         size: 'small',
-                        message: "Are you sure, do you want to disable selected Park?",
+                        message: msg,
                         callback: function (result) {
                             //debugger;
                             if (result) {

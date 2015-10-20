@@ -1,6 +1,7 @@
 ﻿using mobilehome.insure.Areas.Admin.Models;
 using mobilehome.insure.Models.JQDataTable;
 using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.DTO;
 using MobileHome.Insure.Service.Master;
 using System;
 using System.Collections.Generic;
@@ -193,8 +194,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             int totalRecordCount = 0;
             int searchRecordCount = 0;
 
-            var parks = GenericFilterHelper<Park>.GetFilteredRecords(
-                runTimeMethod: _masterServiceFacade.GetParksWithOnOff, //Updating bcos, on/off feature has to implement
+            var parks = GenericFilterHelper<ParkDto>.GetFilteredRecords(
+                runTimeMethod: _masterServiceFacade.GetListPark, //Updating bcos, on/off feature has to implement
                 startIndex: jQueryDataTablesModel.iDisplayStart,
                 pageSize: jQueryDataTablesModel.iDisplayLength,
                 sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
@@ -202,9 +203,9 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ParkName", "OfficePhone", "SpacesToRent", "PhysicalAddress", "PhysicalZip", "IsActive" });
+                properties: new List<string> { "Id", "ParkName", "OfficePhone", "SpacesToRent", "SpacesToOwn", "PhysicalAddress", "OwnerState.Name", "PhysicalZip", "IsActive" });
 
-            return Json(new JQueryDataTablesResponse<Park>(
+            return Json(new JQueryDataTablesResponse<ParkDto>(
                 items: parks,
                 totalRecords: totalRecordCount,
                 totalDisplayRecords: searchRecordCount,

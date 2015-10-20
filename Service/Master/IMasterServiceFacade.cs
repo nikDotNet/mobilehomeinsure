@@ -1,4 +1,5 @@
 ﻿using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace MobileHome.Insure.Service.Master
 
         List<Park> GetParksWithOnOff();
 
+        List<ParkDto> GetListPark();
+
         Park GetParkById(int id);
 
         List<Park> FindParkByZip(int zip);
@@ -27,6 +30,8 @@ namespace MobileHome.Insure.Service.Master
         void SavePark(List<Park> importParks);
 
         bool OnOrOffPark(int id, bool isOff = false);
+
+        List<OrderDto> GetListOrder();
         #endregion
     }
 }

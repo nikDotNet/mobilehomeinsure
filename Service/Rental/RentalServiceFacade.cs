@@ -109,6 +109,20 @@ namespace MobileHome.Insure.Service.Rental
             return Premium;
         }
 
+        public bool SendLandlord(int quoteId, bool SendLandlord)
+        {
+            Quote quoteObj = GetQuoteById(quoteId);
+
+            if (quoteObj != null)
+            {
+                quoteObj.SendLandLord = SendLandlord;
+                _context.Entry(quoteObj).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
 
         public int generateInvoice(decimal amount, int customerId, int quoteId)
         {

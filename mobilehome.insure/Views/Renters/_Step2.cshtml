@@ -40,10 +40,11 @@
                             Would you like us to send a copy of your policy to your landlord to show proof of insurance?
                             @Html.ValidationMessageFor(x => x.SendLandlord, "", new { @class = "text-danger" })
                         </div>*@
-                        <div class="col-xs-12 col-sm-12" style="padding-top:10px;">
+                        <div class="col-xs-12 col-sm-12" style="padding-top:10px; display:none">
                             <div class="col-xs-1 col-sm-1">@*@Html.CheckBoxFor(x => x.SendLandlord, new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })*@
                                 <input id="SendLandlord" type="checkbox" class="le-input" style="width: 100%" checked="checked" /></div>
                             <div class="col-xs-11 col-sm-11">Would you like us to send a copy of your policy to your landlord to show proof of insurance?</div>
+                            <input type="hidden" id="QuoteId" />
                         </div>
                     </div>
                     <div class="pull-left">
@@ -89,14 +90,58 @@
 
                 $("#btnContinuePayment").click(function (evt) {
                     evt.preventDefault();
-                    //$("#accordion").accordion("destroy");
-                    //$("#accordion").accordion({
-                    //    heightStyle: "content",
-                    //    active: 2
-                    //});
-                    $("#divPremium address").html("Personal Property: " + $("#ddlPersonalProperties option:selected").text() + "<br>Liability: " + $("#ddlLiabilities option:selected").text() + "<br>Loss of Use: $" + 3000 + "<br>Medical Payments: $" + 500 + "<br>Total Premium: " + $("#lblTotalPremium").text());
-                    $("#step2").hide();
-                    $("#step3").show();
+                    bootbox.dialog({
+                        message: "Would you like us to send a copy of your policy to your landlord to show proof of insurance?",
+                        title: "Send Recipt to landlord",
+                        buttons: {
+                            no: {
+                                label: "No",
+                                className: "btn-danger",
+                                callback: function () {
+                                    var ajaxOptions = {};
+                                    ajaxOptions.data = JSON.stringify({
+                                        QuoteId: $("#QuoteId").val(),
+                                        SendLandlord: false
+                                    });
+                                    ajaxOptions.url = "/Renters/_Step2LandLord";
+                                    ajaxOptions.method = "POST";
+                                    ajaxOptions.dataType = "JSON";
+                                    ajaxOptions.contentType = 'application/json';
+                                    var request = $.ajax(ajaxOptions);
+
+                                    request.done(function (data) {
+                                        lossofuse = parseInt($("#ddlPersonalProperties option:selected").text().replace("$ ", "").replace(",", "")) * 20 / 100;
+                                        $("#divPremium address").html("Personal Property: " + $("#ddlPersonalProperties option:selected").text() + "<br>Liability: " + $("#ddlLiabilities option:selected").text() + "<br>Loss of Use: $" + lossofuse + "<br>Medical Payments: $" + 500 + "<br>Total Premium: " + $("#lblTotalPremium").text());
+                                        $("#step2").hide();
+                                        $("#step3").show();
+                                    });
+                                }
+                            },
+                            yes: {
+                                label: "Yes",
+                                className: "btn-success",
+                                callback: function () {
+                                    var ajaxOptions = {};
+                                    ajaxOptions.data = JSON.stringify({
+                                        QuoteId: $("#QuoteId").val(),
+                                        SendLandlord: true
+                                    });
+                                    ajaxOptions.url = "/Renters/_Step2LandLord";
+                                    ajaxOptions.method = "POST";
+                                    ajaxOptions.dataType = "JSON";
+                                    ajaxOptions.contentType = 'application/json';
+                                    var request = $.ajax(ajaxOptions);
+
+                                    request.done(function (data) {
+                                        lossofuse = parseInt($("#ddlPersonalProperties option:selected").text().replace("$ ", "").replace(",", "")) * 20 / 100;
+                                        $("#divPremium address").html("Personal Property: " + $("#ddlPersonalProperties option:selected").text() + "<br>Liability: " + $("#ddlLiabilities option:selected").text() + "<br>Loss of Use: $" + lossofuse + "<br>Medical Payments: $" + 500 + "<br>Total Premium: " + $("#lblTotalPremium").text());
+                                        $("#step2").hide();
+                                        $("#step3").show();
+                                    });
+                                }
+                            }
+                        }
+                    });
                 });
 
                 $("#btnQuote").click(function (evt) {
@@ -122,7 +167,9 @@
                         ajaxOptions.contentType = 'application/json';
                         var request = $.ajax(ajaxOptions);
 
-                        request.done(function (result) {
+                        request.done(function (data) {
+                            result = data.Premium;
+                            $("#QuoteId").val(data.QuoteId);
                             $("#lblTotalPremium").text('$ ' + result + ".00");
                             if ($("#NumberOfInstallments").val() == "1") {
                                 $("#lblCurrentPayment").text('$ ' + result + ".00");

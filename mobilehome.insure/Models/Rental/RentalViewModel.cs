@@ -13,7 +13,7 @@ namespace mobilehome.insure.Models.Rental
         public Quote quote { get; set; }
         public Payment payment { get; set; }
 
-        [Display(Name = "Enter your Zip Code")]
+        [Display(Name = "Please Enter Your 5 Digit Zip Code")]
         public string Zip { get; set; }
         
         public int currentStep { get; set; }

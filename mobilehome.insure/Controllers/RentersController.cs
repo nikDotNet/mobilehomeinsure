@@ -86,7 +86,13 @@ namespace MobileHome.Insure.Web.Controllers
             TempData["Premium"] = model.Premium;
             TempData.Keep();
 
-            return Json(model.Premium);
+            return Json(new { Premium = model.Premium, QuoteId = quoteId });
+        }
+
+        [HttpPost]
+        public ActionResult _Step2LandLord(int QuoteId, bool SendLandlord)
+        {
+            return Json(_serviceFacade.SendLandlord(QuoteId, SendLandlord));
         }
 
         [HttpGet]
