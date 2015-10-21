@@ -1,8 +1,114 @@
 ﻿
 @{
-    ViewBag.Title = "List of Parks";
+    ViewBag.Title = "Park Report";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>List of Parks</h2>
-
+<h3 class="page-title">
+    Park Report
+</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Dashboard</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Reporting</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Park Report</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Customer Report
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <label class="control-label">Park Name:</label>
+                        <div class="input-icon">
+                            <i class="fa fa-calendar"></i>
+                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="control-label">Own Rental:</label>
+                        <div class="input-icon">
+                            <i class="fa fa-calendar"></i>
+                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-6">
+                        <label class="control-label">State:</label>
+                        <div class="input-icon">
+                            <i class="fa fa-calendar"></i>
+                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="control-label">Zip Code:</label>
+                        <div class="input-icon">
+                            <i class="fa fa-calendar"></i>
+                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover table-bordered" id="tblLists">
+                    <thead>
+                        <tr>
+                            <th>
+                                TransactionId
+                            </th>
+                            <th>
+                                ApprovalCode
+                            </th>
+                            <th>
+                                ApprovalMessage
+                            </th>
+                            <th>
+                                ErrorMessage
+                            </th>
+                            <th>
+                                ProposalNumber
+                            </th>
+                            <th>
+                                CustomerName
+                            </th>
+                            <th>
+                                CompanyName
+                            </th>
+                            <th>
+                                CreationDate
+                            </th>
+                            <th>
+                                CreatedBy
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+</div>

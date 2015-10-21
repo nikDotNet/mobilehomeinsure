@@ -12,8 +12,8 @@ namespace MobileHome.Insure.Service.Master
 {
     public class MasterServiceFacade : IMasterServiceFacade
     {
-        private readonly mhappraisalContext _context;
-        private readonly mhRentalContext _rentalcontext;
+        private mhappraisalContext _context;
+        private mhRentalContext _rentalcontext;
 
         public MasterServiceFacade()
         {
@@ -336,7 +336,7 @@ namespace MobileHome.Insure.Service.Master
             var rtnItems = items.Select(x => new OrderDto()
             {
                 OrderId = x.Id,
-                
+
                 ApprovalCode = x.ApprovalCode,
                 ApprovalMessage = x.ApprovalMessage,
                 CreatedBy = x.CreatedBy,
@@ -352,11 +352,59 @@ namespace MobileHome.Insure.Service.Master
 
                 CustomerId = x.CustomerId.Value,
                 CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : ""
-                
+
             }).ToList();
             return rtnItems;
         }
 
+        public List<Customer> GetListCustomers(string zipCode, string lastName)
+        {
+            List<Customer> items = null;
+            //.Include("States")
+            _rentalcontext.Configuration.ProxyCreationEnabled = false;
+            if (string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
+                items = _rentalcontext.Customers.ToList();
+
+            if (!string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(lastName))
+                items = _rentalcontext.Customers.Where(x => x.Zip == zipCode).ToList();
+
+            if (!string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
+                items = _rentalcontext.Customers.Where(x => x.LastName == lastName).ToList();
+
+            if (!string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(zipCode))
+                items = _rentalcontext.Customers.Where(x => x.Zip == zipCode && x.LastName == lastName).ToList();
+
+            return (items != null && items.Count > 0) ? items : null;
+        }
+
+        public List<OrderDto> GetListPremiums(int stateId, string zipCode, DateTime startDate, DateTime endDate)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            var items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
+            var state = _context.States.ToList();
+            var rtnItems = items.Select(x => new OrderDto()
+            {
+                OrderId = x.Id,
+
+                ApprovalCode = x.ApprovalCode,
+                ApprovalMessage = x.ApprovalMessage,
+                CreatedBy = x.CreatedBy,
+                CreationDate = x.CreationDate.Value,
+                ErrorMessage = x.ErrorMessage,
+                ResponseCode = x.ResponseCode,
+                TransactionId = x.TransactionId,
+
+                RenterId = x.RentalQuoteId.Value,
+                CompanyId = x.Quote != null ? x.Quote.CompanyId.Value : 0,
+                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
+                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
+
+                CustomerId = x.CustomerId.Value,
+                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : ""
+
+            }).ToList();
+            return rtnItems;
+        }
         #endregion
 
     }

@@ -32,6 +32,10 @@ namespace MobileHome.Insure.Service.Master
         bool OnOrOffPark(int id, bool isOff = false);
 
         List<OrderDto> GetListOrder();
+
+        List<Customer> GetListCustomers(string zipCode, string lastName);
+
+        List<OrderDto> GetListPremiums(int stateId, string zipCode, DateTime startDate, DateTime endDate);
         #endregion
     }
 }

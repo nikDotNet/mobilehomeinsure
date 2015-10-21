@@ -1,8 +1,193 @@
-﻿
-@{
-    ViewBag.Title = "List of Customers";
+﻿@{
+    ViewBag.Title = "Customer Report";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h2>List of Customers</h2>
+<h3 class="page-title">
+    Customer Report
+</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Dashboard</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Reporting</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Customer Report</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Customer Report
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label class="control-label">Zip Code:</label>
+                        @*<input class="form-control" size="16" type="text" id="txtZipCode"/>*@
+                        @Html.TextBox("txtZipCode", null, new { @class = "form-control", @placeholder = "Zip code", size = "5" })
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Last Name:</label>
+                        <div class="input-icon">
+                            @Html.TextBox("txtLastName", null, new { @class = "form-control", @placeholder = "Last Name" })
+                            @*<input class="form-control" size="16" type="text" id="txtZipCode" />*@
+                            @*<input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />*@
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="vertical-align:bottom; padding-top:22px;">
+                        <button class="btn btn-success" id="btnSearch">Search</button>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover table-bordered" id="tblLists">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                FirstName
+                            </th>
+                            <th>
+                                LastName
+                            </th>
+                            <th>
+                                Phone
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Zip
+                            </th>
+                            <th>
+                                City
+                            </th>
+                            @*<th>
+                                    StateName
+                                </th>*@
+                        </tr>
+                    </thead>
+                    @*<tbody id="customerBody"></tbody>*@
+                </table>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+</div>
 
+@section scripts
+{
+    <script type="text/javascript">
+        var zipCode = null;
+        var lastName = null;
+        var dataTable = null;
+        var dataTableAfterInit = null;
+
+        $(document).ready(function () {
+            dataTable = $("#tblLists");
+            initializeDataTable(false);
+            searchCustomers($("#txtZipCode").val(), $("#txtLastName").val());
+
+
+            $("#btnSearch").off("click");
+            $("#btnSearch").on("click", function (e) {
+                e.preventDefault();
+
+                zipCode = $("#txtZipCode").val(); //zip for reference
+                lastName = $("#txtLastName").val();
+                searchCustomers(zipCode, lastName);
+            });
+        });
+
+        function initializeDataTable(condition) {
+            if (!condition && dataTable !== 'undefined') {
+                dataTableAfterInit = dataTable.DataTable({
+                    dom: 'T<"clearfix">lfrtip',
+                    tableTools: {
+                        "sSwfPath": "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "lengthMenu": [
+                        [5, 15, 20, -1],
+                        [5, 15, 20, "All"] // change per page values here
+                    ],
+                    "pageLength": 10,
+                    "language": {
+                        "lengthMenu": " _MENU_ records"
+                    },
+                    "columnDefs": [{ // set default column settings
+                        'orderable': true,
+                        'targets': [0]
+                    }, {
+                        "searchable": true,
+                        "targets": [0]
+                    }],
+                    "order": [
+                        [0, "asc"]
+                    ], // set first column as a default sort by asc
+                    orderCellsTop: true,
+                });
+            }
+            else {
+                dataTableAfterInit.destroy();
+            }
+        }
+
+        function searchCustomers(zipCode, lastName) {
+            debugger;
+            $.ajax({
+                url: "/reporting/SearchCustomer",
+                dataType: "json",
+                data: { zipCode: zipCode, lastName: lastName }
+            }).done(function (data) {
+                debugger;
+                initializeDataTable(true);
+                $("#tblLists tbody").remove();
+
+                //prepare rows
+                var tbody = $("<tbody/>");
+                var html = $.map(data, function (item, i) {
+                    return "<tr><td>" + item.Id + "</td><td>" + item.FirstName + "</td><td>" + item.LastName + "</td><td>" + item.Phone + "</td><td>" + item.Email + "</td><td>" + item.Address + "</td><td>" + item.Zip + "</td><td>" + item.City + "</td></tr>";
+                }).join("");
+                tbody.append(html);
+                $("#tblLists").append(tbody);
+                initializeDataTable(false);
+            }).fail(function (error) {
+                //debugger;
+                bootbox.dialog({
+                    message: "I am a custom dialog",
+                    title: "Custom title",
+                    buttons: {
+                        main: {
+                            label: "Ok",
+                            className: "btn-primary",
+                            callback: function () {
+                                //Example.show("Primary button");
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+}
