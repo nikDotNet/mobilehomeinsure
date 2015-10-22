@@ -17,10 +17,19 @@ namespace MobileHome.Insure.Model.DTO
         public string ApprovalCode { get; set; }
         public string ApprovalMessage { get; set; }
         public string ErrorMessage { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
         public string CreatedBy { get; set; }
         public string ProposalNumber { get; set; }
         public string CustomerName { get; set; }
         public string CompanyName { get; set; }
+
+        //by Vikas
+        public string ZipCode { get; set; }
+
+        public string Email { get; set; }
+
+        public string Phone { get; set; }
+
+        public decimal? TotalPremium { get; set; }
     }
 }

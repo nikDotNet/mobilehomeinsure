@@ -109,9 +109,9 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult SearchPremium(int stateId, string zipCode, DateTime startDate, DateTime endDate)
+        public ActionResult SearchPremium(int? stateId, string zipCode, DateTime? startDate, DateTime? endDate)
         {
-            return Json(_masterServiceFacade.GetListPremiums(stateId, zipCode, startDate, endDate), JsonRequestBehavior.AllowGet);
+            return Json(_masterServiceFacade.GetListPremiums((stateId.HasValue ? stateId.Value : 0), zipCode, startDate, endDate), JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

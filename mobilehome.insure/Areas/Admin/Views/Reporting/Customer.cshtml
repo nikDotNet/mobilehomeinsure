@@ -46,11 +46,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="control-label">Last Name:</label>
-                        <div class="input-icon">
-                            @Html.TextBox("txtLastName", null, new { @class = "form-control", @placeholder = "Last Name" })
-                            @*<input class="form-control" size="16" type="text" id="txtZipCode" />*@
-                            @*<input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />*@
-                        </div>
+                        @Html.TextBox("txtLastName", null, new { @class = "form-control", @placeholder = "Last Name" })
                     </div>
                     <div class="col-md-4" style="vertical-align:bottom; padding-top:22px;">
                         <button class="btn btn-success" id="btnSearch">Search</button>
@@ -175,8 +171,8 @@
             }).fail(function (error) {
                 //debugger;
                 bootbox.dialog({
-                    message: "I am a custom dialog",
-                    title: "Custom title",
+                    message: error.responseText,
+                    title: "Error",
                     buttons: {
                         main: {
                             label: "Ok",

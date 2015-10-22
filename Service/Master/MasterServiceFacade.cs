@@ -377,32 +377,95 @@ namespace MobileHome.Insure.Service.Master
             return (items != null && items.Count > 0) ? items : null;
         }
 
-        public List<OrderDto> GetListPremiums(int stateId, string zipCode, DateTime startDate, DateTime endDate)
+        public List<OrderDto> GetListPremiums(int stateId, string zipCode, DateTime? startDate, DateTime? endDate)
         {
-            _context.Configuration.ProxyCreationEnabled = false;
-            var items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
-            var state = _context.States.ToList();
-            var rtnItems = items.Select(x => new OrderDto()
+            List<Model.Payment> items = null;
+
+            _rentalcontext.Configuration.ProxyCreationEnabled = false;
+            if (stateId == 0 & string.IsNullOrWhiteSpace(zipCode) && !startDate.HasValue && !endDate.HasValue)
+                items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
+
+            if (stateId > 0 & !string.IsNullOrWhiteSpace(zipCode) && startDate.HasValue && endDate.HasValue)
             {
-                OrderId = x.Id,
+                items = _rentalcontext.Payments
+                                      .Where(x => x.TransactionId != null &&
+                                            (x.Customer != null && x.Customer.StateId != null && x.Customer.StateId == stateId) &&
+                                            (x.Customer != null && x.Customer.Zip == zipCode) &&
+                                            (x.CreationDate != null && x.CreationDate.Value >= startDate.Value && x.CreationDate.Value <= endDate.Value)).ToList();
 
-                ApprovalCode = x.ApprovalCode,
-                ApprovalMessage = x.ApprovalMessage,
-                CreatedBy = x.CreatedBy,
-                CreationDate = x.CreationDate.Value,
-                ErrorMessage = x.ErrorMessage,
-                ResponseCode = x.ResponseCode,
-                TransactionId = x.TransactionId,
+            }
+            else if (stateId > 0 || !string.IsNullOrWhiteSpace(zipCode) || (startDate.HasValue && endDate.HasValue))
+            {
+                items = _rentalcontext.Payments
+                                      .Where(x => x.TransactionId != null &&
+                                            (stateId == 0 || (x.Customer != null && x.Customer.StateId != null && x.Customer.State.Id == stateId)) &&
+                                            ((zipCode == null || zipCode.Trim() == string.Empty) || (x.Customer != null && x.Customer.Zip == zipCode)) &&
+                                            ((startDate == null || (x.CreationDate.Value >= startDate.Value)) &&
+                                            (endDate == null || (x.CreationDate.Value <= endDate.Value)))).ToList();
+            }
 
-                RenterId = x.RentalQuoteId.Value,
-                CompanyId = x.Quote != null ? x.Quote.CompanyId.Value : 0,
-                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
-                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
+            List<OrderDto> rtnItems = null;
+            if (items != null && items.Count > 0)
+            {
+                rtnItems = new List<OrderDto>();
+                items.ForEach((rec) =>
+                {
+                    var totPremium = _rentalcontext.Payments.Where(p => rec.CustomerId != null && p.CustomerId == rec.CustomerId).Sum(tp => tp.Amount);
+                    var customer = _rentalcontext.Customers.SingleOrDefault(c => c.Id == rec.CustomerId);
+                    var quote = _rentalcontext.Quotes.SingleOrDefault(q => q.Id == rec.RentalQuoteId.Value);
+                    rtnItems.Add(new OrderDto()
+                               {
+                                   OrderId = rec.Id,
 
-                CustomerId = x.CustomerId.Value,
-                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : ""
+                                   TotalPremium = totPremium,
+                                   ApprovalCode = rec.ApprovalCode,
+                                   ApprovalMessage = rec.ApprovalMessage,
+                                   CreatedBy = rec.CreatedBy,
+                                   CreationDate = rec.CreationDate != null ? rec.CreationDate : null,
+                                   ErrorMessage = rec.ErrorMessage,
+                                   ResponseCode = rec.ResponseCode,
+                                   TransactionId = rec.TransactionId,
 
-            }).ToList();
+                                   RenterId = rec.RentalQuoteId.Value,
+                                   CompanyId = quote != null && quote.Company != null ? quote.CompanyId.Value : 0,
+                                   CompanyName = quote != null && quote.Company != null ? quote.Company.Name : "",
+                                   ProposalNumber = quote != null ? quote.ProposalNumber : "",
+
+                                   CustomerId = rec.CustomerId.Value,
+                                   CustomerName = customer != null ? customer.FirstName + " " + customer.LastName : "",
+                                   ZipCode = customer != null ? customer.Zip : "",
+                                   Phone = customer != null ? customer.Phone : "",
+                                   Email = customer != null ? customer.Email : "",
+
+                               });
+                });
+            }
+            //var state = _context.States.ToList();
+            //var rtnItems = items.Select(x => new OrderDto()
+            //{
+            //    OrderId = x.Id,
+
+            //    TotalPremium = _rentalcontext.Payments.Where(p => x.CustomerId != null && p.CustomerId == x.CustomerId).Sum(tp => tp.Amount),
+            //    ApprovalCode = x.ApprovalCode,
+            //    ApprovalMessage = x.ApprovalMessage,
+            //    CreatedBy = x.CreatedBy,
+            //    CreationDate = x.CreationDate != null ? x.CreationDate : null,
+            //    ErrorMessage = x.ErrorMessage,
+            //    ResponseCode = x.ResponseCode,
+            //    TransactionId = x.TransactionId,
+
+            //    RenterId = x.RentalQuoteId.Value,
+            //    CompanyId = x.Quote != null ? x.Quote.CompanyId.Value : 0,
+            //    CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
+            //    ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
+
+            //    CustomerId = x.CustomerId.Value,
+            //    CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : "",
+            //    ZipCode = x.Customer != null ? x.Customer.Zip : "",
+            //    Phone = x.Customer != null ? x.Customer.Phone : "",
+            //    Email = x.Customer != null ? x.Customer.Email : "",
+
+            //}).ToList();
             return rtnItems;
         }
         #endregion
