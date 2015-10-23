@@ -104,7 +104,7 @@ a:hover,
 a:focus,
 a:active,
 a.active {
-	color: #fff;
+	/*color: #fff;*/
 }
 
 h1,
