@@ -43,29 +43,6 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return Json(_masterServiceFacade.GetListCustomers(zipCode, lastName), JsonRequestBehavior.AllowGet);
         }
 
-        //public ActionResult LoadingCustomer(JQueryDataTablesModel jQueryDataTablesModel)
-        //{
-        //    int totalRecordCount = 0;
-        //    int searchRecordCount = 0;
-
-        //    var customers = GenericFilterHelper<Customer>.GetFilteredRecords(
-        //        runTimeMethod: _masterServiceFacade.GetListCustomers,
-        //        startIndex: jQueryDataTablesModel.iDisplayStart,
-        //        pageSize: jQueryDataTablesModel.iDisplayLength,
-        //        sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
-        //        totalRecordCount: out totalRecordCount,
-        //        searchRecordCount: out searchRecordCount,
-        //        searchString: jQueryDataTablesModel.sSearch,
-        //        searchColumnValues: jQueryDataTablesModel.sSearch_,
-        //        properties: new List<string> { "Id", "FirstName", "LastName", "Phone", "Email", "Address", "Zip", "City", "StateName" });
-
-        //    return Json(new JQueryDataTablesResponse<Customer>(
-        //        items: customers,
-        //        totalRecords: totalRecordCount,
-        //        totalDisplayRecords: searchRecordCount,
-        //        sEcho: jQueryDataTablesModel.sEcho));
-        //}
-
         #endregion
 
         #region Park Report
@@ -74,9 +51,9 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult LoadingPark(JQueryDataTablesModel jQueryDataTablesModel)
+        public ActionResult SearchPark(string parkName, int? stateId, string zipCode)
         {
-            return null;
+            return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
         }
         #endregion
 

@@ -342,7 +342,7 @@ namespace MobileHome.Insure.Service.Master
                 items = _rentalcontext.Payments.Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
             }
 
-            var state = _context.States.ToList();
+
             var rtnItems = items.Select(x => new OrderDto()
             {
                 OrderId = x.Id,
@@ -383,7 +383,7 @@ namespace MobileHome.Insure.Service.Master
                 items = _rentalcontext.Customers.Where(x => x.LastName == lastName).ToList();
 
             if (!string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(zipCode))
-                items = _rentalcontext.Customers.Where(x => x.Zip == zipCode && x.LastName == lastName).ToList();
+                items = _rentalcontext.Customers.Where(x => x.Zip == zipCode && x.LastName.StartsWith(lastName)).ToList();
 
             return (items != null && items.Count > 0) ? items : null;
         }
@@ -467,9 +467,54 @@ namespace MobileHome.Insure.Service.Master
 
             return rtnItems;
         }
+
+        public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
+        {
+            List<Park> items = null;
+
+            _context.Configuration.ProxyCreationEnabled = false;
+            if (string.IsNullOrWhiteSpace(parkName) && stateId == 0 && string.IsNullOrWhiteSpace(zipCode))
+                items = _context.Parks.AsNoTracking().ToList();
+
+            if (!string.IsNullOrWhiteSpace(parkName) && stateId > 0 && !string.IsNullOrWhiteSpace(zipCode))
+            {
+                var zipInt = Convert.ToInt32(zipCode);
+                items = _context.Parks.AsNoTracking().Where(p => p.ParkName.StartsWith(parkName) && p.PhysicalZip == zipInt).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(parkName) || stateId > 0 | !string.IsNullOrWhiteSpace(zipCode))
+            {
+                if (string.IsNullOrWhiteSpace(parkName))
+                    parkName = null;
+
+                int zipInt = 0;
+                if (string.IsNullOrWhiteSpace(zipCode))
+                    zipCode = null;
+                else
+                    zipInt = !string.IsNullOrWhiteSpace(zipCode) ? Convert.ToInt32(zipCode) : 0;
+
+
+                items = _context.Parks.AsNoTracking().Where(p =>
+                                                            (parkName == null || p.ParkName.StartsWith(parkName)) &&
+                                                            (stateId == 0 || (p.PhysicalStateId != null && p.PhysicalStateId.Value == stateId)) &&
+                                                            (zipCode == null || (p.PhysicalZip == zipInt))).ToList();
+            }
+
+            var rtnItems = items.Select(x => new ParkDto()
+            {
+                Id = x.Id,
+                ParkName = x.ParkName,
+                PhysicalAddress = x.PhysicalAddress,
+                PhysicalZip = x.PhysicalZip,
+                PhysicalCity = x.PhysicalCity,
+                TotalOwnRentals = _rentalcontext.Customers.Where(c => c.ParkId == x.Id).Count()
+            }).ToList();
+            return rtnItems;
+        }
         #endregion
 
 
+        #region Common methods for Date operation
         private string GetDateFormatAsString(DateTime date)
         {
             return string.Format("{0}-{1}-{2}", date.Month, date.Day, date.Year);
@@ -492,5 +537,6 @@ namespace MobileHome.Insure.Service.Master
 
             return format;
         }
+        #endregion
     }
 }

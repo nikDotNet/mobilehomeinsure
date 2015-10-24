@@ -23,6 +23,9 @@ namespace MobileHome.Insure.Model
         public string Email { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> StateId { get; set; }
+
+        public Nullable<int> ParkId { get; set; }
+        
         public string Address { get; set; }
         public string City { get; set; }
         public string Zip { get; set; }
@@ -31,6 +34,8 @@ namespace MobileHome.Insure.Model
         public Nullable<System.DateTime> CreationDate { get; set; }
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual Park Park { get; set; }
 
         public virtual State State { get; set; }
         public virtual User User { get; set; }

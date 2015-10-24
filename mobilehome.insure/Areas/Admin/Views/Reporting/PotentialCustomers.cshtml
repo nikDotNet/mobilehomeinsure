@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Potential Customer Report";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
@@ -40,69 +39,42 @@
             </div>
             <div class="portlet-body">
                 <div class="row form-group">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label class="control-label">Park Name:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
-                        </div>
+                        <input class="form-control" type="text" id="txtParkName" />
                     </div>
-                    <div class="col-md-6">
-                        <label class="control-label">Own Rental:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-md-6">
-                        <label class="control-label">State:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label class="control-label">Zip Code:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
-                        </div>
+                        @Html.TextBox("txtZipCode", null, new { @class = "form-control", @placeholder = "Zip code", size = "5" })
+                    </div>
+                    <div class="col-md-3">
+                        <label class="control-label">State:</label>
+                        @Html.DropDownList("ddlStateId", new SelectList(new MobileHome.Insure.Service.Master.MasterServiceFacade().GetStates(), "Id", "Name"), "", new { @placeholder = "Select a State", style = "width: 100%" })
+                    </div>
+                    <div class="col-md-3" style="vertical-align:bottom; padding-top:22px;">
+                        <button class="btn btn-success" id="btnSearch">Search</button>
                     </div>
                 </div>
                 <table class="table table-striped table-hover table-bordered" id="tblLists">
                     <thead>
                         <tr>
                             <th>
-                                TransactionId
+                                Id
                             </th>
                             <th>
-                                ApprovalCode
+                                Park Name
                             </th>
                             <th>
-                                ApprovalMessage
+                                Physical Address
                             </th>
                             <th>
-                                ErrorMessage
+                                Physical Zip
                             </th>
                             <th>
-                                ProposalNumber
+                                Physical City
                             </th>
                             <th>
-                                CustomerName
-                            </th>
-                            <th>
-                                CompanyName
-                            </th>
-                            <th>
-                                CreationDate
-                            </th>
-                            <th>
-                                CreatedBy
-                            </th>
-                            <th>
-                                Action
+                                Total Own Rental
                             </th>
                         </tr>
                     </thead>
@@ -112,3 +84,112 @@
         </div>
     </div>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        var stateId = null;
+        var zipCode = null;
+        var parkName = null;
+        var dataTable = null;
+        var dataTableAfterInit = null;
+
+
+        $(document).ready(function () {
+            //initialize Select2
+            $("#ddlStateId").select2({
+                placeholder: "Select State"
+            });
+
+            dataTable = $("#tblLists");
+            //initializeDataTable(false);
+            //searchPotentials($("#txtParkName").val(),
+            //                $("#ddlStateId").val(),
+            //                $("#txtZipCode").val());
+
+
+            $("#btnSearch").off("click");
+            $("#btnSearch").on("click", function (e) {
+                e.preventDefault();
+
+                stateId = $("#ddlStateId").val();
+                zipCode = $("#txtZipCode").val(); //zip for reference
+                parkName = $("#txtParkName").val();
+                searchPotentials(parkName, stateId, zipCode);
+            });
+        });
+
+        function initializeDataTable(condition) {
+            if (!condition && dataTable !== 'undefined') {
+                dataTableAfterInit = dataTable.DataTable({
+                    dom: 'T<"clearfix">lfrtip',
+                    tableTools: {
+                        "sSwfPath": "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "lengthMenu": [
+                        [5, 15, 20, -1],
+                        [5, 15, 20, "All"] // change per page values here
+                    ],
+                    "pageLength": 10,
+                    "language": {
+                        "lengthMenu": " _MENU_ records"
+                    },
+                    "columnDefs": [{ // set default column settings
+                        'orderable': true,
+                        'targets': [0]
+                    }, {
+                        "searchable": true,
+                        "targets": [0]
+                    }],
+                    "order": [
+                        [0, "asc"]
+                    ], // set first column as a default sort by asc
+                    orderCellsTop: true,
+                });
+            }
+            else {
+                dataTableAfterInit.destroy();
+            }
+        }
+
+        function searchPotentials(parkName, stateId, zipCode) {
+            //debugger;
+            $.ajax({
+                url: "/reporting/SearchPotential",
+                dataType: "json",
+                data: { parkName: parkName, stateId: stateId, zipCode: zipCode }
+            }).done(function (data) {
+                //debugger;
+                initializeDataTable(true);
+                $("#tblLists tbody").remove();
+
+                //prepare rows
+                var tbody = $("<tbody/>");
+                var html = $.map(data, function (item, i) {
+                    //debugger;
+                    return "<tr><td>" + item.Id + "</td><td>" + item.ParkName + "</td><td>" +
+                                     item.PhysicalAddress + "</td><td>" + item.PhysicalZip + "</td><td>" +
+                                    item.PhysicalCity + "</td><td>" + item.TotalOwnRentals + "</td></tr>";
+                }).join("");
+                tbody.append(html);
+                $("#tblLists").append(tbody);
+                initializeDataTable(false);
+            }).fail(function (error) {
+                //debugger;
+                bootbox.dialog({
+                    message: error.responseText,
+                    title: "Error",
+                    buttons: {
+                        main: {
+                            label: "Ok",
+                            className: "btn-primary",
+                            callback: function () {
+                                //Example.show("Primary button");
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+}

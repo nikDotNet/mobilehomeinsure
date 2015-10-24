@@ -27,5 +27,11 @@ namespace MobileHome.Insure.Model.DTO
         public int PhysicalZip { get; set; }
 
         public bool IsActive { get; set; }
+
+
+        //By Vikas
+        public string PhysicalCity { get; set; }
+
+        public int TotalOwnRentals { get; set; }
     }
 }

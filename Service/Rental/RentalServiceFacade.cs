@@ -19,7 +19,7 @@ namespace MobileHome.Insure.Service.Rental
             _context = new mhRentalContext();
         }
 
-        public int saveCustomerInformation(string FirstName, string LastName,string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone)
+        public int saveCustomerInformation(string FirstName, string LastName,string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId)
         {
             var user = new User
             {
@@ -42,6 +42,7 @@ namespace MobileHome.Insure.Service.Rental
                 City = City,
                 Zip = Zip,
                 Phone = Phone,
+                ParkId = parkId,
                 CreationDate = DateTime.Now,
                 User = user,
                 IsActive = true

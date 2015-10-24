@@ -54,10 +54,10 @@ namespace MobileHome.Insure.Web.Controllers
         public ActionResult _Step1(RentalViewModel.Customer model)
         {
             TempData["CustomerId"] = _serviceFacade.saveCustomerInformation(
-                                                    model.FirstName, model.LastName,model.FirstName2, model.LastName2, model.Email,
+                                                    model.FirstName, model.LastName, model.FirstName2, model.LastName2, model.Email,
                                                     model.Password, model.Address,
                                                     model.StateId, model.City,
-                                                    model.Zip, model.Phone);
+                                                    model.Zip, model.Phone, model.ParkId);
 
             return Json(true);
         }
@@ -133,7 +133,7 @@ namespace MobileHome.Insure.Web.Controllers
                 ViewBag.Success = true;
                 var rtn = new
                 {
-                    infoName =customerObject.FirstName + " " + customerObject.LastName,
+                    infoName = customerObject.FirstName + " " + customerObject.LastName,
                     infoAddress1 = customerObject.Address,
                     infoAddress2 = "",
                     infoCity = customerObject.City,

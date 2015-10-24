@@ -41,7 +41,7 @@ namespace MobileHome.Insure.Model
         public string PhysicalCsvState { get; set; }
 
         public int PhysicalZip { get; set; }
-        
+
         [NotMapped]
         public string MapPhysicalZip { get; set; }
 
@@ -106,6 +106,7 @@ namespace MobileHome.Insure.Model
 
         public virtual State OwnerState { get; set; }
 
+        public virtual List<Customer> Customers { get; set; }
 
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
