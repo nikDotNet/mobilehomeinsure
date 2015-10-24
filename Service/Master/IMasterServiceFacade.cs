@@ -31,11 +31,11 @@ namespace MobileHome.Insure.Service.Master
 
         bool OnOrOffPark(int id, bool isOff = false);
 
-        List<OrderDto> GetListOrder();
+        List<OrderDto> GetListOrder(string startDate, string endDate);
 
         List<Customer> GetListCustomers(string zipCode, string lastName);
 
-        List<OrderDto> GetListPremiums(int stateId, string zipCode, DateTime? startDate, DateTime? endDate);
+        List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate);
         #endregion
     }
 }

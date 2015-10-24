@@ -18,7 +18,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             _masterServiceFacade = new MasterServiceFacade();
         }
 
-        #region Ordeer Report
+        #region Order Report
         //
         // GET: /Admin/Reporting/
         public ActionResult Order()
@@ -26,27 +26,9 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult LoadingOrder(JQueryDataTablesModel jQueryDataTablesModel)
+        public ActionResult SearchOrder(string startDate, string endDate)
         {
-            int totalRecordCount = 0;
-            int searchRecordCount = 0;
-
-            var customers = GenericFilterHelper<OrderDto>.GetFilteredRecords(
-                runTimeMethod: _masterServiceFacade.GetListOrder,
-                startIndex: jQueryDataTablesModel.iDisplayStart,
-                pageSize: jQueryDataTablesModel.iDisplayLength,
-                sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
-                totalRecordCount: out totalRecordCount,
-                searchRecordCount: out searchRecordCount,
-                searchString: jQueryDataTablesModel.sSearch,
-                searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "OrderId", "ApprovalCode", "ApprovalMessage", "CreatedBy", "CreationDate", "ErrorMessage", "ResponseCode", "TransactionId", "RenterId", "CompanyId", "CompanyName", "ProposalNumber", "CustomerId", "CustomerName" });
-
-            return Json(new JQueryDataTablesResponse<OrderDto>(
-                items: customers,
-                totalRecords: totalRecordCount,
-                totalDisplayRecords: searchRecordCount,
-                sEcho: jQueryDataTablesModel.sEcho));
+            return Json(_masterServiceFacade.GetListOrder(startDate, endDate), JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -109,7 +91,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult SearchPremium(int? stateId, string zipCode, DateTime? startDate, DateTime? endDate)
+        public ActionResult SearchPremium(int? stateId, string zipCode, string startDate, string endDate)
         {
             return Json(_masterServiceFacade.GetListPremiums((stateId.HasValue ? stateId.Value : 0), zipCode, startDate, endDate), JsonRequestBehavior.AllowGet);
         }

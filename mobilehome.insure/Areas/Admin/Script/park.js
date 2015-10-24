@@ -123,7 +123,7 @@
                 //Need some customization, we can write here
 
                 //appending checkbox for on and off
-                $('td:eq(6)', nRow).append(function (index, html) {
+                $('td:eq(7)', nRow).append(function (index, html) {
                     //debugger;
                     var inputCheckbox = $('<input />',
                                             {

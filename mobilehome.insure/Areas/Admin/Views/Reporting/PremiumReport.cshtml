@@ -47,21 +47,35 @@
                         <label class="control-label">Zip Code:</label>
                         @Html.TextBox("txtZipCode", null, new { @class = "form-control", @placeholder = "Zip code", size = "5" })
                     </div>
-                    @*</div>
-                        <div class="row form-group">*@
                     <div class="col-md-2">
                         <label class="control-label">Start Date:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" id="txtStartDate" />
+                        <div class="form-group">
+                            <div class='input-group date' id='txtStartDate'>
+                                <input type='text' class="form-control" size="10" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
+                        @*<div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input class="form-control date-picker" size="10" type="text" id="txtStartDate" />
+                            </div>*@
                     </div>
                     <div class="col-md-2">
                         <label class="control-label">End Date:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" id="txtEndDate" />
+                        <div class="form-group">
+                            <div class='input-group date' id='txtEndDate'>
+                                <input type='text' class="form-control" size="10" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
+                        @*<div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input class="form-control date-picker" size="10" type="text" id="txtEndDate" />
+                            </div>*@
                     </div>
                     <div class="col-md-2" style="vertical-align:bottom; padding-top:22px;">
                         <button class="btn btn-success" id="btnSearch">Search</button>
@@ -115,9 +129,9 @@
                             <th>
                                 CreationDate
                             </th>
-                            <th>
-                                CreatedBy
-                            </th>
+                            @*<th>
+                                    CreatedBy
+                                </th>*@
                         </tr>
                     </thead>
                 </table>
@@ -138,9 +152,17 @@
         var dataTableAfterInit = null;
 
         $(document).ready(function () {
+            //initialize Select2
+            $("#ddlStateId").select2({
+                placeholder: "Select State"
+            });
+
             dataTable = $("#tblLists");
             initializeDataTable(false);
-            searchPremiums($("#ddlStateId").val(), $("#txtZipCode").val(), $("#txtStartDate").val(), $("#txtEndDate").val());
+            searchPremiums($("#ddlStateId").val(),
+                           $("#txtZipCode").val(),
+                           $("#txtStartDate").find("input").val(),
+                           $("#txtEndDate").find("input").val());
 
 
             $("#btnSearch").off("click");
@@ -149,9 +171,25 @@
 
                 stateId = $("#ddlStateId").val();
                 zipCode = $("#txtZipCode").val(); //zip for reference
-                startDate = $("#txtStartDate").val();
-                endDate = $("#txtEndDate").val();
+                startDate = $("#txtStartDate").find("input").val();
+                endDate = $("#txtEndDate").find("input").val();
                 searchPremiums(stateId, zipCode, startDate, endDate);
+            });
+
+
+            //initialize date controls
+            $('#txtStartDate').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('#txtEndDate').datetimepicker({
+                format: 'MM/DD/YYYY',
+                useCurrent: false //Important! See issue #1075
+            });
+            $("#txtStartDate").on("dp.change", function (e) {
+                $('#txtEndDate').data("DateTimePicker").minDate(e.date);
+            });
+            $("#txtEndDate").on("dp.change", function (e) {
+                $('#txtStartDate').data("DateTimePicker").maxDate(e.date);
             });
         });
 
@@ -189,31 +227,32 @@
         }
 
         function searchPremiums(stateId, zipCode, startDate, endDate) {
-            debugger;
+            //debugger;
             $.ajax({
                 url: "/reporting/SearchPremium",
                 dataType: "json",
                 data: { stateId: stateId, zipCode: zipCode, startDate: startDate, endDate: endDate }
             }).done(function (data) {
-                debugger;
+                //debugger;
                 initializeDataTable(true);
                 $("#tblLists tbody").remove();
 
                 //prepare rows
                 var tbody = $("<tbody/>");
                 var html = $.map(data, function (item, i) {
+                    //debugger;
                     return "<tr><td>" + item.CustomerId + "</td><td>" + item.CustomerName + "</td><td>" +
                                      item.Phone + "</td><td>" + item.Email + "</td><td>" +
                                    item.ZipCode + "</td><td>" + item.TotalPremium + "</td><td>" +
                              item.TransactionId + "</td><td>" + item.ApprovalCode + "</td><td>" +
                            item.ApprovalMessage + "</td><td>" + item.ProposalNumber + "</td><td>" +
-               (item.CreationDate == null ? "" : item.CreationDate) + "</td><td>" + (item.CreatedBy == null ? "" : item.CreatedBy) + "</td></tr>";
+               (item.CreationDateStr == null ? "" : item.CreationDateStr) + "</td></tr>"; //+ "</td><td>" + (item.CreatedBy == null ? "" : item.CreatedBy)
                 }).join("");
                 tbody.append(html);
                 $("#tblLists").append(tbody);
                 initializeDataTable(false);
             }).fail(function (error) {
-                debugger;
+                //debugger;
                 bootbox.dialog({
                     message: error.responseText,
                     title: "Error",

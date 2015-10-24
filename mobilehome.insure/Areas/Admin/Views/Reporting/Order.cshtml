@@ -1,6 +1,5 @@
-﻿
-@{
-    ViewBag.Title = "List of Orders";
+﻿@{
+    ViewBag.Title = "Order Report";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <h3 class="page-title">
@@ -22,7 +21,7 @@
             <i class="fa fa-angle-right"></i>
         </li>
         <li>
-            <a href="#">List of Orders</a>
+            <a href="#">Order Report</a>
         </li>
     </ul>
 </div>
@@ -34,24 +33,43 @@
         <div class="portlet box blue">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-edit"></i>List of Orders
+                    <i class="fa fa-edit"></i>Order Report
                 </div>
             </div>
             <div class="portlet-body">
                 <div class="row form-group">
-                    <div class="col-md-6">
-                        <label class="control-label">Check-in:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                    <div class="col-md-4">
+                        <label class="control-label">Start Date:</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='txtStartDate'>
+                                <input type='text' class="form-control" size="10" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
+                        @*<div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input class="form-control date-picker" size="10" type="text" id="txtStartDate" />
+                            </div>*@
                     </div>
-                    <div class="col-md-6">
-                        <label class="control-label">Check-out:</label>
-                        <div class="input-icon">
-                            <i class="fa fa-calendar"></i>
-                            <input class="form-control date-picker" size="16" type="text" value="12-02-2012" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years" />
+                    <div class="col-md-4">
+                        <label class="control-label">End Date:</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='txtEndDate'>
+                                <input type='text' class="form-control" size="10" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
                         </div>
+                        @*<div class="input-icon">
+                                <i class="fa fa-calendar"></i>
+                                <input class="form-control date-picker" size="10" type="text" id="txtEndDate" />
+                            </div>*@
+                    </div>
+                    <div class="col-md-4" style="vertical-align:bottom; padding-top:22px;">
+                        <button class="btn btn-success" id="btnSearch">Search</button>
                     </div>
                 </div>
                 <table class="table table-striped table-hover table-bordered" id="tblLists">
@@ -84,9 +102,9 @@
                             <th>
                                 CreatedBy
                             </th>
-                            <th>
-                                Action
-                            </th>
+                            @*<th>
+                                    Action
+                                </th>*@
                         </tr>
                     </thead>
                 </table>
@@ -98,58 +116,118 @@
 <!-- END PAGE CONTENT -->
 @section scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
-    <script src="~/Areas/Admin/Script/customer.js"></script>
-    <script>
-        jQuery(document).ready(function () {
-            Metronic.init(); // init metronic core components
-            Layout.init(); // init current layout
-            QuickSidebar.init(); // init quick sidebar
-            Demo.init(); // init demo features
+    <script type="text/javascript">
+        var startDate = null;
+        var endDate = null;
+        var dataTable = null;
+        var dataTableAfterInit = null;
 
-            var tableColumns = [
-                {
-                    "mDataProp": "TransactionId",
-                    "bSearchable": false,
-                    "bSortable": false,
-                    //"bVisible": false
-                },
-                { "mDataProp": "ApprovalCode" },
-                { "mDataProp": "ApprovalMessage" },
-                { "mDataProp": "ErrorMessage" },
-                { "mDataProp": "ProposalNumber" },
-                { "mDataProp": "CustomerName" },
-                { "mDataProp": "CompanyName" },
-                { "mDataProp": "CreationDate" },
-                { "mDataProp": "CreatedBy" },
-                {
-                    data: null,
-                    className: "center",
-                    defaultContent: '<a href="/admin/customer/delete?id=" class="delete-link" data-type="customer">Delete</a>'
-                }
-            ];
+        $(document).ready(function () {
+            //debugger;
+            dataTable = $("#tblLists");
+            initializeDataTable(false);
+            searchOrders($("#txtStartDate").find("input").val(), $("#txtEndDate").find("input").val());
 
-            $('#tblLists thead tr#filterrow th').each(function () {
-                //debugger;
-                var title = $('#tblLists thead th').eq($(this).index()).text();
-                title = title.replace("\n", "").replace("\n", "").trim();
-                if (title !== "Action") {
-                    $(this).html('<input type="text" onclick="stopPropagation(event);" class="form-control" placeholder="Search ' + title + '" />');
-                }
-                else {
-                    $('#tblLists thead tr#filterrow th').eq($(this).index()).text("");
-                }
+
+            $("#btnSearch").off("click");
+            $("#btnSearch").on("click", function (e) {
+                e.preventDefault();
+
+                startDate = $("#txtStartDate").find("input").val();
+                endDate = $("#txtEndDate").find("input").val();
+                searchOrders(startDate, endDate);
             });
 
-            CustomerActions.init("/Admin/Reporting/LoadingOrder", tableColumns);
-            $("#tblLists_filter").css("display", "none"); //hide common/global filter
+            //initialize date controls
+            $('#txtStartDate').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('#txtEndDate').datetimepicker({
+                format: 'MM/DD/YYYY',
+                useCurrent: false //Important! See issue #1075
+            });
+            $("#txtStartDate").on("dp.change", function (e) {
+                $('#txtEndDate').data("DateTimePicker").minDate(e.date);
+            });
+            $("#txtEndDate").on("dp.change", function (e) {
+                $('#txtStartDate').data("DateTimePicker").maxDate(e.date);
+            });
         });
 
-        function stopPropagation(evt) {
-            if (evt.stopPropagation !== undefined) {
-                evt.stopPropagation();
-            } else {
-                evt.cancelBubble = true;
+        function initializeDataTable(condition) {
+            if (!condition && dataTable !== 'undefined') {
+                dataTableAfterInit = dataTable.DataTable({
+                    dom: 'T<"clearfix">lfrtip',
+                    tableTools: {
+                        "sSwfPath": "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf"
+                    },
+                    "lengthMenu": [
+                        [5, 15, 20, -1],
+                        [5, 15, 20, "All"] // change per page values here
+                    ],
+                    "pageLength": 10,
+                    "language": {
+                        "lengthMenu": " _MENU_ records"
+                    },
+                    "columnDefs": [{ // set default column settings
+                        'orderable': true,
+                        'targets': [0]
+                    }, {
+                        "searchable": true,
+                        "targets": [0]
+                    }],
+                    "order": [
+                        [0, "asc"]
+                    ], // set first column as a default sort by asc
+                    orderCellsTop: true,
+                });
             }
+            else {
+                dataTableAfterInit.destroy();
+            }
+        }
+
+        function searchOrders(startDate, endDate) {
+            //debugger;
+
+            $.ajax({
+                url: "/reporting/SearchOrder",
+                dataType: "json",
+                data: { startDate: startDate, endDate: endDate }
+            }).done(function (data) {
+                //debugger;
+                initializeDataTable(true);
+                $("#tblLists tbody").remove();
+
+                //prepare rows
+                var tbody = $("<tbody/>");
+                var html = $.map(data, function (item, i) {
+                    //debugger;
+                    return "<tr><td>" + item.TransactionId + "</td><td>" + item.ApprovalCode + "</td><td>" +
+                                     item.ApprovalMessage + "</td><td>" + item.ErrorMessage + "</td><td>" +
+                                   item.ProposalNumber + "</td><td>" + item.CustomerName + "</td><td>" +
+                             item.CompanyName + "</td><td>" + (item.CreationDateStr == null ? "" : item.CreationDateStr) + "</td><td>" +
+                                (item.CreatedBy == null ? "" : item.CreatedBy) + "</td></tr>";
+                }).join("");
+                tbody.append(html);
+                $("#tblLists").append(tbody);
+                initializeDataTable(false);
+            }).fail(function (error) {
+                //debugger;
+                bootbox.dialog({
+                    message: error.responseText,
+                    title: "Error",
+                    buttons: {
+                        main: {
+                            label: "Ok",
+                            className: "btn-primary",
+                            callback: function () {
+                                //Example.show("Primary button");
+                            }
+                        }
+                    }
+                });
+            });
         }
     </script>
 }

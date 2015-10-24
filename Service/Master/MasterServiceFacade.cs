@@ -328,10 +328,20 @@ namespace MobileHome.Insure.Service.Master
 
         #region Reporting
 
-        public List<OrderDto> GetListOrder()
+        public List<OrderDto> GetListOrder(string startDate, string endDate)
         {
-            _context.Configuration.ProxyCreationEnabled = false;
-            var items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
+            List<Model.Payment> items = null;
+
+            _rentalcontext.Configuration.ProxyCreationEnabled = false;
+            if (string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
+                items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
+            else if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
+            {
+                var startDt = GetStringAsDateFormat(startDate);
+                var endDt = GetStringAsDateFormat(endDate).AddDays(1);
+                items = _rentalcontext.Payments.Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
+            }
+
             var state = _context.States.ToList();
             var rtnItems = items.Select(x => new OrderDto()
             {
@@ -340,13 +350,14 @@ namespace MobileHome.Insure.Service.Master
                 ApprovalCode = x.ApprovalCode,
                 ApprovalMessage = x.ApprovalMessage,
                 CreatedBy = x.CreatedBy,
-                CreationDate = x.CreationDate.Value,
+                //CreationDate = x.CreationDate.HasValue ? x.CreationDate.Value.Date : DateTime.MinValue,
+                CreationDateStr = x.CreationDate.HasValue ? GetDateFormatAsString(x.CreationDate.Value) : string.Empty,
                 ErrorMessage = x.ErrorMessage,
                 ResponseCode = x.ResponseCode,
                 TransactionId = x.TransactionId,
 
                 RenterId = x.RentalQuoteId.Value,
-                CompanyId = x.Quote != null ? x.Quote.CompanyId.Value : 0,
+                CompanyId = x.Quote != null && x.Quote.Company != null ? x.Quote.CompanyId.Value : 0,
                 CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
                 ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
 
@@ -377,31 +388,43 @@ namespace MobileHome.Insure.Service.Master
             return (items != null && items.Count > 0) ? items : null;
         }
 
-        public List<OrderDto> GetListPremiums(int stateId, string zipCode, DateTime? startDate, DateTime? endDate)
+        public List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate)
         {
             List<Model.Payment> items = null;
 
             _rentalcontext.Configuration.ProxyCreationEnabled = false;
-            if (stateId == 0 & string.IsNullOrWhiteSpace(zipCode) && !startDate.HasValue && !endDate.HasValue)
+            if (stateId == 0 & string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
                 items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
 
-            if (stateId > 0 & !string.IsNullOrWhiteSpace(zipCode) && startDate.HasValue && endDate.HasValue)
+            if (stateId > 0 & !string.IsNullOrWhiteSpace(zipCode) && !string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
             {
+                var startDt = GetStringAsDateFormat(startDate);
+                var endDt = GetStringAsDateFormat(endDate).AddDays(1);
+
                 items = _rentalcontext.Payments
                                       .Where(x => x.TransactionId != null &&
                                             (x.Customer != null && x.Customer.StateId != null && x.Customer.StateId == stateId) &&
                                             (x.Customer != null && x.Customer.Zip == zipCode) &&
-                                            (x.CreationDate != null && x.CreationDate.Value >= startDate.Value && x.CreationDate.Value <= endDate.Value)).ToList();
+                                            (x.CreationDate != null && x.CreationDate.Value >= startDt && x.CreationDate.Value <= endDt)).ToList();
 
             }
-            else if (stateId > 0 || !string.IsNullOrWhiteSpace(zipCode) || (startDate.HasValue && endDate.HasValue))
+            else if (stateId > 0 || !string.IsNullOrWhiteSpace(zipCode) || (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate)))
             {
+                DateTime startDt = DateTime.MinValue, endDt = DateTime.MinValue;
+                if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
+                {
+                    startDt = GetStringAsDateFormat(startDate);
+                    endDt = GetStringAsDateFormat(endDate).AddDays(1);
+                }
+                else
+                    startDate = endDate = null;
+
                 items = _rentalcontext.Payments
                                       .Where(x => x.TransactionId != null &&
                                             (stateId == 0 || (x.Customer != null && x.Customer.StateId != null && x.Customer.State.Id == stateId)) &&
                                             ((zipCode == null || zipCode.Trim() == string.Empty) || (x.Customer != null && x.Customer.Zip == zipCode)) &&
-                                            ((startDate == null || (x.CreationDate.Value >= startDate.Value)) &&
-                                            (endDate == null || (x.CreationDate.Value <= endDate.Value)))).ToList();
+                                            ((startDate == null || (x.CreationDate.Value >= startDt)) &&
+                                            (endDate == null || (x.CreationDate.Value <= endDt)))).ToList();
             }
 
             List<OrderDto> rtnItems = null;
@@ -421,7 +444,8 @@ namespace MobileHome.Insure.Service.Master
                                    ApprovalCode = rec.ApprovalCode,
                                    ApprovalMessage = rec.ApprovalMessage,
                                    CreatedBy = rec.CreatedBy,
-                                   CreationDate = rec.CreationDate != null ? rec.CreationDate : null,
+                                   //CreationDate = rec.CreationDate != null ? rec.CreationDate.Value.Date : DateTime.MinValue,
+                                   CreationDateStr = rec.CreationDate != null ? GetDateFormatAsString(rec.CreationDate.Value) : string.Empty,
                                    ErrorMessage = rec.ErrorMessage,
                                    ResponseCode = rec.ResponseCode,
                                    TransactionId = rec.TransactionId,
@@ -440,35 +464,33 @@ namespace MobileHome.Insure.Service.Master
                                });
                 });
             }
-            //var state = _context.States.ToList();
-            //var rtnItems = items.Select(x => new OrderDto()
-            //{
-            //    OrderId = x.Id,
 
-            //    TotalPremium = _rentalcontext.Payments.Where(p => x.CustomerId != null && p.CustomerId == x.CustomerId).Sum(tp => tp.Amount),
-            //    ApprovalCode = x.ApprovalCode,
-            //    ApprovalMessage = x.ApprovalMessage,
-            //    CreatedBy = x.CreatedBy,
-            //    CreationDate = x.CreationDate != null ? x.CreationDate : null,
-            //    ErrorMessage = x.ErrorMessage,
-            //    ResponseCode = x.ResponseCode,
-            //    TransactionId = x.TransactionId,
-
-            //    RenterId = x.RentalQuoteId.Value,
-            //    CompanyId = x.Quote != null ? x.Quote.CompanyId.Value : 0,
-            //    CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
-            //    ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
-
-            //    CustomerId = x.CustomerId.Value,
-            //    CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : "",
-            //    ZipCode = x.Customer != null ? x.Customer.Zip : "",
-            //    Phone = x.Customer != null ? x.Customer.Phone : "",
-            //    Email = x.Customer != null ? x.Customer.Email : "",
-
-            //}).ToList();
             return rtnItems;
         }
         #endregion
 
+
+        private string GetDateFormatAsString(DateTime date)
+        {
+            return string.Format("{0}-{1}-{2}", date.Month, date.Day, date.Year);
+        }
+
+        private DateTime GetStringAsDateFormat(string date)
+        {
+            DateTime format = DateTime.MinValue;
+            var splitDate = date.Split(new char[] { '-', '/', '.' });
+
+            if (splitDate != null && splitDate.Length == 3)
+            {
+                if (Convert.ToInt32(splitDate[0]) > 12) //for 23-09-2015
+                    format = new DateTime(Convert.ToInt32(splitDate[2]), Convert.ToInt32(splitDate[1]), Convert.ToInt32(splitDate[0]));
+                else if (Convert.ToInt32(splitDate[1]) > 12) //for 09-23-2015
+                    format = new DateTime(Convert.ToInt32(splitDate[2]), Convert.ToInt32(splitDate[0]), Convert.ToInt32(splitDate[1]));
+                else //for 09-09-2015 (MM-dd-yyyy)
+                    format = new DateTime(Convert.ToInt32(splitDate[2]), Convert.ToInt32(splitDate[0]), Convert.ToInt32(splitDate[1]));
+            }
+
+            return format;
+        }
     }
 }

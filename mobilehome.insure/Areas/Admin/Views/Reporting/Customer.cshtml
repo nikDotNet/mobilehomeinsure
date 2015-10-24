@@ -150,26 +150,26 @@
         }
 
         function searchCustomers(zipCode, lastName) {
-            debugger;
+            //debugger;
             $.ajax({
                 url: "/reporting/SearchCustomer",
                 dataType: "json",
                 data: { zipCode: zipCode, lastName: lastName }
             }).done(function (data) {
-                debugger;
+                //debugger;
                 initializeDataTable(true);
                 $("#tblLists tbody").remove();
 
                 //prepare rows
                 var tbody = $("<tbody/>");
                 var html = $.map(data, function (item, i) {
-                    return "<tr><td>" + item.Id + "</td><td>" + item.FirstName + "</td><td>" + item.LastName + "</td><td>" + item.Phone + "</td><td>" + item.Email + "</td><td>" + item.Address + "</td><td>" + item.Zip + "</td><td>" + item.City + "</td></tr>";
+                    return "<tr><td>" + item.Id + "</td><td>" + item.FirstName + "</td><td>" + item.LastName + "</td><td>" + item.Phone + "</td><td>" + item.Email + "</td><td>" + item.Address + "</td><td>" + (item.Zip == "0" ? "" : item.Zip) + "</td><td>" + (item.City == null ? "" : item.City) + "</td></tr>";
                 }).join("");
                 tbody.append(html);
                 $("#tblLists").append(tbody);
                 initializeDataTable(false);
             }).fail(function (error) {
-                //debugger;
+                ////debugger;
                 bootbox.dialog({
                     message: error.responseText,
                     title: "Error",

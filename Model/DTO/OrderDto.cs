@@ -31,5 +31,7 @@ namespace MobileHome.Insure.Model.DTO
         public string Phone { get; set; }
 
         public decimal? TotalPremium { get; set; }
+
+        public string CreationDateStr { get; set; }
     }
 }
