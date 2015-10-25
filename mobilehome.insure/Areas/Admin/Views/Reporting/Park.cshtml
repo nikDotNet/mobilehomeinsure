@@ -96,6 +96,13 @@
 
 
         $(document).ready(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+
+
+
             //initialize Select2
             $("#ddlStateId").select2({
                 placeholder: "Select State"

@@ -123,6 +123,12 @@
         var dataTableAfterInit = null;
 
         $(document).ready(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+
+
             //debugger;
             dataTable = $("#tblLists");
             initializeDataTable(false);
