@@ -43,7 +43,7 @@ namespace MobileHome.Insure.Web.Controllers
         {
             try
             {
-                _serviceFacade.sendMail(objContact.senderName, objContact.senderEmail, objContact.subject, objContact.message);
+                _serviceFacade.sendMail(objContact.senderEmail,"info@mobilehome.insure",objContact.subject, objContact.message);
                 return Content("success");
             }
             catch (Exception ex)

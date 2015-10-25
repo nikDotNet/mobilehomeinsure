@@ -24,9 +24,9 @@ namespace MobileHome.Insure.Service
         
         }
 
-        public void sendMail(string sender, string senderMail, string subject, string message)
+        public void sendMail(string from, string to, string subject, string message)
         {
-            MailMessage messageObject = new MailMessage(senderMail, "info@mobilehome.insure", subject, message);
+            MailMessage messageObject = new MailMessage(from, to, subject, message);
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.EnableSsl = true;
 
