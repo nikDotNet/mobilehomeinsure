@@ -174,10 +174,26 @@
     @Scripts.Render("~/Content/Assets/Global/Plugins/select2/scripts")
     @Scripts.Render("~/bundles/dropzone")
     <script src="~/Scripts/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.blockUI.js" type="text/javascript"></script>
+
     <!-- END PAGE LEVEL SCRIPTS -->
     @RenderSection("scripts", required: false)
 
     <script type="text/javascript">
+        //Configuring UI blocker for Ajax operation
+        $(document).ajaxStart($.blockUI({
+            css: {
+                border: 'none',
+                padding: '0px 15px 15px 15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff'
+            }
+        }));
+        $(document).ajaxStop($.unblockUI);
+
         $(function () {
             // Initialize numeric spinner input boxes
             //$(".numeric-spinner").spinedit();
@@ -208,6 +224,8 @@
             });
 
             $(".select2me").select2();
+
+
 
         });
 
