@@ -157,6 +157,7 @@
 
         function searchCustomers(zipCode, lastName) {
             //debugger;
+            configureBlockUI();
             $.ajax({
                 url: "/reporting/SearchCustomer",
                 dataType: "json",

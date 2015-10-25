@@ -195,7 +195,7 @@
 
         function searchOrders(startDate, endDate) {
             //debugger;
-
+            configureBlockUI();
             $.ajax({
                 url: "/reporting/SearchOrder",
                 dataType: "json",

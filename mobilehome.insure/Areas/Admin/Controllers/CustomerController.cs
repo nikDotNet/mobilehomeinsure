@@ -118,5 +118,11 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
             return RedirectToAction((delType == "customer" ? "Index" : delType == "quote" ? "Quote" : "Payment"), "Customer", new { area = "admin" });
         }
+
+        public ActionResult OwnRentalCustomerByParkId(int parkId)
+        {
+            var customers = _rentalServiceFacade.OwnRentalCustomerByParkId(parkId);
+            return PartialView("~/areas/admin/views/customer/OwnRentalCustomer.cshtml", customers);
+        }
     }
 }

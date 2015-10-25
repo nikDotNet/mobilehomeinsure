@@ -44,6 +44,7 @@
             z-index: 100000000 !important;
         }
     </style>
+    @RenderSection("customstyle", required: false)
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -154,7 +155,7 @@
     <script src="~/Content/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
     <script src="~/Content/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
     @Scripts.Render("~/Content/assets/global/plugins/TableToolsv2.2.4/css/script")
-    <script src="~/Content/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    @*<script src="~/Content/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>*@
     <script src="~/Content/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
     <script src="~/Content/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
     @Scripts.Render("~/bundles/jqueryval");
@@ -181,18 +182,21 @@
 
     <script type="text/javascript">
         //Configuring UI blocker for Ajax operation
-        $(document).ajaxStart($.blockUI({
-            css: {
-                border: 'none',
-                padding: '0px 15px 15px 15px',
-                backgroundColor: '#000',
-                '-webkit-border-radius': '10px',
-                '-moz-border-radius': '10px',
-                opacity: .5,
-                color: '#fff'
-            }
-        }));
         $(document).ajaxStop($.unblockUI);
+        function configureBlockUI() {
+            $(document).ajaxStart($.blockUI({
+                css: {
+                    border: 'none',
+                    padding: '0px 15px 15px 15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            }));
+        }
+
 
         $(function () {
             // Initialize numeric spinner input boxes

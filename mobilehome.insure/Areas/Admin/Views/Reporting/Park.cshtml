@@ -2,7 +2,18 @@
     ViewBag.Title = "Park Report";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+@section customstyle
+{
+    <style type="text/css">
+        .modal-dialog {
+            width: 85% !important;
+        }
 
+        .modal-content {
+            width: 100% !important;
+        }
+    </style>
+}
 <h3 class="page-title">
     Park Report
 </h3>
@@ -153,6 +164,12 @@
                     ], // set first column as a default sort by asc
                     orderCellsTop: true,
                 });
+
+                $('#tblLists').on('page.dt', function () {
+                    //var info = table.page.info();
+                    //$('#pageInfo').html('Showing page: ' + info.page + ' of ' + info.pages);
+                    configOwnRental();
+                });
             }
             else {
                 dataTableAfterInit.destroy();
@@ -161,6 +178,7 @@
 
         function SearchParks(parkName, stateId, zipCode) {
             //debugger;
+            configureBlockUI();
             $.ajax({
                 url: "/reporting/SearchPark",
                 dataType: "json",
@@ -176,26 +194,55 @@
                     //debugger;
                     return "<tr><td>" + item.Id + "</td><td>" + item.ParkName + "</td><td>" +
                                      item.PhysicalAddress + "</td><td>" + item.PhysicalZip + "</td><td>" +
-                                    item.PhysicalCity + "</td><td>" + item.TotalOwnRentals + "</td></tr>";
+                                    item.PhysicalCity + "</td><td><a href='#' class='customerpopup' data-parkid='" + item.Id + "'>" + item.TotalOwnRentals + "</a></td></tr>";
                 }).join("");
                 tbody.append(html);
                 $("#tblLists").append(tbody);
                 initializeDataTable(false);
+                configOwnRental();
             }).fail(function (error) {
+                exceptionHandle(error.responseText);
+            });
+        }
+
+        function configOwnRental() {
+            $(".customerpopup").off("click");
+            $(".customerpopup").on("click", function (e) {
+                e.preventDefault();
+
                 //debugger;
-                bootbox.dialog({
-                    message: error.responseText,
-                    title: "Error",
-                    buttons: {
-                        main: {
-                            label: "Ok",
-                            className: "btn-primary",
-                            callback: function () {
-                                //Example.show("Primary button");
-                            }
+                var parkId = $(this).data("parkid");
+                configureBlockUI();
+                $.ajax({
+                    url: "/Customer/OwnRentalCustomerByParkId",
+                    dataType: "json",
+                    data: { parkId: parkId }
+                }).done(function (htmlRes) {
+                    //debugger;
+
+                    var tblOwnRental = $(htmlRes).find("#tblOwnRental");
+                    tblOwnRental.DataTable();
+                    dialogBox(htmlRes, "Own Rental Customers");
+                }).fail(function (error) {
+                    dialogBox(error.responseText, 'Error');
+                });
+            });
+        }
+
+        function dialogBox(message, title) {
+            //debugger;
+            bootbox.dialog({
+                message: message,
+                title: title,
+                buttons: {
+                    main: {
+                        label: "Ok",
+                        className: "btn-primary",
+                        callback: function () {
+                            //Example.show("Primary button");
                         }
                     }
-                });
+                }
             });
         }
     </script>

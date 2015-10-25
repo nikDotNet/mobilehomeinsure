@@ -234,6 +234,7 @@
 
         function searchPremiums(stateId, zipCode, startDate, endDate) {
             //debugger;
+            configureBlockUI();
             $.ajax({
                 url: "/reporting/SearchPremium",
                 dataType: "json",

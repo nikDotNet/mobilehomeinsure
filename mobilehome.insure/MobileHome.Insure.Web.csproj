@@ -1288,6 +1288,8 @@
     <Content Include="Areas\Admin\Views\Reporting\PotentialCustomers.cshtml" />
     <Content Include="Areas\Admin\Views\Reporting\PremiumReport.cshtml" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\OwnRentalCustomer.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />

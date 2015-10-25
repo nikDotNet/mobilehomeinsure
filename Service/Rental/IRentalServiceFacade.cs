@@ -30,5 +30,7 @@ namespace MobileHome.Insure.Service.Rental
         bool SaveCustomerInfo(int id, string delType);
 
         bool SaveParkNotify(ParkNotify notify);
+
+        List<Customer> OwnRentalCustomerByParkId(int parkId);
     }
 }

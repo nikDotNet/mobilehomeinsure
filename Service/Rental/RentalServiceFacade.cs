@@ -19,7 +19,7 @@ namespace MobileHome.Insure.Service.Rental
             _context = new mhRentalContext();
         }
 
-        public int saveCustomerInformation(string FirstName, string LastName,string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId)
+        public int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId)
         {
             var user = new User
             {
@@ -55,7 +55,7 @@ namespace MobileHome.Insure.Service.Rental
             return customerObj.Id;
         }
 
-        public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments,bool SendLandlord, ref int quoteId)
+        public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId)
         {
             //Generating proposal number
             string ProposalNo = "ABCD1234";
@@ -170,7 +170,7 @@ namespace MobileHome.Insure.Service.Rental
 
         public Customer GetCustomerById(int Id)
         {
-          //  _context.Configuration.ProxyCreationEnabled = false;
+            //  _context.Configuration.ProxyCreationEnabled = false;
             return _context.Customers.AsNoTracking().Where(c => c.IsActive == true && c.Id == Id).SingleOrDefault();
         }
 
@@ -182,7 +182,7 @@ namespace MobileHome.Insure.Service.Rental
 
         public Quote GetQuoteById(int Id)
         {
-           // _context.Configuration.ProxyCreationEnabled = false;
+            // _context.Configuration.ProxyCreationEnabled = false;
             return _context.Quotes.AsNoTracking().Where(q => q.IsActive == true && q.Id == Id).SingleOrDefault();
         }
 
@@ -232,6 +232,12 @@ namespace MobileHome.Insure.Service.Rental
             _context.ParkNotifies.Add(notify);
             _context.SaveChanges();
             return true;
+        }
+
+        public List<Customer> OwnRentalCustomerByParkId(int parkId)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Customers.AsNoTracking().Where(c => (c.ParkId != null && c.ParkId == parkId)).ToList();
         }
     }
 }
