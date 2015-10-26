@@ -209,6 +209,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             try
             {
+               
                 _serviceFacade.saveNotify(notifyViewModelObj.notifyObj);
                 TempData["Success"] = true;
             }

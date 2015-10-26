@@ -1000,6 +1000,10 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\about-us-header.png" />
     <Content Include="Content\img\clients\aegis.jpg" />
+    <Content Include="Content\img\header-about-us.png" />
+    <Content Include="Content\img\header-appraisal.png" />
+    <Content Include="Content\img\header-renters-app.png" />
+    <Content Include="Content\img\support-header.png" />
     <Content Include="Content\img\tabs\1.png" />
     <Content Include="Content\img\bg-pattern.jpg" />
     <Content Include="Content\img\bg-patternOLD.png" />

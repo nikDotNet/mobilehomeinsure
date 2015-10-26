@@ -14,11 +14,13 @@ namespace MobileHome.Insure.Service.Master
     {
         private mhappraisalContext _context;
         private mhRentalContext _rentalcontext;
+        private IServiceFacade _genralServiceFacade;
 
         public MasterServiceFacade()
         {
             _context = new mhappraisalContext();
             _rentalcontext = new mhRentalContext();
+            _genralServiceFacade = new ServiceFacade();
         }
 
         #region Manufacturers
@@ -181,20 +183,6 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.IsActive = false;
                     else
                     {
-                        //existingObj.StateId = parkObj.StateId;
-                        //existingObj.Name = parkObj.Name;
-                        //existingObj.Address = parkObj.Address;
-                        //existingObj.City = parkObj.City;
-                        //existingObj.Zip = parkObj.Zip;
-                        //existingObj.Zip4 = parkObj.Zip4;
-                        //existingObj.County = parkObj.County;
-                        //existingObj.Phone = parkObj.Phone;
-                        //existingObj.Spaces = parkObj.Spaces;
-                        //existingObj.ContactName = parkObj.ContactName;
-                        //existingObj.Position = parkObj.Position;
-                        //existingObj.IsActive = parkObj.IsActive;
-
-
                         existingObj.ParkName = parkObj.ParkName;
                         existingObj.PhysicalAddress = parkObj.PhysicalAddress;
                         existingObj.PhysicalAddress2 = parkObj.PhysicalAddress2;
@@ -236,6 +224,7 @@ namespace MobileHome.Insure.Service.Master
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
+                    sendNotificationForPark(parkObj, true);
                 }
             }
             else
@@ -245,6 +234,7 @@ namespace MobileHome.Insure.Service.Master
                 parkObj.IsActive = true;
                 _context.Parks.Add(parkObj);
                 _context.SaveChanges();
+                sendNotificationForPark(parkObj, false);
             }
         }
 
@@ -262,6 +252,25 @@ namespace MobileHome.Insure.Service.Master
             });
             _context.Parks.AddRange(importParks);
             _context.SaveChanges();
+            importParks.ForEach(x => sendNotificationForPark(x, false));
+        }
+
+        public void sendNotificationForPark(Park parkObj, bool isEdit)
+        {
+            List<string> emailNotification = null;
+            string body ="";
+            if (!isEdit)
+            {
+                emailNotification = _context.ParkNotifies.Where(x => x.Zip == parkObj.PhysicalZip.ToString() && x.IsNotified == false).Select(y => y.Email).ToList();
+                body = "New Park for your Zip is Added <br /> Park Name: " + parkObj.ParkName + " <br / > Address: " + parkObj.PhysicalAddress + " " + parkObj.PhysicalAddress2 + " <br /> Park City: " + parkObj.PhysicalCity + "<br /> Park County: " + parkObj.PhysicalCounty + "<br /> Park State: " + parkObj.PhysicalState.Name + "<br /> Park Zip: " + parkObj.PhysicalZip;
+            }
+            else
+            {
+                 emailNotification = _rentalcontext.Customers.Where(x => x.Zip == parkObj.PhysicalZip.ToString() && x.IsActive == true).Select(y => y.Email).ToList();
+                 body = "Your park information has been edited. Here are the details: <br /> Park Name: " + parkObj.ParkName + " <br / > Address: " + parkObj.PhysicalAddress + " " + parkObj.PhysicalAddress2 + " <br /> Park City: " + parkObj.PhysicalCity + "<br /> Park County: " + parkObj.PhysicalCounty + "<br /> Park State: " + parkObj.PhysicalState.Name + "<br /> Park Zip: " + parkObj.PhysicalZip;
+            }
+            _genralServiceFacade.sendMail("info@mobilehome.insure", "info@mobilehome.insure", "", body, emailNotification);
+              
         }
 
         public bool OnOrOffPark(int id, bool isOff = false)
