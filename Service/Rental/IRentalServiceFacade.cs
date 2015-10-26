@@ -15,7 +15,7 @@ namespace MobileHome.Insure.Service.Rental
 
         int generateInvoice(decimal amount, int customerId, int quoteId);
         bool SendLandlord(int quoteId, bool SendLandlord);
-        bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage);
+        bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage, DateTime creationDate);
 
         List<Customer> GetCustomers();
 

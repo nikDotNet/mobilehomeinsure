@@ -125,11 +125,9 @@ namespace MobileHome.Insure.Web.Controllers
                 InvoiceNumber = InvoiceNumber.ToString()
             };
 
-
             PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
-
-            bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage);
-
+            DateTime creationDate = DateTime.Now;
+            bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage, creationDate);
             if (success)
             {
                 ViewBag.Success = true;
@@ -149,8 +147,8 @@ namespace MobileHome.Insure.Web.Controllers
                     infopmtid = paymentResponse.TransactionId,
                     infopmtamt = model.Amount,
                     infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
-                    infotrndat = DateTime.Now.ToShortDateString(),
-                    infotrntim = DateTime.Now.ToShortTimeString()
+                    infotrndat = creationDate.ToShortDateString(),
+                    infotrntim = creationDate.ToShortTimeString()
                 };
                 TempData.Clear();
                

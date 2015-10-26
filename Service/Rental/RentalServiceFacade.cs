@@ -138,7 +138,7 @@ namespace MobileHome.Insure.Service.Rental
             return paymentObj.Id;
         }
 
-        public bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage)
+        public bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage, DateTime creationDate)
         {
             MobileHome.Insure.Model.Payment paymentObj = _context.Payments.Where(x => x.Id == PaymentId).SingleOrDefault();
             paymentObj.ResponseCode = ResponseCode;
@@ -147,18 +147,12 @@ namespace MobileHome.Insure.Service.Rental
             paymentObj.ApprovalMessage = "";
             paymentObj.ErrorMessage = ErrorMessage;
             paymentObj.IsActive = (paymentObj.IsActive ? paymentObj.IsActive : !paymentObj.IsActive);
-
+            paymentObj.CreationDate = DateTime.Now;
             _context.Entry(paymentObj).State = System.Data.Entity.EntityState.Modified;
             _context.SaveChanges();
 
             return true;
 
-        }
-
-
-        public bool saveInvoice(string ResponseCode, string TransactionId, string ApprovalCode, string ErrorMessage)
-        {
-            throw new NotImplementedException();
         }
 
 
