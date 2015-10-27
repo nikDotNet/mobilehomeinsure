@@ -2,22 +2,29 @@
 using mobilehome.insure.Models.JQDataTable;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.DTO;
+using MobileHome.Insure.Service;
 using MobileHome.Insure.Service.Master;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net.Mail;
+using MobileHome.Insure.Service.Rental;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
     public class ParkController : Controller
     {
         private IMasterServiceFacade _masterServiceFacade;
+        private IServiceFacade _generalServiceFacade;
+        private IRentalServiceFacade _rentalServiceFacade;
 
         public ParkController()
         {
             this._masterServiceFacade = new MasterServiceFacade();
+            this._generalServiceFacade = new ServiceFacade();
+            _rentalServiceFacade = new RentalServiceFacade();
         }
 
         public ActionResult Index()

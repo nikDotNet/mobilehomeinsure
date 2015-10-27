@@ -27,11 +27,13 @@ namespace MobileHome.Insure.Web.Controllers
         private IRentalServiceFacade _serviceFacade;
         private IPaymentService _paymentServiceFacade;
         private readonly MasterServiceFacade _masterServiceFacade;
+        private readonly IServiceFacade _generalFacade;
         public RentersController()
         {
             _serviceFacade = new RentalServiceFacade();
             _paymentServiceFacade = new PayTracePaymentService();
             _masterServiceFacade = new MasterServiceFacade();
+            _generalFacade = new ServiceFacade();
         }
 
         public ActionResult Index()
@@ -110,7 +112,7 @@ namespace MobileHome.Insure.Web.Controllers
             int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId);
             Customer customerObject = _serviceFacade.GetCustomerById(customerId);
             Quote quoteObject = _serviceFacade.GetQuoteById(quoteId);
-
+           
             PaymentRequest request = new PaymentRequest
             {
                 CreditCardNumber = model.CreditCardNumber,
@@ -123,14 +125,13 @@ namespace MobileHome.Insure.Web.Controllers
                 InvoiceNumber = InvoiceNumber.ToString()
             };
 
-
             PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
-
-            bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage);
-
+            DateTime creationDate = DateTime.Now;
+            bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage, creationDate);
             if (success)
             {
                 ViewBag.Success = true;
+                ViewBag.CustomerEmail = customerObject.Email;
                 var rtn = new
                 {
                     infoName = customerObject.FirstName + " " + customerObject.LastName,
@@ -146,17 +147,27 @@ namespace MobileHome.Insure.Web.Controllers
                     infopmtid = paymentResponse.TransactionId,
                     infopmtamt = model.Amount,
                     infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
-                    infotrndat = DateTime.Now.ToShortDateString(),
-                    infotrntim = DateTime.Now.ToShortTimeString()
+                    infotrndat = creationDate.ToShortDateString(),
+                    infotrntim = creationDate.ToShortTimeString()
                 };
                 TempData.Clear();
-                //TempData["Success"] = "true";
+               
                 return Json(rtn, JsonRequestBehavior.AllowGet);
             }
             else
                 TempData.Keep();
-
+           
             return Json("Success");
+        }
+
+        [HttpPost]
+        public ContentResult SendReceiptOnEmail(string body, string customerEmail)
+        {
+
+            body = @"<style>#m-info{background:#fff;margin-bottom:30px}dd,dl{display:block}<style>#m-info{padding:40px 30px 30px}#page-header{padding:14px 0 15px}dd,dl,dt,li,ol,ul{margin:0;padding:0}#page-header h3 span{font-size:21px;color:#fff;background:#666;line-height:60px;display:table;margin:0 auto -30px;padding:0 20px}#page-header h3{border-bottom:1px solid #e6e6e6;font-weight:300;font-family:Roboto,Sans-serif}dl{-webkit-margin-before:1em;-webkit-margin-after:1em;-webkit-margin-start:0;-webkit-margin-end:0}dt{font-weight:700}dd,dt{line-height:1.42857143}dd{-webkit-margin-start:40px}</style> " + body;
+            body = body.Replace(System.Environment.NewLine, "");
+            _generalFacade.sendMail("info@mobilehome.insure", customerEmail, "Receipt", body);
+            return Content("Success");
         }
 
         public ActionResult FindZip(int zip)
@@ -231,8 +242,11 @@ namespace MobileHome.Insure.Web.Controllers
 
 
             bool success = _serviceFacade.SaveParkNotify(request);
-
-            return View(model);
+            ViewBag.success = success;
+            if (!success)
+                return View(model);
+            else
+                return View();
         }
     }
 }

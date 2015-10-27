@@ -1,4 +1,5 @@
-﻿@model mobilehome.insure.Models.Rental.NotifyViewModel
+﻿@using mobilehome.insure.Helper.Extensions
+@model mobilehome.insure.Models.Rental.NotifyViewModel
 @{
     ViewBag.Title = "Mobile Home Appraisal - MobileHome.Insure";
 }
@@ -21,7 +22,7 @@
     <div id="rightcontainer" style="background-color:white">
         @using (Html.BeginForm())
         {
-            <div class="row" data-animated="0">
+            <div class="row" data-animated="0" id="notifyForm">
                 <div class="col-md-12">
                     <div class="page-header">
                     </div>
@@ -58,7 +59,36 @@
 
             @Html.ValidationSummary(true)
         }
-    </div>
+        <div class="row" data-animated="0" id="thanksMessage" style="display:none">
+            <div class="col-md-12">
+                <div class="page-header" style="margin-left:40px">
+                   <h3><span>  Thanks!</span></h3>
+                </div>
+                <div class="col-md-12">
+                    <br /><br />
+                    We are always adding new mobile home parks to our site.  We will send you an email when a Park has been added in your Zip Code.<br />
 
-</div>
- 
+                    If you are having technical problems with our site then contact our <a href="@Request.Url.Host:@Request.Url.Port/support">support</a> team today!
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+
+        </div>
+    </div>
+   @Html.Script(
+    @<script>
+        $(document).ready(function () {
+
+            var success = '@ViewBag.success';
+
+            if(success == "True")
+            {    $("#thanksMessage").show();
+                $("#notifyForm").hide();
+            }
+            else if(sucess == "False")
+            {
+                bootbox.alert("Unable to submit the form due to technical error. Please try again!");
+            }
+        })
+    </script>
+   )

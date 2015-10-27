@@ -24,9 +24,19 @@ namespace MobileHome.Insure.Service
         
         }
 
-        public void sendMail(string sender, string senderMail, string subject, string message)
+        public void sendMail(string from, string to, string subject, string message, List<string> bcc = null)
         {
-            MailMessage messageObject = new MailMessage(senderMail, "info@mobilehome.insure", subject, message);
+            MailMessage messageObject = new MailMessage(from, to, subject, message);
+            if(to != from)
+            {
+                MailAddressCollection mc = messageObject.CC;
+                mc.Add(new MailAddress("info@mobilehome.insure"));
+            }
+            if(bcc != null)
+            {
+                MailAddressCollection bccAddresses = messageObject.Bcc;
+                bcc.ForEach(x => bccAddresses.Add(x));
+            }
             SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
             smtp.EnableSsl = true;
 
