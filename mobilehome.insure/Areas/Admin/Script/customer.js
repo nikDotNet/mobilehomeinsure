@@ -118,7 +118,7 @@
                 //debugger;
                 //Need some customization, we can write here
 
-                $('td:eq(7)', nRow).find('a').each(function (index, element) {
+                $('td:eq(8)', nRow).find('a').each(function (index, element) {
                     //debugger;
                     //resolving date problem
                     if ($(element).data("type") == "quote") {
