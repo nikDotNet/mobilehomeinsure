@@ -43,6 +43,7 @@ namespace MobileHome.Insure.Web.Controllers
         {
             try
             {
+                objContact.message = objContact.message + " <br /> <br /> <hr /> Please click Reply to reply to the sender.";
                 _serviceFacade.sendMail(objContact.senderEmail,"info@mobilehome.insure",objContact.subject, objContact.message);
                 return Content("success");
             }
@@ -75,6 +76,13 @@ namespace MobileHome.Insure.Web.Controllers
 
         public ActionResult PrivacyPolicy()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Unsubscribe(string user)
+        {
+            ViewBag.success = _serviceFacade.Unsubscribe(user);
             return View();
         }
 

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Unsubscribe";
+}
+
+<div class="col-md-9 m-right">
+    <div id="rightContainer">
+        <div class="row" data-animated="0">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h1> Unsubscribe</h1>
+                </div>
+                <div class="col-md-12">
+                    <center>
+                        @{
+                         if(Convert.ToBoolean(ViewBag.success))
+                         { 
+                            @:You have been successfully unsubscibed from the Mailing List at MobileHome.Insure. You wish to subscribe again, please contact Support.  
+                         } 
+                         else
+                         {
+                             @:The email Id entered is already unsubscribed or the unsubscribe link is invalid. Please contact support if you're not able to unsubscribe.
+                         }  
+                        }
+
+                    </center>
+                </div>
+            </div>>
+        </div>
+    </div>
+</div>

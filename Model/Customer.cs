@@ -35,6 +35,8 @@ namespace MobileHome.Insure.Model
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
 
+        public bool IsUnsubscribed { get; set; }
+
         public virtual Park Park { get; set; }
 
         public virtual State State { get; set; }

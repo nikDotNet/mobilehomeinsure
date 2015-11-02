@@ -69,6 +69,8 @@
     <Compile Include="Appraisal\AppraisalServiceFacade.cs" />
     <Compile Include="Appraisal\IAppraisalServiceFacade.cs" />
     <Compile Include="Configuration\NinjectConfiguration.cs" />
+    <Compile Include="Helper\Constants\ApplicationConstants.cs" />
+    <Compile Include="Helper\CryptoHelper.cs" />
     <Compile Include="IServiceFacade.cs" />
     <Compile Include="Master\IMasterServiceFacade.cs" />
     <Compile Include="Master\MasterServiceFacade.cs" />
