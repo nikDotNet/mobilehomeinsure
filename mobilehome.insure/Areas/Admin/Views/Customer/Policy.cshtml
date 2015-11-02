@@ -1,0 +1,242 @@
+﻿@{
+    ViewBag.Title = "List of Policy";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section customstyle
+{
+    <style type="text/css">
+        .modal-dialog {
+            width: 60% !important;
+        }
+
+        .modal-content {
+            width: 100% !important;
+        }
+
+        dl, dt, dd, ul, ol, li {
+            margin: 0;
+            padding: 0;
+        }
+
+            ul.resp-tabs-list, p {
+                margin: 0px;
+                padding: 0px;
+            }
+
+        p {
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        #m-info {
+            /*padding: 40px 30px 30px;*/
+            padding: 0 30px;
+            background: #fff;
+            /*margin-bottom: 30px;*/
+        }
+
+        #page-header {
+            background: #fff;
+            /*padding: 14px 0 15px;*/
+            margin-bottom: 30px;
+        }
+
+            #page-header h3 {
+                border-bottom: 1px solid #e6e6e6;
+                font-weight: 300;
+                font-family: Roboto, Sans-serif;
+            }
+
+                #page-header h3 span {
+                    font-size: 21px;
+                    color: #fff;
+                    background: #666666;
+                    line-height: 40px; /*60px;*/
+                    display: table;
+                    margin: 0px auto -20px; /*-30px;*/
+                    padding: 0px 20px;
+                }
+    </style>
+}
+
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">
+    Policies
+</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Dashboard</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Customer Management</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Policies</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Policies Data
+                </div>
+            </div>
+            <div class="portlet-body">
+                @*<div class="table-toolbar">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    @Html.ActionLink("Add New ", "Edit", "Park", null, new { @class = "modal-link btn green" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                <table class="table table-striped table-hover table-bordered" id="tblLists">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Proposal Number
+                            </th>
+                            <th>
+                                Personal Property
+                            </th>
+                            <th>
+                                Liability
+                            </th>
+                            <th>
+                                Preminum
+                            </th>
+                            <th>
+                                Effective Date
+                            </th>
+                            <th>
+                                No Of Installments
+                            </th>
+                            <th>
+                                Send Landlord
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+
+
+<!-- END PAGE CONTENT -->
+@section scripts{
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Areas/Admin/Script/customer.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+            configureBlockUI();
+
+            var tableColumns = [
+                {
+                    "mDataProp": "Id",
+                    "bSearchable": false,
+                    "bSortable": false,
+                    "width": "4%",
+                    //"bVisible": false
+                },
+                { "mDataProp": "ProposalNumber" },
+                { "mDataProp": "PersonalProperty" },
+                { "mDataProp": "Liability", "width": "3%" },
+                { "mDataProp": "Premium", "width": "3%" },
+                { "mDataProp": "EffectiveDate" },
+                { "mDataProp": "NoOfInstallments" },
+                { "mDataProp": "SendLandLord", "width": "12%" },
+                {
+                    data: null,
+                    className: "center",
+                    defaultContent: '<a href="/admin/customer/PolicyReceipt?id=" class="view-link" data-type="policy">View</a>'
+                }
+            ];
+
+            CustomerActions.init("/Admin/Customer/LoadingPolicy", tableColumns);
+            $("#tblLists_filter").css("display", "none"); //hide common/global filter
+
+        });
+
+        function viewEventInit() {
+            $('.view-link').off("click");
+            $('.view-link').on("click", function (e) {
+                debugger;
+                e.preventDefault();
+                var url = $(this).data("href");
+
+                var ajaxOptions = {};
+                ajaxOptions.url = url;
+                //ajaxOptions.dataType = "JSON";
+                //ajaxOptions.method = "POST";
+                //ajaxOptions.contentType = 'application/json';
+                var request = $.ajax(ajaxOptions);
+                request.done(function (result) {
+                    var htmlRes = result;
+                    bootbox.dialog({
+                        title: "Policy Receipt",
+                        message: htmlRes,
+                        buttons: {
+                            main: {
+                                label: "Ok",
+                                className: "btn-primary",
+                                callback: function () {
+                                    //Example.show("Primary button");
+                                }
+                            }
+                        }
+                    });
+                }).fail(function (error) {
+                    //debugger;
+                    bootbox.dialog({
+                        message: error.responseText,
+                        title: "Error",
+                        buttons: {
+                            main: {
+                                label: "Ok",
+                                className: "btn-primary",
+                                callback: function () {
+                                    //Example.show("Primary button");
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+        }
+
+        function stopPropagation(evt) {
+            if (evt.stopPropagation !== undefined) {
+                evt.stopPropagation();
+            } else {
+                evt.cancelBubble = true;
+            }
+        }
+    </script>
+}

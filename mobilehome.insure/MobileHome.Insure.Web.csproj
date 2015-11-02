@@ -214,6 +214,7 @@
     <Content Include="Areas\Admin\Script\AgeFactor.js" />
     <Content Include="Areas\Admin\Script\customer.js" />
     <Content Include="Areas\Admin\Script\park.js" />
+    <Content Include="Areas\Admin\Script\reporting.js" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls.swf" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls_pdf.swf" />
     <Content Include="CalcHomePremiumService.svc" />
@@ -1272,6 +1273,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\OwnRentalCustomer.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\Policy.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\PolicyReceipt.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />

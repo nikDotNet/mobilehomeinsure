@@ -1,75 +1,14 @@
 ﻿var CustomerActions = function () {
+    var oTable = null;
 
     var handleTable = function (url, tableColumns) {
         $.ajaxSetup({
             cache: false
         });
 
-        //function restoreRow(oTable, nRow) {
-        //    debugger;
-        //    var aData = oTable.fnGetData(nRow);
-        //    var jqTds = $('>td', nRow);
-
-        //    for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
-        //        oTable.fnUpdate(aData[i], nRow, i, false);
-        //    }
-
-        //    oTable.fnDraw();
-        //}
-
-        //function editRow(oTable, nRow) {
-        //    debugger;
-        //    var aData = oTable.fnGetData(nRow);
-        //    var jqTds = $('>td', nRow);
-        //    //jqTds[0].innerHTML = '<span id="Id">' + aData[0] + '</span>';
-        //    //jqTds[1].innerHTML = '<input type="text" class="form-control input-small" id="txtAge" value="' + aData[1] + '">';
-        //    //jqTds[2].innerHTML = '<input type="text" class="form-control input-small" id="txtFactor" value="' + aData[2] + '">';
-        //    ////jqTds[3].innerHTML = '<input type="text" class="form-control input-small" id="" value="' + aData[3] + '">';
-        //    //jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
-        //    //jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
-        //}
-
-        //function saveRow(oTable, nRow) {
-        //    debugger;
-        //    var jqInputs = $('input', nRow);
-        //    var options = {};
-        //    options.url = "saveAgeFactor";
-        //    options.method = "POST";
-        //    options.data = { Id: $("#Id").text(), Age: $("#txtAge").val(), Factor: $("#txtFactor").val() };
-        //    var request = $.ajax(options);
-
-        //    request.done(function (msg) {
-        //        alert("Success");
-        //    });
-
-        //    request.fail(function (jqXHR, textStatus) {
-        //        alert("Request failed: " + textStatus);
-        //    });
-
-
-        //    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-        //    oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-        //    oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-        //    //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-        //    oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-        //    oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
-        //    oTable.fnDraw();
-        //}
-
-        //function cancelEditRow(oTable, nRow) {
-        //    debugger;
-        //    var jqInputs = $('input', nRow);
-        //    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-        //    oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-        //    oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-        //    //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-        //    oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-        //    oTable.fnDraw();
-        //}
-
 
         var table = $('#tblLists');
-        var oTable = table.DataTable({
+        oTable = table.DataTable({
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
             // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
@@ -121,7 +60,7 @@
                 $('td:eq(8)', nRow).find('a').each(function (index, element) {
                     //debugger;
                     //resolving date problem
-                    if ($(element).data("type") == "quote") {
+                    if (($(element).data("type") == "quote") || ($(element).data("type") == "policy")) {
                         var effectiveDate = new Date(parseInt(aData.EffectiveDate.replace("/Date(", "").replace(")/", ""), 10));
                         $('td:eq(5)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
                     }
@@ -129,7 +68,17 @@
                     if ($(element).hasClass("delete-link")) {
                         $(element).attr('href', $(element).attr('href') + aData.Id + "&delType=" + $(element).data('type'));
                     }
+                    else if ($(element).hasClass("view-link")) {
+                        $(element).attr('data-href', $(element).attr('href') + aData.Id);
+                        $(element).attr('href', "#");
+                    }
                 });
+            },
+            "initComplete": function (settings, json) {
+                //debugger;
+                if (typeof viewEventInit === 'function') {
+                    viewEventInit();
+                }
             }
         });
 
@@ -142,7 +91,7 @@
                 .search(this.value)
                 .draw();
         });
-        
+
 
         //var tt = new $.fn.dataTable.TableTools(oTable);
         //tt.sSwfPath = "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf";
@@ -182,57 +131,7 @@
             nEditing = nRow;
             nNew = true;
         });
-
-        //table.on('click', '.delete', function (e) {
-        //    debugger;
-        //    e.preventDefault();
-
-        //    if (confirm("Are you sure to delete this row ?") == false) {
-        //        return;
-        //    }
-
-        //    var nRow = $(this).parents('tr')[0];
-        //    oTable.fnDeleteRow(nRow);
-        //    alert("Deleted!)");
-        //});
-
-        //table.on('click', '.cancel', function (e) {
-        //    debugger;
-        //    e.preventDefault();
-        //    if (nNew) {
-        //        oTable.fnDeleteRow(nEditing);
-        //        nEditing = null;
-        //        nNew = false;
-        //    } else {
-        //        restoreRow(oTable, nEditing);
-        //        nEditing = null;
-        //    }
-        //});
-
-        //table.on('click', '.edit', function (e) {
-        //    debugger;
-        //    e.preventDefault();
-
-        //    /* Get the row as a parent of the link that was clicked on */
-        //    var nRow = $(this).parents('tr')[0];
-
-        //    if (nEditing !== null && nEditing != nRow) {
-        //        /* Currently editing - but not this row - restore the old before continuing to edit mode */
-        //        restoreRow(oTable, nEditing);
-        //        editRow(oTable, nRow);
-        //        nEditing = nRow;
-        //    } else if (nEditing == nRow && this.innerHTML == "Save") {
-        //        /* Editing this row and want to save it */
-        //        saveRow(oTable, nEditing);
-        //        nEditing = null;
-        //        alert("Updated!)");
-        //    } else {
-        //        /* No edit in progress - let's start one */
-        //        editRow(oTable, nRow);
-        //        nEditing = nRow;
-        //    }
-        //});
-    }
+    };
 
     return {
 

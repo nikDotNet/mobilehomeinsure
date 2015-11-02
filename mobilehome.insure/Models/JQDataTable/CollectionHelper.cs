@@ -57,10 +57,10 @@ namespace mobilehome.insure.Models.JQDataTable
 
 
             var isFilterValue = searchColumnValues.Any(e => !string.IsNullOrWhiteSpace(e));
-            if ((properties != null && properties.Count > 0) && properties.Count == searchColumnValues.Count - 1 && isFilterValue) // minus -1 means, skipping action column from search list
+            if ((properties != null && properties.Count > 0) && properties.Count == searchColumnValues.Count && isFilterValue) // minus -1 means, skipping action column from search list
             {
                 var filterValueProp = new Dictionary<string, string>();
-                for (int idx = 0; idx < searchColumnValues.Count - 1; idx++)
+                for (int idx = 0; idx < searchColumnValues.Count; idx++)
                 {
                     if (!string.IsNullOrWhiteSpace(searchColumnValues[idx]))
                     {
@@ -68,29 +68,19 @@ namespace mobilehome.insure.Models.JQDataTable
                     }
                 }
 
+                IEnumerable<T> result = null;
                 foreach (var item in filterValueProp)
                 {
-                    var result = WhereQuery<T>(types, item.Key, item.Value);
+                    result = WhereQuery<T>((result == null ? types : result), item.Key, item.Value);
                     if (result != null && result.Count() > 0)
-                    {
-                        types = result.ToList();
-                        break;
-                    }
+                        continue;
+                }
+
+                if (result != null && result.Count() > 0)
+                {
+                    types = result.ToList();
                 }
             }
-
-            //if (!string.IsNullOrWhiteSpace(searchString) && (properties != null && properties.Count > 0))
-            //{
-            //    foreach (string prop in properties)
-            //    {
-            //        var result = WhereQuery<T>(types, prop, searchString);
-            //        if (result != null && result.Count() > 0)
-            //        {
-            //            types = result.ToList();
-            //            break;
-            //        }
-            //    }
-            //}
 
             searchRecordCount = types.Count;
             IEnumerable<T> sortedEntityTypes = null;
@@ -102,7 +92,7 @@ namespace mobilehome.insure.Models.JQDataTable
                 }
                 else
                 {
-                    sortedEntityTypes = types.OrderByDescending(entity => entity.GetType().GetProperty(sortedColumn.PropertyName).GetValue(entity,null));
+                    sortedEntityTypes = types.OrderByDescending(entity => entity.GetType().GetProperty(sortedColumn.PropertyName).GetValue(entity, null));
                 }
             }
 
