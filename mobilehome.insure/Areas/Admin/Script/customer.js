@@ -79,6 +79,11 @@
                 if (typeof viewEventInit === 'function') {
                     viewEventInit();
                 }
+            },
+            "fnDrawCallback": function (oSettings) {
+                if (typeof viewEventInit === 'function') {
+                    viewEventInit();
+                }
             }
         });
 
