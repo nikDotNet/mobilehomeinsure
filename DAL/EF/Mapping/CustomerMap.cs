@@ -64,6 +64,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.City).HasColumnName("City");
             this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
             this.Property(t => t.IsActive).HasColumnName("IsActive");
+            this.Property(t => t.IsUnsubscribed).HasColumnName("IsUnsubscribed");
 
             // Relationships
             this.HasOptional(t => t.State)

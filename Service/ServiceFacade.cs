@@ -7,15 +7,20 @@ using MobileHome.Insure.DAL;
 using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
 using System.Net.Mail;
+using MobileHome.Insure.Service.Helper;
+using MobileHome.Insure.Service.Helper.Constants;
 
 namespace MobileHome.Insure.Service
 {
     public class ServiceFacade : IServiceFacade
     {
         private readonly mhappraisalContext _context;
+        private readonly mhRentalContext _rentalContext;
+        
         public ServiceFacade()
         {
             _context = new mhappraisalContext();
+            _rentalContext = new mhRentalContext();
         }
 
         
@@ -24,25 +29,69 @@ namespace MobileHome.Insure.Service
         
         }
 
-        public void sendMail(string from, string to, string subject, string message, List<string> bcc = null)
+        private string getUnsubscribeLink(string emailId)
         {
-            MailMessage messageObject = new MailMessage(from, to, subject, message);
-            if(to != from)
-            {
-                MailAddressCollection mc = messageObject.CC;
-                mc.Add(new MailAddress("info@mobilehome.insure"));
-            }
-            if(bcc != null)
-            {
-                MailAddressCollection bccAddresses = messageObject.Bcc;
-                bcc.ForEach(x => bccAddresses.Add(x));
-            }
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587);
-            smtp.EnableSsl = true;
+            return "<a href=http://localhost:43517/Unsubscribe?user=" + CryptoHelper.Encrypt(emailId) + ">here</a>";
+        }
 
-            smtp.Credentials = new System.Net.NetworkCredential("info@mobilehome.insure", "MobileHome2015");
-            smtp.Send(messageObject);
+        public void sendMail(string from, string to, string subject, string message, List<string> lstEmail = null)
+        {
+            SmtpClient smtp = new SmtpClient("mail.mobilehome.insure", 25);
+            smtp.EnableSsl = false;
+            smtp.Credentials = new System.Net.NetworkCredential("info@mobilehome.insure", "Password123!");
 
+            if (lstEmail == null)
+                lstEmail = new List<string>();
+
+            if(to!= "" && !lstEmail.Contains(to))
+                lstEmail.Add(to);
+
+           lstEmail = filterUnsubscribedEmails(lstEmail);
+
+            foreach(var emailTo in lstEmail)
+            {
+                MailMessage messageObject = new MailMessage(from, emailTo, subject, message + " <br />" + ApplicationConstants.UnsubscribeText.Replace("here", getUnsubscribeLink(emailTo))); 
+                
+                messageObject.IsBodyHtml = true;
+                smtp.Send(messageObject);
+            }
+        }
+
+        public bool Unsubscribe(string encryptedText)
+        {
+            string customerEmail = CryptoHelper.Decrypt(encryptedText);
+            var customerObjs = (from customer in _rentalContext.Customers
+                               where customer.Email == customerEmail
+                               select customer);
+            foreach (var customerObj in customerObjs)
+            {
+                 customerObj.IsUnsubscribed = true;
+                _rentalContext.Entry(customerObj).State = System.Data.Entity.EntityState.Modified;
+               
+            }
+            try
+            {
+                if (customerObjs.Count() != 0)
+                {
+                    _rentalContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+            
+        }
+
+        public List<string> filterUnsubscribedEmails(List<string> lstEmail)
+        {
+            var query = from customer in _rentalContext.Customers
+                        join emailInList in lstEmail on customer.Email equals emailInList
+                        where customer.IsUnsubscribed == true
+                        select emailInList;
+            return lstEmail.Except(query.Distinct()).ToList();
         }
 
     }
