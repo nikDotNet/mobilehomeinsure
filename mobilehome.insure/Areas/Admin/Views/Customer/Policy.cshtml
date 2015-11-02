@@ -187,7 +187,7 @@
         function viewEventInit() {
             $('.view-link').off("click");
             $('.view-link').on("click", function (e) {
-                debugger;
+                //debugger;
                 e.preventDefault();
                 var url = $(this).data("href");
 
@@ -199,18 +199,22 @@
                 var request = $.ajax(ajaxOptions);
                 request.done(function (result) {
                     var htmlRes = result;
+                    var customerEmail = $(result).find('#infoEmail').html();
                     bootbox.dialog({
                         title: "Policy Receipt",
                         message: htmlRes,
                         buttons: {
                             main: {
-                                label: "Ok",
+                                label: "Send Mail",
                                 className: "btn-primary",
                                 callback: function () {
-                                    //Example.show("Primary button");
+                                    customerEmail = $(this).find('#txtEmails').val();
+                                    sendCustomerReceipt(htmlRes, customerEmail)
                                 }
                             }
                         }
+                    }).init(function () {
+                        $(this).find('#txtEmails').val(customerEmail);
                     });
                 }).fail(function (error) {
                     //debugger;
@@ -237,6 +241,24 @@
             } else {
                 evt.cancelBubble = true;
             }
+        }
+
+        function sendCustomerReceipt(bodyHtml, customerEmail) {
+            //debugger;
+            var ajaxOptions = {};
+            ajaxOptions.url = "/Renters/SendReceiptOnEmail";
+            ajaxOptions.method = "POST";
+            ajaxOptions.dataType = "JSON";
+            ajaxOptions.contentType = 'application/json';
+            ajaxOptions.data = JSON.stringify({
+                body: bodyHtml,
+                customerEmail: customerEmail
+            });
+
+            var request = $.ajax(ajaxOptions);
+            request.fail(function (jqXHR, textStatus) {
+                alert("Request failed: " + textStatus);
+            });
         }
     </script>
 }
