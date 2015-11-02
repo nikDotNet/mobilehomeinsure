@@ -92,105 +92,123 @@
     </div>
 </div>
 
+
+
+
+
+
+
 @section scripts
 {
+    <script src="~/Areas/Admin/Script/reporting.js"></script>
     <script type="text/javascript">
         var zipCode = null;
         var lastName = null;
         var dataTable = null;
         var dataTableAfterInit = null;
 
-        $(document).ready(function () {
+        $(function () {
             Metronic.init(); // init metronic core components
             Layout.init(); // init current layout
             QuickSidebar.init(); // init quick sidebar
             Demo.init(); // init demo features
 
 
-            dataTable = $("#tblLists");
-            initializeDataTable(false);
-            searchCustomers($("#txtZipCode").val(), $("#txtLastName").val());
+            var tableColumns = [
+               {
+                   "mDataProp": "Id",
+                   "bSearchable": false,
+                   "bSortable": false,
+                   //"bVisible": false
+               },
+               { "mDataProp": "FirstName" },
+               { "mDataProp": "LastName" },
+               { "mDataProp": "Phone" },
+               { "mDataProp": "Email" },
+               { "mDataProp": "Address" },
+               { "mDataProp": "Zip" },
+               { "mDataProp": "City" },
+               //{
+               //    data: null,
+               //    className: "center",
+               //    defaultContent: '<a href="/admin/customer/delete?id=" class="delete-link" data-type="customer">Delete</a>'
+               //}
+            ];
+
+            //$('#tblLists thead tr#filterrow th').each(function () {
+            //    //debugger;
+            //    var title = $('#tblLists thead th').eq($(this).index()).text();
+            //    title = title.replace("\n", "").replace("\n", "").trim();
+            //    if (title !== "Action") {
+            //        $(this).html('<input type="text" onclick="stopPropagation(event);" class="form-control" placeholder="Search ' + title + '" />');
+            //    }
+            //    else {
+            //        $('#tblLists thead tr#filterrow th').eq($(this).index()).text("");
+            //    }
+            //});
+
+
+            ReportingActions.init("/Admin/Reporting/LoadingCustomer", tableColumns);
+            $("#tblLists_filter").css("display", "none"); //hide common/global filter
 
 
             $("#btnSearch").off("click");
             $("#btnSearch").on("click", function (e) {
                 e.preventDefault();
 
-                zipCode = $("#txtZipCode").val(); //zip for reference
-                lastName = $("#txtLastName").val();
-                searchCustomers(zipCode, lastName);
+
+                ReportingActions.search();
             });
         });
 
-        function initializeDataTable(condition) {
-            if (!condition && dataTable !== 'undefined') {
-                dataTableAfterInit = dataTable.DataTable({
-                    dom: 'T<"clearfix">lfrtip',
-                    tableTools: {
-                        "sSwfPath": "../../Content/assets/global/plugins/TableToolsv2.2.4/swf/copy_csv_xls_pdf.swf"
-                    },
-                    "lengthMenu": [
-                        [5, 15, 20, -1],
-                        [5, 15, 20, "All"] // change per page values here
-                    ],
-                    "pageLength": 10,
-                    "language": {
-                        "lengthMenu": " _MENU_ records"
-                    },
-                    "columnDefs": [{ // set default column settings
-                        'orderable': true,
-                        'targets': [0]
-                    }, {
-                        "searchable": true,
-                        "targets": [0]
-                    }],
-                    "order": [
-                        [0, "asc"]
-                    ], // set first column as a default sort by asc
-                    orderCellsTop: true,
-                });
-            }
-            else {
-                dataTableAfterInit.destroy();
-            }
+        //This function must be placed on reporting grid page
+        function customSearch(oTable) {
+            //debugger;
+            zipCode = $("#txtZipCode").val(); //zip for reference
+            lastName = $("#txtLastName").val();
+            search(oTable, (zipCode != null && zipCode != "" ? "6," + zipCode : null), (lastName != null && lastName != "" ? "2," + lastName : null));
         }
 
-        function searchCustomers(zipCode, lastName) {
+        function search(oTable, zipIdx, lastNameIdx) {
+            //redraw table with custom filter
             //debugger;
-            configureBlockUI();
-            $.ajax({
-                url: "/reporting/SearchCustomer",
-                dataType: "json",
-                data: { zipCode: zipCode, lastName: lastName }
-            }).done(function (data) {
-                //debugger;
-                initializeDataTable(true);
-                $("#tblLists tbody").remove();
+            
+            if (zipIdx == null && lastNameIdx == null) {
+                oTable.search('')
+                      .columns()
+                      .search('')
+                      .draw();
+            }
+            else if (zipIdx != null && lastNameIdx == null) {
+                var arrayData = zipIdx.split(",");
+                var idx = arrayData[0];
+                var value = arrayData[1];
+                oTable.column(idx)
+                        .search(value)
+                        .draw();
+            }
+            else if (zipIdx == null && lastNameIdx != null) {
+                var arrayData = lastNameIdx.split(",");
+                var idx = arrayData[0];
+                var value = arrayData[1];
+                oTable.column(idx)
+                        .search(value)
+                        .draw();
+            }
+            else if (zipIdx != null && lastNameIdx != null) {
+                var zipArrayData = zipIdx.split(",");
+                var zipIdx = zipArrayData[0];
+                var zipValue = zipArrayData[1];
 
-                //prepare rows
-                var tbody = $("<tbody/>");
-                var html = $.map(data, function (item, i) {
-                    return "<tr><td>" + item.Id + "</td><td>" + item.FirstName + "</td><td>" + item.LastName + "</td><td>" + item.Phone + "</td><td>" + item.Email + "</td><td>" + item.Address + "</td><td>" + (item.Zip == "0" ? "" : item.Zip) + "</td><td>" + (item.City == null ? "" : item.City) + "</td></tr>";
-                }).join("");
-                tbody.append(html);
-                $("#tblLists").append(tbody);
-                initializeDataTable(false);
-            }).fail(function (error) {
-                ////debugger;
-                bootbox.dialog({
-                    message: error.responseText,
-                    title: "Error",
-                    buttons: {
-                        main: {
-                            label: "Ok",
-                            className: "btn-primary",
-                            callback: function () {
-                                //Example.show("Primary button");
-                            }
-                        }
-                    }
-                });
-            });
+                var lastNMArrayData = lastNameIdx.split(",");
+                var lastNMIdx = lastNMArrayData[0];
+                var lastNMValue = lastNMArrayData[1];
+                oTable.column(zipIdx)
+                      .search(zipValue)
+                      .column(lastNMIdx)
+                      .search(lastNMValue)
+                      .draw();
+            }
         }
     </script>
 }

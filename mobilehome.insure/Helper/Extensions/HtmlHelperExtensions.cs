@@ -4,21 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
+using System.Dynamic;
+using System.ComponentModel;
 
 namespace mobilehome.insure.Helper.Extensions
 {
     public static class HtmlHelperExtensions
     {
-        
-            /// <summary>
-            /// Adds a partial view script to the Http context to be rendered in the parent view
-            /// </summary>
-            public static MvcHtmlString Script(this HtmlHelper htmlHelper, Func<object, HelperResult> template)
-            {
-                htmlHelper.ViewContext.HttpContext.Items["_script_" + Guid.NewGuid()] = template;
-                return MvcHtmlString.Empty;
-            }
-        
+
+        /// <summary>
+        /// Adds a partial view script to the Http context to be rendered in the parent view
+        /// </summary>
+        public static MvcHtmlString Script(this HtmlHelper htmlHelper, Func<object, HelperResult> template)
+        {
+            htmlHelper.ViewContext.HttpContext.Items["_script_" + Guid.NewGuid()] = template;
+            return MvcHtmlString.Empty;
+        }
+
 
 
         /// <summary>
@@ -41,5 +43,20 @@ namespace mobilehome.insure.Helper.Extensions
             return MvcHtmlString.Empty;
         }
 
+    }
+
+    public static class DynamicExtensions
+    {
+        public static ExpandoObject ToExpando(this object anonymousObject)
+        {
+            IDictionary<string, object> expando = new ExpandoObject();
+            foreach (PropertyDescriptor propertyDescriptor in TypeDescriptor.GetProperties(anonymousObject))
+            {
+                var obj = propertyDescriptor.GetValue(anonymousObject);
+                expando.Add(propertyDescriptor.Name, obj);
+            }
+
+            return (ExpandoObject)expando;
+        }
     }
 }

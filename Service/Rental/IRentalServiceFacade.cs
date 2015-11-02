@@ -25,6 +25,10 @@ namespace MobileHome.Insure.Service.Rental
 
         Quote GetQuoteById(int Id);
 
+        List<Quote> GetPolicies();
+
+        Model.Payment GetPolicyReceiptById(int quoteId);
+
         List<MobileHome.Insure.Model.Payment> GetPayments();
 
         bool SaveCustomerInfo(int id, string delType);

@@ -171,7 +171,7 @@ namespace MobileHome.Insure.Service.Rental
         public List<Quote> GetQuotes()
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true).ToList();
+            return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true && (c.ProposalNumber == null || c.ProposalNumber == string.Empty)).ToList();
         }
 
         public Quote GetQuoteById(int Id)
@@ -180,6 +180,17 @@ namespace MobileHome.Insure.Service.Rental
             return _context.Quotes.AsNoTracking().Where(q => q.IsActive == true && q.Id == Id).SingleOrDefault();
         }
 
+        public List<Quote> GetPolicies()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true && c.ProposalNumber != null && c.Payments.FirstOrDefault().RentalQuoteId.HasValue).ToList();
+        }
+
+        public Model.Payment GetPolicyReceiptById(int quoteId)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Payments.AsNoTracking().FirstOrDefault(p => p.IsActive == true && p.RentalQuoteId == quoteId);
+        }
 
         public List<Model.Payment> GetPayments()
         {
