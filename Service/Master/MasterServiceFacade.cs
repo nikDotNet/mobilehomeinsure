@@ -377,26 +377,6 @@ namespace MobileHome.Insure.Service.Master
             return rtnItems;
         }
 
-        public List<Customer> GetListCustomers(string zipCode, string lastName)
-        {
-            List<Customer> items = null;
-            //.Include("States")
-            _rentalcontext.Configuration.ProxyCreationEnabled = false;
-            if (string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
-                items = _rentalcontext.Customers.ToList();
-
-            if (!string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(lastName))
-                items = _rentalcontext.Customers.Where(x => x.Zip == zipCode).ToList();
-
-            if (!string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
-                items = _rentalcontext.Customers.Where(x => x.LastName == lastName).ToList();
-
-            if (!string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(zipCode))
-                items = _rentalcontext.Customers.Where(x => x.Zip == zipCode && x.LastName.StartsWith(lastName)).ToList();
-
-            return (items != null && items.Count > 0) ? items : null;
-        }
-
         public List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate)
         {
             List<Model.Payment> items = null;
@@ -477,49 +457,70 @@ namespace MobileHome.Insure.Service.Master
             return rtnItems;
         }
 
-        public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
-        {
-            List<Park> items = null;
 
-            _context.Configuration.ProxyCreationEnabled = false;
-            if (string.IsNullOrWhiteSpace(parkName) && stateId == 0 && string.IsNullOrWhiteSpace(zipCode))
-                items = _context.Parks.AsNoTracking().ToList();
+        //public List<Customer> GetListCustomers(string zipCode, string lastName)
+        //{
+        //    List<Customer> items = null;
+        //    //.Include("States")
+        //    _rentalcontext.Configuration.ProxyCreationEnabled = false;
+        //    if (string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
+        //        items = _rentalcontext.Customers.ToList();
 
-            if (!string.IsNullOrWhiteSpace(parkName) && stateId > 0 && !string.IsNullOrWhiteSpace(zipCode))
-            {
-                var zipInt = Convert.ToInt32(zipCode);
-                items = _context.Parks.AsNoTracking().Where(p => p.ParkName.StartsWith(parkName) && p.PhysicalZip == zipInt).ToList();
-            }
+        //    if (!string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(lastName))
+        //        items = _rentalcontext.Customers.Where(x => x.Zip == zipCode).ToList();
 
-            if (!string.IsNullOrWhiteSpace(parkName) || stateId > 0 | !string.IsNullOrWhiteSpace(zipCode))
-            {
-                if (string.IsNullOrWhiteSpace(parkName))
-                    parkName = null;
+        //    if (!string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
+        //        items = _rentalcontext.Customers.Where(x => x.LastName == lastName).ToList();
 
-                int zipInt = 0;
-                if (string.IsNullOrWhiteSpace(zipCode))
-                    zipCode = null;
-                else
-                    zipInt = !string.IsNullOrWhiteSpace(zipCode) ? Convert.ToInt32(zipCode) : 0;
+        //    if (!string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(zipCode))
+        //        items = _rentalcontext.Customers.Where(x => x.Zip == zipCode && x.LastName.StartsWith(lastName)).ToList();
+
+        //    return (items != null && items.Count > 0) ? items : null;
+        //}
+
+        //public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
+        //{
+        //    List<Park> items = null;
+
+        //    _context.Configuration.ProxyCreationEnabled = false;
+        //    if (string.IsNullOrWhiteSpace(parkName) && stateId == 0 && string.IsNullOrWhiteSpace(zipCode))
+        //        items = _context.Parks.AsNoTracking().ToList();
+
+        //    if (!string.IsNullOrWhiteSpace(parkName) && stateId > 0 && !string.IsNullOrWhiteSpace(zipCode))
+        //    {
+        //        var zipInt = Convert.ToInt32(zipCode);
+        //        items = _context.Parks.AsNoTracking().Where(p => p.ParkName.StartsWith(parkName) && p.PhysicalZip == zipInt).ToList();
+        //    }
+
+        //    if (!string.IsNullOrWhiteSpace(parkName) || stateId > 0 | !string.IsNullOrWhiteSpace(zipCode))
+        //    {
+        //        if (string.IsNullOrWhiteSpace(parkName))
+        //            parkName = null;
+
+        //        int zipInt = 0;
+        //        if (string.IsNullOrWhiteSpace(zipCode))
+        //            zipCode = null;
+        //        else
+        //            zipInt = !string.IsNullOrWhiteSpace(zipCode) ? Convert.ToInt32(zipCode) : 0;
 
 
-                items = _context.Parks.AsNoTracking().Where(p =>
-                                                            (parkName == null || p.ParkName.StartsWith(parkName)) &&
-                                                            (stateId == 0 || (p.PhysicalStateId != null && p.PhysicalStateId.Value == stateId)) &&
-                                                            (zipCode == null || (p.PhysicalZip == zipInt))).ToList();
-            }
+        //        items = _context.Parks.AsNoTracking().Where(p =>
+        //                                                    (parkName == null || p.ParkName.StartsWith(parkName)) &&
+        //                                                    (stateId == 0 || (p.PhysicalStateId != null && p.PhysicalStateId.Value == stateId)) &&
+        //                                                    (zipCode == null || (p.PhysicalZip == zipInt))).ToList();
+        //    }
 
-            var rtnItems = items.Select(x => new ParkDto()
-            {
-                Id = x.Id,
-                ParkName = x.ParkName,
-                PhysicalAddress = x.PhysicalAddress,
-                PhysicalZip = x.PhysicalZip,
-                PhysicalCity = x.PhysicalCity,
-                TotalOwnRentals = _rentalcontext.Customers.Where(c => c.ParkId == x.Id).Count()
-            }).ToList();
-            return rtnItems;
-        }
+        //    var rtnItems = items.Select(x => new ParkDto()
+        //    {
+        //        Id = x.Id,
+        //        ParkName = x.ParkName,
+        //        PhysicalAddress = x.PhysicalAddress,
+        //        PhysicalZip = x.PhysicalZip,
+        //        PhysicalCity = x.PhysicalCity,
+        //        TotalOwnRentals = _rentalcontext.Customers.Where(c => c.ParkId == x.Id).Count()
+        //    }).ToList();
+        //    return rtnItems;
+        //}
         #endregion
 
 
