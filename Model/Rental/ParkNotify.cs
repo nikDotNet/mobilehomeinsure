@@ -8,6 +8,10 @@ namespace MobileHome.Insure.Model.Rental
 {
     public class ParkNotify : Base.BaseEntity
     {
+        public ParkNotify()
+        {
+            IsNotified = false;
+        }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Zip { get; set; }

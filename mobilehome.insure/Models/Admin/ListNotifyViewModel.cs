@@ -17,7 +17,7 @@ namespace MobileHome.Insure.Web.Models.Admin
 
         public ListNotifyViewModel()
         {
-            notifyObj.IsNotified = false;
+          
         }
     }
 }
