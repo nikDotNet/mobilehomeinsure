@@ -38,11 +38,6 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult SearchCustomer(string zipCode, string lastName)
-        {
-            return Json(_masterServiceFacade.GetListCustomers(zipCode, lastName), JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult LoadingCustomer(JQueryDataTablesModel jQueryDataTablesModel)
         {
             int totalRecordCount = 0;
@@ -73,10 +68,49 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult SearchPark(string parkName, int? stateId, string zipCode)
+        //public ActionResult SearchPark(string parkName, int? stateId, string zipCode)
+        //{
+        //    return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
+        //}
+
+        public ActionResult LoadingPark(JQueryDataTablesModel jQueryDataTablesModel)
         {
-            return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
+            int totalRecordCount = 0;
+            int searchRecordCount = 0;
+
+            var parkDtos = GenericFilterHelper<ParkDto>.GetFilteredRecords(
+                runTimeMethod: GetParkDtos,
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
+                totalRecordCount: out totalRecordCount,
+                searchRecordCount: out searchRecordCount,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "ParkName", "PhysicalAddress", "PhysicalZip", "PhysicalCity", "State", "TotalOwnRentals" });
+
+            return Json(new JQueryDataTablesResponse<ParkDto>(
+                items: parkDtos,
+                totalRecords: totalRecordCount,
+                totalDisplayRecords: searchRecordCount,
+                sEcho: jQueryDataTablesModel.sEcho));
         }
+
+        private List<ParkDto> GetParkDtos()
+        {
+            return _masterServiceFacade.GetParks().Select(p => new ParkDto
+                                                                                {
+                                                                                    Id = p.Id,
+                                                                                    ParkName = p.ParkName,
+                                                                                    PhysicalAddress = p.PhysicalAddress,
+                                                                                    PhysicalZip = p.PhysicalZip,
+                                                                                    PhysicalCity = p.PhysicalCity,
+                                                                                    State = p.PhysicalState.Name,
+                                                                                    TotalOwnRentals = p.Customers.Where(c => c.ParkId == p.Id).Count()
+                                                                                }).ToList();
+        }
+
+
         #endregion
 
         public ActionResult PotentialCustomers()
