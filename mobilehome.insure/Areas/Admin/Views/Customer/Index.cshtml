@@ -200,5 +200,16 @@
                 evt.cancelBubble = true;
             }
         }
+
+        function rowCallbackHandler(nRow, aData, iDisplayIndex, iDisplayIndexFull)
+        {
+            $('td:eq(9)', nRow).find('a').each(function (index, element) {
+                //debugger;
+
+                if ($(element).hasClass("delete-link")) {
+                    $(element).attr('href', $(element).attr('href') + aData.Id + "&delType=" + $(element).data('type'));
+                }
+            });
+        }
     </script>
 }

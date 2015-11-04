@@ -138,7 +138,7 @@
                     $(this).html('').append(inputCheckbox);
                 });
 
-                $('td:eq(7)', nRow).find('a').each(function (index, element) {
+                $('td:eq(8)', nRow).find('a').each(function (index, element) {
                     //debugger;
                     if ($(element).hasClass("edit-link")) {
                         $(element).attr('href', $(element).attr('href') + aData.Id);

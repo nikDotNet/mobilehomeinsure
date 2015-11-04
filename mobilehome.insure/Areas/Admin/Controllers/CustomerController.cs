@@ -41,7 +41,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "FirstName", "LastName", "Phone", "Email", "Address", "Zip" });
+                properties: new List<string> { "Id", "FirstName", "LastName", "FirstName2", "LastName2", "Phone", "Email", "Address", "Zip" });
 
             return Json(new JQueryDataTablesResponse<Customer>(
                 items: customers,
@@ -133,7 +133,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability", "Premium", "EffectiveDate", "NoOffInstallments", "SendLandLord" });
+                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability", "Premium", "EffectiveDate", "NoOfInstallments", "SendLandLord" });
 
             return Json(new JQueryDataTablesResponse<MobileHome.Insure.Model.Rental.Quote>(
                 items: quotes,

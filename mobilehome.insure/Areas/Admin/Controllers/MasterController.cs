@@ -119,7 +119,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             ListManufacturerViewModel model = new ListManufacturerViewModel();
 
             //    model.ListManufacturer = _serviceFacade.GetManufacturer();
-            if (id.HasValue)
+            if (id.HasValue && id.Value > 0)
                 model.manufacturerObj = _serviceFacade.GetManufacturerById(id.Value);
             else
                 model.manufacturerObj = new MobileHome.Insure.Model.Manufacturer();
@@ -209,7 +209,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             try
             {
-               
+
                 _serviceFacade.saveNotify(notifyViewModelObj.notifyObj);
                 TempData["Success"] = true;
             }

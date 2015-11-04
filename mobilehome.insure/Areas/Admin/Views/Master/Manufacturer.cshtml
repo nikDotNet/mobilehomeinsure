@@ -1,10 +1,8 @@
 ﻿@model MobileHome.Insure.Web.Models.Admin.ListManufacturerViewModel
-
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
 <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
 <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -30,7 +28,8 @@
 <!-- BEGIN STYLE CUSTOMIZER -->
 <!-- END STYLE CUSTOMIZER -->
 <!-- BEGIN PAGE HEADER-->
-<h3 class="page-title">Manufacturers
+<h3 class="page-title">
+    Manufacturers
 </h3>
 <div class="page-bar">
     <ul class="page-breadcrumb">
@@ -56,7 +55,6 @@
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
     <div class="col-md-12">
-
         @if (TempData["Success"] != null)
         {
             if (Convert.ToBoolean(TempData["Success"]) == true)
@@ -73,7 +71,6 @@
                 </div>
             }
         }
-
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
         <div class="portlet box blue">
             <div class="portlet-title">
@@ -86,48 +83,56 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="btn-group">
-                                @Html.ActionLink("Add New ", "_partialEditManufacturer", "Master", null, new { @class = "modal-link btn green" })
+                                @Html.ActionLink("Add New ", "_partialEditManufacturer", "Master", new { id = 0 }, new { @class = "modal-link btn green" })
                             </div>
                         </div>
                         <div class="col-md-6">
-                            
+
                         </div>
                     </div>
                 </div>
                 <table class="table table-striped table-hover table-bordered" id="tblAgeFactor">
                     <thead>
                         <tr>
-                            <th>ID
+                            <th>
+                                ID
                             </th>
-                            <th>Manufacturer
+                            <th>
+                                Manufacturer
                             </th>
-                            <th>CreatedBy
+                            <th>
+                                CreatedBy
                             </th>
-                           
-                            <th>Edit
+
+                            <th>
+                                Edit
                             </th>
-                            <th>Delete
+                            <th>
+                                Delete
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                            @foreach(var item in Model.ListManufacturer)
-                            {
-                        <tr>
-                            <td>@item.Id
-                            </td>
-                            <td>@item.Name
-                            </td>
-                            <td>@item.CreatedBy
-                            </td>
-                           
-                            <td>
-                                @Html.ActionLink("Edit", "_partialEditManufacturer", "Master", new { Id = item.Id }, new { @class = "modal-link" })
-                            </td>
-                            <td>
-                                @Html.ActionLink("Delete", "deleteManufacturer", "Master", new { Id = item.Id }, new { @class = "delete-link" })
-                            </td>
-                        </tr>}
+                        @foreach (var item in Model.ListManufacturer)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Id
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.CreatedBy
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink("Edit", "_partialEditManufacturer", "Master", new { Id = item.Id }, new { @class = "modal-link" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "deleteManufacturer", "Master", new { Id = item.Id }, new { @class = "delete-link" })
+                                </td>
+                            </tr>}
                     </tbody>
                 </table>
             </div>
@@ -136,10 +141,9 @@
     </div>
 </div>
 <!-- END PAGE CONTENT -->
-
 @section scripts{
     <!-- BEGIN PAGE LEVEL PLUGINS -->
- 
+
     <script src="~/Areas/Admin/Script/AgeFactor.js"></script>
     <script>
         jQuery(document).ready(function () {
@@ -150,4 +154,4 @@
             AgeEditable.init();
         });
     </script>
-} 
+}

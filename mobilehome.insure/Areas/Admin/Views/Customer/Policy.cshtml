@@ -260,5 +260,21 @@
                 alert("Request failed: " + textStatus);
             });
         }
+
+        function rowCallbackHandler(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(8)', nRow).find('a').each(function (index, element) {
+                //debugger;
+                //resolving date problem
+                if (($(element).data("type") == "policy")) {
+                    var effectiveDate = new Date(parseInt(aData.EffectiveDate.replace("/Date(", "").replace(")/", ""), 10));
+                    $('td:eq(5)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
+                }
+
+                if ($(element).hasClass("view-link")) {
+                    $(element).attr('data-href', $(element).attr('href') + aData.Id);
+                    $(element).attr('href', "#");
+                }
+            });
+        }
     </script>
 }

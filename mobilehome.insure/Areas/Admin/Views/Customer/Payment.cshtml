@@ -115,27 +115,6 @@
             Demo.init(); // init demo features
             configureBlockUI();
 
-            //$('#tblLists').dataTable({
-            //    "bProcessing": true,
-            //    "bServerSide": true,
-            //    "sServerMethod": "POST",
-            //    "sAjaxSource": "/Admin/Park/Loading",
-            //    "aoColumns": [
-            //    { "mDataProp": "Id" },
-            //    { "mDataProp": "Name" },
-            //    { "mDataProp": "Position" },
-            //    { "mDataProp": "Phone" },
-            //    { "mDataProp": "Spaces" },
-            //    { "mDataProp": "Address" },
-            //    { "mDataProp": "Zip" },
-            //    ],
-            //    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            //        debugger;
-            //        //var birthday = new Date(parseInt(aData.Birthday.replace("/Date(", "").replace(")/", ""), 10));
-            //        //$('td:eq(3)', nRow).html(birthday.getMonth() + 1 + "/" + birthday.getDate() + "/" + birthday.getFullYear());
-            //    }
-            //});
-
             var tableColumns = [
                 {
                     "mDataProp": "Id",
@@ -179,6 +158,17 @@
             } else {
                 evt.cancelBubble = true;
             }
+        }
+
+
+        function rowCallbackHandler(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+            $('td:eq(6)', nRow).find('a').each(function (index, element) {
+                //debugger;
+
+                if ($(element).hasClass("delete-link")) {
+                    $(element).attr('href', $(element).attr('href') + aData.Id + "&delType=" + $(element).data('type'));
+                }
+            });
         }
     </script>
 }
