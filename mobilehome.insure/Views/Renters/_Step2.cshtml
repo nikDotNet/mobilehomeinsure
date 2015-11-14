@@ -13,19 +13,19 @@
                     <div class="row field-row">
                         <div class="col-xs-12 col-sm-6">
                             @Html.LabelFor(x => x.EffectiveDate)
-                            @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "le-input", value = "" })
+                            @Html.TextBoxFor(x => x.EffectiveDate, new { @class = "le-input", value = "", data_toggle = "tooltip", title = "What date would you like your policy to start?" })
                             @Html.ValidationMessageFor(x => x.EffectiveDate, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-xs-12 col-sm-6">
                             @Html.LabelFor(x => x.PersonalProperty)
-                            @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "le-input", style = "width: 100%" })
+                            @Html.DropDownListFor(x => x.PersonalProperty, new SelectList(Model.PersonalProperties, "Id", "Text"), "", new { id = "ddlPersonalProperties", @placeholder = "Select a Property", @class = "le-input", style = "width: 100%", data_toggle = "tooltip", title = "This insures items such as furniture, appliances, clothing, etc..." })
                             @Html.ValidationMessageFor(x => x.PersonalProperty, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="row field-row">
                         <div class="col-xs-12 col-sm-6">
                             @Html.LabelFor(x => x.Liability)
-                            @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "le-input", style = "width: 100%" })
+                            @Html.DropDownListFor(x => x.Liability, new SelectList(Model.Liabilities, "Id", "Text"), "", new { id = "ddlLiabilities", @placeholder = "Select a Liability", @class = "le-input", style = "width: 100%", data_toggle = "tooltip", title ="This insures you against bodily injury and property damage to others that you become legally responsible for.  The lease agreement with your landlord may require you to carry this coverage." })
                             @Html.ValidationMessageFor(x => x.Liability, "", new { @class = "text-danger" })
                         </div>
 

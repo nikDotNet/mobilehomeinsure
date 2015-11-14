@@ -31,7 +31,7 @@ namespace MobileHome.Insure.Service
 
         private string getUnsubscribeLink(string emailId)
         {
-            return "<a href=http://localhost:43517/Unsubscribe?user=" + CryptoHelper.Encrypt(emailId) + ">here</a>";
+            return "<a href=http://test.mobilehome.insure/Unsubscribe?user=" + CryptoHelper.Encrypt(emailId) + ">here</a>";
         }
 
         public void sendMail(string from, string to, string subject, string message, List<string> lstEmail = null)

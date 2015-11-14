@@ -86,6 +86,8 @@
                 $(".alert-renters-close").show();
             else
                 $(".alert-renters-close").alert('close');
+
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     @RenderSection("scripts", required: false)

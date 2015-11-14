@@ -229,6 +229,7 @@
     <Content Include="Content\assets\admin\layout\img\ajax-loading.gif" />
     <Content Include="Content\assets\admin\layout\img\ajax-modal-loading.gif" />
     <Content Include="Content\assets\admin\layout\img\arrow-down.png" />
+    <Content Include="Content\assets\admin\layout\img\avatar3_small.jpg" />
     <Content Include="Content\assets\admin\layout\img\hor-menu-red-arrow.png" />
     <Content Include="Content\assets\admin\layout\img\icon-color-close.png" />
     <Content Include="Content\assets\admin\layout\img\icon-color.png" />
