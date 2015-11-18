@@ -8,6 +8,7 @@ using MobileHome.Insure.Service;
 
 namespace MobileHome.Insure.Web.Controllers
 {
+    [Authorize]
     public class OwnedController : Controller
     {
         //

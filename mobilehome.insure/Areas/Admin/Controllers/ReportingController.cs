@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ReportingController : Controller
     {
         IMasterServiceFacade _masterServiceFacade;

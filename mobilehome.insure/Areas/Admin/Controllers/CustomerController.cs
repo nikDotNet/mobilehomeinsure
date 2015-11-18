@@ -13,6 +13,7 @@ using mobilehome.insure.Helper.Extensions;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
+    [System.Web.Mvc.Authorize]
     public class CustomerController : Controller
     {
         IRentalServiceFacade _rentalServiceFacade;

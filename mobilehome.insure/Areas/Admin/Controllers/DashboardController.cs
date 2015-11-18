@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
+    [Authorize]
     public class DashboardController : Controller
     {
         //
@@ -13,7 +14,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            if (TempData["IsLoggedIn"] != "true")
+            if (TempData["IsLoggedIn"].ToString() != "true")
             {
                 return RedirectToAction("Index", "Login", new { area = "" });
             }

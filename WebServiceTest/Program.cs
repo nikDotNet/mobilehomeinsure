@@ -17,13 +17,9 @@ namespace WebServiceTest
             XmlDocument doc = new XmlDocument();
             doc.Load(@"D:\Google Drive\TFS-Nik\ColonialGroup\teammobilehomeinsure\mobilehomeinsure\WebServiceTest\SampleXML\xmlnodesample.xml");
             XmlNode xnode = doc.FirstChild;
-            
-
-
-
+      
             XmlNode result =  sClient.QuotePolicy("edb8f159-416a-4a2f-8018-61463980b727", xnode, "AGHO", AstecProcessingMode.SubmitOverride);
-
-           Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

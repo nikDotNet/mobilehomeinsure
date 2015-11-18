@@ -1,5 +1,4 @@
-﻿using mobilehome.insure.Areas.Admin.Models;
-using mobilehome.insure.Models.JQDataTable;
+﻿using mobilehome.insure.Models.JQDataTable;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.DTO;
 using MobileHome.Insure.Service;
@@ -11,9 +10,11 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net.Mail;
 using MobileHome.Insure.Service.Rental;
+using mobilehome.insure.Areas.Admin.Models;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
+    [Authorize]
     public class ParkController : Controller
     {
         private IMasterServiceFacade _masterServiceFacade;

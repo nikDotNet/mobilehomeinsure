@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using mobilehome.insure.Models;
 using MobileHome.Insure.Service;
+using System.Web.Security;
 
 namespace MobileHome.Insure.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         //
@@ -20,6 +22,7 @@ namespace MobileHome.Insure.Web.Controllers
             _serviceFacade = new Service.ServiceFacade();
         }
 
+        
         public ActionResult Index()
         {
            // _serviceFacade.getStates();
