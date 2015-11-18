@@ -68,10 +68,10 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return View();
         }
 
-        //public ActionResult SearchPark(string parkName, int? stateId, string zipCode)
-        //{
-        //    return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
-        //}
+        public ActionResult SearchPark(string parkName, int? stateId, string zipCode)
+        {            
+            return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult LoadingPark(JQueryDataTablesModel jQueryDataTablesModel)
         {
