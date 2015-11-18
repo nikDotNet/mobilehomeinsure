@@ -148,7 +148,7 @@ namespace MobileHome.Insure.Service.Master
                 PhysicalZip = x.PhysicalZip,
                 SpacesToOwn = x.SpacesToOwn,
                 SpacesToRent = x.SpacesToRent,
-                State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""
+                State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Abbr : ""
             }).ToList();
             return rtnItems;
         }
@@ -290,6 +290,31 @@ namespace MobileHome.Insure.Service.Master
             }
 
             return result;
+        }
+
+        public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            Int32 tZipCode = 0;
+            Int32.TryParse(zipCode,out tZipCode);
+            var items = _context.Parks.Where(p => (string.IsNullOrEmpty(parkName) ?1==1: p.ParkName == parkName) && 
+                                             (stateId==0? 1==1: p.PhysicalStateId == stateId) && 
+                                             (string.IsNullOrEmpty(zipCode)?1==1: p.PhysicalZip == tZipCode)).ToList();
+
+            var state = _context.States.ToList();
+            var rtnItems = items.Select(x => new ParkDto()
+            {
+                Id = x.Id,
+                IsActive = x.IsActive,
+                ParkName = x.ParkName,
+                PhysicalAddress = x.PhysicalAddress,
+                PhysicalStateId = x.PhysicalStateId,
+                PhysicalZip = x.PhysicalZip,
+                SpacesToOwn = x.SpacesToOwn,
+                SpacesToRent = x.SpacesToRent,
+                State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""
+            }).ToList();
+            return rtnItems;
         }
         #endregion
 

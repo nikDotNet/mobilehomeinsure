@@ -215,7 +215,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                                                 "SpacesToRent", 
                                                 "SpacesToOwn", 
                                                 "PhysicalAddress", 
-                                                "OwnerState.Name", 
+                                                "State", 
                                                 "PhysicalZip", 
                                                 "IsActive" 
                                             });

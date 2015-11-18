@@ -110,13 +110,16 @@ namespace mobilehome.insure.Models.JQDataTable
             var filtered = source.Where(m =>
                                             {
                                                 var prop = m.GetType().GetProperty(columnName);
-                                                if (prop != null && prop.GetValue(m, null) != null && prop.GetValue(m, null).ToString().StartsWith(propertyValue))
+                                                if (prop != null && prop.GetValue(m, null) != null && 
+                                                prop.GetValue(m, null).ToString().ToUpper().StartsWith(propertyValue.ToUpper()))
                                                 {
                                                     return true;
                                                 }
                                                 else
                                                     return false;
                                             });
+            
+                        
             return (filtered != null && filtered.Count() > 0) ? filtered : null;
         }
     }
