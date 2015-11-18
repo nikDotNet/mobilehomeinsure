@@ -9,20 +9,10 @@ namespace MobileHome.Insure.Model
 {
     public partial class Park : Base.BaseEntity
     {
-        //public int StateId { get; set; }
-        //public string Name { get; set; }
-        //public string Address { get; set; }
-        //public string City { get; set; }
-        //public int Zip { get; set; }
-        //public Nullable<int> Zip4 { get; set; }
-        //public string County { get; set; }
-        //public string Phone { get; set; }
-        //public Nullable<int> Spaces { get; set; }
-        //public string ContactName { get; set; }
-        //public string Position { get; set; }
-        //public virtual State State { get; set; }
-
-
+        public Park()
+        {
+            this.Customers = new List<Customer>();
+        }
 
         public string ParkName { get; set; }
 
@@ -98,7 +88,6 @@ namespace MobileHome.Insure.Model
 
         public string OwnerZip { get; set; }
 
-
         // Navigation properties
         public virtual State PhysicalState { get; set; }
 
@@ -106,7 +95,7 @@ namespace MobileHome.Insure.Model
 
         public virtual State OwnerState { get; set; }
 
-        public virtual List<Customer> Customers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
 
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }

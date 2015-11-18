@@ -15,7 +15,6 @@ namespace MobileHome.Insure.Model
             this.Quotes = new HashSet<Quote>();
         }
 
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FirstName2 { get; set; }
