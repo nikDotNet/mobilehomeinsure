@@ -13,6 +13,7 @@ using MobileHome.Insure.Model.Rental;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
+    [Authorize]
     public class MasterController : Controller
     {
         //

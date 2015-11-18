@@ -13,6 +13,7 @@ using mobilehome.insure.Areas.Admin.Helpers;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
+    [Authorize]
     public class AppraisalController : Controller
     {
         //

@@ -19,6 +19,7 @@ using mobilehome.insure.Helper.Constants;
 
 namespace MobileHome.Insure.Web.Controllers
 {
+    [Authorize]
     public class RentersController : Controller
     {
         //
