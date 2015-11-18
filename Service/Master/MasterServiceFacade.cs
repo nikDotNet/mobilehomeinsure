@@ -138,6 +138,7 @@ namespace MobileHome.Insure.Service.Master
             _context.Configuration.ProxyCreationEnabled = false;
             var items = _context.Parks.AsNoTracking().ToList();
             var state = _context.States.ToList();
+            
             var rtnItems = items.Select(x => new ParkDto()
             {
                 Id = x.Id,
@@ -302,6 +303,7 @@ namespace MobileHome.Insure.Service.Master
                                              (string.IsNullOrEmpty(zipCode)?1==1: p.PhysicalZip == tZipCode)).ToList();
 
             var state = _context.States.ToList();
+            
             var rtnItems = items.Select(x => new ParkDto()
             {
                 Id = x.Id,
@@ -310,6 +312,8 @@ namespace MobileHome.Insure.Service.Master
                 PhysicalAddress = x.PhysicalAddress,
                 PhysicalStateId = x.PhysicalStateId,
                 PhysicalZip = x.PhysicalZip,
+                PhysicalCity = x.PhysicalCity,
+                TotalOwnRentals = (x.Customers != null ? x.Customers.Count() : 0),
                 SpacesToOwn = x.SpacesToOwn,
                 SpacesToRent = x.SpacesToRent,
                 State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""

@@ -121,6 +121,7 @@
 
             dataTable = $("#tblLists");
             initializeDataTable(false);
+            
             SearchParks($("#txtParkName").val(),
                             $("#ddlStateId").val(),
                             $("#txtZipCode").val());
@@ -177,7 +178,7 @@
         }
 
         function SearchParks(parkName, stateId, zipCode) {
-            //debugger;
+            
             configureBlockUI();
             $.ajax({
                 url: "/reporting/SearchPark",
@@ -192,9 +193,19 @@
                 var tbody = $("<tbody/>");
                 var html = $.map(data, function (item, i) {
                     //debugger;
-                    return "<tr><td>" + item.Id + "</td><td>" + item.ParkName + "</td><td>" +
-                                     item.PhysicalAddress + "</td><td>" + item.PhysicalZip + "</td><td>" +
-                                    item.PhysicalCity + "</td><td><a href='#' class='customerpopup' data-parkid='" + item.Id + "'>" + item.TotalOwnRentals + "</a></td></tr>";
+                    if (item.TotalOwnRentals > 0) {
+                        return "<tr><td>" + item.Id + "</td><td>" + item.ParkName + "</td><td>" +
+                                         item.PhysicalAddress + "</td><td>" + item.PhysicalZip + "</td><td>" +
+                                        item.PhysicalCity +
+                                            "</td><td><a href='#' class='customerpopup' data-parkid='" + item.Id + "'>" + item.TotalOwnRentals + "</a></td></tr>";
+                    }
+                    else {
+                        return "<tr><td>" + item.Id + "</td><td>" + item.ParkName + "</td><td>" +
+                                         item.PhysicalAddress + "</td><td>" + item.PhysicalZip + "</td><td>" +
+                                        item.PhysicalCity +
+                                            "</td><td>" + item.TotalOwnRentals + "</td></tr>";
+                    }
+                                    
                 }).join("");
                 tbody.append(html);
                 $("#tblLists").append(tbody);
