@@ -11,9 +11,8 @@ namespace MobileHome.Insure.Model
     {
         public Park()
         {
-            this.Customers = new List<Customer>();
+            this.Customers = new HashSet<Customer>();
         }
-
         public string ParkName { get; set; }
 
         //Physical address

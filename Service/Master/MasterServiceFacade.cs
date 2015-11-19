@@ -295,15 +295,18 @@ namespace MobileHome.Insure.Service.Master
 
         public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
         {
+            
             _context.Configuration.ProxyCreationEnabled = false;
             Int32 tZipCode = 0;
             Int32.TryParse(zipCode,out tZipCode);
-            var items = _context.Parks.Where(p => (string.IsNullOrEmpty(parkName) ?1==1: p.ParkName == parkName) && 
-                                             (stateId==0? 1==1: p.PhysicalStateId == stateId) && 
-                                             (string.IsNullOrEmpty(zipCode)?1==1: p.PhysicalZip == tZipCode)).ToList();
+            var items = _context.Parks.Include("Customers").
+                Include("PhysicalState").
+                Where(p => (string.IsNullOrEmpty(parkName) ? 1 == 1 : p.ParkName == parkName) &&
+                                             (stateId == 0 ? 1 == 1 : p.PhysicalStateId == stateId) &&
+                                             (string.IsNullOrEmpty(zipCode) ? 1 == 1 : p.PhysicalZip == tZipCode)).ToList();
 
-            var state = _context.States.ToList();
-            
+            //var state = _context.States.ToList();
+
             var rtnItems = items.Select(x => new ParkDto()
             {
                 Id = x.Id,
@@ -316,7 +319,8 @@ namespace MobileHome.Insure.Service.Master
                 TotalOwnRentals = (x.Customers != null ? x.Customers.Count() : 0),
                 SpacesToOwn = x.SpacesToOwn,
                 SpacesToRent = x.SpacesToRent,
-                State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""
+                State = (x.PhysicalState!=null?x.PhysicalState.Name:string.Empty)
+                //State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""
             }).ToList();
             return rtnItems;
         }
@@ -372,12 +376,18 @@ namespace MobileHome.Insure.Service.Master
 
             _rentalcontext.Configuration.ProxyCreationEnabled = false;
             if (string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
-                items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
+                items = _rentalcontext.Payments.Include("Customer").
+                    Include("Quote").
+                    Include("Quote.Company").
+                    Where(x => x.TransactionId != null).ToList();
             else if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
             {
                 var startDt = GetStringAsDateFormat(startDate);
                 var endDt = GetStringAsDateFormat(endDate).AddDays(1);
-                items = _rentalcontext.Payments.Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
+                items = _rentalcontext.Payments.Include("Customer").
+                    Include("Quote").
+                    Include("Quote.Company").
+                    Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
             }
 
 
@@ -390,17 +400,17 @@ namespace MobileHome.Insure.Service.Master
                 CreatedBy = x.CreatedBy,
                 //CreationDate = x.CreationDate.HasValue ? x.CreationDate.Value.Date : DateTime.MinValue,
                 CreationDateStr = x.CreationDate.HasValue ? GetDateFormatAsString(x.CreationDate.Value) : string.Empty,
-                ErrorMessage = x.ErrorMessage,
+                ErrorMessage = (x.ErrorMessage!=null ? x.ErrorMessage: string.Empty),
                 ResponseCode = x.ResponseCode,
                 TransactionId = x.TransactionId,
 
                 RenterId = x.RentalQuoteId.Value,
                 CompanyId = x.Quote != null && x.Quote.Company != null ? x.Quote.CompanyId.Value : 0,
-                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : "",
-                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : "",
+                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : string.Empty,
+                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : string.Empty,
 
                 CustomerId = x.CustomerId.Value,
-                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : ""
+                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : string.Empty
 
             }).ToList();
             return rtnItems;

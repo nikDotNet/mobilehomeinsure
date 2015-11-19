@@ -27,7 +27,7 @@ namespace MobileHome.Insure.DAL.EF
         public DbSet<State> States { get; set; }
         public DbSet<OptionsFactor> OptionsFactors { get; set; }
         public DbSet<OptionsType> OptionsTypes { get; set; }
-
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Park> Parks { get; set; }
 
         public DbSet<ParkNotify> ParkNotifies { get; set; }
@@ -44,6 +44,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new OptionsTypeMap());
             modelBuilder.Configurations.Add(new ParkMap());
             modelBuilder.Configurations.Add(new ParkNotifyMap());
+            modelBuilder.Configurations.Add(new CustomerMap());
         }
     }
 }

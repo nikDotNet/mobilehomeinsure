@@ -234,8 +234,8 @@
                     var tblOwnRental = $(htmlRes).find("#tblOwnRental");
                     tblOwnRental.DataTable();
                     dialogBox(htmlRes, "Own Rental Customers");
-                }).fail(function (error) {
-                    dialogBox(error.responseText, 'Error');
+                }).fail(function (error) {                    
+                    dialogBox(error.responseText, 'Own Rental Customers');
                 });
             });
         }

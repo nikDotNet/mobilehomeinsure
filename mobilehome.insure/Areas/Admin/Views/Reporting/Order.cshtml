@@ -80,10 +80,7 @@
                             </th>
                             <th>
                                 ApprovalCode
-                            </th>
-                            <th>
-                                ApprovalMessage
-                            </th>
+                            </th>                           
                             <th>
                                 ErrorMessage
                             </th>
@@ -98,13 +95,7 @@
                             </th>
                             <th>
                                 CreationDate
-                            </th>
-                            <th>
-                                CreatedBy
-                            </th>
-                            @*<th>
-                                    Action
-                                </th>*@
+                            </th>                            
                         </tr>
                     </thead>
                 </table>
@@ -209,11 +200,10 @@
                 var tbody = $("<tbody/>");
                 var html = $.map(data, function (item, i) {
                     //debugger;
-                    return "<tr><td>" + item.TransactionId + "</td><td>" + item.ApprovalCode + "</td><td>" +
-                                     item.ApprovalMessage + "</td><td>" + item.ErrorMessage + "</td><td>" +
+                    return "<tr><td>" + item.TransactionId + "</td><td>" + item.ApprovalCode + "</td>" +
+                                     "<td>" + item.ErrorMessage + "</td><td>" +
                                    item.ProposalNumber + "</td><td>" + item.CustomerName + "</td><td>" +
-                             item.CompanyName + "</td><td>" + (item.CreationDateStr == null ? "" : item.CreationDateStr) + "</td><td>" +
-                                (item.CreatedBy == null ? "" : item.CreatedBy) + "</td></tr>";
+                             item.CompanyName + "</td><td>" + (item.CreationDateStr == null ? "" : item.CreationDateStr) + "</td></tr>";
                 }).join("");
                 tbody.append(html);
                 $("#tblLists").append(tbody);

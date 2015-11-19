@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace MobileHome.Insure.Service.Rental
 {
     public class RentalServiceFacade : IRentalServiceFacade
@@ -55,10 +56,11 @@ namespace MobileHome.Insure.Service.Rental
             return customerObj.Id;
         }
 
-        public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId)
+        public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, 
+            decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId)
         {
             //Generating proposal number
-            string ProposalNo = "ABCD1234";
+            string ProposalNo = string.Empty;
 
             decimal Premium = 0;
             Quote quoteObj = null;
@@ -78,6 +80,7 @@ namespace MobileHome.Insure.Service.Rental
                    NoOfInstallments = NoOfInstallments,
                    CreationDate = DateTime.Now,
                    SendLandLord = SendLandlord,
+                   CompanyId =1,
                    IsActive = true
                };
                 _context.Quotes.Add(quoteObj);
