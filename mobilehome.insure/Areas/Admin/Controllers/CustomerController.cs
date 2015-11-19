@@ -162,7 +162,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "TransactionId", "ResponseCode", "ApprovalCode", "ApprovalMessage", "Amount" });
+                properties: new List<string> { "Id", "TransactionId", "ResponseCode", "ApprovalCode", "CreationDate", "Amount" });
 
             return Json(new JQueryDataTablesResponse<MobileHome.Insure.Model.Payment>(
                 items: payments,

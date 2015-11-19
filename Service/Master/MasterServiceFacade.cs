@@ -130,7 +130,7 @@ namespace MobileHome.Insure.Service.Master
         public List<Park> GetParksWithOnOff()
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Parks.AsNoTracking().ToList();
+            return _context.Parks.AsNoTracking().Where(x => x.IsActive == true).ToList();
         }
 
         public List<ParkDto> GetListPark()
@@ -330,7 +330,7 @@ namespace MobileHome.Insure.Service.Master
         public List<ParkNotify> GetNotifies()
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.ParkNotifies.AsNoTracking().OrderBy(x => x.CreatedOn).ToList();
+            return _context.ParkNotifies.AsNoTracking().Where(x => x.IsNotified != true).OrderBy(x => x.CreatedOn).ToList();
         }
 
         public ParkNotify GetNotifyById(int id)

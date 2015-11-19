@@ -14,10 +14,6 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            if (TempData["IsLoggedIn"].ToString() != "true")
-            {
-                return RedirectToAction("Index", "Login", new { area = "" });
-            }
             return View();
         }
 
