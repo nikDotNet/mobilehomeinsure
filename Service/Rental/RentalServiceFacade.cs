@@ -1,5 +1,6 @@
 ﻿using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.DTO;
 using MobileHome.Insure.Model.Rental;
 using System;
 using System.Collections.Generic;
@@ -57,11 +58,8 @@ namespace MobileHome.Insure.Service.Rental
         }
 
         public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, 
-            decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId)
+            decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId, out string ProposalNo)
         {
-            //Generating proposal number
-            string ProposalNo = string.Empty;
-
             decimal Premium = 0;
             Quote quoteObj = null;
 
@@ -73,7 +71,6 @@ namespace MobileHome.Insure.Service.Rental
                    EffectiveDate = EffectiveDate,
                    PersonalProperty = PersonalProperty,
                    Deductible = Deductible,
-                   ProposalNumber = ProposalNo,
                    Liability = Liability,
                    Premium = Premium,
                    CustomerId = CustomerId,
@@ -91,7 +88,6 @@ namespace MobileHome.Insure.Service.Rental
                 quoteObj.EffectiveDate = EffectiveDate;
                 quoteObj.PersonalProperty = PersonalProperty;
                 quoteObj.Deductible = Deductible;
-                quoteObj.ProposalNumber = ProposalNo;
                 quoteObj.Liability = Liability;
                 quoteObj.Premium = Premium;
                 quoteObj.CustomerId = CustomerId;
@@ -106,6 +102,7 @@ namespace MobileHome.Insure.Service.Rental
             //Get Premium calculation service result
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
+            ProposalNo = quoteObj.ProposalNumber;
             _context.SaveChanges();
 
 
@@ -141,13 +138,23 @@ namespace MobileHome.Insure.Service.Rental
             return paymentObj.Id;
         }
 
+
+        public void saveQuote(Quote quoteObj)
+        {
+            if (quoteObj != null && quoteObj.Id != 0)
+            {
+                _context.Entry(quoteObj).State = System.Data.Entity.EntityState.Modified;
+                _context.SaveChanges();
+            }
+        }
+
         public bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage, DateTime creationDate)
         {
             MobileHome.Insure.Model.Payment paymentObj = _context.Payments.Where(x => x.Id == PaymentId).SingleOrDefault();
             paymentObj.ResponseCode = ResponseCode;
             paymentObj.TransactionId = TransactionId;
             paymentObj.ApprovalCode = ApprovalCode;
-            paymentObj.ApprovalMessage = "";
+            paymentObj.ApprovalMessage = ErrorMessage == string.Empty ? "Approved" : "";
             paymentObj.ErrorMessage = ErrorMessage;
             paymentObj.IsActive = (paymentObj.IsActive ? paymentObj.IsActive : !paymentObj.IsActive);
             paymentObj.CreationDate = DateTime.Now;
@@ -171,10 +178,22 @@ namespace MobileHome.Insure.Service.Rental
             return _context.Customers.AsNoTracking().Where(c => c.IsActive == true && c.Id == Id).SingleOrDefault();
         }
 
-        public List<Quote> GetQuotes()
+        public List<QuoteDto> GetQuotes()
         {
-            _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true && (c.ProposalNumber == null || c.ProposalNumber == string.Empty)).ToList();
+            _context.Configuration.ProxyCreationEnabled = true;
+            _context.Configuration.LazyLoadingEnabled = true;
+            var quoteList = _context.Quotes.Where(c => c.IsActive == true && (c.Payments.Where(x => x.TransactionId == null).Any())).ToList();
+            return quoteList.Select(x => new QuoteDto
+            {
+                Id = x.Id,
+                ProposalNumber = x.ProposalNumber,
+                PersonalProperty = x.PersonalProperty,
+                Liability = x.Liability,
+                Premium = x.Premium,
+                EffectiveDate = x.EffectiveDate,
+                NoOfInstallments = x.NoOfInstallments,
+                SendLandLord = x.SendLandLord
+            }).ToList();
         }
 
         public Quote GetQuoteById(int Id)
@@ -183,10 +202,25 @@ namespace MobileHome.Insure.Service.Rental
             return _context.Quotes.AsNoTracking().Where(q => q.IsActive == true && q.Id == Id).SingleOrDefault();
         }
 
-        public List<Quote> GetPolicies()
+        public List<QuoteDto> GetPolicies()
         {
-            _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true && c.ProposalNumber != null && c.Payments.FirstOrDefault().RentalQuoteId.HasValue).ToList();
+            //_context.Configuration.ProxyCreationEnabled = true;
+            //_context.Configuration.LazyLoadingEnabled = true;
+            //return _context.Quotes.AsNoTracking().Where(c => c.IsActive == true && c.ProposalNumber != null && c.Payments.FirstOrDefault().RentalQuoteId.HasValue).ToList();
+
+            var policyList = _context.Quotes.Where(c => c.IsActive == true && ((c.Payments.Where(x => x.TransactionId != null).Any()) || c.IsParkSitePolicy == true)).ToList();
+            return policyList.Select(x => new QuoteDto
+            {
+                Id = x.Id,
+                ProposalNumber = x.ProposalNumber,
+                PersonalProperty = x.PersonalProperty,
+                Liability = x.Liability,
+                Premium = x.Premium,
+                EffectiveDate = x.EffectiveDate,
+                NoOfInstallments = x.NoOfInstallments,
+                SendLandLord = x.SendLandLord
+            }).ToList();
+
         }
 
         public Model.Payment GetPolicyReceiptById(int quoteId)

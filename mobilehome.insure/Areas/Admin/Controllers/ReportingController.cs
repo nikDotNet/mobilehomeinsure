@@ -130,5 +130,10 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return Json(_masterServiceFacade.GetListPremiums((stateId.HasValue ? stateId.Value : 0), zipCode, startDate, endDate), JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public ActionResult ParkSites()
+        {
+            return View();
+        }
     }
 }

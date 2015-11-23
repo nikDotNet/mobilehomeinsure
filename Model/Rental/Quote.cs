@@ -10,6 +10,7 @@ namespace MobileHome.Insure.Model.Rental
     {
         public Quote() 
         {
+            this.ParkSites = new List<ParkSite>();
             this.Payments = new HashSet<Payment>();
         }
 
@@ -26,14 +27,16 @@ namespace MobileHome.Insure.Model.Rental
         public Nullable<System.DateTime> CreationDate { get; set; }
         public Nullable<System.DateTime> EffectiveDate { get; set; }
         public Nullable<int> NoOfInstallments { get; set; }
-        public virtual Customer Customer { get; set; }
-        public virtual Company Company { get; set; }
-
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
 
         public bool SendLandLord { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<bool> IsParkSitePolicy { get; set; }
 
+        public virtual Customer Customer { get; set; }
+        public virtual Company Company { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<ParkSite> ParkSites { get; set; }
     }
 }

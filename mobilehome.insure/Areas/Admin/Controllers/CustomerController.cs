@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
 using mobilehome.insure.Helper.Extensions;
+using MobileHome.Insure.Model.DTO;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
@@ -62,7 +63,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             int totalRecordCount = 0;
             int searchRecordCount = 0;
 
-            var quotes = GenericFilterHelper<MobileHome.Insure.Model.Rental.Quote>.GetFilteredRecords(
+            var quotes = GenericFilterHelper<QuoteDto>.GetFilteredRecords(
                 runTimeMethod: _rentalServiceFacade.GetPolicies,
                 startIndex: jQueryDataTablesModel.iDisplayStart,
                 pageSize: jQueryDataTablesModel.iDisplayLength,
@@ -73,7 +74,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
                 properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability", "Premium", "EffectiveDate", "NoOffInstallments", "SendLandLord" });
 
-            return Json(new JQueryDataTablesResponse<MobileHome.Insure.Model.Rental.Quote>(
+            return Json(new JQueryDataTablesResponse<QuoteDto>(
                 items: quotes,
                 totalRecords: totalRecordCount,
                 totalDisplayRecords: searchRecordCount,
@@ -125,7 +126,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             int totalRecordCount = 0;
             int searchRecordCount = 0;
 
-            var quotes = GenericFilterHelper<MobileHome.Insure.Model.Rental.Quote>.GetFilteredRecords(
+            var quotes = GenericFilterHelper<QuoteDto>.GetFilteredRecords(
                 runTimeMethod: _rentalServiceFacade.GetQuotes,
                 startIndex: jQueryDataTablesModel.iDisplayStart,
                 pageSize: jQueryDataTablesModel.iDisplayLength,
@@ -136,7 +137,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
                 properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability", "Premium", "EffectiveDate", "NoOfInstallments", "SendLandLord" });
 
-            return Json(new JQueryDataTablesResponse<MobileHome.Insure.Model.Rental.Quote>(
+            return Json(new JQueryDataTablesResponse<QuoteDto>(
                 items: quotes,
                 totalRecords: totalRecordCount,
                 totalDisplayRecords: searchRecordCount,

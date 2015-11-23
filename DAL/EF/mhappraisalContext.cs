@@ -17,6 +17,8 @@ namespace MobileHome.Insure.DAL.EF
         public mhappraisalContext()
             : base("Name=mhappraisalContext")
         {
+            this.Configuration.LazyLoadingEnabled = true;
+            this.Configuration.ProxyCreationEnabled = true;
         }
 
         public DbSet<AgeFactor> AgeFactors { get; set; }
@@ -29,6 +31,8 @@ namespace MobileHome.Insure.DAL.EF
         public DbSet<OptionsType> OptionsTypes { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Park> Parks { get; set; }
+        public DbSet<ParkSite> ParkSites { get; set; }
+        public DbSet<Quote> Quotes { get; set; }
 
         public DbSet<ParkNotify> ParkNotifies { get; set; }
 
@@ -45,6 +49,8 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new ParkMap());
             modelBuilder.Configurations.Add(new ParkNotifyMap());
             modelBuilder.Configurations.Add(new CustomerMap());
+            modelBuilder.Configurations.Add(new ParkSiteMap());
+            modelBuilder.Configurations.Add(new QuoteMap());
         }
     }
 }

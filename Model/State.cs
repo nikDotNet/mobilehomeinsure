@@ -14,6 +14,7 @@ namespace MobileHome.Insure.Model
             this.Customers = new List<Customer>();
             this.PhysicalParks = new List<Park>();
             this.MailingParks = new List<Park>();
+            this.ParkSites = new HashSet<ParkSite>();
         }
 
         [Display(Name="Abbreviation")]
@@ -37,6 +38,6 @@ namespace MobileHome.Insure.Model
         public virtual ICollection<Park> MailingParks { get; set; }
 
         public virtual ICollection<Park> OwnerParks { get; set; }
-       
+        public virtual ICollection<ParkSite> ParkSites { get; set; }
     }
 }

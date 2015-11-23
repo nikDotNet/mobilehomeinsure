@@ -1,0 +1,204 @@
+﻿@model mobilehome.insure.Areas.Admin.Models.ParkSitesViewModel
+
+@{
+    ViewBag.Title = "List of Park Sites";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .custom-portlet {
+        width: 900px !important;
+        /*margin: 30px auto !important;*/
+        left: 20px;
+        /*overflow: auto;*/
+    }
+
+    .input-medium {
+        width: 100% !important;
+    }
+
+    .form .form-actions {
+        padding: 10px !important;
+    }
+
+</style>
+
+<!-- BEGIN PAGE HEADER-->
+<h3 class="page-title">
+    Park Sites
+</h3>
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <i class="fa fa-home"></i>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Dashboard</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Masters</a>
+            <i class="fa fa-angle-right"></i>
+        </li>
+        <li>
+            <a href="#">Park Sites</a>
+        </li>
+    </ul>
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
+<div class="row">
+    <div class="col-md-12">
+        <!-- BEGIN EXAMPLE TABLE PORTLET-->
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-edit"></i>Park Sites Data
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                          
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover table-bordered" id="tblLists">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Site Number
+                            </th>
+                             <th>
+                                Park Name
+                            </th>
+                            <th>
+                                Tenant First Name
+                            </th>
+                            <th>
+                                Tenant Last Name
+                            </th>
+                            <th>
+                                City
+                            </th>
+                            <th>
+                                State
+                            </th>
+                            <th>
+                                Physical Zip
+                            </th>
+                            <th>
+                                Premium
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                        <tr id="filterrow">
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Site Number
+                            </th>
+                            <th>
+                                Park Name
+                            </th>
+                            <th>
+                                Tenant First Name
+                            </th>
+                            <th>
+                                Tenant Last Name
+                            </th>
+                            <th>
+                                City
+                            </th>
+                            <th>
+                                State
+                            </th>
+                            <th>
+                                Physical Zip
+                            </th>
+                            <th>
+                                Premium
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
+        </div>
+    </div>
+</div>
+
+<!-- END PAGE CONTENT -->
+@section scripts{
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="~/Areas/Admin/Script/parkSites.js"></script>
+    <script>
+        jQuery(document).ready(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+            configureBlockUI();
+
+            var tableColumns = [
+                {
+                    "mDataProp": "Id",
+                    "bSearchable": false,
+                    "bSortable": false,
+                    "sWidth": "9%"
+                    //"bVisible": false
+                },
+                { "mDataProp": "SiteNumber" },
+                { "mDataProp": "ParkName", "sWidth": "10%" },
+                { "mDataProp": "TenantFirstName", },
+                { "mDataProp": "TenantLastName" },
+                { "mDataProp": "PhysicalCity" },
+                { "mDataProp": "PhysicalState" },
+                { "mDataProp": "PhysicalZip", "sWidth": "10%" },
+                { "mDataProp": "Premium", "sWidth": "9%", className: "center" },
+                {
+                    data: null,
+                    className: "center",
+                    "sWidth": "8%",
+                    defaultContent: '<a href="/admin/park/editParkSite?id=" class="modal-link edit-link">Edit</a> / <a href="/admin/park/deleteParkSite?id=" class="delete-link">Delete</a>'
+                }
+            ];
+
+            $('#tblLists thead tr#filterrow th').each(function () {
+                var title = $('#tblLists thead th').eq($(this).index()).text();
+                title = title.replace("\n", "").replace("\n", "").trim();
+                if (title !== "Action") {
+                    $(this).html('<input type="text" onclick="stopPropagation(event);" class="form-control" placeholder="Search ' + title + '" />');
+                }
+                else {
+                    $('#tblLists thead tr#filterrow th').eq($(this).index()).text("");
+                }
+            });
+
+
+            ParkActions.init("/Admin/Park/LoadParkSites", tableColumns);
+            $("#tblLists_filter").css("display", "none"); //hide common/global filter
+            $("#completedStatuMsg").hide();//By default will be hide status table
+        });
+
+        function stopPropagation(evt) {
+            if (evt.stopPropagation !== undefined) {
+                evt.stopPropagation();
+            } else {
+                evt.cancelBubble = true;
+            }
+        }
+    </script>
+}

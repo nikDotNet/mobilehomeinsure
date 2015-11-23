@@ -48,9 +48,12 @@
     <Compile Include="Customer.cs" />
     <Compile Include="DTO\OrderDto.cs" />
     <Compile Include="DTO\ParkDto.cs" />
+    <Compile Include="DTO\ParkSiteDto.cs" />
+    <Compile Include="DTO\QuoteDto.cs" />
     <Compile Include="Manufacturer.cs" />
     <Compile Include="Appraisal\ManufacturerFactor.cs" />
     <Compile Include="Park.cs" />
+    <Compile Include="ParkSite.cs" />
     <Compile Include="Payment.cs" />
     <Compile Include="PaymentGateway\PaymentRequest.cs" />
     <Compile Include="PaymentGateway\PaymentResponse.cs" />

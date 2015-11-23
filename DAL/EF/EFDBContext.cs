@@ -15,7 +15,8 @@ namespace MobileHome.Insure.DAL.EF
         public EFDBContext()
           :base("Name=EFDbContext")
       {
- 
+          this.Configuration.ProxyCreationEnabled = true;
+          this.Configuration.LazyLoadingEnabled = true; 
       }
  
       public DbSet<AgeFactor> AgeFactors { get; set; }

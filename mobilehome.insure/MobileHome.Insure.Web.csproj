@@ -55,6 +55,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -171,6 +174,7 @@
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
     <Compile Include="Areas\Admin\Models\ImportCsvStatus.cs" />
     <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ParkSitesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ParkViewModel.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AppraisalController.cs" />
@@ -214,6 +218,7 @@
     <Content Include="Areas\Admin\Script\AgeFactor.js" />
     <Content Include="Areas\Admin\Script\customer.js" />
     <Content Include="Areas\Admin\Script\park.js" />
+    <Content Include="Areas\Admin\Script\parkSites.js" />
     <Content Include="Areas\Admin\Script\reporting.js" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls.swf" />
     <Content Include="Areas\Admin\Script\swf\copy_csv_xls_pdf.swf" />
@@ -1276,6 +1281,9 @@
     <Content Include="Areas\Admin\Views\Customer\OwnRentalCustomer.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\Policy.cshtml" />
     <Content Include="Areas\Admin\Views\Customer\PolicyReceipt.cshtml" />
+    <Content Include="Areas\Admin\Views\Park\ParkSites.cshtml" />
+    <Content Include="Areas\Admin\Views\Park\EditParkSite.cshtml" />
+    <Content Include="Areas\Admin\Views\Reporting\ParkSites.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
@@ -1290,6 +1298,8 @@
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.eot" />
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.ttf" />
     <Content Include="Content\assets\global\plugins\simple-line-icons\fonts\Simple-Line-Icons.woff" />
+    <None Include="Properties\PublishProfiles\mobilehomeinsuredemo - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mobilehomeinsuredemo - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mobilehomeinsureprofile.pubxml" />
     <None Include="Properties\PublishProfiles\web_publish_mobinsure.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />

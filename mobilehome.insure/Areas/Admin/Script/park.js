@@ -5,69 +5,6 @@
             cache: false
         });
 
-        //function restoreRow(oTable, nRow) {
-        //    debugger;
-        //    var aData = oTable.fnGetData(nRow);
-        //    var jqTds = $('>td', nRow);
-
-        //    for (var i = 0, iLen = jqTds.length; i < iLen; i++) {
-        //        oTable.fnUpdate(aData[i], nRow, i, false);
-        //    }
-
-        //    oTable.fnDraw();
-        //}
-
-        //function editRow(oTable, nRow) {
-        //    debugger;
-        //    var aData = oTable.fnGetData(nRow);
-        //    var jqTds = $('>td', nRow);
-        //    //jqTds[0].innerHTML = '<span id="Id">' + aData[0] + '</span>';
-        //    //jqTds[1].innerHTML = '<input type="text" class="form-control input-small" id="txtAge" value="' + aData[1] + '">';
-        //    //jqTds[2].innerHTML = '<input type="text" class="form-control input-small" id="txtFactor" value="' + aData[2] + '">';
-        //    ////jqTds[3].innerHTML = '<input type="text" class="form-control input-small" id="" value="' + aData[3] + '">';
-        //    //jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
-        //    //jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
-        //}
-
-        //function saveRow(oTable, nRow) {
-        //    debugger;
-        //    var jqInputs = $('input', nRow);
-        //    var options = {};
-        //    options.url = "saveAgeFactor";
-        //    options.method = "POST";
-        //    options.data = { Id: $("#Id").text(), Age: $("#txtAge").val(), Factor: $("#txtFactor").val() };
-        //    var request = $.ajax(options);
-
-        //    request.done(function (msg) {
-        //        alert("Success");
-        //    });
-
-        //    request.fail(function (jqXHR, textStatus) {
-        //        alert("Request failed: " + textStatus);
-        //    });
-
-
-        //    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-        //    oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-        //    oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-        //    //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-        //    oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-        //    oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
-        //    oTable.fnDraw();
-        //}
-
-        //function cancelEditRow(oTable, nRow) {
-        //    debugger;
-        //    var jqInputs = $('input', nRow);
-        //    oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-        //    oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-        //    oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-        //    //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-        //    oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-        //    oTable.fnDraw();
-        //}
-
-
         var currentState;
         var currentElement;
         var table = $('#tblLists');
@@ -214,7 +151,7 @@
             e.preventDefault();
 
             if (nNew && nEditing) {
-                if (confirm("Previse row not saved. Do you want to save it ?")) {
+                if (confirm("Previous row not saved. Do you want to save it ?")) {
                     saveRow(oTable, nEditing); // save
                     $(nEditing).find("td:first").html("Untitled");
                     nEditing = null;

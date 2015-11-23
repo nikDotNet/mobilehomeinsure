@@ -20,6 +20,8 @@ namespace MobileHome.Insure.DAL.EF
         public mhRentalContext()
             : base("Name=mhappraisalContext")
         {
+            this.Configuration.ProxyCreationEnabled = true;
+            this.Configuration.LazyLoadingEnabled = true;
         }
 
 
@@ -30,7 +32,7 @@ namespace MobileHome.Insure.DAL.EF
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Park> Parks { get; set; }
-
+        public virtual DbSet<ParkSite> ParkSites { get; set; }
         public virtual DbSet<ParkNotify> ParkNotifies { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -42,6 +44,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new ParkMap());
             modelBuilder.Configurations.Add(new ParkNotifyMap());
+            modelBuilder.Configurations.Add(new ParkSiteMap());
         }
     }
 }

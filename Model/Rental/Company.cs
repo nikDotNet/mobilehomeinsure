@@ -13,7 +13,6 @@ namespace MobileHome.Insure.Model.Rental
             this.Quotes = new HashSet<Quote>();
         }
 
-       
         public string Name { get; set; }
 
         public virtual ICollection<Quote> Quotes { get; set; }

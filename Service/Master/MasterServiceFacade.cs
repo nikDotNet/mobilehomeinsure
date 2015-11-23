@@ -154,6 +154,28 @@ namespace MobileHome.Insure.Service.Master
             return rtnItems;
         }
 
+        public List<ParkSiteDto> GetParkSites()
+        {
+            _context.Configuration.ProxyCreationEnabled = true;
+            _context.Configuration.LazyLoadingEnabled = true;
+
+            var parkSitesList = _context.ParkSites.Where(x=>x.IsActive == true).ToList();
+            var rtnItems = parkSitesList.Select(x => new ParkSiteDto()
+            {
+                Id = x.Id,
+                ParkName = x.Park.ParkName,
+                PhysicalCity = x.PhysicalCity,
+                PhysicalState = x.State.Name,
+                PhysicalZip = x.PhysicalZip.Value,
+                TenantFirstName = x.TenantFirstName,
+                TenantLastName = x.TenantLastName,
+                Premium = x.Quote.Premium.Value,
+                SiteNumber = x.SiteNumber.Value
+            }).ToList();
+
+            return rtnItems;
+        }
+
         public Park GetParkById(int id)
         {
             return _context.Parks.Where(x => x.Id == id && x.IsActive == true).SingleOrDefault();
@@ -236,6 +258,22 @@ namespace MobileHome.Insure.Service.Master
                 _context.Parks.Add(parkObj);
                 _context.SaveChanges();
                 sendNotificationForPark(parkObj, false);
+            }
+        }
+
+        public void SaveParkSite(ParkSite parkSiteObj, bool toDelete = false)
+        {
+            if (parkSiteObj.Id != 0)
+            {
+                var existingObj = _context.ParkSites.Where(x => x.Id == parkSiteObj.Id).SingleOrDefault();
+                if (existingObj != null)
+                {
+                    if (toDelete)
+                        existingObj.IsActive = false;
+
+                    _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
+                    _context.SaveChanges();                   
+                }
             }
         }
 

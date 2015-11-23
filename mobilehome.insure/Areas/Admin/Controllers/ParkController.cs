@@ -30,11 +30,6 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            //var model = new ParkViewModel();
-            //model.Parks = _masterServiceFacade.GetParks();
-
-            //return View(model);
-
             return View();
         }
 
@@ -89,6 +84,16 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return RedirectToAction("Park", "Master", new { area = "admin" });
         }
 
+        public ActionResult DeleteParkSite(int id)
+        {
+            var parkSite = new ParkSite();
+            parkSite.Id = id;
+            _masterServiceFacade.SaveParkSite(parkSite, true);
+            TempData["Success"] = true;
+
+            return RedirectToAction("ParkSites", "Park", new { area = "admin" });
+        }
+
         //it's also using for On/Off feature.
         public ActionResult OnOffPark(int id, bool isOnOrOff)
         {
@@ -125,20 +130,6 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                         HttpPostedFileBase file = Request.Files[fileName];
                         if (file != null && file.ContentLength > 0)
                         {
-                            ////TODO: for save file on server
-                            //var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\WallImages", Server.MapPath(@"\")));
-                            //string pathString = Path.Combine(originalDirectory.ToString(), "imagepath");
-                            //var fileName1 = Path.GetFileName(file.FileName);
-                            //bool isExists = Directory.Exists(pathString);
-
-                            //if (!isExists)
-                            //    System.IO.Directory.CreateDirectory(pathString);
-
-                            //var path = string.Format("{0}\\{1}", pathString, file.FileName);
-                            //file.SaveAs(path);
-
-
-
                             var records = mobilehome.insure.Helper.DataImport.ParkCsvImport.ParkImport(file.InputStream);
                             var parks = this._masterServiceFacade.GetParksWithOnOff();
 
@@ -187,15 +178,6 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             }
         }
 
-        //public ActionResult Export(bool? export) //any format like CSV/PDF/EXCEL etc
-        //{
-        //    var exportList = _masterServiceFacade.GetParks();
-        //    if (export.HasValue)
-        //        exportList.ExportCSV("ParksList_" + DateTime.Now.ToString());
-
-        //    return View(exportList);
-        //}
-
         //[HttpPost]
         public JsonResult Loading(JQueryDataTablesModel jQueryDataTablesModel)
         {
@@ -226,5 +208,43 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 totalDisplayRecords: searchRecordCount,
                 sEcho: jQueryDataTablesModel.sEcho));
         }
+
+        public JsonResult LoadParkSites(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            int totalRecordCount = 0;
+            int searchRecordCount = 0;
+            
+            var parks = GenericFilterHelper<ParkSiteDto>.GetFilteredRecords(
+                runTimeMethod: _masterServiceFacade.GetParkSites, //Updating bcos, on/off feature has to implement
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
+                totalRecordCount: out totalRecordCount,
+                searchRecordCount: out searchRecordCount,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "SiteNumber", 
+                                                "ParkName", 
+                                                "TenantFirstName", 
+                                                "TenantLastName", 
+                                                "PhysicalCity",
+                                                "PhysicalState", 
+                                                "PhysicalZip", 
+                                                "Premium",
+                                                "IsActive" 
+                                            });
+
+            return Json(new JQueryDataTablesResponse<ParkSiteDto>(
+                items: parks,
+                totalRecords: totalRecordCount,
+                totalDisplayRecords: searchRecordCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
+
+        public ActionResult ParkSites()
+        {
+            return View();
+        }
+
     }
 }

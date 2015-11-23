@@ -11,6 +11,7 @@ namespace MobileHome.Insure.Model
     {
         public Park()
         {
+            this.ParkSites = new HashSet<ParkSite>();
             this.Customers = new HashSet<Customer>();
         }
         public string ParkName { get; set; }
@@ -99,6 +100,7 @@ namespace MobileHome.Insure.Model
         public string CreatedBy { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
+        public virtual ICollection<ParkSite> ParkSites { get; set; }
 
     }
 }

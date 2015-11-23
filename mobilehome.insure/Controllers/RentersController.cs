@@ -77,6 +77,7 @@ namespace MobileHome.Insure.Web.Controllers
         {
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]); ;
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
+            string proposalNumber = string.Empty;
 
             var itemLia = GetLiabilities().Find(l => l.Id == Convert.ToInt32(model.Liability));
             model.Liability = itemLia != null ? Convert.ToDecimal(itemLia.Text.Replace("$", "")) : model.Liability;
@@ -84,9 +85,10 @@ namespace MobileHome.Insure.Web.Controllers
             var itemPProperty = GetPersonalProperties().Find(l => l.Id == Convert.ToInt32(model.PersonalProperty));
             model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
 
-            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId);
+            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId, out proposalNumber);
             TempData["QuoteId"] = quoteId;
             TempData["Premium"] = model.Premium;
+            TempData["ProposalNumber"] = proposalNumber;
             TempData.Keep();
 
             return Json(new { Premium = model.Premium, QuoteId = quoteId });
@@ -110,10 +112,12 @@ namespace MobileHome.Insure.Web.Controllers
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]);
             model.Amount = (decimal)TempData["Premium"];
+            string proposalNumber = TempData["ProposalNumber"].ToString();
             int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId);
             Customer customerObject = _serviceFacade.GetCustomerById(customerId);
             Quote quoteObject = _serviceFacade.GetQuoteById(quoteId);
-           
+            quoteObject.ProposalNumber = proposalNumber;
+
             PaymentRequest request = new PaymentRequest
             {
                 CreditCardNumber = model.CreditCardNumber,
@@ -132,6 +136,7 @@ namespace MobileHome.Insure.Web.Controllers
             if (success)
             {
                 ViewBag.Success = true;
+                _serviceFacade.saveQuote(quoteObject);
                 ViewBag.CustomerEmail = customerObject.Email;
                 var rtn = new
                 {

@@ -1,4 +1,5 @@
 ﻿using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.DTO;
 using MobileHome.Insure.Model.Rental;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace MobileHome.Insure.Service.Rental
     public interface IRentalServiceFacade
     {
         int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId);
-        decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments,bool SendLandlord, ref int quoteId);
-
+        decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId, out string ProposalNo);
+        void saveQuote(Quote quoteObj);
         int generateInvoice(decimal amount, int customerId, int quoteId);
         bool SendLandlord(int quoteId, bool SendLandlord);
         bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage, DateTime creationDate);
@@ -21,11 +22,11 @@ namespace MobileHome.Insure.Service.Rental
 
         Customer GetCustomerById(int Id);
 
-        List<Quote> GetQuotes();
+        List<QuoteDto> GetQuotes();
 
         Quote GetQuoteById(int Id);
 
-        List<Quote> GetPolicies();
+        List<QuoteDto> GetPolicies();
 
         Model.Payment GetPolicyReceiptById(int quoteId);
 
