@@ -1,5 +1,7 @@
 ﻿@model MobileHome.Insure.Web.Models.Admin.ListStateFactorViewModel
-
+@{ 
+    Layout = null;
+}
 
 <div class="portlet-title"><div class="caption">Add / Edit State Factor</div></div>
 <div class="portlet-body">
@@ -51,7 +53,9 @@
             if ($(this).valid())
                 $('#modal-container').modal('hide');
         });
-        $(".select2me").select2();
+        $(".select2me").select2({
+            dropdownParent: "#modal-container"
+        });
         $.validator.unobtrusive.parse("#frmStateFactor");
     });
 

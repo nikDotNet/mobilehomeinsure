@@ -67,6 +67,38 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             return RedirectToAction("Park", "Master", new { area = "admin" });
         }
 
+        public ActionResult EditParkSite(int? id)
+        {
+            ParkSitesViewModel model = new ParkSitesViewModel();
+            model.States = _masterServiceFacade.GetStates();
+            model.Parks = _masterServiceFacade.GetParks();
+            if (id.HasValue)
+            {
+                model.CurrentParkSite = _masterServiceFacade.GetParkSiteById(id.Value);
+            }
+            else
+            {
+                model.CurrentParkSite = new ParkSite { IsActive = true };
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult EditParkSite(ParkSitesViewModel model)
+        {
+            try
+            {
+                _masterServiceFacade.SaveParkSite(model.CurrentParkSite,false);
+                TempData["Success"] = true;
+            }
+            catch (Exception ex)
+            {
+                TempData["Success"] = false;
+            }
+            return RedirectToAction("ParkSites", "Park", new { area = "admin" });
+        }
+
         public ActionResult Delete(int id)
         {
             try

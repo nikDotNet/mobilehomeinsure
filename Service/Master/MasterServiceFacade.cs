@@ -180,7 +180,11 @@ namespace MobileHome.Insure.Service.Master
         {
             return _context.Parks.Where(x => x.Id == id && x.IsActive == true).SingleOrDefault();
         }
-
+        public ParkSite GetParkSiteById(int id)
+        {
+            return _context.ParkSites.Include("Park").
+                Include("Quote").Include("Quote.Company").Where(x => x.Id == id && x.IsActive == true).SingleOrDefault();
+        }
         /// <summary>
         /// Find Park by zip
         /// </summary>
@@ -265,12 +269,25 @@ namespace MobileHome.Insure.Service.Master
         {
             if (parkSiteObj.Id != 0)
             {
-                var existingObj = _context.ParkSites.Where(x => x.Id == parkSiteObj.Id).SingleOrDefault();
+                var existingObj = _context.ParkSites.Include("Quote").Where(x => x.Id == parkSiteObj.Id).SingleOrDefault();
                 if (existingObj != null)
                 {
                     if (toDelete)
                         existingObj.IsActive = false;
-
+                    else
+                    {
+                        existingObj.PhysicalAddress1 = parkSiteObj.PhysicalAddress1;
+                        existingObj.PhysicalAddress2 = parkSiteObj.PhysicalAddress2;
+                        existingObj.PhysicalCity = parkSiteObj.PhysicalCity;
+                        existingObj.PhysicalStateId = parkSiteObj.PhysicalStateId;
+                        existingObj.PhysicalZip = parkSiteObj.PhysicalZip;
+                        existingObj.Quote.IsParkSitePolicy = true;
+                        existingObj.Quote.EffectiveDate = parkSiteObj.Quote.EffectiveDate;
+                        existingObj.Quote.ExpiryDate = parkSiteObj.Quote.ExpiryDate;
+                        existingObj.Quote.CompanyId = parkSiteObj.Quote.CompanyId;
+                        existingObj.Quote.Liability = parkSiteObj.Quote.Liability;
+                        existingObj.Quote.Premium = parkSiteObj.Quote.Premium;
+                    }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();                   
                 }

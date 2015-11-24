@@ -18,6 +18,7 @@ namespace mobilehome.insure.Areas.Admin.Models
             public ParkSite CurrentParkSite { get; set; }
 
             public List<State> States { get; set; }
-        
+            public List<Park> Parks { get; set; }
+
     }
 }
