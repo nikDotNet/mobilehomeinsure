@@ -74,18 +74,9 @@
         @Html.Script(
         @<script>
             $(document).ready(function () {
-
-                //$("#ddlLiabilities, #NumberOfInstallments, #ddlPersonalProperties").select2(
-                //   {
-                //       //placeholder: "Select a State",
-                //       allowClear: true
-                //   })
-                //   .on("change", function (e) {
-                //   });
-
-                //var effectiveDate = $("#EffectiveDate").datepicker("getDate");
-                //$.datepicker.formatDate('mm/dd/yyyy', effectiveDate);
-                $("#EffectiveDate").datepicker({ dateFormate: "mm/dd/yyyy" }).datepicker('setDate', new Date());
+             
+                $("#EffectiveDate").datepicker({ dateFormat: "mm/dd/yyyy" }).datepicker('setDate', new Date());
+                $("#EffectiveDate").datepicker("option", "minDate", new Date());
                 $("#btnContinuePayment").prop('disabled', true);
 
                 $("#btnContinuePayment").click(function (evt) {
