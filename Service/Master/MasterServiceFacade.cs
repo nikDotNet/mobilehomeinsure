@@ -169,8 +169,9 @@ namespace MobileHome.Insure.Service.Master
                 PhysicalZip = x.PhysicalZip.Value,
                 TenantFirstName = x.TenantFirstName,
                 TenantLastName = x.TenantLastName,
-                Premium = x.Quote.Premium.Value,
-                SiteNumber = x.SiteNumber.Value
+                Premium = (x.Quote!=null ? Convert.ToInt32(x.Quote.Premium): 0),
+                SiteNumber =Convert.ToInt32(x.SiteNumber)
+                    
             }).ToList();
 
             return rtnItems;
@@ -276,6 +277,10 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.IsActive = false;
                     else
                     {
+                        existingObj.ParkId = parkSiteObj.ParkId;
+                        existingObj.TenantFirstName = parkSiteObj.TenantFirstName;
+                        existingObj.TenantLastName = parkSiteObj.TenantLastName;
+                        existingObj.SiteNumber = parkSiteObj.SiteNumber;
                         existingObj.PhysicalAddress1 = parkSiteObj.PhysicalAddress1;
                         existingObj.PhysicalAddress2 = parkSiteObj.PhysicalAddress2;
                         existingObj.PhysicalCity = parkSiteObj.PhysicalCity;
@@ -286,11 +291,19 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.Quote.ExpiryDate = parkSiteObj.Quote.ExpiryDate;
                         existingObj.Quote.CompanyId = parkSiteObj.Quote.CompanyId;
                         existingObj.Quote.Liability = parkSiteObj.Quote.Liability;
-                        existingObj.Quote.Premium = parkSiteObj.Quote.Premium;
+                        existingObj.Quote.Premium = parkSiteObj.Quote.Premium;                        
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();                   
                 }
+            }
+            else
+            {                
+                parkSiteObj.CreatedDate = DateTime.Now;
+                parkSiteObj.IsActive = true;
+                _context.ParkSites.Add(parkSiteObj);
+                _context.SaveChanges();
+                
             }
         }
 

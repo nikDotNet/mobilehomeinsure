@@ -10,14 +10,13 @@
     <form method="post" action="/Park/editParkSite" role="form" class="horizontal-form">
         <div class="form-body">
             <div class="row">
-                @Html.HiddenFor(x => x.CurrentParkSite.Id)
-                @Html.HiddenFor(x => x.CurrentParkSite.ParkId)
+                @Html.HiddenFor(x => x.CurrentParkSite.Id)                
                 @Html.HiddenFor(x => x.CurrentParkSite.Quote.CompanyId)
                 @Html.HiddenFor(x => x.CurrentParkSite.QuoteId)
                 <div class="col-md-8">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentParkSite.Park.ParkName, new { @class = "control-label" })   
-                        @Html.DropDownListFor(x => x.CurrentParkSite.ParkId, new SelectList(Model.Parks, "Id", "ParkName"), "", new { @class = "form-control select2me input-medium" })                     
+                        @Html.DropDownListFor(x => x.CurrentParkSite.ParkId, new SelectList(Model.Parks, "Id", "ParkName"), "", new { id = "ddlParkId", @class = "form-control select2me input-medium" })                     
                         @*@Html.TextBoxFor(x => x.CurrentParkSite.Park.ParkName, new { @class = "form-control input-medium" })*@
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Park.ParkName, "", new { @class = "text-danger" })
                     </div>
@@ -25,6 +24,13 @@
             </div>
             <!-- Tenant Details-->
             <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentParkSite.SiteNumber, new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentParkSite.SiteNumber, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentParkSite.SiteNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentParkSite.TenantFirstName, new { @class = "control-label" })

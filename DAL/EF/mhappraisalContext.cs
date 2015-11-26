@@ -33,6 +33,7 @@ namespace MobileHome.Insure.DAL.EF
         public DbSet<Park> Parks { get; set; }
         public DbSet<ParkSite> ParkSites { get; set; }
         public DbSet<Quote> Quotes { get; set; }
+        public DbSet<Company> Companies { get; set; }
 
         public DbSet<ParkNotify> ParkNotifies { get; set; }
 
@@ -51,6 +52,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new CustomerMap());
             modelBuilder.Configurations.Add(new ParkSiteMap());
             modelBuilder.Configurations.Add(new QuoteMap());
+            modelBuilder.Configurations.Add(new CompanyMap());
         }
     }
 }
