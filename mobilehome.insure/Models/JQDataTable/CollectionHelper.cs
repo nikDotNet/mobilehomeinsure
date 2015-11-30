@@ -48,11 +48,9 @@ namespace mobilehome.insure.Models.JQDataTable
             ReadOnlyCollection<string> searchColumnValues,
             List<string> properties)
         {
+            
             var types = runTimeMethod();
-            //if (typeof(T).FullName.Equals("MobileHome.Insure.Model.Customer", StringComparison.OrdinalIgnoreCase))
-            //{
-
-            //}
+           
             totalRecordCount = types.Count;
 
 
@@ -105,6 +103,42 @@ namespace mobilehome.insure.Models.JQDataTable
             //return types.Skip(startIndex).Take(pageSize).ToList();
         }
 
+        public static IList<T> GetFilteredRecords(
+            List<T>  sourceData,
+            int startIndex, int pageSize,
+            ReadOnlyCollection<SortedColumn> sortedColumns,    
+            int totalRecordCount,
+            string searchString,
+            ReadOnlyCollection<string> searchColumnValues,
+            bool isSearch,
+            List<string> properties)
+        {
+
+            
+            IEnumerable<T> sortedEntityTypes = null;
+            foreach (var sortedColumn in sortedColumns)
+            {
+                if (sortedColumn.Direction == SortingDirection.Ascending)
+                {
+                    sortedEntityTypes = sourceData.OrderBy(sortedColumn.PropertyName);
+                }
+                else
+                {
+                    sortedEntityTypes = sourceData.OrderByDescending(entity => entity.GetType().GetProperty(sortedColumn.PropertyName).GetValue(entity, null));
+                }
+            }
+            if (!isSearch)
+            {
+                return sortedEntityTypes.ToList();
+            }
+            else
+            {
+                return sortedEntityTypes.Skip(startIndex).Take((pageSize > 0 ? pageSize : totalRecordCount))
+                    .ToList();
+            }
+            
+        }
+
         public static IEnumerable<T> WhereQuery<T>(IEnumerable<T> source, string columnName, string propertyValue)
         {
             var filtered = source.Where(m =>
@@ -124,6 +158,6 @@ namespace mobilehome.insure.Models.JQDataTable
         }
     }
 
-
+    
     
 }

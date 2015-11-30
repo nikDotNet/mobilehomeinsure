@@ -51,7 +51,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new ParkNotifyMap());
             modelBuilder.Configurations.Add(new CustomerMap());
             modelBuilder.Configurations.Add(new ParkSiteMap());
-            modelBuilder.Configurations.Add(new QuoteMap());
+            modelBuilder.Configurations.Add(new QuoteMap());            
             modelBuilder.Configurations.Add(new CompanyMap());
         }
     }

@@ -241,6 +241,50 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 
+        public JsonResult LoadPark(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            int totalRecordCount = 0;
+            int searchRecordCount = 0;
+
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "ParkName", //"OfficePhone", 
+                                                "SpacesToRent",
+                                                "SpacesToOwn",
+                                                "PhysicalAddress",
+                                                "State",
+                                                "PhysicalZip",
+                                                "IsActive"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+
+            List<ParkDto> result = _masterServiceFacade.GetListPark(param);
+
+            var parks = GenericFilterHelper<ParkDto>.GetFilteredRecords(
+                sourceData: result, //Updating bcos, on/off feature has to implement
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),  
+                totalRecordCount: param.TotalRecordCount,             
+                searchString: jQueryDataTablesModel.sSearch,
+                isSearch:param.IsFilterValue,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "ParkName", //"OfficePhone", 
+                                                "SpacesToRent",
+                                                "SpacesToOwn",
+                                                "PhysicalAddress",
+                                                "State",
+                                                "PhysicalZip",
+                                                "IsActive"
+                                            });
+
+            return Json(new JQueryDataTablesResponse<ParkDto>(
+                items: parks,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
         public JsonResult LoadParkSites(JQueryDataTablesModel jQueryDataTablesModel)
         {
             int totalRecordCount = 0;
@@ -273,6 +317,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 
+        
         public ActionResult ParkSites()
         {
             return View();

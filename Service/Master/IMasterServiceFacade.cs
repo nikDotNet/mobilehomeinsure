@@ -19,8 +19,8 @@ namespace MobileHome.Insure.Service.Master
 
         List<Park> GetParksWithOnOff();
 
+        List<ParkDto> GetListPark(SearchParameter searchParam);
         List<ParkDto> GetListPark();
-
         Park GetParkById(int id);
 
         List<Park> FindParkByZip(int zip);

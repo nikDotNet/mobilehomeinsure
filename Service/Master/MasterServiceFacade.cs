@@ -7,6 +7,7 @@ using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.Rental;
 using MobileHome.Insure.Model.DTO;
+using System.Data.Entity.SqlServer;
 
 namespace MobileHome.Insure.Service.Master
 {
@@ -153,7 +154,125 @@ namespace MobileHome.Insure.Service.Master
             }).ToList();
             return rtnItems;
         }
+        private ParkDto GetSearchObject(SearchParameter searchParam)
+        {
+            ParkDto parkObj = new ParkDto();
+            if (searchParam != null)
+            {
+                var isFilterValue = searchParam.SearchColumnValue.Any(e => !string.IsNullOrWhiteSpace(e));
 
+                searchParam.IsFilterValue = isFilterValue;
+
+                if ((searchParam.SearchColumn != null && searchParam.SearchColumn.Count > 0) &&
+                    searchParam.SearchColumn.Count == searchParam.SearchColumnValue.Count - 1 && isFilterValue) // minus -1 means, skipping action column from search list
+                {
+                    var filterValueProp = new Dictionary<string, string>();
+                    for (int idx = 0; idx < searchParam.SearchColumnValue.Count; idx++)
+                    {
+                        if (!string.IsNullOrWhiteSpace(searchParam.SearchColumnValue[idx]))
+                        {
+                            if (searchParam.SearchColumn[idx] == "Id") parkObj.Id = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
+                            else if (searchParam.SearchColumn[idx] == "ParkName") parkObj.ParkName = searchParam.SearchColumnValue[idx];
+                            else if (searchParam.SearchColumn[idx] == "SpacesToRent") parkObj.SpacesToRent = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
+                            else if (searchParam.SearchColumn[idx] == "SpacesToOwn") parkObj.SpacesToOwn = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
+                            else if (searchParam.SearchColumn[idx] == "PhysicalAddress") parkObj.PhysicalAddress = searchParam.SearchColumnValue[idx];
+                            else if (searchParam.SearchColumn[idx] == "State") parkObj.State = searchParam.SearchColumnValue[idx];
+                            else if (searchParam.SearchColumn[idx] == "PhysicalZip") parkObj.PhysicalZip = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
+                            else if (searchParam.SearchColumn[idx] == "IsActive") parkObj.IsActive = Convert.ToBoolean(searchParam.SearchColumnValue[idx]);
+
+                        }
+                    }                                                                                 
+                }
+                
+            }
+            return parkObj;
+        }
+        public List<ParkDto> GetListPark(SearchParameter searchParam)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            List<ParkDto> result = null;
+            if (searchParam != null)
+            {
+
+                ParkDto ParkDto = GetSearchObject(searchParam);
+
+                Int32 SpacesToRent = Convert.ToInt32(ParkDto.SpacesToRent);
+                Int32 SpacesToOwn = Convert.ToInt32(ParkDto.SpacesToOwn);
+                string ParkName = Convert.ToString(ParkDto.ParkName);
+                string State = Convert.ToString(ParkDto.State);
+                string PhysicalAddress = Convert.ToString(ParkDto.PhysicalAddress);
+                List<Park> items = null;
+                
+                if (!searchParam.IsFilterValue)
+                {
+                    searchParam.TotalRecordCount = _context.Parks.Count();
+                    items = _context.Parks.Include("PhysicalState").Where(m =>
+
+                        (ParkDto.Id == 0 ? 1 == 1 : m.Id == ParkDto.Id) &&
+
+                        (string.IsNullOrEmpty(ParkName) ? 1 == 1 : m.ParkName.ToUpper().StartsWith(ParkName.ToUpper())) &&
+
+                        (SpacesToRent == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SpacesToRent).StartsWith(SqlFunctions.StringConvert((double)SpacesToRent))) &&
+
+                        (SpacesToOwn == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SpacesToOwn).StartsWith(SqlFunctions.StringConvert((double)SpacesToOwn))) &&
+
+                        (string.IsNullOrEmpty(PhysicalAddress) ? 1 == 1 : m.PhysicalAddress.ToUpper().StartsWith(PhysicalAddress.ToUpper())) &&
+
+                        (string.IsNullOrEmpty(State) ? 1 == 1 : m.PhysicalState.Abbr.ToUpper().StartsWith(State.ToUpper())) &&
+
+                        (ParkDto.PhysicalZip == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.PhysicalZip).StartsWith(SqlFunctions.StringConvert((double)ParkDto.PhysicalZip)))
+
+                    //(m.IsActive == ParkDto.IsActive)                 
+                    ).
+                    OrderBy(x => x.Id)
+                    .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
+                    ToList();
+                }
+                else
+                {
+                    items = _context.Parks.Include("PhysicalState").Where(m =>
+
+                        (ParkDto.Id == 0 ? 1 == 1 : m.Id == ParkDto.Id) &&
+
+                        (string.IsNullOrEmpty(ParkName) ? 1 == 1 : m.ParkName.ToUpper().StartsWith(ParkName.ToUpper())) &&
+
+                        (SpacesToRent == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SpacesToRent).StartsWith(SqlFunctions.StringConvert((double)SpacesToRent))) &&
+
+                        (SpacesToOwn == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SpacesToOwn).StartsWith(SqlFunctions.StringConvert((double)SpacesToOwn))) &&
+
+                        (string.IsNullOrEmpty(PhysicalAddress) ? 1 == 1 : m.PhysicalAddress.ToUpper().StartsWith(PhysicalAddress.ToUpper())) &&
+
+                        (string.IsNullOrEmpty(State) ? 1 == 1 : m.PhysicalState.Abbr.ToUpper().StartsWith(State.ToUpper())) &&
+
+                        (ParkDto.PhysicalZip == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.PhysicalZip).StartsWith(SqlFunctions.StringConvert((double)ParkDto.PhysicalZip)))
+
+                    //(m.IsActive == ParkDto.IsActive)                 
+                    ).ToList();
+                    searchParam.TotalRecordCount = items.Count();
+                }
+                result = items.Select(x =>
+                    new ParkDto()
+                    {
+                        Id = x.Id,
+                        IsActive = x.IsActive,
+                        ParkName = x.ParkName,
+                        PhysicalAddress = x.PhysicalAddress,
+                        PhysicalStateId = x.PhysicalStateId,
+                        PhysicalZip = x.PhysicalZip,
+                        SpacesToOwn = x.SpacesToOwn,
+                        SpacesToRent = x.SpacesToRent,
+                        State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? x.PhysicalState.Abbr : ""
+                    }
+                ).ToList();
+                
+            }
+            
+            searchParam.SearchedCount = (!searchParam.IsFilterValue ? searchParam.TotalRecordCount : result.Count);
+
+            return result;
+        }
+
+        
         public List<ParkSiteDto> GetParkSites()
         {
             _context.Configuration.ProxyCreationEnabled = true;

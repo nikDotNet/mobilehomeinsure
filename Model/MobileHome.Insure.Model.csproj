@@ -61,6 +61,7 @@
     <Compile Include="Rental\Company.cs" />
     <Compile Include="Rental\ParkNotify.cs" />
     <Compile Include="Rental\Quote.cs" />
+    <Compile Include="SearchParameter.cs" />
     <Compile Include="State.cs" />
     <Compile Include="Appraisal\StateFactor.cs" />
     <Compile Include="User.cs" />
