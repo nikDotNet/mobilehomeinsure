@@ -16,5 +16,7 @@ namespace mobilehome.insure.Models.Rental
         public string Email { get; set; }
         [Display(Name = "Zip Code")]
         public string Zip { get; set; }
+        [Display(Name="Park Name")]
+        public string ParkName { get; set; }
     }
 }

@@ -996,6 +996,8 @@
     <Content Include="Content\css\jquery-ui.theme.css" />
     <Content Include="Content\css\jquery-ui.theme.min.css" />
     <Content Include="Content\css\prettyphoto.css" />
+    <Content Include="Content\css\select2_ver4\select2.css" />
+    <Content Include="Content\css\select2_ver4\select2.min.css" />
     <Content Include="Content\css\style-responsive.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\font-awesome\css\font-awesome.css" />
@@ -1351,6 +1353,10 @@
     <Content Include="Content\Plugins\owl-carousel\owl.theme.css" />
     <Content Include="Content\Plugins\owl-carousel\owl.transitions.css" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\select2_ver4\select2.full.js" />
+    <Content Include="Scripts\select2_ver4\select2.full.min.js" />
+    <Content Include="Scripts\select2_ver4\select2.js" />
+    <Content Include="Scripts\select2_ver4\select2.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

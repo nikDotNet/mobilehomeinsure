@@ -55,6 +55,14 @@ namespace MobileHome.Insure.Web
                 "~/Content/Assets/Global/Plugins/select2/select2.min.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/Scripts/select2_ver4/scripts").Include(
+                "~/Scripts/select2_ver4/select2.min.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/css/select2_ver4/css").Include(
+                 "~/Content/css/select2_ver4/select2.css"
+                ));
+
             bundles.Add(new StyleBundle("~/Content/Assets/Global/Plugins/select2/css").Include(
                  "~/Content/Assets/Global/Plugins/select2/select2.css"
                 ));

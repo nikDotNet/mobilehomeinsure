@@ -34,6 +34,13 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <div class="=form-group">
+                            @Html.LabelFor(x => x.ParkName)
+                            @Html.TextBoxFor(x => x.ParkName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(x => x.ParkName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <div class="form-group">
                             @Html.LabelFor(x => x.Email)
                             @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
@@ -80,14 +87,14 @@
         $(document).ready(function () {
 
             var success = '@ViewBag.success';
-
-            if(success == "True")
-            {    $("#thanksMessage").show();
-                $("#notifyForm").hide();
-            }
-            else if(sucess == "False")
-            {
-                bootbox.alert("Unable to submit the form due to technical error. Please try again!");
+            if (success != "") {
+                if (success == "True") {
+                    $("#thanksMessage").show();
+                    $("#notifyForm").hide();
+                }
+                else if (sucess == "False") {
+                    bootbox.alert("Unable to submit the form due to technical error. Please try again!");
+                }
             }
         })
     </script>

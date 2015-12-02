@@ -83,6 +83,7 @@
                                     </div>
                                     <div>
                                         &nbsp;<button class="btn btn-default" id="btnParkSelContinue" style="display:none">Continue</button>
+                                        &nbsp;<button class="btn btn-default" id="btnNotify" style="display:none">Notify Me</button>
                                     </div>
                                 </div>
                             </form>
@@ -267,6 +268,11 @@
                 }
             });
 
+            $("#btnNotify").on("click", function (e) {
+                e.preventDefault();
+                location.href = "/renters/notify?Zip=" + $("#findZip").val();
+            });
+
             $("#btnParkSelection").off("click");
             $("#btnParkSelection").on("click", function (e) {
                 e.preventDefault();
@@ -288,25 +294,16 @@
                             var datatmp = [];
                             $.each(data2.Result, function (index, item) {
                                 datatmp.push({
-                                    id: item.Id, text: item.ParkName, address: item.PhysicalAddress, city: item.PhysicalCity
+                                    id: item.Id, text: item.ParkName + "", address: item.PhysicalAddress + "", city: item.PhysicalCity + ""
                                 });
                             });
                             $("#ddlParks").select2({
-                                //initSelection: function (element, callback) {
-                                //    var datatmp = [];
-                                //    $.each(data.Result, function (index, item) {
-                                //        datatmp.push({
-                                //            id: item.Id, text: item.Name
-                                //        });
-                                //    });
-                                //    callback(datatmp);
-                                //},
                                 data: datatmp, //{ results: data2.Result, text: function (item) { return item.Name; } },
                                 placeholder: "Select a Park",
                                 allowChar: true,
                                 templateResult: function (item) {
                                     if (!item.id) { return item.text; }
-
+                                    if (item.id == 0) { return $('<center>' + item.text + '</center>' ); }
                                     return $(
                                            '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">Name:</span></div><div class="col-md-8">' + item.text + '</div></div></div>' +
                                            '<div class="form-group" style="margin-bottom:5px;"><div class="row"><div class="col-md-2"><span style="font-weight:bold">Address:</span></div><div class="col-md-8">' + item.address + '</div></div></div>' +
@@ -317,7 +314,7 @@
                         else {
                             $("#btnParkSelContinue").css("display", "none");
                             $("#divParks").css("display", "none");
-                            bootbox.alert("The Zip Code You Are Searching For is Not Available At This time<br/>1.<a href='/renters/notify'>Click Here</a> to be notified when your zip code is available<br/>2.<a href='/renters'>Click Here</a> to Start Over.");
+                            bootbox.alert("The Zip Code You Are Searching For is Not Available At This time<br/>1.<a href='/renters/notify?Zip=" + $("#findZip").val() +"'>Click Here</a> to be notified when your zip code is available<br/>2.<a href='/renters'>Click Here</a> to Start Over.");
                         }
                         $('#dvLoading').hide();
                     });
@@ -338,6 +335,18 @@
             $("#accordion").accordion("option", "active", 1);
             //$("#accordion").accordion({ active: "h3:last" })
 
+            $("#ddlParks").on("change", function () {
+                if(parseInt($(this).val()) === 0)
+                {
+                    $("#btnNotify").css("display", "block");
+                    $("#btnParkSelContinue").css("display", "none");
+                }
+                else
+                {
+                    $("#btnNotify").css("display", "none");
+                    $("#btnParkSelContinue").css("display", "block");
+                }
+            });
         });
     </script>
 }

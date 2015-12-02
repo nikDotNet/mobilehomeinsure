@@ -179,7 +179,8 @@ namespace MobileHome.Insure.Web.Controllers
         public ActionResult FindZip(int zip)
         {
             var parks = _masterServiceFacade.FindParkByZip(zip);
-
+            if(parks!=null)
+                parks.Add(new Park() { ParkName = "My Park is not listed", Id = 0, PhysicalAddress = "", PhysicalCity = "" });
             return Json(
                     new
                     {
@@ -231,11 +232,14 @@ namespace MobileHome.Insure.Web.Controllers
                 };
         }
 
-        public ActionResult Notify()
+        [HttpGet]
+        public ActionResult Notify(string Zip)
         {
             NotifyViewModel model = new NotifyViewModel();
+            model.Zip = Zip;
             return View(model);
         }
+        
         [HttpPost]
         public ActionResult Notify(NotifyViewModel model)
         {
