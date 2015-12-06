@@ -137,6 +137,8 @@ namespace MobileHome.Insure.Web.Controllers
             {
                 ViewBag.Success = true;
                 _serviceFacade.saveQuote(quoteObject);
+                SaveParkSite(quoteId, customerObject, quoteObject);
+
                 ViewBag.CustomerEmail = customerObject.Email;
                 var rtn = new
                 {
@@ -157,13 +159,28 @@ namespace MobileHome.Insure.Web.Controllers
                     infotrntim = creationDate.ToShortTimeString()
                 };
                 TempData.Clear();
-               
+
                 return Json(rtn, JsonRequestBehavior.AllowGet);
             }
             else
                 TempData.Keep();
            
             return Json("Success");
+        }
+
+        private void SaveParkSite(int quoteId, Customer customerObject, Quote quoteObject)
+        {
+            ParkSite parkSite = new ParkSite()
+            {
+                TenantFirstName = customerObject.FirstName,
+                TenantLastName = customerObject.LastName,
+                Park = customerObject.Park,
+                ParkId = customerObject.ParkId,
+                Quote = quoteObject,
+                QuoteId = quoteId,
+                State = customerObject.State
+            };
+            _masterServiceFacade.SaveParkSite(parkSite);
         }
 
         [HttpPost]

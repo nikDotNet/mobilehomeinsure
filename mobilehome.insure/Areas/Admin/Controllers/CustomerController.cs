@@ -52,6 +52,41 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 
+        public ActionResult LoadCustomer(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "FirstName",
+                                                "LastName",
+                                                "FirstName2",
+                                                "LastName2",
+                                                "Phone",
+                                                "Email",
+                                                "Address",
+                                                 "Zip"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+            List<Customer> sourceData = _rentalServiceFacade.GetCustomers(param);
+
+            var customers = GenericFilterHelper<Customer>.GetFilteredRecords(
+                sourceData: sourceData,
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
+                totalRecordCount: param.TotalRecordCount,
+                searchString: jQueryDataTablesModel.sSearch,
+                isSearch:param.IsFilterValue,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "FirstName", "LastName", "FirstName2",
+                    "LastName2", "Phone", "Email", "Address", "Zip" });
+
+            return Json(new JQueryDataTablesResponse<Customer>(
+                items: customers,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
 
         public ActionResult Policy()
         {
@@ -72,12 +107,47 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 searchRecordCount: out searchRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability", "Premium", "EffectiveDate", "NoOffInstallments", "SendLandLord" });
+                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability",
+                    "Premium", "EffectiveDate", "NoOffInstallments", "SendLandLord" });
 
             return Json(new JQueryDataTablesResponse<QuoteDto>(
                 items: quotes,
                 totalRecords: totalRecordCount,
                 totalDisplayRecords: searchRecordCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
+
+        public ActionResult LoadPolicy(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "ProposalNumber",
+                                                "PersonalProperty",
+                                                "Liability",
+                                                "Premium",
+                                                "EffectiveDate",
+                                                "NoOffInstallments",
+                                                "SendLandLord"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+            List<QuoteDto> sourceData = _rentalServiceFacade.GetPolicies(param);
+            var quotes = GenericFilterHelper<QuoteDto>.GetFilteredRecords(
+                sourceData: sourceData,
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
+                totalRecordCount: param.TotalRecordCount,
+                isSearch: param.IsFilterValue,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability",
+                    "Premium", "EffectiveDate", "NoOffInstallments", "SendLandLord" });
+
+            return Json(new JQueryDataTablesResponse<QuoteDto>(
+                items: quotes,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 
@@ -144,6 +214,41 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 
+        public ActionResult LoadQuote(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "ProposalNumber",
+                                                "PersonalProperty",
+                                                "Liability",
+                                                "Premium",
+                                                "EffectiveDate",
+                                                "NoOffInstallments",
+                                                "SendLandLord"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+            List<QuoteDto> sourceData = _rentalServiceFacade.GetQuotes(param);
+
+            var quotes = GenericFilterHelper<QuoteDto>.GetFilteredRecords(
+                sourceData: sourceData,
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
+                totalRecordCount: param.TotalRecordCount,
+                isSearch: param.IsFilterValue,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty",
+                    "Liability", "Premium", "EffectiveDate", "NoOfInstallments", "SendLandLord" });
+
+            return Json(new JQueryDataTablesResponse<QuoteDto>(
+                items: quotes,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
+
         public ActionResult Payment()
         {
             return View();
@@ -169,6 +274,37 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 items: payments,
                 totalRecords: totalRecordCount,
                 totalDisplayRecords: searchRecordCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
+        public ActionResult LoadPayment(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "TransactionId",
+                                                "ResponseCode",
+                                                "ApprovalCode",
+                                                "CreationDate",
+                                                "Amount"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+            List<Payment> sourceData = _rentalServiceFacade.GetPayments(param);
+
+            var payments = GenericFilterHelper<MobileHome.Insure.Model.Payment>.GetFilteredRecords(
+                sourceData: sourceData,
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
+                totalRecordCount: param.TotalRecordCount,
+                isSearch:param.IsFilterValue,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "TransactionId", "ResponseCode", "ApprovalCode", "CreationDate", "Amount" });
+
+            return Json(new JQueryDataTablesResponse<MobileHome.Insure.Model.Payment>(
+                items: payments,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 

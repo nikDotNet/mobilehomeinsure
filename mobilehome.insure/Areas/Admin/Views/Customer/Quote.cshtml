@@ -125,28 +125,7 @@
             Layout.init(); // init current layout
             QuickSidebar.init(); // init quick sidebar
             Demo.init(); // init demo features
-            configureBlockUI();
-
-            //$('#tblLists').dataTable({
-            //    "bProcessing": true,
-            //    "bServerSide": true,
-            //    "sServerMethod": "POST",
-            //    "sAjaxSource": "/Admin/Park/Loading",
-            //    "aoColumns": [
-            //    { "mDataProp": "Id" },
-            //    { "mDataProp": "Name" },
-            //    { "mDataProp": "Position" },
-            //    { "mDataProp": "Phone" },
-            //    { "mDataProp": "Spaces" },
-            //    { "mDataProp": "Address" },
-            //    { "mDataProp": "Zip" },
-            //    ],
-            //    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            //        debugger;
-            //        //var birthday = new Date(parseInt(aData.Birthday.replace("/Date(", "").replace(")/", ""), 10));
-            //        //$('td:eq(3)', nRow).html(birthday.getMonth() + 1 + "/" + birthday.getDate() + "/" + birthday.getFullYear());
-            //    }
-            //});
+            configureBlockUI();            
 
             var tableColumns = [
                 {
@@ -183,7 +162,7 @@
             });
 
 
-            CustomerActions.init("/Admin/Customer/LoadingQuote", tableColumns);
+            CustomerActions.init("/Admin/Customer/LoadQuote", tableColumns);
             $("#tblLists_filter").css("display", "none"); //hide common/global filter
         });
 

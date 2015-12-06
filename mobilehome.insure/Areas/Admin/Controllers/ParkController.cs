@@ -210,42 +210,9 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             }
         }
 
-        //[HttpPost]
-        public JsonResult Loading(JQueryDataTablesModel jQueryDataTablesModel)
-        {
-            int totalRecordCount = 0;
-            int searchRecordCount = 0;
-
-            var parks = GenericFilterHelper<ParkDto>.GetFilteredRecords(
-                runTimeMethod: _masterServiceFacade.GetListPark, //Updating bcos, on/off feature has to implement
-                startIndex: jQueryDataTablesModel.iDisplayStart,
-                pageSize: jQueryDataTablesModel.iDisplayLength,
-                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
-                totalRecordCount: out totalRecordCount,
-                searchRecordCount: out searchRecordCount,
-                searchString: jQueryDataTablesModel.sSearch,
-                searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ParkName", //"OfficePhone", 
-                                                "SpacesToRent", 
-                                                "SpacesToOwn", 
-                                                "PhysicalAddress", 
-                                                "State", 
-                                                "PhysicalZip", 
-                                                "IsActive" 
-                                            });
-
-            return Json(new JQueryDataTablesResponse<ParkDto>(
-                items: parks,
-                totalRecords: totalRecordCount,
-                totalDisplayRecords: searchRecordCount,
-                sEcho: jQueryDataTablesModel.sEcho));
-        }
-
+        
         public JsonResult LoadPark(JQueryDataTablesModel jQueryDataTablesModel)
-        {
-            int totalRecordCount = 0;
-            int searchRecordCount = 0;
-
+        {            
             SearchParameter param = new SearchParameter();
             param.SearchColumn = new List<string> { "Id", "ParkName", //"OfficePhone", 
                                                 "SpacesToRent",
@@ -287,16 +254,30 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         }
         public JsonResult LoadParkSites(JQueryDataTablesModel jQueryDataTablesModel)
         {
-            int totalRecordCount = 0;
-            int searchRecordCount = 0;
-            
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "SiteNumber",
+                                                "ParkName",
+                                                "TenantFirstName",
+                                                "TenantLastName",
+                                                "PhysicalCity",
+                                                "PhysicalState",
+                                                "PhysicalZip",
+                                                "Premium",
+                                                "IsActive"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+
+            List<ParkSiteDto> result = _masterServiceFacade.GetParkSites(param);
+
             var parks = GenericFilterHelper<ParkSiteDto>.GetFilteredRecords(
-                runTimeMethod: _masterServiceFacade.GetParkSites, //Updating bcos, on/off feature has to implement
+                sourceData: result, //Updating bcos, on/off feature has to implement
                 startIndex: jQueryDataTablesModel.iDisplayStart,
                 pageSize: jQueryDataTablesModel.iDisplayLength,
                 sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
-                totalRecordCount: out totalRecordCount,
-                searchRecordCount: out searchRecordCount,
+                totalRecordCount: param.TotalRecordCount,
+                isSearch: param.IsFilterValue,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
                 properties: new List<string> { "Id", "SiteNumber", 
@@ -312,8 +293,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
             return Json(new JQueryDataTablesResponse<ParkSiteDto>(
                 items: parks,
-                totalRecords: totalRecordCount,
-                totalDisplayRecords: searchRecordCount,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
                 sEcho: jQueryDataTablesModel.sEcho));
         }
 

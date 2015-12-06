@@ -136,6 +136,36 @@
                                 Action
                             </th>
                         </tr>
+
+                        <tr id="filterrow">
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Proposal Number
+                            </th>
+                            <th>
+                                Personal Property
+                            </th>
+                            <th>
+                                Liability
+                            </th>
+                            <th>
+                                Preminum
+                            </th>
+                            <th>
+                                Effective Date
+                            </th>
+                            <th>
+                                No Of Installments
+                            </th>
+                            <th>
+                                Send Landlord
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
                     </thead>
                 </table>
             </div>
@@ -179,7 +209,19 @@
                 }
             ];
 
-            CustomerActions.init("/Admin/Customer/LoadingPolicy", tableColumns);
+            $('#tblLists thead tr#filterrow th').each(function () {
+                //debugger;
+                var title = $('#tblLists thead th').eq($(this).index()).text();
+                title = title.replace("\n", "").replace("\n", "").trim();
+                if (title !== "Action") {
+                    $(this).html('<input type="text" onclick="stopPropagation(event);" class="form-control" placeholder="Search ' + title + '" />');
+                }
+                else {
+                    $('#tblLists thead tr#filterrow th').eq($(this).index()).text("");
+                }
+            });
+
+            CustomerActions.init("/Admin/Customer/LoadPolicy", tableColumns);
             $("#tblLists_filter").css("display", "none"); //hide common/global filter
 
         });

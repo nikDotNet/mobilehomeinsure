@@ -38,6 +38,7 @@
     </ul>
 </div>
 <!-- END PAGE HEADER-->
+<!-- BEGIN PAGE CONTENT-->
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN EXAMPLE TABLE PORTLET-->
@@ -47,6 +48,122 @@
                     <i class="fa fa-edit"></i>Park Sites Report
                 </div>
             </div>
+            <div class="portlet-body">
+                <div class="row form-group">
+                    <div class="col-md-4">
+                        <label class="control-label">Effective Date:</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='txtEffectiveDate'>
+                                <input type='text' class="form-control" size="10" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="vertical-align:bottom; padding-top:22px;">
+                        <button class="btn btn-success" id="btnSearch">Search</button>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover table-bordered" id="tblLists">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Park Name
+                            </th>
+                            <th>
+                                Site Number
+                            </th>                            
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                Zip
+                            </th>
+                            <th>
+                                City
+                            </th>                           
+                        </tr>
+                    </thead>                   
+                </table>
+            </div>
+            <!-- END EXAMPLE TABLE PORTLET-->
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+@section scripts
+{
+    <script src="~/Areas/Admin/Script/reporting.js"></script>
+    <script type="text/javascript">
+        var effectiveDate = null;       
+        var dataTable = null;
+        var dataTableAfterInit = null;
+
+        $(function () {
+            Metronic.init(); // init metronic core components
+            Layout.init(); // init current layout
+            QuickSidebar.init(); // init quick sidebar
+            Demo.init(); // init demo features
+
+
+            var tableColumns = [
+               {
+                   "mDataProp": "Id",
+                   "bSearchable": false,
+                   "bSortable": false,
+                   //"bVisible": false
+               },
+               { "mDataProp": "ParkName" },
+               { "mDataProp": "SiteNumber" },
+               { "mDataProp": "PhysicalCity" },
+               { "mDataProp": "PhysicalState" },
+               { "mDataProp": "PhysicalZip" },              
+            ];
+
+            ReportingActions.init("/Admin/Reporting/LoadParkSites", tableColumns);
+            $("#tblLists_filter").css("display", "none"); //hide common/global filter
+
+
+            $("#btnSearch").off("click");
+            $("#btnSearch").on("click", function (e) {
+                e.preventDefault();
+                effectiveDate = $("#txtEffectiveDate").find("input").val();
+                ReportingActions.search();
+            });
+
+            //initialize date controls
+            $('#txtEffectiveDate').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+                                    
+        });
+
+        
+        function search(oTable, effectiveDate) {
+            //redraw table with custom filter
+            //debugger;
+
+            if (effectiveDate != null ) {
+                var arrayData = effectiveDate.split(",");
+                var idx = arrayData[0];
+                var value = arrayData[1];
+                oTable.column(idx)
+                        .search(value)
+                        .draw();
+            }
+            
+        }
+    </script>
+}
+
+

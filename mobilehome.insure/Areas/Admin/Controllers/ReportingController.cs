@@ -61,6 +61,40 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 totalDisplayRecords: searchRecordCount,
                 sEcho: jQueryDataTablesModel.sEcho));
         }
+
+        public ActionResult LoadCustomer(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "FirstName",
+                                                "LastName",                                               
+                                                "Phone",
+                                                "Email",
+                                                "Address",
+                                                 "Zip",
+                                                 "City"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+            List<Customer> sourceData = new MobileHome.Insure.Service.Rental.RentalServiceFacade().GetCustomers(param);
+
+            var customers = GenericFilterHelper<Customer>.GetFilteredRecords(
+                sourceData: sourceData,
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
+                totalRecordCount: param.TotalRecordCount,
+                searchString: jQueryDataTablesModel.sSearch,
+                isSearch: param.IsFilterValue,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "FirstName", "LastName", "Phone", "Email", "Address", "Zip", "City" });
+
+            return Json(new JQueryDataTablesResponse<Customer>(
+                items: customers,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
         #endregion
 
         #region Park Report
@@ -73,29 +107,29 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {            
             return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
         }
+        
+        //public ActionResult LoadingPark(JQueryDataTablesModel jQueryDataTablesModel)
+        //{
+        //    int totalRecordCount = 0;
+        //    int searchRecordCount = 0;
 
-        public ActionResult LoadingPark(JQueryDataTablesModel jQueryDataTablesModel)
-        {
-            int totalRecordCount = 0;
-            int searchRecordCount = 0;
+        //    var parkDtos = GenericFilterHelper<ParkDto>.GetFilteredRecords(
+        //        runTimeMethod: GetParkDtos,
+        //        startIndex: jQueryDataTablesModel.iDisplayStart,
+        //        pageSize: jQueryDataTablesModel.iDisplayLength,
+        //        sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
+        //        totalRecordCount: out totalRecordCount,
+        //        searchRecordCount: out searchRecordCount,
+        //        searchString: jQueryDataTablesModel.sSearch,
+        //        searchColumnValues: jQueryDataTablesModel.sSearch_,
+        //        properties: new List<string> { "Id", "ParkName", "PhysicalAddress", "PhysicalZip", "PhysicalCity", "State", "TotalOwnRentals" });
 
-            var parkDtos = GenericFilterHelper<ParkDto>.GetFilteredRecords(
-                runTimeMethod: GetParkDtos,
-                startIndex: jQueryDataTablesModel.iDisplayStart,
-                pageSize: jQueryDataTablesModel.iDisplayLength,
-                sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
-                totalRecordCount: out totalRecordCount,
-                searchRecordCount: out searchRecordCount,
-                searchString: jQueryDataTablesModel.sSearch,
-                searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ParkName", "PhysicalAddress", "PhysicalZip", "PhysicalCity", "State", "TotalOwnRentals" });
-
-            return Json(new JQueryDataTablesResponse<ParkDto>(
-                items: parkDtos,
-                totalRecords: totalRecordCount,
-                totalDisplayRecords: searchRecordCount,
-                sEcho: jQueryDataTablesModel.sEcho));
-        }
+        //    return Json(new JQueryDataTablesResponse<ParkDto>(
+        //        items: parkDtos,
+        //        totalRecords: totalRecordCount,
+        //        totalDisplayRecords: searchRecordCount,
+        //        sEcho: jQueryDataTablesModel.sEcho));
+        //}
 
         private List<ParkDto> GetParkDtos()
         {
@@ -135,5 +169,51 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             return View();
         }
+        public JsonResult LoadParkSites(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            SearchParameter param = new SearchParameter();
+            param.SearchColumn = new List<string> { "Id", "SiteNumber",
+                                                "ParkName",
+                                                "TenantFirstName",
+                                                "TenantLastName",
+                                                "PhysicalCity",
+                                                "PhysicalState",
+                                                "PhysicalZip",
+                                                "Premium",
+                                                "IsActive"
+                                            };
+            param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
+            param.StartIndex = jQueryDataTablesModel.iDisplayStart;
+            param.PageSize = jQueryDataTablesModel.iDisplayLength;
+
+            List<ParkSiteDto> result = _masterServiceFacade.GetParkSites(param);
+
+            var parks = GenericFilterHelper<ParkSiteDto>.GetFilteredRecords(
+                sourceData: result, //Updating bcos, on/off feature has to implement
+                startIndex: jQueryDataTablesModel.iDisplayStart,
+                pageSize: jQueryDataTablesModel.iDisplayLength,
+                sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
+                totalRecordCount: param.TotalRecordCount,
+                isSearch: param.IsFilterValue,
+                searchString: jQueryDataTablesModel.sSearch,
+                searchColumnValues: jQueryDataTablesModel.sSearch_,
+                properties: new List<string> { "Id", "SiteNumber",
+                                                "ParkName",
+                                                "TenantFirstName",
+                                                "TenantLastName",
+                                                "PhysicalCity",
+                                                "PhysicalState",
+                                                "PhysicalZip",
+                                                "Premium",
+                                                "IsActive"
+                                            });
+
+            return Json(new JQueryDataTablesResponse<ParkSiteDto>(
+                items: parks,
+                totalRecords: param.TotalRecordCount,
+                totalDisplayRecords: param.SearchedCount,
+                sEcho: jQueryDataTablesModel.sEcho));
+        }
+
     }
 }

@@ -40,6 +40,7 @@ namespace MobileHome.Insure.Service.Master
 
         List<ParkDto> GetListParks(string parkName, int stateId, string zipCode);
         List<ParkSiteDto> GetParkSites();
+        List<ParkSiteDto> GetParkSites(SearchParameter searchParam);
         ParkSite GetParkSiteById(int id);
         void SaveParkSite(ParkSite parkSiteObj, bool toDelete = false);
 
