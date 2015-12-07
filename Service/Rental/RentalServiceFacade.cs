@@ -534,7 +534,8 @@ namespace MobileHome.Insure.Service.Rental
         public List<Model.Payment> GetPayments(SearchParameter searchParam)
         {
             List<Model.Payment> result = null;
-            
+            _context.Configuration.ProxyCreationEnabled = false;
+            _context.Configuration.LazyLoadingEnabled = false;
             if (searchParam != null)
             {
                 Model.Payment payment = GetPaymentObject(searchParam);
