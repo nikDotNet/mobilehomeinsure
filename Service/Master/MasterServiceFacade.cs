@@ -8,8 +8,8 @@ using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.Rental;
 using MobileHome.Insure.Model.DTO;
 using System.Data.Entity.SqlServer;
-using MobileHome.Insure.Service.Search;
-using MobileHome.Insure.Service.Repository;
+//using MobileHome.Insure.Service.Search;
+//using MobileHome.Insure.Service.Repository;
 
 namespace MobileHome.Insure.Service.Master
 {
@@ -248,65 +248,66 @@ namespace MobileHome.Insure.Service.Master
 
             return result;
         }
-        
-        private SearchQuery<Park> CreateFilter(SearchParameter searchParam)
-        {
-            var query = new SearchQuery<Park>();
-            if (searchParam != null)
-            {
-                var isFilterValue = searchParam.SearchColumnValue.Any(e => !string.IsNullOrWhiteSpace(e));
 
-                searchParam.IsFilterValue = isFilterValue;
+        #region Generic Search
+        //private SearchQuery<Park> CreateFilter(SearchParameter searchParam)
+        //{
+        //    var query = new SearchQuery<Park>();
+        //    if (searchParam != null)
+        //    {
+        //        var isFilterValue = searchParam.SearchColumnValue.Any(e => !string.IsNullOrWhiteSpace(e));
 
-                if ((searchParam.SearchColumn != null && searchParam.SearchColumn.Count > 0) &&
-                    searchParam.SearchColumn.Count == searchParam.SearchColumnValue.Count - 1 && isFilterValue) // minus -1 means, skipping action column from search list
-                {
-                    var filterValueProp = new Dictionary<string, string>();
-                    for (int idx = 0; idx < searchParam.SearchColumnValue.Count; idx++)
-                    {
-                        if (!string.IsNullOrWhiteSpace(searchParam.SearchColumnValue[idx]))
-                        {
-                            if (searchParam.SearchColumn[idx] == "Id") query.AddFilter(p => p.Id == Convert.ToInt32(searchParam.SearchColumnValue[idx]));
-                            else if (searchParam.SearchColumn[idx] == "ParkName") query.AddFilter(p => p.ParkName == searchParam.SearchColumnValue[idx]);
-                            else if (searchParam.SearchColumn[idx] == "SpacesToRent") query.AddFilter(p => p.SpacesToRent == Convert.ToInt32(searchParam.SearchColumnValue[idx]));
-                            else if (searchParam.SearchColumn[idx] == "SpacesToOwn") query.AddFilter(p => p.SpacesToOwn == Convert.ToInt32(searchParam.SearchColumnValue[idx]));
-                            else if (searchParam.SearchColumn[idx] == "PhysicalAddress") query.AddFilter(p => p.PhysicalAddress == searchParam.SearchColumnValue[idx]);
-                            else if (searchParam.SearchColumn[idx] == "State") query.AddFilter(p => p.PhysicalState.Name == searchParam.SearchColumnValue[idx]);
-                            else if (searchParam.SearchColumn[idx] == "PhysicalZip") query.AddFilter(p => p.PhysicalZip == Convert.ToInt32(searchParam.SearchColumnValue[idx]));                                                     
+        //        searchParam.IsFilterValue = isFilterValue;
 
-                        }
-                    }
-                }
+        //        if ((searchParam.SearchColumn != null && searchParam.SearchColumn.Count > 0) &&
+        //            searchParam.SearchColumn.Count == searchParam.SearchColumnValue.Count - 1 && isFilterValue) // minus -1 means, skipping action column from search list
+        //        {
+        //            var filterValueProp = new Dictionary<string, string>();
+        //            for (int idx = 0; idx < searchParam.SearchColumnValue.Count; idx++)
+        //            {
+        //                if (!string.IsNullOrWhiteSpace(searchParam.SearchColumnValue[idx]))
+        //                {
+        //                    if (searchParam.SearchColumn[idx] == "Id") query.AddFilter(p => p.Id == Convert.ToInt32(searchParam.SearchColumnValue[idx]));
+        //                    else if (searchParam.SearchColumn[idx] == "ParkName") query.AddFilter(p => p.ParkName == searchParam.SearchColumnValue[idx]);
+        //                    else if (searchParam.SearchColumn[idx] == "SpacesToRent") query.AddFilter(p => p.SpacesToRent == Convert.ToInt32(searchParam.SearchColumnValue[idx]));
+        //                    else if (searchParam.SearchColumn[idx] == "SpacesToOwn") query.AddFilter(p => p.SpacesToOwn == Convert.ToInt32(searchParam.SearchColumnValue[idx]));
+        //                    else if (searchParam.SearchColumn[idx] == "PhysicalAddress") query.AddFilter(p => p.PhysicalAddress == searchParam.SearchColumnValue[idx]);
+        //                    else if (searchParam.SearchColumn[idx] == "State") query.AddFilter(p => p.PhysicalState.Name == searchParam.SearchColumnValue[idx]);
+        //                    else if (searchParam.SearchColumn[idx] == "PhysicalZip") query.AddFilter(p => p.PhysicalZip == Convert.ToInt32(searchParam.SearchColumnValue[idx]));                                                     
 
-            }
-            return query;
-        }
-        public List<ParkDto> SearchPark(SearchParameter searchParam)
-        {
-            var productRepository = new Repository<Park>(new mhappraisalContext());
-            var query = CreateFilter(searchParam);
-            var result = productRepository.Search(query);
-            List<ParkDto> data = new List<ParkDto>();
-            foreach (var x in result.Entities)
-            {
-                ParkDto objParkDto =  new ParkDto()
-                {
-                    Id = x.Id,
-                    IsActive = x.IsActive,
-                    ParkName = x.ParkName,
-                    PhysicalAddress = x.PhysicalAddress,
-                    PhysicalStateId = x.PhysicalStateId,
-                    PhysicalZip = x.PhysicalZip,
-                    SpacesToOwn = x.SpacesToOwn,
-                    SpacesToRent = x.SpacesToRent,
-                    State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? x.PhysicalState.Abbr : ""
-                };
-                data.Add(objParkDto);
-            }
+        //                }
+        //            }
+        //        }
+
+        //    }
+        //    return query;
+        //}
+        //public List<ParkDto> SearchPark(SearchParameter searchParam)
+        //{
+        //    var productRepository = new Repository<Park>(new mhappraisalContext());
+        //    var query = CreateFilter(searchParam);
+        //    var result = productRepository.Search(query);
+        //    List<ParkDto> data = new List<ParkDto>();
+        //    foreach (var x in result.Entities)
+        //    {
+        //        ParkDto objParkDto =  new ParkDto()
+        //        {
+        //            Id = x.Id,
+        //            IsActive = x.IsActive,
+        //            ParkName = x.ParkName,
+        //            PhysicalAddress = x.PhysicalAddress,
+        //            PhysicalStateId = x.PhysicalStateId,
+        //            PhysicalZip = x.PhysicalZip,
+        //            SpacesToOwn = x.SpacesToOwn,
+        //            SpacesToRent = x.SpacesToRent,
+        //            State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? x.PhysicalState.Abbr : ""
+        //        };
+        //        data.Add(objParkDto);
+        //    }
             
-            return data;
-        }
-
+        //    return data;
+        //}
+        #endregion
         public List<ParkSiteDto> GetParkSites()
         {
             _context.Configuration.ProxyCreationEnabled = true;

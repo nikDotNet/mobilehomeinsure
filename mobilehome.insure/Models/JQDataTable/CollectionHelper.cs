@@ -113,30 +113,32 @@ namespace mobilehome.insure.Models.JQDataTable
             bool isSearch,
             List<string> properties)
         {
-
             
             IEnumerable<T> sortedEntityTypes = null;
-            foreach (var sortedColumn in sortedColumns)
+            if (sourceData != null)
             {
-                if (sortedColumn.Direction == SortingDirection.Ascending)
+                foreach (var sortedColumn in sortedColumns)
                 {
-                    sortedEntityTypes = sourceData.OrderBy(sortedColumn.PropertyName);
+                    if (sortedColumn.Direction == SortingDirection.Ascending)
+                    {
+                        sortedEntityTypes = sourceData.OrderBy(sortedColumn.PropertyName);
+                    }
+                    else
+                    {
+                        sortedEntityTypes = sourceData.OrderByDescending(entity => entity.GetType().GetProperty(sortedColumn.PropertyName).GetValue(entity, null));
+                    }
+                }
+                if (!isSearch)
+                {
+                    return sortedEntityTypes.ToList();
                 }
                 else
                 {
-                    sortedEntityTypes = sourceData.OrderByDescending(entity => entity.GetType().GetProperty(sortedColumn.PropertyName).GetValue(entity, null));
+                    return sortedEntityTypes.Skip(startIndex).Take((pageSize > 0 ? pageSize : totalRecordCount))
+                        .ToList();
                 }
             }
-            if (!isSearch)
-            {
-                return sortedEntityTypes.ToList();
-            }
-            else
-            {
-                return sortedEntityTypes.Skip(startIndex).Take((pageSize > 0 ? pageSize : totalRecordCount))
-                    .ToList();
-            }
-            
+            return sourceData;
         }
 
         public static IEnumerable<T> WhereQuery<T>(IEnumerable<T> source, string columnName, string propertyValue)
