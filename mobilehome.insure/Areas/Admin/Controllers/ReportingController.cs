@@ -2,6 +2,7 @@
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.DTO;
 using MobileHome.Insure.Service.Master;
+using MobileHome.Insure.Service.Rental;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,12 @@ namespace mobilehome.insure.Areas.Admin.Controllers
     public class ReportingController : Controller
     {
         IMasterServiceFacade _masterServiceFacade;
+        IRentalServiceFacade _rentalServiceFacade;
+
         public ReportingController()
         {
             _masterServiceFacade = new MasterServiceFacade();
+            _rentalServiceFacade = new RentalServiceFacade();
         }
 
         #region Order Report
@@ -29,7 +33,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult SearchOrder(string startDate, string endDate)
         {
-            return Json(_masterServiceFacade.GetListOrder(startDate, endDate), JsonRequestBehavior.AllowGet);
+            return Json(_rentalServiceFacade.GetListOrder(startDate, endDate), JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -161,7 +165,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult SearchPremium(int? stateId, string zipCode, string startDate, string endDate)
         {
-            return Json(_masterServiceFacade.GetListPremiums((stateId.HasValue ? stateId.Value : 0), zipCode, startDate, endDate), JsonRequestBehavior.AllowGet);
+            return Json(_rentalServiceFacade.GetListPremiums((stateId.HasValue ? stateId.Value : 0), zipCode, startDate, endDate), JsonRequestBehavior.AllowGet);
         }
         #endregion
 

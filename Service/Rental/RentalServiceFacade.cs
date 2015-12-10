@@ -609,5 +609,135 @@ namespace MobileHome.Insure.Service.Rental
             return _context.Customers.AsNoTracking().Where(c => (c.ParkId != null && c.ParkId == parkId)).ToList();
         }
         #endregion
+
+        #region Reporting
+
+        public List<OrderDto> GetListOrder(string startDate, string endDate)
+        {
+            List<Model.Payment> items = null;
+
+            _context.Configuration.ProxyCreationEnabled = false;
+            if (string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
+                items = _context.Payments.Include("Customer").
+                    Include("Quote").
+                    Include("Quote.Company").
+                    Where(x => x.TransactionId != null).ToList();
+            else if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
+            {
+                var startDt = Master.MasterServiceFacade.GetStringAsDateFormat(startDate);
+                var endDt = Master.MasterServiceFacade.GetStringAsDateFormat(endDate).AddDays(1);
+                items = _context.Payments.Include("Customer").
+                    Include("Quote").
+                    Include("Quote.Company").
+                    Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
+            }
+
+
+            var rtnItems = items.Select(x => new OrderDto()
+            {
+                OrderId = x.Id,
+
+                ApprovalCode = x.ApprovalCode,
+                ApprovalMessage = x.ApprovalMessage,
+                CreatedBy = x.CreatedBy,
+                //CreationDate = x.CreationDate.HasValue ? x.CreationDate.Value.Date : DateTime.MinValue,
+                CreationDateStr = x.CreationDate.HasValue ? Master.MasterServiceFacade.GetDateFormatAsString(x.CreationDate.Value) : string.Empty,
+                ErrorMessage = (x.ErrorMessage != null ? x.ErrorMessage : string.Empty),
+                ResponseCode = x.ResponseCode,
+                TransactionId = x.TransactionId,
+
+                RenterId = x.RentalQuoteId.Value,
+                CompanyId = x.Quote != null && x.Quote.Company != null ? x.Quote.CompanyId.Value : 0,
+                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : string.Empty,
+                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : string.Empty,
+
+                CustomerId = x.CustomerId.Value,
+                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : string.Empty
+
+            }).ToList();
+            return rtnItems;
+        }
+
+        public List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate)
+        {
+            List<Model.Payment> items = null;
+
+            _context.Configuration.ProxyCreationEnabled = false;
+            if (stateId == 0 & string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
+                items = _context.Payments.Where(x => x.TransactionId != null).ToList();
+
+            if (stateId > 0 & !string.IsNullOrWhiteSpace(zipCode) && !string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
+            {
+                var startDt = Master.MasterServiceFacade.GetStringAsDateFormat(startDate);
+                var endDt = Master.MasterServiceFacade.GetStringAsDateFormat(endDate).AddDays(1);
+
+                items = _context.Payments
+                                      .Where(x => x.TransactionId != null &&
+                                            (x.Customer != null && x.Customer.StateId != null && x.Customer.StateId == stateId) &&
+                                            (x.Customer != null && x.Customer.Zip == zipCode) &&
+                                            (x.CreationDate != null && x.CreationDate.Value >= startDt && x.CreationDate.Value <= endDt)).ToList();
+
+            }
+            else if (stateId > 0 || !string.IsNullOrWhiteSpace(zipCode) || (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate)))
+            {
+                DateTime startDt = DateTime.MinValue, endDt = DateTime.MinValue;
+                if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
+                {
+                    startDt = Master.MasterServiceFacade.GetStringAsDateFormat(startDate);
+                    endDt = Master.MasterServiceFacade.GetStringAsDateFormat(endDate).AddDays(1);
+                }
+                else
+                    startDate = endDate = null;
+
+                items = _context.Payments
+                                      .Where(x => x.TransactionId != null &&
+                                            (stateId == 0 || (x.Customer != null && x.Customer.StateId != null && x.Customer.State.Id == stateId)) &&
+                                            ((zipCode == null || zipCode.Trim() == string.Empty) || (x.Customer != null && x.Customer.Zip == zipCode)) &&
+                                            ((startDate == null || (x.CreationDate.Value >= startDt)) &&
+                                            (endDate == null || (x.CreationDate.Value <= endDt)))).ToList();
+            }
+
+            List<OrderDto> rtnItems = null;
+            if (items != null && items.Count > 0)
+            {
+                rtnItems = new List<OrderDto>();
+                items.ForEach((rec) =>
+                {
+                    var totPremium = _context.Payments.Where(p => rec.CustomerId != null && p.CustomerId == rec.CustomerId).Sum(tp => tp.Amount);
+                    var customer = _context.Customers.SingleOrDefault(c => c.Id == rec.CustomerId);
+                    var quote = _context.Quotes.SingleOrDefault(q => q.Id == rec.RentalQuoteId.Value);
+                    rtnItems.Add(new OrderDto()
+                    {
+                        OrderId = rec.Id,
+
+                        TotalPremium = totPremium,
+                        ApprovalCode = rec.ApprovalCode,
+                        ApprovalMessage = rec.ApprovalMessage,
+                        CreatedBy = rec.CreatedBy,
+                        //CreationDate = rec.CreationDate != null ? rec.CreationDate.Value.Date : DateTime.MinValue,
+                        CreationDateStr = rec.CreationDate != null ? Master.MasterServiceFacade.GetDateFormatAsString(rec.CreationDate.Value) : string.Empty,
+                        ErrorMessage = rec.ErrorMessage,
+                        ResponseCode = rec.ResponseCode,
+                        TransactionId = rec.TransactionId,
+
+                        RenterId = rec.RentalQuoteId.Value,
+                        CompanyId = quote != null && quote.Company != null ? quote.CompanyId.Value : 0,
+                        CompanyName = quote != null && quote.Company != null ? quote.Company.Name : "",
+                        ProposalNumber = quote != null ? quote.ProposalNumber : "",
+
+                        CustomerId = rec.CustomerId.Value,
+                        CustomerName = customer != null ? customer.FirstName + " " + customer.LastName : "",
+                        ZipCode = customer != null ? customer.Zip : "",
+                        Phone = customer != null ? customer.Phone : "",
+                        Email = customer != null ? customer.Email : "",
+
+                    });
+                });
+            }
+
+            return rtnItems;
+        }
+
+        #endregion
     }
 }

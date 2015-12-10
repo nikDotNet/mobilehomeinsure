@@ -174,11 +174,11 @@ namespace MobileHome.Insure.Web.Controllers
             {
                 TenantFirstName = customerObject.FirstName,
                 TenantLastName = customerObject.LastName,
-                Park = customerObject.Park,
+                //Park = customerObject.Park,
                 ParkId = customerObject.ParkId,
-                Quote = quoteObject,
+                //Quote = quoteObject,
                 QuoteId = quoteId,
-                State = customerObject.State
+                //State = customerObject.State
             };
             _masterServiceFacade.SaveParkSite(parkSite);
         }

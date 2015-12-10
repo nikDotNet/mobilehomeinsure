@@ -30,12 +30,6 @@ namespace MobileHome.Insure.Service.Master
         void SavePark(List<Park> importParks);
 
         bool OnOrOffPark(int id, bool isOff = false);
-
-        List<OrderDto> GetListOrder(string startDate, string endDate);
-
-        List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate);
-
-
         //List<Customer> GetListCustomers(string zipCode, string lastName);
 
         List<ParkDto> GetListParks(string parkName, int stateId, string zipCode);

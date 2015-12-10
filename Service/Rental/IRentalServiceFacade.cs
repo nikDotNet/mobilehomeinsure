@@ -41,5 +41,9 @@ namespace MobileHome.Insure.Service.Rental
         bool SaveParkNotify(ParkNotify notify);
 
         List<Customer> OwnRentalCustomerByParkId(int parkId);
+
+        List<OrderDto> GetListOrder(string startDate, string endDate);
+
+        List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate);
     }
 }

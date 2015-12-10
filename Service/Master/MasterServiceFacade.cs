@@ -21,8 +21,7 @@ namespace MobileHome.Insure.Service.Master
 
         public MasterServiceFacade()
         {
-            _context = new mhappraisalContext();
-            _rentalcontext = new mhRentalContext();
+            _context = new mhappraisalContext();            
             _genralServiceFacade = new ServiceFacade();
         }
 
@@ -518,6 +517,7 @@ namespace MobileHome.Insure.Service.Master
 
         public void SaveParkSite(ParkSite parkSiteObj, bool toDelete = false)
         {
+            _context.Configuration.ValidateOnSaveEnabled = false;
             if (parkSiteObj.Id != 0)
             {
                 var existingObj = _context.ParkSites.Include("Quote").Where(x => x.Id == parkSiteObj.Id).SingleOrDefault();
@@ -575,7 +575,7 @@ namespace MobileHome.Insure.Service.Master
         }
 
         public void sendNotificationForPark(Park parkObj, bool isEdit)
-        {
+        {            
             List<string> emailNotification = null;
             string body ="";
             if (!isEdit)
@@ -585,7 +585,8 @@ namespace MobileHome.Insure.Service.Master
             }
             else
             {
-                 emailNotification = _rentalcontext.Customers.Where(x => x.Zip == parkObj.PhysicalZip.ToString() && x.IsActive == true).Select(y => y.Email).ToList();
+                _rentalcontext = new mhRentalContext();
+                emailNotification = _rentalcontext.Customers.Where(x => x.Zip == parkObj.PhysicalZip.ToString() && x.IsActive == true).Select(y => y.Email).ToList();
                  body = "Your park information has been edited. Here are the details: <br /> Park Name: " + parkObj.ParkName + " <br / > Address: " + parkObj.PhysicalAddress + " " + parkObj.PhysicalAddress2 + " <br /> Park City: " + parkObj.PhysicalCity + "<br /> Park County: " + parkObj.PhysicalCounty + "<br /> Park State: " + parkObj.PhysicalState.Name + "<br /> Park Zip: " + parkObj.PhysicalZip;
             }
             _genralServiceFacade.sendMail("info@mobilehome.insure", "info@mobilehome.insure", "", body, emailNotification);
@@ -686,208 +687,14 @@ namespace MobileHome.Insure.Service.Master
 
         #endregion
 
-        #region Reporting
-
-        public List<OrderDto> GetListOrder(string startDate, string endDate)
-        {
-            List<Model.Payment> items = null;
-
-            _rentalcontext.Configuration.ProxyCreationEnabled = false;
-            if (string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
-                items = _rentalcontext.Payments.Include("Customer").
-                    Include("Quote").
-                    Include("Quote.Company").
-                    Where(x => x.TransactionId != null).ToList();
-            else if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
-            {
-                var startDt = GetStringAsDateFormat(startDate);
-                var endDt = GetStringAsDateFormat(endDate).AddDays(1);
-                items = _rentalcontext.Payments.Include("Customer").
-                    Include("Quote").
-                    Include("Quote.Company").
-                    Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
-            }
-
-
-            var rtnItems = items.Select(x => new OrderDto()
-            {
-                OrderId = x.Id,
-
-                ApprovalCode = x.ApprovalCode,
-                ApprovalMessage = x.ApprovalMessage,
-                CreatedBy = x.CreatedBy,
-                //CreationDate = x.CreationDate.HasValue ? x.CreationDate.Value.Date : DateTime.MinValue,
-                CreationDateStr = x.CreationDate.HasValue ? GetDateFormatAsString(x.CreationDate.Value) : string.Empty,
-                ErrorMessage = (x.ErrorMessage!=null ? x.ErrorMessage: string.Empty),
-                ResponseCode = x.ResponseCode,
-                TransactionId = x.TransactionId,
-
-                RenterId = x.RentalQuoteId.Value,
-                CompanyId = x.Quote != null && x.Quote.Company != null ? x.Quote.CompanyId.Value : 0,
-                CompanyName = x.Quote != null && x.Quote.Company != null ? x.Quote.Company.Name : string.Empty,
-                ProposalNumber = x.Quote != null ? x.Quote.ProposalNumber : string.Empty,
-
-                CustomerId = x.CustomerId.Value,
-                CustomerName = x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : string.Empty
-
-            }).ToList();
-            return rtnItems;
-        }
-
-        public List<OrderDto> GetListPremiums(int stateId, string zipCode, string startDate, string endDate)
-        {
-            List<Model.Payment> items = null;
-
-            _rentalcontext.Configuration.ProxyCreationEnabled = false;
-            if (stateId == 0 & string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
-                items = _rentalcontext.Payments.Where(x => x.TransactionId != null).ToList();
-
-            if (stateId > 0 & !string.IsNullOrWhiteSpace(zipCode) && !string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
-            {
-                var startDt = GetStringAsDateFormat(startDate);
-                var endDt = GetStringAsDateFormat(endDate).AddDays(1);
-
-                items = _rentalcontext.Payments
-                                      .Where(x => x.TransactionId != null &&
-                                            (x.Customer != null && x.Customer.StateId != null && x.Customer.StateId == stateId) &&
-                                            (x.Customer != null && x.Customer.Zip == zipCode) &&
-                                            (x.CreationDate != null && x.CreationDate.Value >= startDt && x.CreationDate.Value <= endDt)).ToList();
-
-            }
-            else if (stateId > 0 || !string.IsNullOrWhiteSpace(zipCode) || (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate)))
-            {
-                DateTime startDt = DateTime.MinValue, endDt = DateTime.MinValue;
-                if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
-                {
-                    startDt = GetStringAsDateFormat(startDate);
-                    endDt = GetStringAsDateFormat(endDate).AddDays(1);
-                }
-                else
-                    startDate = endDate = null;
-
-                items = _rentalcontext.Payments
-                                      .Where(x => x.TransactionId != null &&
-                                            (stateId == 0 || (x.Customer != null && x.Customer.StateId != null && x.Customer.State.Id == stateId)) &&
-                                            ((zipCode == null || zipCode.Trim() == string.Empty) || (x.Customer != null && x.Customer.Zip == zipCode)) &&
-                                            ((startDate == null || (x.CreationDate.Value >= startDt)) &&
-                                            (endDate == null || (x.CreationDate.Value <= endDt)))).ToList();
-            }
-
-            List<OrderDto> rtnItems = null;
-            if (items != null && items.Count > 0)
-            {
-                rtnItems = new List<OrderDto>();
-                items.ForEach((rec) =>
-                {
-                    var totPremium = _rentalcontext.Payments.Where(p => rec.CustomerId != null && p.CustomerId == rec.CustomerId).Sum(tp => tp.Amount);
-                    var customer = _rentalcontext.Customers.SingleOrDefault(c => c.Id == rec.CustomerId);
-                    var quote = _rentalcontext.Quotes.SingleOrDefault(q => q.Id == rec.RentalQuoteId.Value);
-                    rtnItems.Add(new OrderDto()
-                               {
-                                   OrderId = rec.Id,
-
-                                   TotalPremium = totPremium,
-                                   ApprovalCode = rec.ApprovalCode,
-                                   ApprovalMessage = rec.ApprovalMessage,
-                                   CreatedBy = rec.CreatedBy,
-                                   //CreationDate = rec.CreationDate != null ? rec.CreationDate.Value.Date : DateTime.MinValue,
-                                   CreationDateStr = rec.CreationDate != null ? GetDateFormatAsString(rec.CreationDate.Value) : string.Empty,
-                                   ErrorMessage = rec.ErrorMessage,
-                                   ResponseCode = rec.ResponseCode,
-                                   TransactionId = rec.TransactionId,
-
-                                   RenterId = rec.RentalQuoteId.Value,
-                                   CompanyId = quote != null && quote.Company != null ? quote.CompanyId.Value : 0,
-                                   CompanyName = quote != null && quote.Company != null ? quote.Company.Name : "",
-                                   ProposalNumber = quote != null ? quote.ProposalNumber : "",
-
-                                   CustomerId = rec.CustomerId.Value,
-                                   CustomerName = customer != null ? customer.FirstName + " " + customer.LastName : "",
-                                   ZipCode = customer != null ? customer.Zip : "",
-                                   Phone = customer != null ? customer.Phone : "",
-                                   Email = customer != null ? customer.Email : "",
-
-                               });
-                });
-            }
-
-            return rtnItems;
-        }
-
-
-        //public List<Customer> GetListCustomers(string zipCode, string lastName)
-        //{
-        //    List<Customer> items = null;
-        //    //.Include("States")
-        //    _rentalcontext.Configuration.ProxyCreationEnabled = false;
-        //    if (string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
-        //        items = _rentalcontext.Customers.ToList();
-
-        //    if (!string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(lastName))
-        //        items = _rentalcontext.Customers.Where(x => x.Zip == zipCode).ToList();
-
-        //    if (!string.IsNullOrWhiteSpace(lastName) && string.IsNullOrWhiteSpace(zipCode))
-        //        items = _rentalcontext.Customers.Where(x => x.LastName == lastName).ToList();
-
-        //    if (!string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(zipCode))
-        //        items = _rentalcontext.Customers.Where(x => x.Zip == zipCode && x.LastName.StartsWith(lastName)).ToList();
-
-        //    return (items != null && items.Count > 0) ? items : null;
-        //}
-
-        //public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
-        //{
-        //    List<Park> items = null;
-
-        //    _context.Configuration.ProxyCreationEnabled = false;
-        //    if (string.IsNullOrWhiteSpace(parkName) && stateId == 0 && string.IsNullOrWhiteSpace(zipCode))
-        //        items = _context.Parks.AsNoTracking().ToList();
-
-        //    if (!string.IsNullOrWhiteSpace(parkName) && stateId > 0 && !string.IsNullOrWhiteSpace(zipCode))
-        //    {
-        //        var zipInt = Convert.ToInt32(zipCode);
-        //        items = _context.Parks.AsNoTracking().Where(p => p.ParkName.StartsWith(parkName) && p.PhysicalZip == zipInt).ToList();
-        //    }
-
-        //    if (!string.IsNullOrWhiteSpace(parkName) || stateId > 0 | !string.IsNullOrWhiteSpace(zipCode))
-        //    {
-        //        if (string.IsNullOrWhiteSpace(parkName))
-        //            parkName = null;
-
-        //        int zipInt = 0;
-        //        if (string.IsNullOrWhiteSpace(zipCode))
-        //            zipCode = null;
-        //        else
-        //            zipInt = !string.IsNullOrWhiteSpace(zipCode) ? Convert.ToInt32(zipCode) : 0;
-
-
-        //        items = _context.Parks.AsNoTracking().Where(p =>
-        //                                                    (parkName == null || p.ParkName.StartsWith(parkName)) &&
-        //                                                    (stateId == 0 || (p.PhysicalStateId != null && p.PhysicalStateId.Value == stateId)) &&
-        //                                                    (zipCode == null || (p.PhysicalZip == zipInt))).ToList();
-        //    }
-
-        //    var rtnItems = items.Select(x => new ParkDto()
-        //    {
-        //        Id = x.Id,
-        //        ParkName = x.ParkName,
-        //        PhysicalAddress = x.PhysicalAddress,
-        //        PhysicalZip = x.PhysicalZip,
-        //        PhysicalCity = x.PhysicalCity,
-        //        TotalOwnRentals = _rentalcontext.Customers.Where(c => c.ParkId == x.Id).Count()
-        //    }).ToList();
-        //    return rtnItems;
-        //}
-        #endregion
-
-
+        
         #region Common methods for Date operation
-        private string GetDateFormatAsString(DateTime date)
+        public static string GetDateFormatAsString(DateTime date)
         {
             return string.Format("{0}-{1}-{2}", date.Month, date.Day, date.Year);
         }
 
-        private DateTime GetStringAsDateFormat(string date)
+        public static DateTime GetStringAsDateFormat(string date)
         {
             DateTime format = DateTime.MinValue;
             var splitDate = date.Split(new char[] { '-', '/', '.' });
