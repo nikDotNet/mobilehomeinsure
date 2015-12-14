@@ -13,3 +13,13 @@
     vertical-align:middle;
     text-align:center;
 }
+
+.tooltip-image
+{
+    background-image:url('../img/tooltip.png');
+    float:left;
+    width:16px;
+    height:16px;
+    margin-left:5px;
+    margin-top: 0px;
+}
