@@ -363,6 +363,7 @@ namespace MobileHome.Insure.Service.Rental
         #endregion
 
         #region Policy
+       
         private Quote GetPolicyObject(SearchParameter searchParam)
         {
             Quote Quote = new Quote();
@@ -394,7 +395,12 @@ namespace MobileHome.Insure.Service.Rental
                                         isOtherAnyParam = true;
                                     }
                                 }
-                            }
+                            //else if (searchParam.SearchColumn[idx] == "InsuredName") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            //else if (searchParam.SearchColumn[idx] == "InsuredAddress") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            //else if (searchParam.SearchColumn[idx] == "InsuredPhone") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            //else if (searchParam.SearchColumn[idx] == "InsuredEmail") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            //else if (searchParam.SearchColumn[idx] == "PolicyNumber") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                        }
                     }
                 }
                 searchParam.IsFilterValue = isFilterValue;
@@ -432,13 +438,19 @@ namespace MobileHome.Insure.Service.Rental
                 Int32 month = Convert.ToDateTime(Quote.EffectiveDate).Date.Month;
                 Int32 year = Convert.ToDateTime(Quote.EffectiveDate).Date.Year;
 
+                string InsuredName = searchParam.SearchColumnValue[searchParam.SearchColumn.IndexOf("InsuredName")];
+                string InsuredAddress = searchParam.SearchColumnValue[searchParam.SearchColumn.IndexOf("InsuredAddress")];
+                string InsuredPhone = searchParam.SearchColumnValue[searchParam.SearchColumn.IndexOf("InsuredPhone")];
+                string InsuredEmail = searchParam.SearchColumnValue[searchParam.SearchColumn.IndexOf("InsuredEmail")];
+                //string PolicyNumber = searchParam.SearchColumnValue[searchParam.SearchColumn.IndexOf("PolicyNumber")];
+
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.Quotes.Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
                                                  || c.IsParkSitePolicy == true)).Count();
 
-                    items = _context.Quotes.Where(c => c.IsActive == true &&
+                    items = _context.Quotes.Include("Customer").Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any()) 
                                                  || c.IsParkSitePolicy == true)).OrderBy(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? 
@@ -448,12 +460,17 @@ namespace MobileHome.Insure.Service.Rental
                 }
                 else
                 {
-                    items = _context.Quotes.Where(c => c.IsActive == true &&
+                    items = _context.Quotes.Include("Customer")                        
+                        .Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
                                                  || c.IsParkSitePolicy == true) &&
 
                                                  (Quote.Id == 0 ? 1 == 1 : c.Id == Quote.Id) &&
                                                  (string.IsNullOrEmpty(Quote.ProposalNumber) ? 1 == 1 : c.ProposalNumber.ToUpper().StartsWith(Quote.ProposalNumber.ToUpper())) &&
+                                                 (string.IsNullOrEmpty(InsuredName) ? 1==1 : c.Customer.FirstName.ToUpper().StartsWith(InsuredName.ToUpper()))&&
+                                                 (string.IsNullOrEmpty(InsuredAddress) ? 1 == 1 : c.Customer.Address.ToUpper().StartsWith(InsuredAddress.ToUpper())) &&
+                                                 (string.IsNullOrEmpty(InsuredPhone) ? 1 == 1 : c.Customer.Phone.ToUpper().StartsWith(InsuredPhone.ToUpper())) &&
+                                                 (string.IsNullOrEmpty(InsuredEmail) ? 1 == 1 : c.Customer.Email.ToUpper().StartsWith(InsuredEmail.ToUpper())) &&                                                 
                                                  (PersonalProperty == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.PersonalProperty).ToUpper().StartsWith(SqlFunctions.StringConvert((double)PersonalProperty).ToUpper())) &&
                                                  (Liability == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.Liability).ToUpper().StartsWith(SqlFunctions.StringConvert((double)Liability).ToUpper())) &&
                                                  (Premium == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.Premium).ToUpper().StartsWith(SqlFunctions.StringConvert((double)Premium).ToUpper())) &&
@@ -461,6 +478,8 @@ namespace MobileHome.Insure.Service.Rental
                                                  SqlFunctions.DatePart("dd", c.EffectiveDate) == day &&
                                                  SqlFunctions.DatePart("mm", c.EffectiveDate) == month &&
                                                  SqlFunctions.DatePart("yyyy", c.EffectiveDate) == year))
+
+
                                                  ).ToList();
 
                     searchParam.TotalRecordCount = items.Count();
@@ -474,7 +493,13 @@ namespace MobileHome.Insure.Service.Rental
                     Premium = x.Premium,
                     EffectiveDate = x.EffectiveDate,
                     NoOfInstallments = x.NoOfInstallments,
-                    SendLandLord = x.SendLandLord
+                    SendLandLord = x.SendLandLord,
+                    InsuredName = (x.Customer != null ? x.Customer.FirstName + " " + x.Customer.FirstName : string.Empty),
+                    InsuredAddress = (x.Customer != null ? x.Customer.Address  : string.Empty),
+                    InsuredEmail = (x.Customer != null ? x.Customer.Email  : string.Empty),
+                    InsuredPhone = (x.Customer != null ? x.Customer.Phone  : string.Empty),
+
+
                 }).ToList();
             }
             searchParam.SearchedCount = (!searchParam.IsFilterValue ? searchParam.TotalRecordCount : result.Count);

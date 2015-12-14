@@ -112,8 +112,20 @@
                                 ID
                             </th>
                             <th>
-                                Proposal Number
+                                Insured Name
                             </th>
+                            <th>
+                                Insured Address
+                            </th>
+                            <th>
+                                Insured Phone
+                            </th>
+                            <th>
+                                Insured Email
+                            </th>
+                            <th>
+                                Policy Number
+                            </th>                            
                             <th>
                                 Personal Property
                             </th>
@@ -141,6 +153,18 @@
                             <th>
                                 ID
                             </th>
+                            <th>
+                                Insured Name
+                            </th>
+                            <th>
+                                Insured Address
+                            </th>
+                            <th>
+                                Insured Phone
+                            </th>
+                            <th>
+                                Insured Email
+                            </th>                            
                             <th>
                                 Proposal Number
                             </th>
@@ -195,6 +219,10 @@
                     "width": "4%",
                     //"bVisible": false
                 },
+                { "mDataProp": "InsuredName" },
+                { "mDataProp": "InsuredAddress" },
+                { "mDataProp": "InsuredPhone" },
+                { "mDataProp": "InsuredEmail" },                
                 { "mDataProp": "ProposalNumber" },
                 { "mDataProp": "PersonalProperty" },
                 { "mDataProp": "Liability", "width": "3%" },
@@ -304,12 +332,12 @@
         }
 
         function rowCallbackHandler(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $('td:eq(8)', nRow).find('a').each(function (index, element) {
+            $('td:eq(12)', nRow).find('a').each(function (index, element) {
                 //debugger;
                 //resolving date problem
                 if (($(element).data("type") == "policy")) {
                     var effectiveDate = new Date(parseInt(aData.EffectiveDate.replace("/Date(", "").replace(")/", ""), 10));
-                    $('td:eq(5)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
+                    $('td:eq(9)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
                 }
 
                 if ($(element).hasClass("view-link")) {

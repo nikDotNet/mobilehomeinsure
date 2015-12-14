@@ -120,7 +120,12 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         public ActionResult LoadPolicy(JQueryDataTablesModel jQueryDataTablesModel)
         {
             SearchParameter param = new SearchParameter();
-            param.SearchColumn = new List<string> { "Id", "ProposalNumber",
+            param.SearchColumn = new List<string> { "Id",
+                                                "InsuredName",
+                                                "InsuredAddress",
+                                                "InsuredPhone",
+                                                "InsuredEmail",                                                
+                                                "ProposalNumber",
                                                 "PersonalProperty",
                                                 "Liability",
                                                 "Premium",
@@ -141,8 +146,18 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 isSearch: param.IsFilterValue,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "ProposalNumber", "PersonalProperty", "Liability",
-                    "Premium", "EffectiveDate", "NoOffInstallments", "SendLandLord" });
+                properties: new List<string> { "Id",
+                                                "InsuredName",
+                                                "InsuredAddress",
+                                                "InsuredPhone",
+                                                "InsuredEmail",                                                
+                                                "ProposalNumber",
+                                                "PersonalProperty",
+                                                "Liability",
+                                                "Premium",
+                                                "EffectiveDate",
+                                                "NoOffInstallments",
+                                                "SendLandLord" });
 
             return Json(new JQueryDataTablesResponse<QuoteDto>(
                 items: quotes,

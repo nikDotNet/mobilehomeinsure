@@ -16,5 +16,10 @@ namespace MobileHome.Insure.Model.DTO
         public DateTime? EffectiveDate { get; set; }
         public int? NoOfInstallments { get; set; }
         public bool SendLandLord { get; set; }
+        public string InsuredName { get; set; }
+        public string InsuredAddress { get; set; }
+        public string InsuredPhone { get; set; }
+        public string InsuredEmail { get; set; }
+        public string PolicyNumber { get; set; }
     }
 }
