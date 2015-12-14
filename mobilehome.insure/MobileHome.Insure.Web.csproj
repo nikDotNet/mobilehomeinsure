@@ -1133,6 +1133,9 @@
     <Content Include="Content\img\team\1.png" />
     <Content Include="Content\img\team\2.png" />
     <Content Include="Content\img\team\3.png" />
+    <Content Include="Content\img\team\4.png" />
+    <Content Include="Content\img\team\5.png" />
+    <Content Include="Content\img\team\6.png" />
     <Content Include="Content\img\tooltip.png" />
     <Content Include="Content\Script\insure.js" />
     <Content Include="Content\themes\base\accordion.css" />

@@ -82,7 +82,7 @@ $(document).ready(function () {
 
     // Flickrfeed
     $('#flickr').jflickrfeed({
-        limit: 5,
+        limit: 6,
         qstrings: {
             id: '52617155@N08'
         },
