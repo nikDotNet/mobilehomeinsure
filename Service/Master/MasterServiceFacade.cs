@@ -355,7 +355,6 @@ namespace MobileHome.Insure.Service.Master
                             else if (searchParam.SearchColumn[idx] == "PhysicalCity") parkObj.PhysicalCity = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "PhysicalState") parkObj.PhysicalState = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "PhysicalZip") parkObj.PhysicalZip = Convert.ToInt32(searchParam.SearchColumnValue[idx]);                                                     
-
                         }
                     }
                 }
@@ -380,19 +379,17 @@ namespace MobileHome.Insure.Service.Master
                     searchParam.TotalRecordCount = _context.ParkSites.Count();
                     items = _context.ParkSites.Include("State")
                         .Include("Park")
-                        .Include("Quote").
+                        .Include("Quote").Where(p=>p.IsActive==true).
                     OrderBy(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();
                 }
                 else
                 {
-
-
                     items = _context.ParkSites.Include("State")
                         .Include("Park")
                         .Include("Quote")
-                        .Where(m =>
+                        .Where(m => m.IsActive==true &&
                         (ParkDto.Id == 0 ? 1 == 1 : m.Id == ParkDto.Id) &&
                         (string.IsNullOrEmpty(ParkDto.ParkName) ? 1 == 1 : m.Park.ParkName.ToUpper().StartsWith(ParkDto.ParkName.ToUpper())) &&
                         (SiteNumber == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SiteNumber).StartsWith(SqlFunctions.StringConvert((double)SiteNumber))) &&
@@ -410,8 +407,8 @@ namespace MobileHome.Insure.Service.Master
                         Id = x.Id,
                         ParkName = x.Park.ParkName,
                         PhysicalCity = x.PhysicalCity,
-                        PhysicalState = x.State.Name,
-                        PhysicalZip = x.PhysicalZip.Value,
+                        PhysicalState = (x.State!=null?x.State.Name:string.Empty),
+                        PhysicalZip = x.PhysicalZip,
                         TenantFirstName = x.TenantFirstName,
                         TenantLastName = x.TenantLastName,
                         Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
