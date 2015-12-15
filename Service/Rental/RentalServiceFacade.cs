@@ -494,7 +494,7 @@ namespace MobileHome.Insure.Service.Rental
                     EffectiveDate = x.EffectiveDate,
                     NoOfInstallments = x.NoOfInstallments,
                     SendLandLord = x.SendLandLord,
-                    InsuredName = (x.Customer != null ? x.Customer.FirstName + " " + x.Customer.FirstName : string.Empty),
+                    InsuredName = (x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : string.Empty),
                     InsuredAddress = (x.Customer != null ? x.Customer.Address  : string.Empty),
                     InsuredEmail = (x.Customer != null ? x.Customer.Email  : string.Empty),
                     InsuredPhone = (x.Customer != null ? x.Customer.Phone  : string.Empty),

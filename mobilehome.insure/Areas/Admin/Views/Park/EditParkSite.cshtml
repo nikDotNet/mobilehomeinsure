@@ -116,7 +116,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentParkSite.Quote.Company.Name, new { @class = "control-label" })
+                        @Html.LabelFor(x => x.CurrentParkSite.Quote.Company.Name, "Insurance Company", new { @class = "control-label" })
                         @Html.TextBoxFor(x => x.CurrentParkSite.Quote.Company.Name, new { @class = "form-control input-medium" })
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Quote.Company.Name, "", new { @class = "text-danger" })
                     </div>
