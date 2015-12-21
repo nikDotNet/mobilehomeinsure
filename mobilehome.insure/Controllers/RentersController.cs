@@ -157,6 +157,7 @@ namespace MobileHome.Insure.Web.Controllers
                     infopmtid = paymentResponse.TransactionId,
                     infopmtamttoday = model.Amount,
                     infopmtamttotal = quoteObject.Premium,
+                    infonoofremainingpmt = quoteObject.NoOfInstallments - 1,
                     infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
                     infotrndat = creationDate.ToShortDateString(),
                     infotrntim = creationDate.ToShortTimeString()

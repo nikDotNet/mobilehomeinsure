@@ -262,10 +262,9 @@ namespace MobileHome.Insure.Service.Rental
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
             if(quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0)
                 quoteObj.PremiumChargedToday = quoteObj.Premium / quoteObj.NoOfInstallments.Value;
-            premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? quoteObj.PremiumChargedToday.Value : 0;
+            premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? Math.Ceiling(quoteObj.PremiumChargedToday.Value * 100) * 0.01M : 0;
             ProposalNo = quoteObj.ProposalNumber;
             _context.SaveChanges();
-
 
             quoteId = quoteObj.Id;
             return Premium;
