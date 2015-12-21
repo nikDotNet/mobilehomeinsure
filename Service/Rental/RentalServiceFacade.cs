@@ -215,7 +215,8 @@ namespace MobileHome.Insure.Service.Rental
         
         public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible,
                                     decimal Liability, int CustomerId, int NoOfInstallments, 
-                                    bool SendLandlord, ref int quoteId, out string ProposalNo)
+                                    bool SendLandlord, ref int quoteId, out string ProposalNo,
+                                    out decimal premiumChargedToday)
         {
             decimal Premium = 0;
             Quote quoteObj = null;
@@ -259,6 +260,9 @@ namespace MobileHome.Insure.Service.Rental
             //Get Premium calculation service result
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
+            if(quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0)
+                quoteObj.PremiumChargedToday = quoteObj.Premium / quoteObj.NoOfInstallments.Value;
+            premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? quoteObj.PremiumChargedToday.Value : 0;
             ProposalNo = quoteObj.ProposalNumber;
             _context.SaveChanges();
 

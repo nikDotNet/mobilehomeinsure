@@ -12,7 +12,7 @@ namespace MobileHome.Insure.Service.Rental
     public interface IRentalServiceFacade
     {
         int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId);
-        decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId, out string ProposalNo);
+        decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId, out string ProposalNo, out decimal premiumChargedToday);
         void saveQuote(Quote quoteObj);
         int generateInvoice(decimal amount, int customerId, int quoteId);
         bool SendLandlord(int quoteId, bool SendLandlord);

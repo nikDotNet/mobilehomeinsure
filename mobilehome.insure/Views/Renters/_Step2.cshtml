@@ -74,7 +74,7 @@
             <button class="btn btn-default" id="btnContinuePayment">Pay For My Policy</button>
         </div>
     </div>
-    @Html.ValidationSummary(true)
+     @Html.ValidationSummary(true)
 }
 @Html.Script(
     @<script>
@@ -167,6 +167,7 @@
                         result = data.Premium;
                         $("#QuoteId").val(data.QuoteId);
                         $("#lblTotalPremium").text('$ ' + result + ".00");
+                        
                         if ($("#NumberOfInstallments").val() == "1") {
                             $("#lblCurrentPayment").text('$ ' + result + ".00");
                         }
@@ -179,6 +180,7 @@
                         else if ($("#NumberOfInstallments").val() == "4") {
                             $("#lblCurrentPayment").text('$ ' + (+result / 4).toFixed(2));
                         }
+                       
                         $("div.cal-premium").show();
                         $("#btnContinuePayment").prop('disabled', false);
                         $('#dvLoading').hide();

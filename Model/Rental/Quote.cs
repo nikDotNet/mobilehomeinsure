@@ -22,6 +22,7 @@ namespace MobileHome.Insure.Model.Rental
         public Nullable<decimal> LOU { get; set; }
         public Nullable<decimal> MedPay { get; set; }
         public Nullable<decimal> Premium { get; set; }
+        public Nullable<decimal> PremiumChargedToday { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> CompanyId { get; set; }
         public Nullable<System.DateTime> CreationDate { get; set; }

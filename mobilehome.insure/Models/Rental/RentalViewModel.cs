@@ -87,6 +87,7 @@ namespace mobilehome.insure.Models.Rental
             public decimal Liability { get; set; }
             public decimal Deductible { get; set; }
             public decimal Premium { get; set; }
+            public decimal PremiumChargedToday { get; set; }
 
             [Display(Name = "Choose Number of Payments")]
             [Range(1,4, ErrorMessage="Select Installment")]

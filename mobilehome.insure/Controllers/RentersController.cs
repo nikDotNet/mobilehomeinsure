@@ -78,16 +78,18 @@ namespace MobileHome.Insure.Web.Controllers
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]); ;
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             string proposalNumber = string.Empty;
-
+            decimal premiumChargedToday;
             var itemLia = GetLiabilities().Find(l => l.Id == Convert.ToInt32(model.Liability));
             model.Liability = itemLia != null ? Convert.ToDecimal(itemLia.Text.Replace("$", "")) : model.Liability;
 
             var itemPProperty = GetPersonalProperties().Find(l => l.Id == Convert.ToInt32(model.PersonalProperty));
             model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
 
-            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId, out proposalNumber);
+            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId, out proposalNumber, out premiumChargedToday);
+            model.PremiumChargedToday = premiumChargedToday;
             TempData["QuoteId"] = quoteId;
             TempData["Premium"] = model.Premium;
+            TempData["PremiumChargedToday"] = model.PremiumChargedToday;
             TempData["ProposalNumber"] = proposalNumber;
             TempData.Keep();
 
@@ -111,7 +113,7 @@ namespace MobileHome.Insure.Web.Controllers
         {
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]);
-            model.Amount = (decimal)TempData["Premium"];
+            model.Amount = (decimal)TempData["PremiumChargedToday"];
             string proposalNumber = TempData["ProposalNumber"].ToString();
             int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId);
             Customer customerObject = _serviceFacade.GetCustomerById(customerId);
@@ -153,7 +155,8 @@ namespace MobileHome.Insure.Web.Controllers
                     infopolnbr = quoteObject.ProposalNumber,
                     infocopcod = "Aegis",
                     infopmtid = paymentResponse.TransactionId,
-                    infopmtamt = model.Amount,
+                    infopmtamttoday = model.Amount,
+                    infopmtamttotal = quoteObject.Premium,
                     infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
                     infotrndat = creationDate.ToShortDateString(),
                     infotrntim = creationDate.ToShortTimeString()
