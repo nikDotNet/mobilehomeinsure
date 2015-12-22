@@ -128,7 +128,19 @@ namespace MobileHome.Insure.Service.Master
             _context.Configuration.ProxyCreationEnabled = false;
             return _context.Parks.AsNoTracking().Where(x => x.IsActive == true).ToList();
         }
-
+        public List<Park> GetFirstFewParks()
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Parks.AsNoTracking().Where(x => x.IsActive == true)
+                .OrderBy(x => x.Id)
+                .Skip(1).Take(10)
+                .ToList();
+        }
+        public List<Park> GetParks(string searchParam)
+        {
+            _context.Configuration.ProxyCreationEnabled = false;
+            return _context.Parks.AsNoTracking().Where(x => x.IsActive == true && x.ParkName.ToUpper().StartsWith(searchParam.ToUpper())).ToList();
+        }
         public List<Park> GetParksWithOnOff()
         {
             _context.Configuration.ProxyCreationEnabled = false;

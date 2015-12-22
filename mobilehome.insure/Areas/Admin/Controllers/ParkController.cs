@@ -11,7 +11,7 @@ using System.Web.Mvc;
 using System.Net.Mail;
 using MobileHome.Insure.Service.Rental;
 using mobilehome.insure.Areas.Admin.Models;
-
+using Newtonsoft.Json;
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
     [Authorize]
@@ -71,10 +71,10 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             ParkSitesViewModel model = new ParkSitesViewModel();
             model.States = _masterServiceFacade.GetStates();
-            model.Parks = _masterServiceFacade.GetParks();
+            model.Parks = _masterServiceFacade.GetFirstFewParks();
             if (id.HasValue)
             {
-                model.CurrentParkSite = _masterServiceFacade.GetParkSiteById(id.Value);
+                model.CurrentParkSite = _masterServiceFacade.GetParkSiteById(id.Value);                
             }
             else
             {
@@ -83,7 +83,16 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
             return View(model);
         }
-
+        
+        public ActionResult GetParkList(string  searchParam)
+        {            
+            var result = JsonConvert.SerializeObject(_masterServiceFacade.GetParks(searchParam).Select(x=> new
+            {
+                id = x.Id,
+                text = x.ParkName
+            }));
+            return Json(result,JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult EditParkSite(ParkSitesViewModel model)
         {

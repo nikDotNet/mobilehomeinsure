@@ -16,7 +16,8 @@ namespace MobileHome.Insure.Service.Master
 
         #region Pack Operations
         List<Park> GetParks();
-
+        List<Park> GetFirstFewParks();
+        List<Park> GetParks(string searchParam);
         List<Park> GetParksWithOnOff();
 
         List<ParkDto> GetListPark(SearchParameter searchParam);

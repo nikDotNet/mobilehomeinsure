@@ -16,8 +16,8 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentParkSite.Park.ParkName, new { @class = "control-label" })   
-                        @Html.DropDownListFor(x => x.CurrentParkSite.ParkId, new SelectList(Model.Parks, "Id", "ParkName"), "", new { id = "ddlParkId", @class = "form-control select2me input-medium" })                     
-                        @*@Html.TextBoxFor(x => x.CurrentParkSite.Park.ParkName, new { @class = "form-control input-medium" })*@
+                        @*@Html.DropDownListFor(x => x.CurrentParkSite.ParkId, new SelectList(Model.Parks, "Id", "ParkName"), "", new { id = "ddlParkId", @class = "form-control select2me input-medium" })*@                                             
+                        <input type="hidden" id="thisid" style="width:300px" class="form-control select2me input-medium" />
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Park.ParkName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -157,12 +157,35 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        $(".select2me").select2({
-            dropdownParent: "#modal-container"
+        
+        $("#thisid").select2({
+            placeholder: "Search for Park",
+            minimumInputLength: 1,
+            ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                url: "/Park/GetParkList",
+                dataType: 'json',
+
+                data: function (term, page) {
+                    return {
+                        searchParam: term, // search term
+                        page: page
+                    };
+                },
+                results: function (data, page) {
+                    return { results: data };
+                }
+            },
         });
 
         $("#CurrentParkSite_Quote_EffectiveDate").datepicker({ dateFormate: "mm/dd/yyyy" });
         $("#CurrentParkSite_Quote_ExpiryDate").datepicker({ dateFormate: "mm/dd/yyyy" });
+
+        $("#CurrentParkSite_Quote_EffectiveDate").change(function () {
+            selectedDate = $('#CurrentParkSite_Quote_EffectiveDate').datepicker({ dateFormat: 'yy-mm-dd' }).val();
+            var date = new Date(selectedDate);
+            date = date.setMonth(date.getMonth() + 12);
+            $("#CurrentParkSite_Quote_ExpiryDate").val(new Date(date).toLocaleDateString());
+        });
     });    
     
     </script>
