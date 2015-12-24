@@ -17,7 +17,8 @@
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentParkSite.Park.ParkName, new { @class = "control-label" })   
                         @*@Html.DropDownListFor(x => x.CurrentParkSite.ParkId, new SelectList(Model.Parks, "Id", "ParkName"), "", new { id = "ddlParkId", @class = "form-control select2me input-medium" })*@                                             
-                        <input type="hidden" id="thisid" style="width:300px" class="form-control select2me input-medium" />
+                        @*<input type="hidden" id="thisid" style="width:300px" class="form-control select2me input-medium" />*@
+                        @Html.HiddenFor(model => model.CurrentParkSite.ParkId, new { id = "thisid", @class = "form-control select2me input-medium" })
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Park.ParkName, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -164,15 +165,17 @@
             ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
                 url: "/Park/GetParkList",
                 dataType: 'json',
-
-                data: function (term, page) {
+                type: "GET",
+                quietMillis: 50,
+                data: function (term) {
                     return {
-                        searchParam: term, // search term
-                        page: page
+                        searchParam: term
                     };
                 },
-                results: function (data, page) {
-                    return { results: data };
+                results: function (data) {
+                    return {
+                        results: data
+                    };
                 }
             },
         });

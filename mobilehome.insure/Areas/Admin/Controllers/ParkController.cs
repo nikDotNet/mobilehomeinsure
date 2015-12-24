@@ -85,19 +85,22 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         }
         
         public ActionResult GetParkList(string  searchParam)
-        {            
-            var result = JsonConvert.SerializeObject(_masterServiceFacade.GetParks(searchParam).Select(x=> new
+        {              
+            var result = _masterServiceFacade.GetParks(searchParam).Select(x => new
             {
                 id = x.Id,
                 text = x.ParkName
-            }));
+            });
             return Json(result,JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult EditParkSite(ParkSitesViewModel model)
+        //public ActionResult EditParkSite(FormCollection model)
         {
             try
             {
+                
+
                 _masterServiceFacade.SaveParkSite(model.CurrentParkSite,false);
                 TempData["Success"] = true;
             }

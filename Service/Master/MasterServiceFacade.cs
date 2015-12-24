@@ -417,7 +417,7 @@ namespace MobileHome.Insure.Service.Master
                     new ParkSiteDto()
                     {
                         Id = x.Id,
-                        ParkName = x.Park.ParkName,
+                        ParkName = (x.Park!=null? x.Park.ParkName:string.Empty),
                         PhysicalCity = x.PhysicalCity,
                         PhysicalState = (x.State!=null?x.State.Name:string.Empty),
                         PhysicalZip = x.PhysicalZip,
