@@ -40,6 +40,9 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.ExpiryDate).HasColumnName("ExpiryDate");
             this.Property(t => t.IsParkSitePolicy).HasColumnName("IsParkSitePolicy");
             this.Property(t => t.PremiumChargedToday).HasColumnName("PremiumChargedToday");
+            this.Property(t => t.ProcessingFee).HasColumnName("ProcessingFee");
+            this.Property(t => t.InstallmentFee).HasColumnName("InstallmentFee");
+            this.Property(t => t.TotalChargedToday).HasColumnName("TotalChargedToday");
 
             // Relationships
             this.HasOptional(t => t.Customer)

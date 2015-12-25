@@ -19,7 +19,7 @@ namespace MobileHoome.Insure.ExtService
         private static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
 
 
-        public decimal GetPremiumDetail(MobileHome.Insure.Model.Rental.Quote quote)
+        public decimal GetPremiumDetail(MobileHome.Insure.Model.Rental.Quote quote, bool generatePolicy = false)
         {
             decimal premium = 0;
 
@@ -28,36 +28,16 @@ namespace MobileHoome.Insure.ExtService
             {
                 //cxt.Configuration.ProxyCreationEnabled = false;
                 var customerInfo = cxt.Customers.FirstOrDefault(c => c.Id == quote.CustomerId);
-
-                //XElement rootEle = new XElement("root",
-                //    //new XElement("rtninfo", GetPolicyReturnInfo()),
-                //                        new XElement("prdinfo", GetPropertyDealerInfo()),
-                //                        new XElement("pplinfo", GetPropertyInfo(customerInfo)),
-                //                        new XElement("unitinfo",
-                //                                    new XElement("ho_unit", GetHouseUnitInfo())),
-                //                        new XElement("covinfo",
-                //                                    new XElement("cov_item", GetCoverItemInfo(CoverType.Persprop)),
-                //                                    new XElement("cov_item", GetCoverItemInfo(CoverType.Deductible)),
-                //                                    new XElement("cov_item", GetCoverItemInfo(CoverType.LOU))
-                //                        ));
-
-                //XElement rootEle = new XElement("root",
-                //    //new XElement("rtninfo", GetPolicyReturnInfo()),
-                //                        GetPropertyDealerInfo(),
-                //                        GetPropertyInfo(customerInfo),
-                //                        new XElement("unitinfo", GetHouseUnitInfo()),
-                //                        new XElement("covinfo",
-                //                                        GetCoverItemInfo(CoverType.Persprop),
-                //                                        GetCoverItemInfo(CoverType.Deductible),
-                //                                        GetCoverItemInfo(CoverType.LOU)
-                //                        ));
-
+                var amountCharged = 0M;
+              // As per requirement, we are not sending the proc fee to aegis
+                if(quote.InstallmentFee.HasValue)
+                    amountCharged = quote.PremiumChargedToday.Value + quote.InstallmentFee.Value;
 
                 XElement rootEle = new XElement("root",
-                                        GetPolicyReturnInfo(),
+                                        GetPolicyReturnInfo(generatePolicy,amountCharged),
                                         GetPropertyDealerInfo(),
                                         GetPropertyInfo(customerInfo),
-                                        new XElement("unitinfo", GetHouseUnitInfo())
+                                        new XElement("unitinfo", GetHouseUnitInfo(quote.PersonalProperty))
                                         );
 
                 rootEle.Element("unitinfo").Add(new XElement("covinfo",
@@ -66,8 +46,7 @@ namespace MobileHoome.Insure.ExtService
                                                         GetCoverItemInfo(CoverType.lou, limit: quote.LOU),
                                                         GetCoverItemInfo(CoverType.liability, limit: quote.Liability),
                                                         GetCoverItemInfo(CoverType.medpay, limit: quote.MedPay)
-
-                                        ));
+                                                        ));
 
                 //Call service and get the result with Premium
                 ServiceSoapClient sClient = new ServiceSoapClient();
@@ -95,14 +74,14 @@ namespace MobileHoome.Insure.ExtService
 
         #region Private methods for generate XML elements
 
-        private XElement GetPolicyReturnInfo()
+        private XElement GetPolicyReturnInfo(bool generatePolicy = false, decimal premiumCharged = 0)
         {
             var returnInfo = new PolicyReturnInfo()
             {
-                returnc = "Q",
-                premwrit = "316.00",
-                policynbr = LongBetween(9999999999, 1000000000).ToString(), //"4200001254", //Finding new number
-                progmode = "A",
+                returnc = generatePolicy ? "A" : "Q",
+                premwrit = generatePolicy ? premiumCharged.ToString() :"316",
+                policynbr = generatePolicy ? "" : LongBetween(9999999999, 1000000000).ToString(), //"4200001254", //Finding new number
+                progmode = generatePolicy ? "Q": "A",
                 effdate = "06/14/2015",
                 productcde = "42DT",
                 lstate = "SC",
@@ -138,21 +117,21 @@ namespace MobileHoome.Insure.ExtService
                 insaddr2 = string.Empty,          //TODO: update from DB
                 inscity = customer.City,
                 insstate = customer.State.Abbr,
-                inscounty = "DAUPHIN", //string.Empty,           //TODO: update from DB
-                insctycode = "77",
+                inscounty = string.Empty, //string.Empty,           //TODO: update from DB
+                insctycode = string.Empty,
                 inszip = customer.Zip,
-                insdob = "12/03/1966",  //TODO: update from DB
-                insfin = "794",
-                insssn = "199999200",   //TODO: update from DB
+                insdob = string.Empty,  //TODO: update from DB
+                insfin = string.Empty,
+                insssn = string.Empty,   //TODO: update from DB
                 insphone = customer.Phone,
-                insoccup = "BAKER",   //TODO: update from DB
+                insoccup = string.Empty,   //TODO: update from DB
                 reltoapp = string.Empty  //TODO: update from DB
             };
 
             return Helpers.Extensions.ToXml(property);
         }
 
-        private XElement GetHouseUnitInfo()
+        private XElement GetHouseUnitInfo(decimal? limit = 0)
         {
             //TODO: it should be populate from Database
             var houseUnit = new HouseUnitInfo()
@@ -175,7 +154,7 @@ namespace MobileHoome.Insure.ExtService
                 loccountynb = "64",
                 locterritory = "1",
                 loczip = "18417",
-                ratingbase = "25000",
+                ratingbase = (limit.HasValue ? limit.Value : 0).ToString(),
                 parkcode = string.Empty,
                 ftfmhyd = "500",
                 milfmfde = "5",

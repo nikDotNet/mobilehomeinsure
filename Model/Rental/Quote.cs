@@ -28,6 +28,9 @@ namespace MobileHome.Insure.Model.Rental
         public Nullable<System.DateTime> CreationDate { get; set; }
         public Nullable<System.DateTime> EffectiveDate { get; set; }
         public Nullable<int> NoOfInstallments { get; set; }
+        public Nullable<decimal> ProcessingFee { get; set; }
+        public Nullable<decimal> InstallmentFee { get; set; }
+        public Nullable<decimal> TotalChargedToday { get; set; }
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }
 

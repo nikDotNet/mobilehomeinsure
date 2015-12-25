@@ -2,6 +2,7 @@
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.DTO;
 using MobileHome.Insure.Model.Rental;
+using MobileHome.Insure.Service.Helper.Constants;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.SqlServer;
@@ -260,14 +261,43 @@ namespace MobileHome.Insure.Service.Rental
             //Get Premium calculation service result
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
+            quoteObj.ProcessingFee = (Premium * Convert.ToDecimal(System.Configuration.ConfigurationManager.AppSettings["RentalProcessingFee"])/100);
+            
+            var customerObj = GetCustomerById(CustomerId);
+
             if(quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0)
+            {
+                quoteObj.InstallmentFee = getInstallmentFee(customerObj.State.Abbr);
                 quoteObj.PremiumChargedToday = quoteObj.Premium / quoteObj.NoOfInstallments.Value;
+            }
+            
+            quoteObj.TotalChargedToday = quoteObj.InstallmentFee + quoteObj.ProcessingFee + quoteObj.PremiumChargedToday;
+  
             premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? Math.Ceiling(quoteObj.PremiumChargedToday.Value * 100) * 0.01M : 0;
             ProposalNo = quoteObj.ProposalNumber;
             _context.SaveChanges();
 
             quoteId = quoteObj.Id;
             return Premium;
+        }
+
+        public decimal getInstallmentFee(string abbr)
+        {
+            if (ApplicationConstants.installmentLevel1States.Contains(abbr))
+                return 7;
+            else if (ApplicationConstants.installmentLevel2States.Contains(abbr))
+                return 6;
+            else if (ApplicationConstants.installmentLevel3States.Contains(abbr))
+                return 3;
+            else
+                return 0;
+        }
+
+        public void GeneratePolicy(Quote quoteObj)
+        {
+                var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
+                result.GetPremiumDetail(quoteObj, true);
+                saveQuote(quoteObj);
         }
 
         public List<QuoteDto> GetQuotes()

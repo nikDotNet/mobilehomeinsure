@@ -11,10 +11,11 @@ namespace MobileHome.Insure.Model.Rental
         public Company()
         {
             this.Quotes = new HashSet<Quote>();
+            this.Programs = new List<Program>();
         }
 
         public string Name { get; set; }
-
+        public virtual ICollection<Program> Programs { get; set; }
         public virtual ICollection<Quote> Quotes { get; set; }
     }
 }
