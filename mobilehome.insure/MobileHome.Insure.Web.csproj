@@ -1006,6 +1006,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\about-us-header.png" />
     <Content Include="Content\img\clients\aegis.jpg" />
+    <Content Include="Content\img\fav.png" />
+    <Content Include="Content\img\favicon.ico" />
     <Content Include="Content\img\header-about-us.png" />
     <Content Include="Content\img\header-appraisal.png" />
     <Content Include="Content\img\header-renters-app.png" />
@@ -1171,6 +1173,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

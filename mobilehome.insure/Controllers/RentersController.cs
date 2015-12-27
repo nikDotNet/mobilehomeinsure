@@ -182,6 +182,9 @@ namespace MobileHome.Insure.Web.Controllers
             {
                 TenantFirstName = customerObject.FirstName,
                 TenantLastName = customerObject.LastName,
+                PhysicalCity = customerObject.Park.PhysicalCity,
+                PhysicalStateId = customerObject.Park.PhysicalStateId,
+                PhysicalZip = customerObject.Park.PhysicalZip,
                 //Park = customerObject.Park,
                 ParkId = customerObject.ParkId,
                 //Quote = quoteObject,

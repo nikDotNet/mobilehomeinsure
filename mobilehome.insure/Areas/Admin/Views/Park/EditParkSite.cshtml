@@ -178,6 +178,10 @@
                     };
                 }
             },
+            initSelection: function (element, callback) {
+                var data = { id: '@Model.CurrentParkSite.Park.Id', text: '@Model.CurrentParkSite.Park.ParkName' };
+                callback(data);
+            }
         });
 
         $("#CurrentParkSite_Quote_EffectiveDate").datepicker({ dateFormate: "mm/dd/yyyy" });

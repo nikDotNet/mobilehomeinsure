@@ -81,7 +81,7 @@ namespace MobileHoome.Insure.ExtService
                 returnc = generatePolicy ? "A" : "Q",
                 premwrit = generatePolicy ? premiumCharged.ToString() :"316",
                 policynbr = generatePolicy ? "" : LongBetween(9999999999, 1000000000).ToString(), //"4200001254", //Finding new number
-                progmode = generatePolicy ? "Q": "A",
+                progmode = generatePolicy ? "A": "Q",
                 effdate = "06/14/2015",
                 productcde = "42DT",
                 lstate = "SC",

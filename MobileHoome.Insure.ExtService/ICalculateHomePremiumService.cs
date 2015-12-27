@@ -13,7 +13,7 @@ namespace MobileHoome.Insure.ExtService
     public interface ICalculateHomePremiumService
     {
         [OperationContract]
-        decimal GetPremiumDetail(Quote quote);
+        decimal GetPremiumDetail(Quote quote, bool generatePolicy = false);
 
         // TODO: Add your service operations here
     }

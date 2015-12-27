@@ -274,9 +274,13 @@ namespace MobileHome.Insure.Service.Rental
             quoteObj.TotalChargedToday = quoteObj.InstallmentFee + quoteObj.ProcessingFee + quoteObj.PremiumChargedToday;
   
             premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? Math.Ceiling(quoteObj.PremiumChargedToday.Value * 100) * 0.01M : 0;
-            ProposalNo = quoteObj.ProposalNumber;
-            _context.SaveChanges();
+            
+            ProposalNo = string.Empty;
 
+            quoteObj.ProposalNumber = string.Empty;
+
+            _context.SaveChanges();
+            
             quoteId = quoteObj.Id;
             return Premium;
         }
