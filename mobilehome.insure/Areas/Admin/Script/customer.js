@@ -52,6 +52,7 @@
             "bServerSide": true,
             "sServerMethod": "POST",
             "sAjaxSource": url,
+            "stateSave": true,
             "aoColumns": tableColumns,
             "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                 //debugger;
@@ -70,18 +71,60 @@
             "fnDrawCallback": function (oSettings) {
                 if (typeof viewEventInit === 'function') {
                     viewEventInit();
+
                 }
+                
+                if (s === "") {
+                    oTable.state.clear();
+                    window.location.reload();
+                }
+                var s = window.location.hash.replace("#", "");
+
+                var obj = s === "" ? {} : JSON.parse('{"' + decodeURI(s.replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}');
+                
+                $("#tblLists thead input").each(function (i, e) {
+                    //alert(obj['C' + i]);
+                    if ('C' + i in obj && obj['C' + i] !== undefined) {
+                        //alert(obj['C' + i]);
+                        this.value = obj['C' + i];
+                    }
+                });
             }
         });
 
+        $("ul.sub-menu li").click(function () {
+            var url = window.location.href;
+            if ($(this).find("a").prop("href").toLowerCase() === url.toLowerCase()) {
+                oTable.state.clear();
+                window.location.reload();
+            }
+        }) 
 
         // Apply the filter with header textbox
         $("#tblLists thead input").on('keyup change', function () {
-            //debugger;
+            var hash = "";
+            var cindex = $(this).parent().index();
+            var scount = 0;
+            $("#tblLists thead input").each(function (i, e) {
+
+                if (this.value != "" && i != cindex) {
+                    if(scount == 0)
+                        hash = 'C' + i + "=" + this.value;
+                    else
+                        hash = '&C' + i + "=" + this.value;
+                    scount++;
+                }
+            });
+            if (scount == 0)
+                window.location.hash = '#' + hash + 'C' + $(this).parent().index() + '=' + this.value;
+            else
+                window.location.hash = '#' + hash + '&C' + $(this).parent().index() + '=' + this.value;
+
             oTable
                 .column($(this).parent().index() + ':visible')
                 .search(this.value)
                 .draw();
+            oTable.state.save();
         });
 
 
