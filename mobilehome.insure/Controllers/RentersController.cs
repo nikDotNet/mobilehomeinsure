@@ -60,7 +60,7 @@ namespace MobileHome.Insure.Web.Controllers
                                                     model.FirstName, model.LastName, model.FirstName2, model.LastName2, model.Email,
                                                     model.Password, model.Address,
                                                     model.StateId, model.City,
-                                                    model.Zip, model.Phone, model.ParkId);
+                                                    model.Zip, model.Phone, model.ParkId, model.SiteNumber);
 
             return Json(true);
         }
@@ -190,6 +190,8 @@ namespace MobileHome.Insure.Web.Controllers
                 //Quote = quoteObject,
                 QuoteId = quoteId,
                 //State = customerObject.State
+                TenantEmail = customerObject.Email,
+                TenantPhoneNumber = customerObject.Phone
             };
             _masterServiceFacade.SaveParkSite(parkSite);
         }

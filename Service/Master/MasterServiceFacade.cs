@@ -550,7 +550,9 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.Quote.ExpiryDate = parkSiteObj.Quote.ExpiryDate;
                         existingObj.Quote.CompanyId = parkSiteObj.Quote.CompanyId;
                         existingObj.Quote.Liability = parkSiteObj.Quote.Liability;
-                        existingObj.Quote.Premium = parkSiteObj.Quote.Premium;                        
+                        existingObj.Quote.Premium = parkSiteObj.Quote.Premium;
+                        existingObj.TenantEmail = parkSiteObj.TenantEmail;
+                        existingObj.TenantPhoneNumber = parkSiteObj.TenantPhoneNumber;
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();                   

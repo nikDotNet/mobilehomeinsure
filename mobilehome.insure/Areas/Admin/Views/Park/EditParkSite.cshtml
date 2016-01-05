@@ -48,6 +48,23 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentParkSite.TenantEmail, new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentParkSite.TenantEmail, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentParkSite.TenantEmail, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentParkSite.TenantPhoneNumber, new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentParkSite.TenantPhoneNumber, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentParkSite.TenantPhoneNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
             <!-- Physical address-->
             <div class="row">
                 <div class="col-md-4">
@@ -109,6 +126,14 @@
                         @Html.LabelFor(x => x.CurrentParkSite.Quote.ExpiryDate, new { @class = "control-label" })
                         @Html.TextBoxFor(x => x.CurrentParkSite.Quote.ExpiryDate, new { @class = "form-control", size = "10" })                        
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Quote.ExpiryDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentParkSite.SiteRental, "Site Rental", new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentParkSite.SiteRental, new { @class = "form-control", size = "10" })
+                        @Html.ValidationMessageFor(x => x.CurrentParkSite.SiteRental, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -179,7 +204,10 @@
                 }
             },
             initSelection: function (element, callback) {
-                var data = { id: '@Model.CurrentParkSite.Park.Id', text: '@Model.CurrentParkSite.Park.ParkName' };
+                @if(Model.CurrentParkSite.Park != null)
+                {
+                   @:var data = { id: '@Model.CurrentParkSite.Park.Id', text: '@Model.CurrentParkSite.Park.ParkName' };
+                }
                 callback(data);
             }
         });

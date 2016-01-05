@@ -56,7 +56,7 @@ namespace MobileHome.Insure.Service.Rental
         #endregion
 
         #region Customer
-        public int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId)
+        public int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId, string SiteNumber)
         {
             var user = new User
             {
@@ -82,7 +82,8 @@ namespace MobileHome.Insure.Service.Rental
                 ParkId = parkId,
                 CreationDate = DateTime.Now,
                 User = user,
-                IsActive = true
+                IsActive = true,
+                SiteNumber = SiteNumber
             };
 
             _context.Users.Add(user);

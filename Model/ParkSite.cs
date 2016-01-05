@@ -13,6 +13,9 @@ namespace MobileHome.Insure.Model
         public Nullable<int> SiteNumber { get; set; }
         public string TenantFirstName { get; set; }
         public string TenantLastName { get; set; }
+        public string TenantEmail { get; set; }
+        public string TenantPhoneNumber { get; set; }
+        public string SiteRental { get; set; }
         public string PhysicalAddress1 { get; set; }
         public string PhysicalAddress2 { get; set; }
         public string PhysicalCity { get; set; }

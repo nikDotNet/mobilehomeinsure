@@ -29,7 +29,7 @@ namespace MobileHome.Insure.Model
         public string City { get; set; }
         public string Zip { get; set; }
         public string Phone { get; set; }
-
+        public string SiteNumber { get; set; }
         public Nullable<System.DateTime> CreationDate { get; set; }
         public string CreatedBy { get; set; }
         public bool IsActive { get; set; }

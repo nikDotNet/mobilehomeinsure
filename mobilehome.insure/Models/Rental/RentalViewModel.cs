@@ -55,6 +55,10 @@ namespace mobilehome.insure.Models.Rental
 
             public string City { get; set; }
             public string Zip { get; set; }
+
+            [Display(Name="Site Number")]
+            public string SiteNumber { get; set; }
+
             [Required]
             [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Enter valid phone no.")]
             public string Phone { get; set; }
