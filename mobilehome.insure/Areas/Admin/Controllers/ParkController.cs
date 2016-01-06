@@ -267,16 +267,19 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         public JsonResult LoadParkSites(JQueryDataTablesModel jQueryDataTablesModel)
         {
             SearchParameter param = new SearchParameter();
-            param.SearchColumn = new List<string> { "Id", "SiteNumber",
-                                                "ParkName",
+            param.SearchColumn = new List<string> { "Id", "ParkId",
+                                                "SiteNumber",
                                                 "TenantFirstName",
                                                 "TenantLastName",
-                                                "PhysicalCity",
-                                                "PhysicalState",
-                                                "PhysicalZip",
+                                                "CompanyName",
+                                                "ExpiryDate",
+                                                "SiteRental",
+                                                "Liability",
+                                                "PersonalProperty",
                                                 "Premium",
                                                 "IsActive"
                                             };
+
             param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
             param.StartIndex = jQueryDataTablesModel.iDisplayStart;
             param.PageSize = jQueryDataTablesModel.iDisplayLength;
@@ -292,15 +295,17 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 isSearch: param.IsFilterValue,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
-                properties: new List<string> { "Id", "SiteNumber", 
-                                                "ParkName", 
-                                                "TenantFirstName", 
-                                                "TenantLastName", 
-                                                "PhysicalCity",
-                                                "PhysicalState", 
-                                                "PhysicalZip", 
+                properties: new List<string> { "Id", "ParkId", 
+                                                "SiteNumber",
+                                                "TenantFirstName",
+                                                "TenantLastName",
+                                                "CompanyName",
+                                                "ExpiryDate",
+                                                "SiteRental",
+                                                "Liability",
+                                                "PersonalProperty",
                                                 "Premium",
-                                                "IsActive" 
+                                                "IsActive"
                                             });
 
             return Json(new JQueryDataTablesResponse<ParkSiteDto>(

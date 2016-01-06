@@ -10,13 +10,15 @@ namespace MobileHome.Insure.Model.DTO
     {
       public int Id { get; set; }
       public int? SiteNumber { get; set; }
+      public long ParkId { get; set; }
        public string ParkName { get; set; }
        public string TenantFirstName { get; set; }
        public string TenantLastName { get; set; }
-       public string PhysicalCity { get; set; }
-       public string PhysicalState {get; set;}
-       public int? PhysicalZip {get; set;}
        public decimal Premium {get; set;}
-
+       public decimal? PersonalProperty { get; set; }
+       public decimal? Liability { get; set; }
+       public string ExpiryDate { get; set; }
+       public string SiteRental { get; set; }
+       public string CompanyName { get; set; }
     } 
 }
