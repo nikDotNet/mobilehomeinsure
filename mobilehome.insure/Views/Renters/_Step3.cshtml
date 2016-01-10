@@ -51,6 +51,13 @@
 
             </div>
 
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    @Html.CheckBoxFor(x => x.AcceptChargeOnCard, new { @class="le-input"})
+                    @Html.LabelFor(x => x.AcceptChargeOnCard)
+                  
+                </div>
+            </div>
             @*<div class="row field-row">
                     <div class="col-xs-12 col-sm-12">
                         @Html.CheckBoxFor(x => x.SendLandlond)
@@ -70,10 +77,16 @@
 
 @Html.Script(
     @<script>
-        $(document).ready(function () {
-            $("#EffectiveDate").datepicker();
+    $(document).ready(function () {
+        $("#EffectiveDate").datepicker();
+       
             $("#btnPayment").click(function (evt) {
                 evt.preventDefault();
+                if (!$("#AcceptChargeOnCard").is(":checked"))
+                {
+                    bootbox.alert("Please check the checkbox to proceed with the payment.")
+                    return false;
+                }
                 var $form = $('#frmPayment');
                 if ($form.valid()) {
                     $('#dvLoading').show();
@@ -86,7 +99,7 @@
                         BillingAddressLine1: $("#BillingAddressLine1").val(),
                         BillingAddressLine2: $("#BillingAddressLine2").val(),
                         Zip: $("#Zip").val(),
-                        NoOfInstallments: $("#NoOfInstallments").val()                        
+                        NoOfInstallments: $("#NoOfInstallments").val()
                     });
                     ajaxOptions.url = "/Renters/_Step3";
                     ajaxOptions.method = "POST";
@@ -132,11 +145,11 @@
                 var request = $.ajax(ajaxOptions);
 
                 request.fail(function (jqXHR, textStatus) {
-                   // alert("Request failed: " + textStatus);
+                    // alert("Request failed: " + textStatus);
                 });
             }
 
 
         });
     </script>
-    )
+        )

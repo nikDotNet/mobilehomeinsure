@@ -56,7 +56,9 @@ namespace MobileHome.Insure.Service.Rental
         #endregion
 
         #region Customer
-        public int saveCustomerInformation(string FirstName, string LastName, string FirstName2, string LastName2, string Email, string Password, string Address, int StateId, string City, string Zip, string Phone, int parkId, string SiteNumber)
+        public int saveCustomerInformation(string FirstName, string LastName, string FirstName2,
+            string LastName2, string Email, string Password, string Address, int StateId, string City,
+            string Zip, string Phone, int parkId, string SiteNumber)
         {
             var user = new User
             {
@@ -218,7 +220,8 @@ namespace MobileHome.Insure.Service.Rental
         public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible,
                                     decimal Liability, int CustomerId, int NoOfInstallments, 
                                     bool SendLandlord, ref int quoteId, out string ProposalNo,
-                                    out decimal premiumChargedToday)
+                                    out decimal premiumChargedToday, out decimal installmentFee, out decimal processingFee, 
+                                    out decimal totalChargedToday)
         {
             decimal Premium = 0;
             Quote quoteObj = null;
@@ -245,6 +248,13 @@ namespace MobileHome.Insure.Service.Rental
             else
             {
                 quoteObj = _context.Quotes.Find(quoteId);
+                
+                //Initializing Premium Values again
+                quoteObj.ProcessingFee = 0;
+                quoteObj.InstallmentFee = 0;
+                quoteObj.PremiumChargedToday = 0;
+                quoteObj.PremiumChargedToday = 0;
+                quoteObj.Premium = 0;
                 quoteObj.EffectiveDate = EffectiveDate;
                 quoteObj.PersonalProperty = PersonalProperty;
                 quoteObj.Deductible = Deductible;
@@ -262,20 +272,26 @@ namespace MobileHome.Insure.Service.Rental
             //Get Premium calculation service result
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
-            quoteObj.ProcessingFee = (Premium * Convert.ToDecimal(System.Configuration.ConfigurationManager.AppSettings["RentalProcessingFee"])/100);
             
             var customerObj = GetCustomerById(CustomerId);
 
-            if(quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0)
+            if (quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0 && quoteObj.NoOfInstallments.Value != 1)
             {
                 quoteObj.InstallmentFee = getInstallmentFee(customerObj.State.Abbr);
                 quoteObj.PremiumChargedToday = quoteObj.Premium / quoteObj.NoOfInstallments.Value;
+                quoteObj.TotalChargedToday = quoteObj.InstallmentFee + quoteObj.PremiumChargedToday;
+            }
+            else
+            {
+                quoteObj.PremiumChargedToday = Premium;
+                quoteObj.ProcessingFee = (Premium * Convert.ToDecimal(System.Configuration.ConfigurationManager.AppSettings["RentalProcessingFee"]) / 100);
+                quoteObj.TotalChargedToday = quoteObj.ProcessingFee + quoteObj.PremiumChargedToday;
             }
             
-            quoteObj.TotalChargedToday = quoteObj.InstallmentFee + quoteObj.ProcessingFee + quoteObj.PremiumChargedToday;
-  
             premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? Math.Ceiling(quoteObj.PremiumChargedToday.Value * 100) * 0.01M : 0;
-            
+            processingFee = Convert.ToDecimal(quoteObj.ProcessingFee);
+            installmentFee = Convert.ToDecimal(quoteObj.InstallmentFee);
+            totalChargedToday = Convert.ToDecimal(quoteObj.TotalChargedToday);
             ProposalNo = string.Empty;
 
             quoteObj.ProposalNumber = string.Empty;

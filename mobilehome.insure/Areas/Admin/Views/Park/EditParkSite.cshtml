@@ -128,12 +128,22 @@
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Quote.ExpiryDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
+</div>
 
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         @Html.LabelFor(x => x.CurrentParkSite.SiteRental, "Site Rental", new { @class = "control-label" })
                         @Html.TextBoxFor(x => x.CurrentParkSite.SiteRental, new { @class = "form-control", size = "10" })
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.SiteRental, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentParkSite.Quote.Company.Name, "Insurance Company", new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentParkSite.Quote.Company.Name, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentParkSite.Quote.Company.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -142,9 +152,9 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        @Html.LabelFor(x => x.CurrentParkSite.Quote.Company.Name, "Insurance Company", new { @class = "control-label" })
-                        @Html.TextBoxFor(x => x.CurrentParkSite.Quote.Company.Name, new { @class = "form-control input-medium" })
-                        @Html.ValidationMessageFor(x => x.CurrentParkSite.Quote.Company.Name, "", new { @class = "text-danger" })
+                        @Html.LabelFor(x => x.CurrentParkSite.Quote.PersonalProperty, "Personal Property", new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentParkSite.Quote.PersonalProperty, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentParkSite.Quote.PersonalProperty, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="col-md-4">

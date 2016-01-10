@@ -46,35 +46,42 @@
                 <div class="col-xs-12 col-sm-12" style="padding-top:10px; display:none">
                     <div class="col-xs-1 col-sm-1">
                         @*@Html.CheckBoxFor(x => x.SendLandlord, new { @placeholder = "Select Installment", @class = "le-input", style = "width: 100%" })*@
-                    <input id="SendLandlord" type="checkbox" class="le-input" style="width: 100%" checked="checked" />
+                        <input id="SendLandlord" type="checkbox" class="le-input" style="width: 100%" checked="checked" />
+                    </div>
+                    <div class="col-xs-11 col-sm-11">Would you like us to send a copy of your policy to your landlord to show proof of insurance?</div>
+                    <input type="hidden" id="QuoteId" />
                 </div>
-                <div class="col-xs-11 col-sm-11">Would you like us to send a copy of your policy to your landlord to show proof of insurance?</div>
-                <input type="hidden" id="QuoteId" />
+            </div>
+            <div class="pull-left">
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-default" id="btnQuote">Calculate</button>
+                @*<button class="btn btn-default btn-cancel-renters">Cancel</button>*@
+            </div>
+            <div id="deductibleTerms" class="pull-left" style="display:none">
+                <br /><p><sup>*</sup>A $500 Deductible applies to Personal Property limit. Some Personal Property subject to certain limitations and/or exclusions. Please review your policy for details.</p>
             </div>
         </div>
-        <div class="pull-left">
-
-        </div>
-        <div class="pull-right">
-            <button class="btn btn-default" id="btnQuote">Calculate</button>
-            @*<button class="btn btn-default btn-cancel-renters">Cancel</button>*@
-        </div>
     </div>
-</div>
     <div class="col-xs-12 col-md-4">
-        <div class="page-header text-center cal-premium" style="display:none">
-            <h3>Premium</h3>
-            <h4>Total Premium: <span id="lblTotalPremium">$0.00</span></h4>
-            <h4>Charged Today: <span id="lblCurrentPayment">$0.00</span></h4>
-            <p><sup>*</sup>A $500 Deductible applies to Personal Property limit. Some Personal Property subject to certain limitations and/or exclusions. Please review your policy for details.</p>
+        <div class="page-header cal-premium" style="display:none">
+            <h3 class="text-center">Premium</h3>
+            <h4>Total Premium: <span id="lblTotalPremium" class="pull-right">$0.00</span></h4>
+            <h5>Premium Charged Today: <span id="lblCurrentPayment" class="pull-right">$0.00</span></h5>
+            <h5 id="itemProcFee">Processing Fee: <span id="lblProcFee" class="pull-right">$0.00</span></h5>
+            <h5 id="itemInstallmentFee">Installment Fee: <span id="lblIntallmentFee" class="pull-right">$0.00</span></h5>
+            <h4 class="text-center">Total Charged Today: <span id="lblTotalChargedToday">$0.00</span></h4>
+
             <p class="fraudstatement" style="display:none">
                 <strong>Fraud Statement<sup>*</sup></strong>:It is a crime to knowingly provide false, incomplete or misleading information to an insurance company for the purpose of defrauding the company. Penalties include imprisonment, fines and denial of insurance benefits.
                 <br />(*Applicable to residents of Tennessee and Virginia.)
             </p>
-            <button class="btn btn-default" id="btnContinuePayment">Pay For My Policy</button>
+            <p class="text-center">
+                <button class="btn btn-default" id="btnContinuePayment">Pay For My Policy</button>
+            </p>
         </div>
     </div>
-     @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)
 }
 @Html.Script(
     @<script>
@@ -83,6 +90,18 @@
             $("#EffectiveDate").datepicker({ dateFormat: "mm/dd/yyyy" }).datepicker('setDate', new Date());
             $("#EffectiveDate").datepicker("option", "minDate", new Date());
             $("#btnContinuePayment").prop('disabled', true);
+
+            $("#ddlPersonalProperties").on("change", function () {
+                $("#btnContinuePayment").hide();
+            });
+
+            $("#ddlLiabilities").on("change", function () {
+                $("#btnContinuePayment").hide();
+            });
+
+            $("#NumberOfInstallments").on("change", function () {
+                $("#btnContinuePayment").hide();
+            });
 
             $("#btnContinuePayment").click(function (evt) {
                 evt.preventDefault();
@@ -167,7 +186,10 @@
                         result = data.Premium;
                         $("#QuoteId").val(data.QuoteId);
                         $("#lblTotalPremium").text('$ ' + result + ".00");
-                        
+                        $("#lblProcFee").text(data.ProcessingFee);
+                        $("#lblIntallmentFee").text(data.InstallmentFee);
+                        $("#lblTotalChargedToday").text(data.TotalChargedToday);
+
                         if ($("#NumberOfInstallments").val() == "1") {
                             $("#lblCurrentPayment").text('$ ' + result + ".00");
                         }
@@ -180,8 +202,23 @@
                         else if ($("#NumberOfInstallments").val() == "4") {
                             $("#lblCurrentPayment").text('$ ' + (+result / 4).toFixed(2));
                         }
-                       
+
+                        if ($("#NumberOfInstallments").val() == "1")
+                        {
+                            $("#itemInstallmentFee").hide();
+                            $("#itemProcFee").show();
+                        }
+                        else
+                        {
+                            $("#itemProcFee").hide();
+                            $("#itemInstallmentFee").show();
+                        }
+                        
+                        $("label[for='AcceptChargeOnCard']").html("I agree that my credit card will be charged today in the amount of " + data.TotalChargedToday);
+                        
                         $("div.cal-premium").show();
+                        $("#deductibleTerms").show();
+                        $("#btnContinuePayment").show();
                         $("#btnContinuePayment").prop('disabled', false);
                         $('#dvLoading').hide();
                     });
@@ -195,6 +232,6 @@
 
             });
         });
-
+    
     </script>
-                                                     )
+)

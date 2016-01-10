@@ -78,14 +78,14 @@ namespace MobileHome.Insure.Web.Controllers
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]); ;
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             string proposalNumber = string.Empty;
-            decimal premiumChargedToday;
+            decimal premiumChargedToday, installmentFee, processingFee, totalChargedToday;
             var itemLia = GetLiabilities().Find(l => l.Id == Convert.ToInt32(model.Liability));
             model.Liability = itemLia != null ? Convert.ToDecimal(itemLia.Text.Replace("$", "")) : model.Liability;
 
             var itemPProperty = GetPersonalProperties().Find(l => l.Id == Convert.ToInt32(model.PersonalProperty));
             model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
 
-            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId, out proposalNumber, out premiumChargedToday);
+            model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId, out proposalNumber, out premiumChargedToday, out installmentFee, out processingFee, out totalChargedToday);
            
             model.PremiumChargedToday = premiumChargedToday;
             TempData["QuoteId"] = quoteId;
@@ -95,7 +95,7 @@ namespace MobileHome.Insure.Web.Controllers
             TempData["ProposalNumber"] = proposalNumber;
             TempData.Keep();
 
-            return Json(new { Premium = model.Premium, QuoteId = quoteId });
+            return Json(new { Premium = model.Premium, QuoteId = quoteId, InstallmentFee = installmentFee.ToString("c"), ProcessingFee = processingFee.ToString("c"), TotalChargedToday = totalChargedToday.ToString("c") });
         }
 
         [HttpPost]
@@ -113,6 +113,7 @@ namespace MobileHome.Insure.Web.Controllers
         [HttpPost]
         public ActionResult _Step3(RentalViewModel.Payment model)
         {
+            
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]);
             string proposalNumber = TempData["ProposalNumber"].ToString();
@@ -178,6 +179,8 @@ namespace MobileHome.Insure.Web.Controllers
 
         private void SaveParkSite(int quoteId, Customer customerObject, Quote quoteObject)
         {
+            int tmpSiteNumber;
+            int? nullInt = null;
             ParkSite parkSite = new ParkSite()
             {
                 TenantFirstName = customerObject.FirstName,
@@ -191,8 +194,10 @@ namespace MobileHome.Insure.Web.Controllers
                 QuoteId = quoteId,
                 //State = customerObject.State
                 TenantEmail = customerObject.Email,
-                TenantPhoneNumber = customerObject.Phone
+                TenantPhoneNumber = customerObject.Phone,
+                SiteNumber = int.TryParse(customerObject.SiteNumber, out tmpSiteNumber) ? tmpSiteNumber : nullInt
             };
+
             _masterServiceFacade.SaveParkSite(parkSite);
         }
 

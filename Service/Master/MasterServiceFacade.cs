@@ -218,7 +218,8 @@ namespace MobileHome.Insure.Service.Master
                 {
                     searchParam.TotalRecordCount = _context.Parks.Count();
                     items = _context.Parks.Include("PhysicalState").
-                    OrderBy(x => x.Id)
+                     Where(x => x.IsActive == true)
+                    .OrderBy(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();
                 }
@@ -233,7 +234,8 @@ namespace MobileHome.Insure.Service.Master
                         (SpacesToOwn == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SpacesToOwn).StartsWith(SqlFunctions.StringConvert((double)SpacesToOwn))) &&
                         (string.IsNullOrEmpty(PhysicalAddress) ? 1 == 1 : m.PhysicalAddress.ToUpper().StartsWith(PhysicalAddress.ToUpper())) &&
                         (string.IsNullOrEmpty(State) ? 1 == 1 : m.PhysicalState.Abbr.ToUpper().StartsWith(State.ToUpper())) &&
-                        (ParkDto.PhysicalZip == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.PhysicalZip).StartsWith(SqlFunctions.StringConvert((double)ParkDto.PhysicalZip)))                
+                        (ParkDto.PhysicalZip == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.PhysicalZip).StartsWith(SqlFunctions.StringConvert((double)ParkDto.PhysicalZip))) &&
+                        m.IsActive == true
                     ).ToList();
 
                     searchParam.TotalRecordCount = items.Count();
@@ -394,11 +396,11 @@ namespace MobileHome.Insure.Service.Master
              
                 if (!searchParam.IsFilterValue)
                 {
-                    searchParam.TotalRecordCount = _context.ParkSites.Count();
+                    searchParam.TotalRecordCount = _context.ParkSites.Where(p => p.IsActive == true).Count();
                     items = _context.ParkSites.Include("State")
                         .Include("Park")
-                        .Include("Quote").Where(p=>p.IsActive==true).
-                    OrderBy(x => x.Id)
+                        .Include("Quote").Where(p => p.IsActive == true).
+                    OrderByDescending(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();
                 }
@@ -419,8 +421,8 @@ namespace MobileHome.Insure.Service.Master
                         (PersonalProperty == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.Quote.PersonalProperty).StartsWith(SqlFunctions.StringConvert((double)PersonalProperty))) &&
                         (Liability == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.Quote.Liability).StartsWith(SqlFunctions.StringConvert((double)Liability))) &&
                         (string.IsNullOrEmpty(ParkDto.TenantFirstName) ? 1 == 1 : m.TenantFirstName.ToUpper().StartsWith(ParkDto.TenantFirstName)) &&
-                        (string.IsNullOrEmpty(ParkDto.TenantLastName) ? 1 == 1 : m.TenantLastName.ToUpper().StartsWith(ParkDto.TenantLastName))
-
+                        (string.IsNullOrEmpty(ParkDto.TenantLastName) ? 1 == 1 : m.TenantLastName.ToUpper().StartsWith(ParkDto.TenantLastName)) &&
+                        m.IsActive == true
                     ).ToList();
 
                     searchParam.TotalRecordCount = items.Count();

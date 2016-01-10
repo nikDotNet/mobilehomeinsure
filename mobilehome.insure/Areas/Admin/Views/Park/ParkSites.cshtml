@@ -64,17 +64,14 @@
                         <div class="col-md-6">
                             <div class="">                                
                                 @Html.ActionLink("Add New ", "EditParkSite", "Park", null, new { @class = "modal-link btn green" })                               
+                                <br /><br />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                @Html.LabelFor(x => x.CurrentParkSite.Park.ParkName, new { @class = "control-label" })
-                                @*@Html.DropDownListFor(x => x.CurrentParkSite.ParkId, new SelectList(Model.Parks, "Id", "ParkName"), "", new { id = "ddlParkId", @class = "form-control select2me input-medium" })*@
-                                @*<input type="hidden" id="thisid" style="width:300px" class="form-control select2me input-medium" />*@
-                                @Html.HiddenFor(model => model.CurrentParkSite.ParkId, new { id = "thisid", @class = "form-control select2me2 input-medium" })
-                                
+                                @Html.HiddenFor(model => model.CurrentParkSite.ParkId, new { id = "thisidList", @class = "form-control select2me2 input-medium" })
                             </div>
                         </div>
                     </div>
@@ -220,8 +217,9 @@
             $("#completedStatuMsg").hide();//By default will be hide status table
 
             $(".select2me2").select2({
-                placeholder: "Search for Park",
-                minimumInputLength: 1,
+                placeholder: "Select a Park to filter Park Sites",
+                minimumInputLength: 2,
+                'allowClear': true,
                 ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
                     url: "/Park/GetParkList",
                     dataType: 'json',
@@ -245,8 +243,7 @@
             })
            .on("change", function (e) {
                // mostly used event, fired to the original element when the value changes
-               alert("change val=" + e.val);
-               $("#tblLists").dataTable().fnFilter(e.val, 1);
+              $("#tblLists").dataTable().fnFilter(e.val, 1);
            });
 
         });
