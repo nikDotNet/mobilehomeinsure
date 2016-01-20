@@ -232,7 +232,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                                                 "PhysicalAddress",
                                                 "State",
                                                 "PhysicalZip",
-                                                "IsActive"
+                                                "IsOn"
                                             };
             param.SearchColumnValue = jQueryDataTablesModel.sSearch_;
             param.StartIndex = jQueryDataTablesModel.iDisplayStart;
@@ -255,7 +255,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                                                 "PhysicalAddress",
                                                 "State",
                                                 "PhysicalZip",
-                                                "IsActive"
+                                                "IsOn"
                                             });
 
             return Json(new JQueryDataTablesResponse<ParkDto>(

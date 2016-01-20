@@ -66,7 +66,7 @@
                                             {
                                                 type: 'checkbox',
                                                 id: 'cb' + aData.Id,
-                                                checked: aData.IsActive
+                                                checked: aData.IsOn
                                             }).data('id', aData.Id).addClass('make-switch');
                     inputCheckbox.data('size', 'small')
                                  .data('on-text', "<i class='fa fa-check'></i>")

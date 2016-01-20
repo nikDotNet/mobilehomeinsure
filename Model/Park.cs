@@ -13,6 +13,8 @@ namespace MobileHome.Insure.Model
         {
             this.ParkSites = new HashSet<ParkSite>();
             this.Customers = new HashSet<Customer>();
+            IsActive = true;
+            IsOn = true;
         }
         public string ParkName { get; set; }
 
@@ -87,6 +89,8 @@ namespace MobileHome.Insure.Model
         public string OwnerCsvState { get; set; }
 
         public string OwnerZip { get; set; }
+
+        public bool IsOn { get; set; }
 
         // Navigation properties
         public virtual State PhysicalState { get; set; }

@@ -266,10 +266,10 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="CurrentPark_IsActive" style="margin-left: 10px;">
-                        IsActive
-                        @Html.CheckBoxFor(x => x.CurrentPark.IsActive, new { @class = "form-control", style = "height: auto" })
+                        On / Off
+                        @Html.CheckBoxFor(x => x.CurrentPark.IsOn, new { @class = "form-control", style = "height: auto" })
                     </label>
-                    @Html.ValidationMessageFor(x => x.CurrentPark.IsActive, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(x => x.CurrentPark.IsOn, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>

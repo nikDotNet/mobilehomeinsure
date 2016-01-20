@@ -139,12 +139,12 @@ namespace MobileHome.Insure.Service.Master
         public List<Park> GetParks(string searchParam)
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Parks.AsNoTracking().Where(x => x.IsActive == true && x.ParkName.ToUpper().StartsWith(searchParam.ToUpper())).ToList();
+            return _context.Parks.AsNoTracking().Where(x => x.IsActive == true && x.IsOn == true && x.ParkName.ToUpper().StartsWith(searchParam.ToUpper())).ToList();
         }
         public List<Park> GetParksWithOnOff()
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Parks.AsNoTracking().Where(x => x.IsActive == true).ToList();
+            return _context.Parks.AsNoTracking().ToList();
         }
 
         public List<ParkDto> GetListPark()
@@ -216,9 +216,9 @@ namespace MobileHome.Insure.Service.Master
 
                 if (!searchParam.IsFilterValue)
                 {
-                    searchParam.TotalRecordCount = _context.Parks.Count();
-                    items = _context.Parks.Include("PhysicalState").
-                     Where(x => x.IsActive == true)
+                    searchParam.TotalRecordCount = _context.Parks.Where(x => x.IsActive == true).Count();
+                    items = _context.Parks.Include("PhysicalState")
+                    .Where(x => x.IsActive == true)
                     .OrderBy(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();
@@ -251,7 +251,8 @@ namespace MobileHome.Insure.Service.Master
                         PhysicalZip = x.PhysicalZip,
                         SpacesToOwn = x.SpacesToOwn,
                         SpacesToRent = x.SpacesToRent,
-                        State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? x.PhysicalState.Abbr : ""
+                        State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? x.PhysicalState.Abbr : "",
+                        IsOn = x.IsOn
                     }
                 ).ToList();
                 
@@ -469,9 +470,7 @@ namespace MobileHome.Insure.Service.Master
         public List<Park> FindParkByZip(int zip)
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            var parks = _context.Parks.Where(p => p.PhysicalZip == zip).ToList(); //TODO: Filter should  be based on PhysicalZip
-            if (parks != null)
-                parks = parks.Where(p => p.IsActive == true).ToList();
+            var parks = _context.Parks.Where(p => p.PhysicalZip == zip && p.IsOn == true && p.IsActive == true).ToList(); //TODO: Filter should  be based on PhysicalZip
             return ((parks != null && parks.Count > 0) ? parks : null);
         }
 
@@ -523,11 +522,15 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.OwnerPhone = parkObj.OwnerPhone;
 
 
-                        existingObj.IsActive = parkObj.IsActive;
+                        existingObj.IsOn = parkObj.IsOn;
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
-                    sendNotificationForPark(parkObj, true);
+
+                    if (parkObj.IsOn)
+                    {
+                        sendNotificationForPark(parkObj, true);
+                    }
                 }
             }
             else
@@ -537,7 +540,10 @@ namespace MobileHome.Insure.Service.Master
                 parkObj.IsActive = true;
                 _context.Parks.Add(parkObj);
                 _context.SaveChanges();
-                sendNotificationForPark(parkObj, false);
+                if (parkObj.IsOn)
+                {
+                    sendNotificationForPark(parkObj, false);
+                }
             }
         }
 
@@ -630,7 +636,7 @@ namespace MobileHome.Insure.Service.Master
                 var existingObj = _context.Parks.Where(x => x.Id == id).SingleOrDefault();
                 if (existingObj != null)
                 {
-                    existingObj.IsActive = isOff;
+                    existingObj.IsOn = isOff;
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
 

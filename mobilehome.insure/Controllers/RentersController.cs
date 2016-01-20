@@ -16,6 +16,7 @@ using mobilehome.insure.Areas.Admin.Models;
 using MobileHome.Insure.Model;
 using MobileHome.Insure.Model.Rental;
 using mobilehome.insure.Helper.Constants;
+using System.Configuration;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -132,13 +133,14 @@ namespace MobileHome.Insure.Web.Controllers
                 BillingAddressLine1 = model.BillingAddressLine1,
                 BillingAddressLine2 = model.BillingAddressLine2,
                 Zip = model.Zip,
-                InvoiceNumber = InvoiceNumber.ToString()
+                InvoiceNumber = InvoiceNumber.ToString(),
+                CSC = model.CSC
             };
 
             PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
-            DateTime creationDate = DateTime.Now;
+             DateTime creationDate = DateTime.Now;
             bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage, creationDate);
-            if (success)
+            if (success && string.IsNullOrEmpty(paymentResponse.ErrorMessage))
             {
                 ViewBag.Success = true;
                 _serviceFacade.GeneratePolicy(quoteObject);
@@ -158,10 +160,10 @@ namespace MobileHome.Insure.Web.Controllers
                     infopolnbr = quoteObject.ProposalNumber,
                     infocopcod = "Aegis",
                     infopmtid = paymentResponse.TransactionId,
-                    infopmtamttoday = model.Amount,
-                    infopmtprocfee = quoteObject.ProcessingFee,
-                    infopmtinstfee = quoteObject.InstallmentFee,
-                    infopmtamttotal = quoteObject.Premium,
+                    infopmtamttoday = model.Amount.ToString("c"),
+                    infopmtprocfee = Convert.ToDecimal(quoteObject.ProcessingFee).ToString("c"),
+                    infopmtinstfee = Convert.ToDecimal(quoteObject.InstallmentFee).ToString("c"),
+                    infopmtamttotal = Convert.ToDecimal(quoteObject.Premium).ToString("c"),
                     infonoofremainingpmt = quoteObject.NoOfInstallments - 1,
                     infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
                     infotrndat = creationDate.ToShortDateString(),
@@ -174,7 +176,7 @@ namespace MobileHome.Insure.Web.Controllers
             else
                 TempData.Keep();
            
-            return Json("Success");
+            return Json("Failed");
         }
 
         private void SaveParkSite(int quoteId, Customer customerObject, Quote quoteObject)
@@ -207,7 +209,7 @@ namespace MobileHome.Insure.Web.Controllers
 
             body = @"<style>#m-info{background:#fff;margin-bottom:30px}dd,dl{display:block}<style>#m-info{padding:40px 30px 30px}#page-header{padding:14px 0 15px}dd,dl,dt,li,ol,ul{margin:0;padding:0}#page-header h3 span{font-size:21px;color:#fff;background:#666;line-height:60px;display:table;margin:0 auto -30px;padding:0 20px}#page-header h3{border-bottom:1px solid #e6e6e6;font-weight:300;font-family:Roboto,Sans-serif}dl{-webkit-margin-before:1em;-webkit-margin-after:1em;-webkit-margin-start:0;-webkit-margin-end:0}dt{font-weight:700}dd,dt{line-height:1.42857143}dd{-webkit-margin-start:40px}</style> " + body;
             body = body.Replace(System.Environment.NewLine, "");
-            _generalFacade.sendMail("info@mobilehome.insure", customerEmail, "Receipt", body);
+            _generalFacade.sendMail(ConfigurationManager.AppSettings["OrdersEmail"], customerEmail, "Receipt", body, null, true);
             return Content("Success");
         }
 

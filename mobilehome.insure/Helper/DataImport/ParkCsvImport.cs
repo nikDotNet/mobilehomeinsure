@@ -117,7 +117,7 @@ namespace mobilehome.insure.Helper.DataImport
             Map(m => m.OwnerCsvState).Name("OWNER STATE");
             Map(m => m.OwnerZip).Name("OWNER ZIP");
 
-            Map(m => m.IsActive).Name("IsActive");
+            Map(m => m.IsOn).Name("IsActive");
         }
     }
     #endregion

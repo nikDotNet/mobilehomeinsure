@@ -700,7 +700,7 @@ namespace MobileHome.Insure.Service.Rental
                 items = _context.Payments.Include("Customer").
                     Include("Quote").
                     Include("Quote.Company").
-                    Where(x => x.TransactionId != null).ToList();
+                    Where(x => x.TransactionId != null).OrderByDescending(x => x.CreationDate).ToList();
             else if (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
             {
                 var startDt = Master.MasterServiceFacade.GetStringAsDateFormat(startDate);
@@ -708,7 +708,7 @@ namespace MobileHome.Insure.Service.Rental
                 items = _context.Payments.Include("Customer").
                     Include("Quote").
                     Include("Quote.Company").
-                    Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).ToList();
+                    Where(x => x.TransactionId != null && (x.CreationDate >= startDt && x.CreationDate <= endDt)).OrderByDescending(x => x.CreationDate).ToList();
             }
 
 
@@ -743,7 +743,7 @@ namespace MobileHome.Insure.Service.Rental
 
             _context.Configuration.ProxyCreationEnabled = false;
             if (stateId == 0 & string.IsNullOrWhiteSpace(zipCode) && string.IsNullOrWhiteSpace(startDate) && string.IsNullOrWhiteSpace(endDate))
-                items = _context.Payments.Where(x => x.TransactionId != null).ToList();
+                items = _context.Payments.Where(x => x.TransactionId != null).OrderByDescending(x => x.CreationDate).ToList();
 
             if (stateId > 0 & !string.IsNullOrWhiteSpace(zipCode) && !string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate))
             {
@@ -754,7 +754,7 @@ namespace MobileHome.Insure.Service.Rental
                                       .Where(x => x.TransactionId != null &&
                                             (x.Customer != null && x.Customer.StateId != null && x.Customer.StateId == stateId) &&
                                             (x.Customer != null && x.Customer.Zip == zipCode) &&
-                                            (x.CreationDate != null && x.CreationDate.Value >= startDt && x.CreationDate.Value <= endDt)).ToList();
+                                            (x.CreationDate != null && x.CreationDate.Value >= startDt && x.CreationDate.Value <= endDt)).OrderByDescending(x => x.CreationDate).ToList();
 
             }
             else if (stateId > 0 || !string.IsNullOrWhiteSpace(zipCode) || (!string.IsNullOrWhiteSpace(startDate) && !string.IsNullOrWhiteSpace(endDate)))
@@ -773,7 +773,7 @@ namespace MobileHome.Insure.Service.Rental
                                             (stateId == 0 || (x.Customer != null && x.Customer.StateId != null && x.Customer.State.Id == stateId)) &&
                                             ((zipCode == null || zipCode.Trim() == string.Empty) || (x.Customer != null && x.Customer.Zip == zipCode)) &&
                                             ((startDate == null || (x.CreationDate.Value >= startDt)) &&
-                                            (endDate == null || (x.CreationDate.Value <= endDt)))).ToList();
+                                            (endDate == null || (x.CreationDate.Value <= endDt)))).OrderByDescending(x => x.CreationDate).ToList();
             }
 
             List<OrderDto> rtnItems = null;

@@ -61,7 +61,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4" style="vertical-align:bottom; padding-top:22px;">
+                    <div class="col-md-4">
+                        <label class="control-label">Expiry Date:</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='txtExpiryDate'>
+                                <input type='text' class="form-control" size="10" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="control-label">Park:</label>
+                        <div class="form-group">
+                            <div class='input-group date' id='txtExpiryDate'>
+                                @Html.Hidden("parkList","", new { id = "parkList", @class = "form-control select2me2 input-medium" })
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                <div class="row form-group"> 
+                    <div class="col-md-4" style="vertical-align:bottom;">
                         <button class="btn btn-success" id="btnSearch">Search</button>
                     </div>
                 </div>
@@ -78,14 +99,17 @@
                                 Site Number
                             </th>                            
                             <th>
-                                Address
+                                Site Rental
                             </th>
                             <th>
-                                Zip
+                                Expiration Date
                             </th>
                             <th>
-                                City
-                            </th>                           
+                                Insurance Company
+                            </th>                
+                            <th>
+                                Premium
+                            </th>           
                         </tr>
                     </thead>                   
                 </table>
@@ -105,7 +129,9 @@
 {
     <script src="~/Areas/Admin/Script/reporting.js"></script>
     <script type="text/javascript">
-        var effectiveDate = null;       
+        var effectiveDate = null;
+        var expiryDate = null;
+        var parkId = null;
         var dataTable = null;
         var dataTableAfterInit = null;
 
@@ -125,9 +151,10 @@
                },
                { "mDataProp": "ParkName" },
                { "mDataProp": "SiteNumber" },
-               { "mDataProp": "PhysicalCity" },
-               { "mDataProp": "PhysicalState" },
-               { "mDataProp": "PhysicalZip" },              
+               { "mDataProp": "SiteRental" },
+               { "mDataProp": "ExpiryDate" },
+               { "mDataProp": "CompanyName" },
+               { "mDataProp": "Premium" },
             ];
 
             ReportingActions.init("/Admin/Reporting/LoadParkSites", tableColumns);
@@ -138,11 +165,16 @@
             $("#btnSearch").on("click", function (e) {
                 e.preventDefault();
                 effectiveDate = $("#txtEffectiveDate").find("input").val();
+                expiryDate = $("#txtExpiryDate").find("input").val();
+                parkId = $("#parkList").val();
                 ReportingActions.search();
             });
 
             //initialize date controls
             $('#txtEffectiveDate').datetimepicker({
+                format: 'MM/DD/YYYY'
+            });
+            $('#txtExpiryDate').datetimepicker({
                 format: 'MM/DD/YYYY'
             });
                                     
@@ -161,8 +193,33 @@
                         .search(value)
                         .draw();
             }
-            
         }
+
+        $(".select2me2").select2({
+            placeholder: "Select a Park to filter",
+            minimumInputLength: 2,
+            'allowClear': true,
+            ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                url: "/Park/GetParkList",
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                data: function (term) {
+                    return {
+                        searchParam: term
+                    };
+                },
+                results: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            },
+            initSelection: function (element, callback) {
+
+                callback(data);
+            }
+        })
     </script>
 }
 

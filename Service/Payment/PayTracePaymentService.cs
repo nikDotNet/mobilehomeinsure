@@ -32,7 +32,7 @@ namespace MobileHome.Insure.Service.Payment
                 "|TERMS~"+ requestPayment.Terms+"|METHOD~"+ requestPayment.Method +"|TRANXTYPE~"+ requestPayment.TransactionType +
                 "|CC~"+ requestPayment.CreditCardNumber +"|EXPMNTH~"+ requestPayment.ExpiryMonth+"|EXPYR~"+ requestPayment.ExpiryYear+
                 "|AMOUNT~"+ requestPayment.Amount +"|BADDRESS~"+requestPayment.BillingAddressLine1+"|BADDRESS~"+requestPayment.BillingAddressLine2 +
-                "|BZIP~"+ requestPayment.Zip +"|INVOICE~"+ requestPayment.InvoiceNumber +"|");
+                "|BZIP~"+ requestPayment.Zip +"|INVOICE~"+ requestPayment.InvoiceNumber +"|CSC~" + requestPayment.CSC + "|");
 
             //process a swiped transaction
             //String sRequest = "PARMLIST=" + Server.UrlEncode("UN~demo123|PSWD~demo123|TERMS~Y|METHOD~ProcessTranx|TRANXTYPE~Sale|SWIPE~%B4012881888818888^Demo/Customer^1212101001020001000000701000000?;4012881888818888=12121010010270100001?|AMOUNT~1.00|BADDRESS~1234|BADDRESS~1234 Main Street|BZIP~97201|INVOICE~1234|");

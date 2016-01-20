@@ -28,6 +28,7 @@ namespace MobileHome.Insure.Model.DTO
 
         public bool IsActive { get; set; }
 
+        public bool IsOn { get; set; }
 
         //By Vikas
         public string PhysicalCity { get; set; }

@@ -34,11 +34,21 @@ namespace MobileHome.Insure.Service
             return "<a href=http://test.mobilehome.insure/Unsubscribe?user=" + CryptoHelper.Encrypt(emailId) + ">here</a>";
         }
 
-        public void sendMail(string from, string to, string subject, string message, List<string> lstEmail = null)
+        public void sendMail(string from, string to, string subject, string message, List<string> lstEmail = null, bool isOrderMail = false)
         {
-            SmtpClient smtp = new SmtpClient("mail.mobilehome.insure", 25);
+            SmtpClient smtp = new SmtpClient(System.Configuration.ConfigurationManager.AppSettings["SmtpHost"], int.Parse(System.Configuration.ConfigurationManager.AppSettings["SmtpPort"]));
             smtp.EnableSsl = false;
-            smtp.Credentials = new System.Net.NetworkCredential("info@mobilehome.insure", "Password123!");
+             MailAddress fromMailAddress = null;
+            if (!isOrderMail)
+            {
+                smtp.Credentials = new System.Net.NetworkCredential(System.Configuration.ConfigurationManager.AppSettings["InfoEmail"], System.Configuration.ConfigurationManager.AppSettings["InfoEmailPassword"]);
+                fromMailAddress = new MailAddress(from, "MobileHome.Insure");
+            }
+            else
+            {
+                smtp.Credentials = new System.Net.NetworkCredential(System.Configuration.ConfigurationManager.AppSettings["OrdersEmail"], System.Configuration.ConfigurationManager.AppSettings["OrdersEmailPassword"]);
+                fromMailAddress = new MailAddress(from, "Orders - MobileHome.Insure");
+            }
 
             if (lstEmail == null)
                 lstEmail = new List<string>();
@@ -50,7 +60,10 @@ namespace MobileHome.Insure.Service
 
             foreach(var emailTo in lstEmail)
             {
-                MailMessage messageObject = new MailMessage(from, emailTo, subject, message + " <br />" + ApplicationConstants.UnsubscribeText.Replace("here", getUnsubscribeLink(emailTo))); 
+                
+                MailMessage messageObject = new MailMessage(fromMailAddress, new MailAddress(emailTo));
+                messageObject.Subject = subject;
+                messageObject.Body = message + " <br />" + ApplicationConstants.UnsubscribeText.Replace("here", getUnsubscribeLink(emailTo)); 
                 
                 messageObject.IsBodyHtml = true;
                 smtp.Send(messageObject);

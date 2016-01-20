@@ -8,6 +8,13 @@ namespace MobileHome.Insure.Model.PaymentGateway
 {
     public class PaymentRequest
     {
+        public PaymentRequest()
+        {
+            TransactionType = "SALE";
+            Method = "ProcessTranx";
+            Terms = "Y";
+        }
+
         public string Username { get; set; }
         public string Password { get; set; }
         public string Url { get; set; }
@@ -22,7 +29,6 @@ namespace MobileHome.Insure.Model.PaymentGateway
         public string BillingAddressLine2 { get; set; }
         public string Zip { get; set; }
         public string InvoiceNumber { get; set; }
-
-
+        public string CSC { get; set; }
     }
 }

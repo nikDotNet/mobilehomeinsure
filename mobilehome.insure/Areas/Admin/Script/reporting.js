@@ -43,8 +43,8 @@
                 "targets": [0]
             }],
             "order": [
-                [0, "asc"]
-            ], // set first column as a default sort by asc
+                [0, "desc"]
+            ], // set first column as a default sort by desc
 
             //Vikas did generic modification for all table initialisation
             //"bFilter": false, //disabled common search 

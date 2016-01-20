@@ -148,6 +148,7 @@ namespace mobilehome.insure.Models.Rental
             [Display(Name = "Billing Address Line2")]
             public string BillingAddressLine2 { get; set; }
             public string Zip { get; set; }
+            public string CSC { get; set; }
 
             //[Range(typeof(bool), "true", "true", ErrorMessage = "Please check to proceed with the payment")]
             public bool AcceptChargeOnCard { get; set; }

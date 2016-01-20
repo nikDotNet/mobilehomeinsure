@@ -29,7 +29,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
                 .HasMaxLength(150);
 
             this.Property(t => t.ErrorMessage)
-                .HasMaxLength(150);
+                .HasMaxLength(700);
 
             this.Property(t => t.CreatedBy)
                 .HasMaxLength(100);

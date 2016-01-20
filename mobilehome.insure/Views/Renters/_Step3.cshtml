@@ -31,6 +31,12 @@
             </div>
 
             <div class="row field-row">
+                <div class="col-xs-12 col-sm-2">
+                    @Html.LabelFor(x => x.CSC)
+                    @Html.TextBoxFor(x => x.CSC, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.CSC, "", new { @class = "text-danger" })
+                </div>
+
                 <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.BillingAddressLine1)
                     @Html.TextBoxFor(x => x.BillingAddressLine1, new { @class = "le-input" })
@@ -43,7 +49,7 @@
                     @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="col-xs-12 col-sm-4">
+                <div class="col-xs-12 col-sm-2">
                     @Html.LabelFor(x => x.Zip)
                     @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
                     @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
@@ -99,7 +105,8 @@
                         BillingAddressLine1: $("#BillingAddressLine1").val(),
                         BillingAddressLine2: $("#BillingAddressLine2").val(),
                         Zip: $("#Zip").val(),
-                        NoOfInstallments: $("#NoOfInstallments").val()
+                        NoOfInstallments: $("#NoOfInstallments").val(),
+                        CSC: $("#CSC").val()
                     });
                     ajaxOptions.url = "/Renters/_Step3";
                     ajaxOptions.method = "POST";
@@ -110,24 +117,34 @@
                     request.done(function (result) {
 
                         $('#dvLoading').hide();
-                        $("#renterprocess").hide();
-                        $("#renterprint").show();
 
-                        var CustomerEmail;
-                        $.each(result, function (key, data) {
-                            var id = "#" + key;
-                            if (key == "infoEmail")
-                                CustomerEmail = data;
-                            $(id).html(data);
-                        });
-                        sendCustomerReceipt(CustomerEmail);
-                        bootbox.alert("Your Payment has been made successfully!");
+                        if (result != "Failed") {
+
+                            $("#renterprocess").hide();
+                            $("#renterprint").show();
+                            var CustomerEmail;
+                            $.each(result, function (key, data) {
+                                var id = "#" + key;
+                                if (key == "infoEmail")
+                                    CustomerEmail = data;
+                                if (data == "$0.00") {
+                                    $(id).prev().remove();
+                                    $(id).remove();
+                                }
+                                $(id).html(data);
+                            });
+                            sendCustomerReceipt(CustomerEmail);
+                            bootbox.alert("Your Payment has been made successfully!");
+                        }
+                        else
+                        {
+                            bootbox.alert("Your Payment failed! Please try again.");
+                        }
                         //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
                     });
 
                     request.fail(function (jqXHR, textStatus) {
-                        alert("Request failed: " + textStatus);
-                        bootbox.alert("Your Payment failed! Please try again.");
+                         bootbox.alert("Your Payment failed! Please try again.");
                     });
                 }
             });
