@@ -21,7 +21,7 @@ namespace MobileHome.Insure.Service.Master
 
         public MasterServiceFacade()
         {
-            _context = new mhappraisalContext();            
+            _context = new mhappraisalContext();
             _genralServiceFacade = new ServiceFacade();
         }
 
@@ -152,7 +152,7 @@ namespace MobileHome.Insure.Service.Master
             _context.Configuration.ProxyCreationEnabled = false;
             var items = _context.Parks.AsNoTracking().ToList();
             var state = _context.States.ToList();
-            
+
             var rtnItems = items.Select(x => new ParkDto()
             {
                 Id = x.Id,
@@ -164,7 +164,7 @@ namespace MobileHome.Insure.Service.Master
                 SpacesToOwn = x.SpacesToOwn,
                 SpacesToRent = x.SpacesToRent,
                 State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Abbr : ""
-            }).ToList();
+            }).OrderByDescending(t => t.Id).ToList();
             return rtnItems;
         }
         private ParkDto GetSearchObject(SearchParameter searchParam)
@@ -194,9 +194,9 @@ namespace MobileHome.Insure.Service.Master
                             //else if (searchParam.SearchColumn[idx] == "IsActive") parkObj.IsActive = Convert.ToBoolean(searchParam.SearchColumnValue[idx]);                           
 
                         }
-                    }                                                                                 
+                    }
                 }
-                
+
             }
             return parkObj;
         }
@@ -205,7 +205,7 @@ namespace MobileHome.Insure.Service.Master
             _context.Configuration.ProxyCreationEnabled = false;
             List<ParkDto> result = null;
             if (searchParam != null)
-            {                
+            {
                 List<Park> items = null;
                 ParkDto ParkDto = GetSearchObject(searchParam);
                 Int32 SpacesToRent = Convert.ToInt32(ParkDto.SpacesToRent);
@@ -225,7 +225,7 @@ namespace MobileHome.Insure.Service.Master
                 }
                 else
                 {
-                    
+
 
                     items = _context.Parks.Include("PhysicalState").Where(m =>
                         (ParkDto.Id == 0 ? 1 == 1 : m.Id == ParkDto.Id) &&
@@ -255,9 +255,9 @@ namespace MobileHome.Insure.Service.Master
                         IsOn = x.IsOn
                     }
                 ).ToList();
-                
+
             }
-            
+
             searchParam.SearchedCount = (!searchParam.IsFilterValue ? searchParam.TotalRecordCount : result.Count);
 
             return result;
@@ -318,7 +318,7 @@ namespace MobileHome.Insure.Service.Master
         //        };
         //        data.Add(objParkDto);
         //    }
-            
+
         //    return data;
         //}
         #endregion
@@ -326,8 +326,8 @@ namespace MobileHome.Insure.Service.Master
         {
             _context.Configuration.ProxyCreationEnabled = true;
             _context.Configuration.LazyLoadingEnabled = true;
-            DateTime? temp = null; 
-            var parkSitesList = _context.ParkSites.Where(x=>x.IsActive == true).ToList();
+            DateTime? temp = null;
+            var parkSitesList = _context.ParkSites.Where(x => x.IsActive == true).ToList();
             var rtnItems = parkSitesList.Select(x => new ParkSiteDto()
             {
                 Id = x.Id,
@@ -340,9 +340,9 @@ namespace MobileHome.Insure.Service.Master
                 Liability = (x.Quote != null ? Convert.ToDecimal(x.Quote.Liability) : 0),
                 PersonalProperty = (x.Quote != null ? Convert.ToDecimal(x.Quote.PersonalProperty) : 0),
                 ExpiryDate = (x.Quote != null ? Convert.ToString(x.Quote.ExpiryDate.HasValue ? x.Quote.ExpiryDate.Value.ToShortDateString() : null) : ""),
-                Premium = (x.Quote!=null ? Convert.ToInt32(x.Quote.Premium): 0),
-                SiteNumber = Convert.ToInt32(x.SiteNumber)                    
-            }).ToList();
+                Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
+                SiteNumber = Convert.ToInt32(x.SiteNumber)
+            }).OrderByDescending(t=>t.Id).ToList();
 
             return rtnItems;
         }
@@ -391,10 +391,10 @@ namespace MobileHome.Insure.Service.Master
                 List<ParkSite> items = null;
                 ParkSiteDto ParkDto = GetParkSiteObject(searchParam);
                 Int32 SiteNumber = Convert.ToInt32(ParkDto.SiteNumber);
-                decimal Premium = Convert.ToDecimal(ParkDto.Premium);      
+                decimal Premium = Convert.ToDecimal(ParkDto.Premium);
                 decimal Liability = ParkDto.Liability.HasValue ? Convert.ToDecimal(ParkDto.Liability) : 0;
-                decimal PersonalProperty = ParkDto.PersonalProperty.HasValue ?  Convert.ToDecimal(ParkDto.PersonalProperty) : 0;
-             
+                decimal PersonalProperty = ParkDto.PersonalProperty.HasValue ? Convert.ToDecimal(ParkDto.PersonalProperty) : 0;
+
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.ParkSites.Where(p => p.IsActive == true).Count();
@@ -411,7 +411,7 @@ namespace MobileHome.Insure.Service.Master
                         .Include("Park")
                         .Include("Quote")
                         .Include("Quote.Company")
-                        .Where(m => m.IsActive==true &&
+                        .Where(m => m.IsActive == true &&
                         (ParkDto.Id == 0 ? 1 == 1 : m.Id == ParkDto.Id) &&
                         (ParkDto.ParkId == 0 ? 1 == 1 : m.ParkId == ParkDto.ParkId) &&
                         (string.IsNullOrEmpty(ParkDto.ParkName) ? 1 == 1 : m.Park.ParkName.ToUpper().StartsWith(ParkDto.ParkName.ToUpper())) &&
@@ -432,17 +432,17 @@ namespace MobileHome.Insure.Service.Master
                     new ParkSiteDto()
                     {
                         Id = x.Id,
-                        ParkName = (x.Park!=null? x.Park.ParkName:string.Empty),
+                        ParkName = (x.Park != null ? x.Park.ParkName : string.Empty),
                         ParkId = Convert.ToInt64(x.ParkId),
                         CompanyName = (x.Quote != null ? Convert.ToString(x.Quote.Company != null ? x.Quote.Company.Name : "") : ""),
-                         SiteRental = x.SiteRental,
-                         TenantFirstName = x.TenantFirstName,
-                         TenantLastName = x.TenantLastName,
-                         Liability = (x.Quote != null ? Convert.ToDecimal(x.Quote.Liability) : 0),
-                         PersonalProperty = (x.Quote != null ? Convert.ToInt32(x.Quote.PersonalProperty) : 0),
+                        SiteRental = x.SiteRental,
+                        TenantFirstName = x.TenantFirstName,
+                        TenantLastName = x.TenantLastName,
+                        Liability = (x.Quote != null ? Convert.ToDecimal(x.Quote.Liability) : 0),
+                        PersonalProperty = (x.Quote != null ? Convert.ToInt32(x.Quote.PersonalProperty) : 0),
                         ExpiryDate = (x.Quote != null ? Convert.ToString(x.Quote.ExpiryDate.HasValue ? x.Quote.ExpiryDate.Value.ToShortDateString() : null) : ""),
-                        Premium = (x.Quote!=null ? Convert.ToInt32(x.Quote.Premium): 0),
-                        SiteNumber = Convert.ToInt32(x.SiteNumber),                  
+                        Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
+                        SiteNumber = Convert.ToInt32(x.SiteNumber),
                     }
                 ).ToList();
 
@@ -579,16 +579,16 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.SiteRental = parkSiteObj.SiteRental;
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
-                    _context.SaveChanges();                   
+                    _context.SaveChanges();
                 }
             }
             else
-            {                
+            {
                 parkSiteObj.CreatedDate = DateTime.Now;
                 parkSiteObj.IsActive = true;
                 _context.ParkSites.Add(parkSiteObj);
                 _context.SaveChanges();
-                
+
             }
         }
 
@@ -610,9 +610,9 @@ namespace MobileHome.Insure.Service.Master
         }
 
         public void sendNotificationForPark(Park parkObj, bool isEdit)
-        {            
+        {
             List<string> emailNotification = null;
-            string body ="";
+            string body = "";
             if (!isEdit)
             {
                 emailNotification = _context.ParkNotifies.Where(x => x.Zip == parkObj.PhysicalZip.ToString() && x.IsNotified == false).Select(y => y.Email).ToList();
@@ -622,10 +622,10 @@ namespace MobileHome.Insure.Service.Master
             {
                 _rentalcontext = new mhRentalContext();
                 emailNotification = _rentalcontext.Customers.Where(x => x.Zip == parkObj.PhysicalZip.ToString() && x.IsActive == true).Select(y => y.Email).ToList();
-                 body = "Your park information has been edited. Here are the details: <br /> Park Name: " + parkObj.ParkName + " <br / > Address: " + parkObj.PhysicalAddress + " " + parkObj.PhysicalAddress2 + " <br /> Park City: " + parkObj.PhysicalCity + "<br /> Park County: " + parkObj.PhysicalCounty + "<br /> Park State: " + parkObj.PhysicalState.Name + "<br /> Park Zip: " + parkObj.PhysicalZip;
+                body = "Your park information has been edited. Here are the details: <br /> Park Name: " + parkObj.ParkName + " <br / > Address: " + parkObj.PhysicalAddress + " " + parkObj.PhysicalAddress2 + " <br /> Park City: " + parkObj.PhysicalCity + "<br /> Park County: " + parkObj.PhysicalCounty + "<br /> Park State: " + parkObj.PhysicalState.Name + "<br /> Park Zip: " + parkObj.PhysicalZip;
             }
             _genralServiceFacade.sendMail("info@mobilehome.insure", "info@mobilehome.insure", "", body, emailNotification);
-              
+
         }
 
         public bool OnOrOffPark(int id, bool isOff = false)
@@ -649,10 +649,10 @@ namespace MobileHome.Insure.Service.Master
 
         public List<ParkDto> GetListParks(string parkName, int stateId, string zipCode)
         {
-            
+
             _context.Configuration.ProxyCreationEnabled = false;
             Int32 tZipCode = 0;
-            Int32.TryParse(zipCode,out tZipCode);
+            Int32.TryParse(zipCode, out tZipCode);
             var items = _context.Parks.Include("Customers").
                 Include("PhysicalState").
                 Where(p => (string.IsNullOrEmpty(parkName) ? 1 == 1 : p.ParkName == parkName) &&
@@ -673,7 +673,7 @@ namespace MobileHome.Insure.Service.Master
                 TotalOwnRentals = (x.Customers != null ? x.Customers.Count() : 0),
                 SpacesToOwn = x.SpacesToOwn,
                 SpacesToRent = x.SpacesToRent,
-                State = (x.PhysicalState!=null?x.PhysicalState.Name:string.Empty)
+                State = (x.PhysicalState != null ? x.PhysicalState.Name : string.Empty)
                 //State = (x.PhysicalStateId != null || x.PhysicalStateId != 0) ? state.Where(y => y.Id == x.PhysicalStateId).SingleOrDefault().Name : ""
             }).ToList();
             return rtnItems;
@@ -722,7 +722,7 @@ namespace MobileHome.Insure.Service.Master
 
         #endregion
 
-        
+
         #region Common methods for Date operation
         public static string GetDateFormatAsString(DateTime date)
         {

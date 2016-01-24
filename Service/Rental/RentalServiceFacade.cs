@@ -148,7 +148,7 @@ namespace MobileHome.Insure.Service.Rental
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.Customers.Count();
-                    result = _context.Customers.Where(c => c.IsActive == true).OrderBy(x => x.Id)
+                    result = _context.Customers.Where(c => c.IsActive == true).OrderByDescending(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();
                 }
@@ -166,7 +166,7 @@ namespace MobileHome.Insure.Service.Rental
                     (string.IsNullOrEmpty(Customer.Email) ? 1 == 1 : c.Email.ToUpper().StartsWith(Customer.Email.ToUpper())) &&
                     (string.IsNullOrEmpty(Customer.Zip) ? 1 == 1 : c.Zip.ToUpper().StartsWith(Customer.Zip.ToUpper())) &&
                     (string.IsNullOrEmpty(Customer.City) ? 1 == 1 : c.Zip.ToUpper().StartsWith(Customer.City.ToUpper()))
-                    ).ToList();
+                    ).OrderByDescending(x => x.Id).ToList();
 
                     searchParam.TotalRecordCount = result.Count();
                 }
@@ -351,6 +351,7 @@ namespace MobileHome.Insure.Service.Rental
                 Int32 day = Convert.ToDateTime(Quote.EffectiveDate).Date.Day;
                 Int32 month = Convert.ToDateTime(Quote.EffectiveDate).Date.Month;
                 Int32 year = Convert.ToDateTime(Quote.EffectiveDate).Date.Year;
+                string customerFirstName = Quote.Customer.FirstName;
 
                 if (!searchParam.IsFilterValue)
                 {
@@ -362,7 +363,7 @@ namespace MobileHome.Insure.Service.Rental
                     items = _context.Quotes.Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any()) &&
                                                  string.IsNullOrEmpty(c.ProposalNumber.Trim())
-                                                 )).OrderBy(x => x.Id)
+                                                 )).OrderByDescending(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
                                                 ToList();
@@ -382,8 +383,9 @@ namespace MobileHome.Insure.Service.Rental
                                                  ((day == 1 && month == 1 && year == 1 ? 1 == 1 :
                                                  SqlFunctions.DatePart("dd", c.EffectiveDate) == day &&
                                                  SqlFunctions.DatePart("mm", c.EffectiveDate) == month &&
-                                                 SqlFunctions.DatePart("yyyy", c.EffectiveDate) == year))
-                                                 ).ToList();
+                                                 SqlFunctions.DatePart("yyyy", c.EffectiveDate) == year)) &&
+                                                 (string.IsNullOrEmpty(customerFirstName) ? 1 == 1 : c.Customer.FirstName.StartsWith(customerFirstName))
+                                                 ).OrderByDescending(x => x.Id).ToList();
 
                     searchParam.TotalRecordCount = items.Count();
                 }
@@ -424,6 +426,7 @@ namespace MobileHome.Insure.Service.Rental
         private Quote GetPolicyObject(SearchParameter searchParam)
         {
             Quote Quote = new Quote();
+            Quote.Customer = new Customer();
             bool isOtherAnyParam = false;
             if (searchParam != null)
             {
@@ -438,7 +441,10 @@ namespace MobileHome.Insure.Service.Rental
                         if (!string.IsNullOrWhiteSpace(searchParam.SearchColumnValue[idx]))
                         {
                             if (searchParam.SearchColumn[idx] == "Id") { Quote.Id = Convert.ToInt32(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
-                            else if (searchParam.SearchColumn[idx] == "ProposalNumber") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "CustomerName")
+                            {
+                                Quote.Customer.FirstName = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true;
+                            }
                             else if (searchParam.SearchColumn[idx] == "PersonalProperty") { Quote.PersonalProperty = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
                             else if (searchParam.SearchColumn[idx] == "Liability") { Quote.Liability = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
                             else if (searchParam.SearchColumn[idx] == "Premium") { Quote.Premium = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
@@ -509,7 +515,7 @@ namespace MobileHome.Insure.Service.Rental
 
                     items = _context.Quotes.Include("Customer").Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
-                                                 || c.IsParkSitePolicy == true)).OrderBy(x => x.Id)
+                                                 || c.IsParkSitePolicy == true)).OrderByDescending(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
                                                 ToList();
@@ -535,9 +541,7 @@ namespace MobileHome.Insure.Service.Rental
                                                  SqlFunctions.DatePart("dd", c.EffectiveDate) == day &&
                                                  SqlFunctions.DatePart("mm", c.EffectiveDate) == month &&
                                                  SqlFunctions.DatePart("yyyy", c.EffectiveDate) == year))
-
-
-                                                 ).ToList();
+                                                 ).OrderByDescending(x => x.Id).ToList();
 
                     searchParam.TotalRecordCount = items.Count();
                 }
@@ -632,7 +636,7 @@ namespace MobileHome.Insure.Service.Rental
                     searchParam.TotalRecordCount = _context.Payments.Where(c => c.IsActive == true).Count();
 
                     result = _context.Payments.Where(c => c.IsActive == true
-                                                ).OrderBy(x => x.Id)
+                                                ).OrderByDescending(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
                                                 ToList();
@@ -650,7 +654,7 @@ namespace MobileHome.Insure.Service.Rental
                                                  SqlFunctions.DatePart("dd", c.CreationDate) == day &&
                                                  SqlFunctions.DatePart("mm", c.CreationDate) == month &&
                                                  SqlFunctions.DatePart("yyyy", c.CreationDate) == year))
-                                                 ).ToList();
+                                                 ).OrderByDescending(x => x.Id).ToList();
 
                     searchParam.TotalRecordCount = result.Count();
                 }

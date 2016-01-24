@@ -33,7 +33,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         public ActionResult State(bool? exportCsv)
         {
             var model = new ListStateViewModel();
-            var State = _serviceFacade.GetStates();
+            var State = _serviceFacade.GetStates().OrderByDescending(s => s.Id);
 
             foreach (var item in State)
             {
@@ -101,7 +101,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         public ActionResult Manufacturer(bool? exportCsv)
         {
             var model = new ListManufacturerViewModel();
-            var Manufacturer = _serviceFacade.GetManufacturer();
+            var Manufacturer = _serviceFacade.GetManufacturer().OrderByDescending(t => t.Id);
 
             foreach (var item in Manufacturer)
             {

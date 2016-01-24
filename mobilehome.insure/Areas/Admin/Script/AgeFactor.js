@@ -99,7 +99,7 @@ var AgeEditable = function () {
                 "targets": [0]
             }],
             "order": [
-                [0, "asc"]
+                [0, "desc"]
             ] // set first column as a default sort by asc
         });
 
