@@ -76,12 +76,12 @@
                         <label class="control-label">Park:</label>
                         <div class="form-group">
                             <div class='input-group date' id='txtExpiryDate'>
-                                @Html.Hidden("parkList","", new { id = "parkList", @class = "form-control select2me2 input-medium" })
+                                @Html.Hidden("parkList", "", new { id = "parkList", @class = "form-control select2me2 input-medium" })
                             </div>
                         </div>
                     </div>
-                    </div>
-                <div class="row form-group"> 
+                </div>
+                <div class="row form-group">
                     <div class="col-md-4" style="vertical-align:bottom;">
                         <button class="btn btn-success" id="btnSearch">Search</button>
                     </div>
@@ -93,25 +93,40 @@
                                 Id
                             </th>
                             <th>
-                                Park Name
+                                ParkId
                             </th>
                             <th>
                                 Site Number
-                            </th>                            
+                            </th>
                             <th>
-                                Site Rental
+                                Park Name
+                            </th>
+                            <th>
+                                Tenant First Name
+                            </th>
+                            <th>
+                                Tenant Last Name
+                            </th>
+                            <th>
+                                Insurance Company
                             </th>
                             <th>
                                 Expiration Date
                             </th>
                             <th>
-                                Insurance Company
-                            </th>                
+                                Site Rental
+                            </th>
+                            <th>
+                                Liability Limit
+                            </th>
+                            <th>
+                                Property Limit
+                            </th>
                             <th>
                                 Premium
-                            </th>           
+                            </th>
                         </tr>
-                    </thead>                   
+                    </thead>
                 </table>
             </div>
             <!-- END EXAMPLE TABLE PORTLET-->
@@ -149,11 +164,16 @@
                    "bSortable": false,
                    //"bVisible": false
                },
-               { "mDataProp": "ParkName" },
+               { "mDataProp": "ParkId", "bVisible": false },
                { "mDataProp": "SiteNumber" },
-               { "mDataProp": "SiteRental" },
-               { "mDataProp": "ExpiryDate" },
+               { "mDataProp": "ParkName" },
+               { "mDataProp": "TenantFirstName", },
+               { "mDataProp": "TenantLastName" },
                { "mDataProp": "CompanyName" },
+               { "mDataProp": "ExpiryDate" },
+               { "mDataProp": "SiteRental" },
+               { "mDataProp": "Liability" },
+               { "mDataProp": "PersonalProperty" },
                { "mDataProp": "Premium" },
             ];
 
@@ -177,15 +197,15 @@
             $('#txtExpiryDate').datetimepicker({
                 format: 'MM/DD/YYYY'
             });
-                                    
+
         });
 
-        
+
         function search(oTable, effectiveDate) {
             //redraw table with custom filter
             //debugger;
 
-            if (effectiveDate != null ) {
+            if (effectiveDate != null) {
                 var arrayData = effectiveDate.split(",");
                 var idx = arrayData[0];
                 var value = arrayData[1];
@@ -219,7 +239,10 @@
 
                 callback(data);
             }
-        })
+        }).on("change", function (e) {
+            // mostly used event, fired to the original element when the value changes
+            $("#tblLists").dataTable().fnFilter(e.val, 1);
+        });
     </script>
 }
 
