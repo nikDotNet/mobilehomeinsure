@@ -76,7 +76,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 sortedColumns: jQueryDataTablesModel.GetSortedColumns("desc"),
                 totalRecordCount: param.TotalRecordCount,
                 searchString: jQueryDataTablesModel.sSearch,
-                isSearch:param.IsFilterValue,
+                isSearch: param.IsFilterValue,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
                 properties: new List<string> { "Id", "FirstName", "LastName", "FirstName2",
                     "LastName2", "Phone", "Email", "Address", "Zip" });
@@ -193,7 +193,23 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 infopmtamt = paymentResponse.Amount,
                 infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
                 infotrndat = creationDate.ToShortDateString(),
-                infotrntim = creationDate.ToShortTimeString()
+                infotrntim = creationDate.ToShortTimeString(),
+                infopmtinstfee = quoteObject != null && quoteObject.InstallmentFee.HasValue 
+                    ? quoteObject.InstallmentFee.Value 
+                    : 0,
+                infopmtprocfee = quoteObject != null && quoteObject.ProcessingFee.HasValue 
+                    ? quoteObject.ProcessingFee.Value
+                    : 0,
+                infopmtamttotal = quoteObject != null && quoteObject.Premium.HasValue 
+                    ? quoteObject.Premium.Value 
+                    : 0,
+                pmtamttoday = quoteObject != null && quoteObject.PremiumChargedToday.HasValue 
+                    ? quoteObject.PremiumChargedToday.Value 
+                    : 0,
+                infonoofremainingpmt = quoteObject != null && quoteObject.Payments.Any() 
+                    ? quoteObject.Payments.Count() - 1
+                    : 0
+
             };
 
             //return Json(rtn, JsonRequestBehavior.AllowGet);
@@ -311,7 +327,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 pageSize: jQueryDataTablesModel.iDisplayLength,
                 sortedColumns: jQueryDataTablesModel.GetSortedColumns(string.Empty),
                 totalRecordCount: param.TotalRecordCount,
-                isSearch:param.IsFilterValue,
+                isSearch: param.IsFilterValue,
                 searchString: jQueryDataTablesModel.sSearch,
                 searchColumnValues: jQueryDataTablesModel.sSearch_,
                 properties: new List<string> { "Id", "TransactionId", "ResponseCode", "ApprovalCode", "CreationDate", "Amount" });

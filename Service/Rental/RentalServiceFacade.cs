@@ -16,12 +16,12 @@ namespace MobileHome.Insure.Service.Rental
     public class RentalServiceFacade : IRentalServiceFacade
     {
         private readonly mhRentalContext _context;
-        
+
         public RentalServiceFacade()
         {
             _context = new mhRentalContext();
         }
-              
+
 
         #region Invoice
         public int generateInvoice(decimal amount, int customerId, int quoteId)
@@ -139,16 +139,16 @@ namespace MobileHome.Insure.Service.Rental
         public List<Customer> GetCustomers(SearchParameter searchParam)
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            
+
             List<Customer> result = null;
-            
+
             if (searchParam != null)
             {
                 Customer Customer = GetCustomerObject(searchParam);
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.Customers.Count();
-                    result = _context.Customers.Where(c=>c.IsActive == true).OrderBy(x => x.Id)
+                    result = _context.Customers.Where(c => c.IsActive == true).OrderBy(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();
                 }
@@ -216,11 +216,11 @@ namespace MobileHome.Insure.Service.Rental
         #endregion
 
         #region Quote
-        
+
         public decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible,
-                                    decimal Liability, int CustomerId, int NoOfInstallments, 
+                                    decimal Liability, int CustomerId, int NoOfInstallments,
                                     bool SendLandlord, ref int quoteId, out string ProposalNo,
-                                    out decimal premiumChargedToday, out decimal installmentFee, out decimal processingFee, 
+                                    out decimal premiumChargedToday, out decimal installmentFee, out decimal processingFee,
                                     out decimal totalChargedToday)
         {
             decimal Premium = 0;
@@ -248,7 +248,7 @@ namespace MobileHome.Insure.Service.Rental
             else
             {
                 quoteObj = _context.Quotes.Find(quoteId);
-                
+
                 //Initializing Premium Values again
                 quoteObj.ProcessingFee = 0;
                 quoteObj.InstallmentFee = 0;
@@ -272,7 +272,7 @@ namespace MobileHome.Insure.Service.Rental
             //Get Premium calculation service result
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
-            
+
             var customerObj = GetCustomerById(CustomerId);
 
             if (quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0 && quoteObj.NoOfInstallments.Value != 1)
@@ -287,7 +287,7 @@ namespace MobileHome.Insure.Service.Rental
                 quoteObj.ProcessingFee = (Premium * Convert.ToDecimal(System.Configuration.ConfigurationManager.AppSettings["RentalProcessingFee"]) / 100);
                 quoteObj.TotalChargedToday = quoteObj.ProcessingFee + quoteObj.PremiumChargedToday;
             }
-            
+
             premiumChargedToday = quoteObj.PremiumChargedToday.HasValue ? Math.Ceiling(quoteObj.PremiumChargedToday.Value * 100) * 0.01M : 0;
             processingFee = Convert.ToDecimal(quoteObj.ProcessingFee);
             installmentFee = Convert.ToDecimal(quoteObj.InstallmentFee);
@@ -297,7 +297,7 @@ namespace MobileHome.Insure.Service.Rental
             quoteObj.ProposalNumber = string.Empty;
 
             _context.SaveChanges();
-            
+
             quoteId = quoteObj.Id;
             return Premium;
         }
@@ -316,9 +316,9 @@ namespace MobileHome.Insure.Service.Rental
 
         public void GeneratePolicy(Quote quoteObj)
         {
-                var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
-                result.GetPremiumDetail(quoteObj, true);
-                saveQuote(quoteObj);
+            var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
+            result.GetPremiumDetail(quoteObj, true);
+            saveQuote(quoteObj);
         }
 
         public List<QuoteDto> GetQuotes()
@@ -348,18 +348,20 @@ namespace MobileHome.Insure.Service.Rental
                 Decimal PersonalProperty = Convert.ToDecimal(Quote.PersonalProperty);
                 Decimal Liability = Convert.ToDecimal(Quote.Liability);
                 Decimal Premium = Convert.ToDecimal(Quote.Premium);
-                 Int32 day = Convert.ToDateTime(Quote.EffectiveDate).Date.Day;
+                Int32 day = Convert.ToDateTime(Quote.EffectiveDate).Date.Day;
                 Int32 month = Convert.ToDateTime(Quote.EffectiveDate).Date.Month;
                 Int32 year = Convert.ToDateTime(Quote.EffectiveDate).Date.Year;
 
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.Quotes.Where(c => c.IsActive == true &&
-                                                 ((c.Payments.Where(x => x.TransactionId != null).Any())
-                                                 )).Count();
+                                                    string.IsNullOrEmpty(c.ProposalNumber) &&
+                                                    ((c.Payments.Where(x => x.TransactionId != null).Any()))
+                                                    ).Count();
 
                     items = _context.Quotes.Where(c => c.IsActive == true &&
-                                                 ((c.Payments.Where(x => x.TransactionId != null).Any())
+                                                 ((c.Payments.Where(x => x.TransactionId != null).Any()) &&
+                                                 string.IsNullOrEmpty(c.ProposalNumber.Trim())
                                                  )).OrderBy(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
@@ -373,16 +375,16 @@ namespace MobileHome.Insure.Service.Rental
                                                  ) &&
 
                                                  (Quote.Id == 0 ? 1 == 1 : c.Id == Quote.Id) &&
-                                                 (string.IsNullOrEmpty(Quote.ProposalNumber) ? 1 == 1 : c.ProposalNumber.ToUpper().StartsWith(Quote.ProposalNumber.ToUpper())) &&
+                                                 (string.IsNullOrEmpty(Quote.ProposalNumber)) &&
                                                  (PersonalProperty == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.PersonalProperty).ToUpper().StartsWith(SqlFunctions.StringConvert((double)PersonalProperty).ToUpper())) &&
                                                  (Liability == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.Liability).ToUpper().StartsWith(SqlFunctions.StringConvert((double)Liability).ToUpper())) &&
                                                  (Premium == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.Premium).ToUpper().StartsWith(SqlFunctions.StringConvert((double)Premium).ToUpper())) &&
                                                  ((day == 1 && month == 1 && year == 1 ? 1 == 1 :
-                                                 SqlFunctions.DatePart("dd",c.EffectiveDate) ==day &&
+                                                 SqlFunctions.DatePart("dd", c.EffectiveDate) == day &&
                                                  SqlFunctions.DatePart("mm", c.EffectiveDate) == month &&
                                                  SqlFunctions.DatePart("yyyy", c.EffectiveDate) == year))
                                                  ).ToList();
-                    
+
                     searchParam.TotalRecordCount = items.Count();
                 }
                 result = items.Select(x => new QuoteDto
@@ -394,7 +396,8 @@ namespace MobileHome.Insure.Service.Rental
                     Premium = x.Premium,
                     EffectiveDate = x.EffectiveDate,
                     NoOfInstallments = x.NoOfInstallments,
-                    SendLandLord = x.SendLandLord
+                    SendLandLord = x.SendLandLord,
+                    CustomerName = x.Customer.FirstName + " " + x.Customer.LastName
                 }).ToList();
             }
             searchParam.SearchedCount = (!searchParam.IsFilterValue ? searchParam.TotalRecordCount : result.Count);
@@ -417,7 +420,7 @@ namespace MobileHome.Insure.Service.Rental
         #endregion
 
         #region Policy
-       
+
         private Quote GetPolicyObject(SearchParameter searchParam)
         {
             Quote Quote = new Quote();
@@ -433,22 +436,22 @@ namespace MobileHome.Insure.Service.Rental
                     for (int idx = 0; idx < searchParam.SearchColumnValue.Count; idx++)
                     {
                         if (!string.IsNullOrWhiteSpace(searchParam.SearchColumnValue[idx]))
+                        {
+                            if (searchParam.SearchColumn[idx] == "Id") { Quote.Id = Convert.ToInt32(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "ProposalNumber") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "PersonalProperty") { Quote.PersonalProperty = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "Liability") { Quote.Liability = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "Premium") { Quote.Premium = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "EffectiveDate")
                             {
-                                if (searchParam.SearchColumn[idx] == "Id") { Quote.Id = Convert.ToInt32(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
-                                else if (searchParam.SearchColumn[idx] == "ProposalNumber") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
-                                else if (searchParam.SearchColumn[idx] == "PersonalProperty") { Quote.PersonalProperty = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
-                                else if (searchParam.SearchColumn[idx] == "Liability") { Quote.Liability = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
-                                else if (searchParam.SearchColumn[idx] == "Premium") { Quote.Premium = Convert.ToDecimal(searchParam.SearchColumnValue[idx]); isOtherAnyParam = true; }
-                                else if (searchParam.SearchColumn[idx] == "EffectiveDate")
+                                DateTime tempDate;
+                                bool result = DateTime.TryParse(searchParam.SearchColumnValue[idx], out tempDate);
+                                if (result)
                                 {
-                                    DateTime tempDate;
-                                    bool result = DateTime.TryParse(searchParam.SearchColumnValue[idx], out tempDate);
-                                    if (result)
-                                    {
-                                        Quote.EffectiveDate = Convert.ToDateTime(searchParam.SearchColumnValue[idx]);
-                                        isOtherAnyParam = true;
-                                    }
+                                    Quote.EffectiveDate = Convert.ToDateTime(searchParam.SearchColumnValue[idx]);
+                                    isOtherAnyParam = true;
                                 }
+                            }
                             //else if (searchParam.SearchColumn[idx] == "InsuredName") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
                             //else if (searchParam.SearchColumn[idx] == "InsuredAddress") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
                             //else if (searchParam.SearchColumn[idx] == "InsuredPhone") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
@@ -463,7 +466,7 @@ namespace MobileHome.Insure.Service.Rental
         }
         public List<QuoteDto> GetPolicies()
         {
-            var policyList = _context.Quotes.Where(c => c.IsActive == true && 
+            var policyList = _context.Quotes.Where(c => c.IsActive == true &&
             ((c.Payments.Where(x => x.TransactionId != null).Any()) || c.IsParkSitePolicy == true)).ToList();
             return policyList.Select(x => new QuoteDto
             {
@@ -505,30 +508,30 @@ namespace MobileHome.Insure.Service.Rental
                                                  || c.IsParkSitePolicy == true)).Count();
 
                     items = _context.Quotes.Include("Customer").Where(c => c.IsActive == true &&
-                                                 ((c.Payments.Where(x => x.TransactionId != null).Any()) 
+                                                 ((c.Payments.Where(x => x.TransactionId != null).Any())
                                                  || c.IsParkSitePolicy == true)).OrderBy(x => x.Id)
-                                                .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? 
+                                                .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
                                                 ToList();
 
                 }
                 else
                 {
-                    items = _context.Quotes.Include("Customer")                        
+                    items = _context.Quotes.Include("Customer")
                         .Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
                                                  || c.IsParkSitePolicy == true) &&
 
                                                  (Quote.Id == 0 ? 1 == 1 : c.Id == Quote.Id) &&
                                                  (string.IsNullOrEmpty(Quote.ProposalNumber) ? 1 == 1 : c.ProposalNumber.ToUpper().StartsWith(Quote.ProposalNumber.ToUpper())) &&
-                                                 (string.IsNullOrEmpty(InsuredName) ? 1==1 : c.Customer.FirstName.ToUpper().StartsWith(InsuredName.ToUpper()))&&
+                                                 (string.IsNullOrEmpty(InsuredName) ? 1 == 1 : c.Customer.FirstName.ToUpper().StartsWith(InsuredName.ToUpper())) &&
                                                  (string.IsNullOrEmpty(InsuredAddress) ? 1 == 1 : c.Customer.Address.ToUpper().StartsWith(InsuredAddress.ToUpper())) &&
                                                  (string.IsNullOrEmpty(InsuredPhone) ? 1 == 1 : c.Customer.Phone.ToUpper().StartsWith(InsuredPhone.ToUpper())) &&
-                                                 (string.IsNullOrEmpty(InsuredEmail) ? 1 == 1 : c.Customer.Email.ToUpper().StartsWith(InsuredEmail.ToUpper())) &&                                                 
+                                                 (string.IsNullOrEmpty(InsuredEmail) ? 1 == 1 : c.Customer.Email.ToUpper().StartsWith(InsuredEmail.ToUpper())) &&
                                                  (PersonalProperty == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.PersonalProperty).ToUpper().StartsWith(SqlFunctions.StringConvert((double)PersonalProperty).ToUpper())) &&
                                                  (Liability == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.Liability).ToUpper().StartsWith(SqlFunctions.StringConvert((double)Liability).ToUpper())) &&
                                                  (Premium == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)c.Premium).ToUpper().StartsWith(SqlFunctions.StringConvert((double)Premium).ToUpper())) &&
-                                                 ( (day==1 && month==1 && year==1 ? 1==1 :                                                 
+                                                 ((day == 1 && month == 1 && year == 1 ? 1 == 1 :
                                                  SqlFunctions.DatePart("dd", c.EffectiveDate) == day &&
                                                  SqlFunctions.DatePart("mm", c.EffectiveDate) == month &&
                                                  SqlFunctions.DatePart("yyyy", c.EffectiveDate) == year))
@@ -549,9 +552,9 @@ namespace MobileHome.Insure.Service.Rental
                     NoOfInstallments = x.NoOfInstallments,
                     SendLandLord = x.SendLandLord,
                     InsuredName = (x.Customer != null ? x.Customer.FirstName + " " + x.Customer.LastName : string.Empty),
-                    InsuredAddress = (x.Customer != null ? x.Customer.Address  : string.Empty),
-                    InsuredEmail = (x.Customer != null ? x.Customer.Email  : string.Empty),
-                    InsuredPhone = (x.Customer != null ? x.Customer.Phone  : string.Empty),
+                    InsuredAddress = (x.Customer != null ? x.Customer.Address : string.Empty),
+                    InsuredEmail = (x.Customer != null ? x.Customer.Email : string.Empty),
+                    InsuredPhone = (x.Customer != null ? x.Customer.Phone : string.Empty),
 
 
                 }).ToList();
@@ -618,7 +621,7 @@ namespace MobileHome.Insure.Service.Rental
             if (searchParam != null)
             {
                 Model.Payment payment = GetPaymentObject(searchParam);
-                
+
                 Decimal Amount = Convert.ToDecimal(payment.Amount);
                 Int32 day = Convert.ToDateTime(payment.CreationDate).Date.Day;
                 Int32 month = Convert.ToDateTime(payment.CreationDate).Date.Month;
@@ -650,7 +653,7 @@ namespace MobileHome.Insure.Service.Rental
                                                  ).ToList();
 
                     searchParam.TotalRecordCount = result.Count();
-                }                
+                }
             }
             searchParam.SearchedCount = (!searchParam.IsFilterValue ? searchParam.TotalRecordCount : result.Count);
             return result;

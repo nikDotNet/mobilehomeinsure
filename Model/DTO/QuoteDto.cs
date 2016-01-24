@@ -8,7 +8,7 @@ namespace MobileHome.Insure.Model.DTO
 {
     public class QuoteDto
     {
-        public int Id {get; set;}
+        public int Id { get; set; }
         public string ProposalNumber { get; set; }
         public decimal? Liability { get; set; }
         public decimal? PersonalProperty { get; set; }
@@ -21,5 +21,6 @@ namespace MobileHome.Insure.Model.DTO
         public string InsuredPhone { get; set; }
         public string InsuredEmail { get; set; }
         public string PolicyNumber { get; set; }
+        public string CustomerName { get; set; }
     }
 }
