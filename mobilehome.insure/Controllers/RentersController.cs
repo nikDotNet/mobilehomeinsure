@@ -87,12 +87,12 @@ namespace MobileHome.Insure.Web.Controllers
             model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
 
             model.Premium = _serviceFacade.generateQuote(model.EffectiveDate, model.PersonalProperty, model.Deductible, model.Liability, customerId, model.NumberOfInstallments, model.SendLandlord, ref quoteId, out proposalNumber, out premiumChargedToday, out installmentFee, out processingFee, out totalChargedToday);
-           
+
             model.PremiumChargedToday = premiumChargedToday;
             TempData["QuoteId"] = quoteId;
             TempData["Premium"] = model.Premium;
             TempData["PremiumChargedToday"] = model.PremiumChargedToday;
-            
+
             TempData["ProposalNumber"] = proposalNumber;
             TempData.Keep();
 
@@ -114,7 +114,7 @@ namespace MobileHome.Insure.Web.Controllers
         [HttpPost]
         public ActionResult _Step3(RentalViewModel.Payment model)
         {
-            
+
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]);
             string proposalNumber = TempData["ProposalNumber"].ToString();
@@ -138,9 +138,9 @@ namespace MobileHome.Insure.Web.Controllers
             };
 
             PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
-             DateTime creationDate = DateTime.Now;
+            DateTime creationDate = DateTime.Now;
             bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage, creationDate);
-            if (success && string.IsNullOrEmpty(paymentResponse.ErrorMessage))
+            if (success && (paymentResponse.Successfull.HasValue && paymentResponse.Successfull.Value) && string.IsNullOrEmpty(paymentResponse.ErrorMessage))
             {
                 ViewBag.Success = true;
                 _serviceFacade.GeneratePolicy(quoteObject);
@@ -175,7 +175,7 @@ namespace MobileHome.Insure.Web.Controllers
             }
             else
                 TempData.Keep();
-           
+
             return Json("Failed");
         }
 
@@ -216,7 +216,7 @@ namespace MobileHome.Insure.Web.Controllers
         public ActionResult FindZip(int zip)
         {
             var parks = _masterServiceFacade.FindParkByZip(zip);
-            if(parks!=null)
+            if (parks != null)
                 parks.Add(new Park() { ParkName = "My Park is not listed", Id = 0, PhysicalAddress = "", PhysicalCity = "" });
             return Json(
                     new
@@ -276,7 +276,7 @@ namespace MobileHome.Insure.Web.Controllers
             model.Zip = Zip;
             return View(model);
         }
-        
+
         [HttpPost]
         public ActionResult Notify(NotifyViewModel model)
         {

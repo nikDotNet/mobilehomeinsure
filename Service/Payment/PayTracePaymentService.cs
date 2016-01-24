@@ -22,7 +22,7 @@ namespace MobileHome.Insure.Service.Payment
             requestPayment.Method = "ProcessTranx";
             requestPayment.TransactionType = "Sale";
             requestPayment.Terms = "Y";
-            
+            response.Successfull = false;
 
             WebClient wClient = new WebClient();
 
@@ -75,14 +75,17 @@ namespace MobileHome.Insure.Service.Payment
                 if (strERROR != "")
                 {
                     response.ErrorMessage = "<br>The following error occurred: " + strERROR + ".<br>";
+                    response.Successfull = false;
                 }
                 else if (strAPPCODE != "")
                 {
                   response.ApprovalMessage =   "<br>Transaction ID, " + strTRANSACTIONID + ", was approved with approval code " + strAPPCODE + ".<br>";
+                  response.Successfull = true;
                 }
                 else
                 {
                     response.ApprovalMessage = "<br>Transaction ID, " + strTRANSACTIONID + ", was NOT approved.<br>";
+                    response.Successfull = false;
                 }
 
                 
