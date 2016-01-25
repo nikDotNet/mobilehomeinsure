@@ -145,6 +145,8 @@ namespace MobileHome.Insure.Web.Controllers
                 ViewBag.Success = true;
                 _serviceFacade.GeneratePolicy(quoteObject);
                 SaveParkSite(quoteId, customerObject, quoteObject);
+                var result = new MobileHoome.Insure.ExtService.SendPaymentServiceForAegis();
+                bool suc = result.makePayment(quoteObject.ProposalNumber.ToString(), customerObject.FirstName + " " + customerObject.LastName, paymentResponse.TransactionId.ToString(), quoteObject.PremiumChargedToday.Value.ToString(), "0", quoteObject.NoOfInstallments.ToString(), quoteObject.CreationDate.Value);
 
                 ViewBag.CustomerEmail = customerObject.Email;
                 var rtn = new

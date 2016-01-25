@@ -53,13 +53,16 @@
   <ItemGroup>
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="ICalculateHomePremiumService.cs" />
+    <Compile Include="ISendPaymentService.cs" />
     <Compile Include="Models\CoverItemInfo.cs" />
     <Compile Include="Models\HouseUnitInfo.cs" />
+    <Compile Include="Models\PaymentInfo.cs" />
     <Compile Include="Models\PolicyReturnInfo.cs" />
     <Compile Include="Models\PropertyDealerInfo.cs" />
     <Compile Include="Models\PropertyInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CalculateHomePremiumService.cs" />
+    <Compile Include="SendPaymentServiceForAegis.cs" />
     <Compile Include="Service References\AegisRental\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
