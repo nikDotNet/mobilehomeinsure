@@ -150,7 +150,7 @@ namespace MobileHome.Insure.Service.Master
         public List<ParkDto> GetListPark()
         {
             _context.Configuration.ProxyCreationEnabled = false;
-            var items = _context.Parks.AsNoTracking().ToList();
+            var items = _context.Parks.AsNoTracking().Where(x => x.IsActive == true).ToList();
             var state = _context.States.ToList();
 
             var rtnItems = items.Select(x => new ParkDto()
@@ -662,7 +662,7 @@ namespace MobileHome.Insure.Service.Master
                 Include("PhysicalState").
                 Where(p => (string.IsNullOrEmpty(parkName) ? 1 == 1 : p.ParkName == parkName) &&
                                              (stateId == 0 ? 1 == 1 : p.PhysicalStateId == stateId) &&
-                                             (string.IsNullOrEmpty(zipCode) ? 1 == 1 : p.PhysicalZip == tZipCode)).ToList();
+                                             (string.IsNullOrEmpty(zipCode) ? 1 == 1 : p.PhysicalZip == tZipCode) && p.IsActive == true).ToList();
 
             //var state = _context.States.ToList();
 
