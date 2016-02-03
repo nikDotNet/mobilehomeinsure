@@ -2046,6 +2046,8 @@ System feeds
   float: left;
   width: 100%;
   clear: both;
+  line-height:20px;
+  color:black;
 }
 .feeds li .col1 > .cont {
   float: left;

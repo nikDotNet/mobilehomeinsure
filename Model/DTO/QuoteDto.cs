@@ -22,5 +22,8 @@ namespace MobileHome.Insure.Model.DTO
         public string InsuredEmail { get; set; }
         public string PolicyNumber { get; set; }
         public string CustomerName { get; set; }
+        public decimal PremiumChargedToday { get; set; }
+        public decimal TotalChargedToday { get; set; }
+        public DateTime? CreationDate { get; set; }
     }
 }

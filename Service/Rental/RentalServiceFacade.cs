@@ -95,10 +95,13 @@ namespace MobileHome.Insure.Service.Rental
             return customerObj.Id;
         }
 
-        public List<Customer> GetCustomers()
+        public List<Customer> GetCustomers(DateTime? rangeDate = null)
         {
+            if (rangeDate == null)
+                rangeDate = DateTime.Now.AddYears(-100);
+
             _context.Configuration.ProxyCreationEnabled = false;
-            return _context.Customers.AsNoTracking().Where(c => c.IsActive == true).ToList();
+            return _context.Customers.AsNoTracking().Where(c => c.IsActive == true && c.CreationDate > rangeDate).ToList();
         }
 
         private Customer GetCustomerObject(SearchParameter searchParam)
@@ -321,11 +324,14 @@ namespace MobileHome.Insure.Service.Rental
             saveQuote(quoteObj);
         }
 
-        public List<QuoteDto> GetQuotes()
+        public List<QuoteDto> GetQuotes(DateTime? dateRange = null)
         {
             _context.Configuration.ProxyCreationEnabled = true;
             _context.Configuration.LazyLoadingEnabled = true;
-            var quoteList = _context.Quotes.Where(c => c.IsActive == true && (c.Payments.Where(x => x.TransactionId == null).Any())).ToList();
+            if (dateRange == null)
+                dateRange = DateTime.Now.AddYears(-100);
+
+            var quoteList = _context.Quotes.Where(c => c.IsActive == true && c.CreationDate > dateRange  && (c.Payments.Where(x => x.TransactionId == null).Any())).ToList();
             return quoteList.Select(x => new QuoteDto
             {
                 Id = x.Id,
@@ -338,6 +344,7 @@ namespace MobileHome.Insure.Service.Rental
                 SendLandLord = x.SendLandLord
             }).ToList();
         }
+
         public List<QuoteDto> GetQuotes(SearchParameter searchParam)
         {
             List<QuoteDto> result = null;
@@ -410,7 +417,6 @@ namespace MobileHome.Insure.Service.Rental
             // _context.Configuration.ProxyCreationEnabled = false;
             return _context.Quotes.AsNoTracking().Where(q => q.IsActive == true && q.Id == Id).SingleOrDefault();
         }
-
         public void saveQuote(Quote quoteObj)
         {
             if (quoteObj != null && quoteObj.Id != 0)
@@ -458,11 +464,11 @@ namespace MobileHome.Insure.Service.Rental
                                     isOtherAnyParam = true;
                                 }
                             }
-                            //else if (searchParam.SearchColumn[idx] == "InsuredName") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
-                            //else if (searchParam.SearchColumn[idx] == "InsuredAddress") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
-                            //else if (searchParam.SearchColumn[idx] == "InsuredPhone") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
-                            //else if (searchParam.SearchColumn[idx] == "InsuredEmail") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
-                            //else if (searchParam.SearchColumn[idx] == "PolicyNumber") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "InsuredName") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "InsuredAddress") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "InsuredPhone") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "InsuredEmail") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
+                            else if (searchParam.SearchColumn[idx] == "ProposalNumber") { Quote.ProposalNumber = searchParam.SearchColumnValue[idx]; isOtherAnyParam = true; }
                         }
                     }
                 }
@@ -470,9 +476,11 @@ namespace MobileHome.Insure.Service.Rental
             }
             return Quote;
         }
-        public List<QuoteDto> GetPolicies()
+        public List<QuoteDto> GetPolicies(DateTime? dateRange = null)
         {
-            var policyList = _context.Quotes.Where(c => c.IsActive == true &&
+            if (dateRange == null)
+                dateRange = DateTime.Now.AddYears(-100);
+            var policyList = _context.Quotes.Where(c => c.IsActive == true && c.CreationDate > dateRange &&
             ((c.Payments.Where(x => x.TransactionId != null).Any()) || c.IsParkSitePolicy == true)).ToList();
             return policyList.Select(x => new QuoteDto
             {
@@ -483,7 +491,10 @@ namespace MobileHome.Insure.Service.Rental
                 Premium = x.Premium,
                 EffectiveDate = x.EffectiveDate,
                 NoOfInstallments = x.NoOfInstallments,
-                SendLandLord = x.SendLandLord
+                SendLandLord = x.SendLandLord,
+                PremiumChargedToday = x.PremiumChargedToday == null ? 0 : x.PremiumChargedToday.Value,
+                TotalChargedToday = x.TotalChargedToday == null ? 0 : x.TotalChargedToday.Value,
+                CreationDate = x.CreationDate
             }).ToList();
 
         }
@@ -574,7 +585,7 @@ namespace MobileHome.Insure.Service.Rental
         #endregion
 
         #region Payment
-        public List<Model.Payment> GetPayments()
+        public List<Model.Payment> GetPayments(DateTime? dateRange = null)
         {
             _context.Configuration.ProxyCreationEnabled = false;
             return _context.Payments.AsNoTracking().Where(c => c.IsActive == true).ToList();

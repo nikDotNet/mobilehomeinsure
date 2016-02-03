@@ -17,6 +17,7 @@ namespace MobileHome.Insure.Model.DTO
        public decimal Premium {get; set;}
        public decimal? PersonalProperty { get; set; }
        public decimal? Liability { get; set; }
+       public string EffectiveDate { get; set; }
        public string ExpiryDate { get; set; }
        public string SiteRental { get; set; }
        public string CompanyName { get; set; }

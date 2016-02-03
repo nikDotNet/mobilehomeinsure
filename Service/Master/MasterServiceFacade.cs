@@ -340,6 +340,7 @@ namespace MobileHome.Insure.Service.Master
                 Liability = (x.Quote != null ? Convert.ToDecimal(x.Quote.Liability) : 0),
                 PersonalProperty = (x.Quote != null ? Convert.ToDecimal(x.Quote.PersonalProperty) : 0),
                 ExpiryDate = (x.Quote != null ? Convert.ToString(x.Quote.ExpiryDate.HasValue ? x.Quote.ExpiryDate.Value.ToShortDateString() : null) : ""),
+                EffectiveDate = (x.Quote != null ? Convert.ToString(x.Quote.EffectiveDate.HasValue ? x.Quote.EffectiveDate.Value.ToShortDateString() : null) : ""),
                 Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
                 SiteNumber = Convert.ToInt32(x.SiteNumber)
             }).OrderByDescending(t=>t.Id).ToList();
@@ -371,6 +372,7 @@ namespace MobileHome.Insure.Service.Master
                             else if (searchParam.SearchColumn[idx] == "TenantLastName") parkObj.TenantLastName = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "Premium") parkObj.Premium = Convert.ToDecimal(searchParam.SearchColumnValue[idx]);
                             else if (searchParam.SearchColumn[idx] == "ExpiryDate") parkObj.ExpiryDate = searchParam.SearchColumnValue[idx];
+                            else if (searchParam.SearchColumn[idx] == "EffectiveDate") parkObj.EffectiveDate = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "SiteRental") parkObj.SiteRental = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "CompanyName") parkObj.CompanyName = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "Liability") parkObj.Liability = Convert.ToDecimal(searchParam.SearchColumnValue[idx]);
@@ -423,6 +425,8 @@ namespace MobileHome.Insure.Service.Master
                         (Liability == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.Quote.Liability).StartsWith(SqlFunctions.StringConvert((double)Liability))) &&
                         (string.IsNullOrEmpty(ParkDto.TenantFirstName) ? 1 == 1 : m.TenantFirstName.ToUpper().StartsWith(ParkDto.TenantFirstName)) &&
                         (string.IsNullOrEmpty(ParkDto.TenantLastName) ? 1 == 1 : m.TenantLastName.ToUpper().StartsWith(ParkDto.TenantLastName)) &&
+                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.EffectiveDate.HasValue ? m.Quote.EffectiveDate.Value.ToShortDateString() : "").StartsWith(ParkDto.EffectiveDate)) &&
+                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.ExpiryDate.HasValue ? m.Quote.ExpiryDate.Value.ToShortDateString() : "").StartsWith(ParkDto.ExpiryDate)) &&
                         m.IsActive == true
                     ).ToList();
 
@@ -440,6 +444,7 @@ namespace MobileHome.Insure.Service.Master
                         TenantLastName = x.TenantLastName,
                         Liability = (x.Quote != null ? Convert.ToDecimal(x.Quote.Liability) : 0),
                         PersonalProperty = (x.Quote != null ? Convert.ToInt32(x.Quote.PersonalProperty) : 0),
+                        EffectiveDate = (x.Quote != null ? Convert.ToString(x.Quote.EffectiveDate.HasValue ? x.Quote.EffectiveDate.Value.ToShortDateString() : null) : ""),
                         ExpiryDate = (x.Quote != null ? Convert.ToString(x.Quote.ExpiryDate.HasValue ? x.Quote.ExpiryDate.Value.ToShortDateString() : null) : ""),
                         Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
                         SiteNumber = Convert.ToInt32(x.SiteNumber),
@@ -721,7 +726,6 @@ namespace MobileHome.Insure.Service.Master
         }
 
         #endregion
-
 
         #region Common methods for Date operation
         public static string GetDateFormatAsString(DateTime date)

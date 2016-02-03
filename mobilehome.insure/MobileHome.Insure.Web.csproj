@@ -172,6 +172,7 @@
     <Compile Include="Areas\Admin\Controllers\ReportingController.cs" />
     <Compile Include="Areas\Admin\Helpers\CSVExportExtension.cs" />
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
+    <Compile Include="Areas\Admin\Models\DashboardViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ImportCsvStatus.cs" />
     <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ParkSitesViewModel.cs" />
@@ -1011,6 +1012,8 @@
     <Content Include="Content\img\header-about-us.png" />
     <Content Include="Content\img\header-appraisal.png" />
     <Content Include="Content\img\header-renters-app.png" />
+    <Content Include="Content\img\Off.png" />
+    <Content Include="Content\img\On.png" />
     <Content Include="Content\img\support-header.png" />
     <Content Include="Content\img\tabs\1.png" />
     <Content Include="Content\img\bg-pattern.jpg" />

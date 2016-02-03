@@ -39,7 +39,7 @@ namespace mobilehome.insure.Models.JQDataTable
         private static T entity;
 
         public static IList<T> GetFilteredRecords(
-            Func<List<T>> runTimeMethod,
+            Func<DateTime?, List<T>> runTimeMethod,
             int startIndex, int pageSize,
             ReadOnlyCollection<SortedColumn> sortedColumns,
             out int totalRecordCount,
@@ -49,7 +49,7 @@ namespace mobilehome.insure.Models.JQDataTable
             List<string> properties)
         {
             
-            var types = runTimeMethod();
+            var types = runTimeMethod(null);
            
             totalRecordCount = types.Count;
 
@@ -159,7 +159,4 @@ namespace mobilehome.insure.Models.JQDataTable
             return (filtered != null && filtered.Count() > 0) ? filtered : null;
         }
     }
-
-    
-    
 }

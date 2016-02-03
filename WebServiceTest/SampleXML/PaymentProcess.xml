@@ -1,5 +1,5 @@
 ﻿<root>
-  <polnbr>4200900006</polnbr>
+  <polnbr>4200900038</polnbr>
   <cmpcod>01</cmpcod>
   <pmttyp>SW</pmttyp>
   <billtype>DIRECT BILL</billtype>
@@ -9,8 +9,8 @@
   <latefee />
   <reinsfee />
   <payopt>1</payopt>
-  <trndat>12152015</trndat>
-  <trntim>09:36</trntim>
+  <trndat>01272016</trndat>
+  <trntim>11:00</trntim>
   <payee>Zach Richards</payee>
   <nsffee />
   <prcemp />

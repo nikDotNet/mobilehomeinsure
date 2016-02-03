@@ -19,22 +19,22 @@ namespace MobileHome.Insure.Service.Rental
         bool SendLandlord(int quoteId, bool SendLandlord);
         bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage, DateTime creationDate);
 
-        List<Customer> GetCustomers();
+        List<Customer> GetCustomers(DateTime? dateRange = null);
         List<Customer> GetCustomers(SearchParameter searchParam);
 
         Customer GetCustomerById(int Id);
 
         List<QuoteDto> GetQuotes(SearchParameter searchParam);
-        List<QuoteDto> GetQuotes();
+        List<QuoteDto> GetQuotes(DateTime? dateRange = null);
 
         Quote GetQuoteById(int Id);
 
-        List<QuoteDto> GetPolicies();
+        List<QuoteDto> GetPolicies(DateTime? dateRange = null);
         List<QuoteDto> GetPolicies(SearchParameter searchParam);
 
         Model.Payment GetPolicyReceiptById(int quoteId);
 
-        List<MobileHome.Insure.Model.Payment> GetPayments();
+        List<MobileHome.Insure.Model.Payment> GetPayments(DateTime? dateRange = null);
         List<MobileHome.Insure.Model.Payment> GetPayments(SearchParameter searchParam);
 
         bool SaveCustomerInfo(int id, string delType);

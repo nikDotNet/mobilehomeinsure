@@ -3,7 +3,7 @@
 <returnc>Q</returnc>
 <premwrit>316.00</premwrit>
 <policynbr>4200001254</policynbr>
-<progmode>A</progmode>
+<progmode>Q</progmode>
 <effdate>06/14/2015</effdate>
 <productcde>42DT</productcde>
 <lstate>SC</lstate>
@@ -90,10 +90,23 @@
     <written_premium></written_premium>
     <inforce_premium></inforce_premium>
   </cov_item>
-  
-  
 
+  <cov_item>
+    <cov_name>thirdpartydesignee</cov_name>
+  </cov_item>
 </covinfo>
+  
+  <addl_exposure>
+    <ae_thirdpartydesignee>
+      <name>Stevens MH Park</name>
+      <addr1>9823 Park Dr</addr1>
+      <addr2/>
+      <city>Hampton</city>
+      <state>IN</state>
+      <zip>47777</zip>
+      <ai_desc/>
+    </ae_thirdpartydesignee>
+  </addl_exposure>
 
 </unitinfo>
 <pplinfo>
@@ -117,6 +130,7 @@
 <reltoapp></reltoapp>
 </pplinfo>
 </root>
+
 
 
 
