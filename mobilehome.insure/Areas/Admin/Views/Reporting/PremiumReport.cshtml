@@ -260,7 +260,7 @@
             }).fail(function (error) {
                 //debugger;
                 bootbox.dialog({
-                    message: error.responseText,
+                    message: "Error: " + error.responseText,
                     title: "Error",
                     buttons: {
                         main: {

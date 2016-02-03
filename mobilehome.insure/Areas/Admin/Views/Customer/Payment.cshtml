@@ -57,10 +57,7 @@
                             <th>
                                 Transaction Id
                             </th>
-                            <th>
-                                Response Code
-                            </th>
-                            <th>
+                             <th>
                                 Approval Code
                             </th>
                             <th>
@@ -68,6 +65,9 @@
                             </th>
                             <th>
                                 Amount
+                            </th>
+                            <th>
+                                Transaction Date
                             </th>
                             <th>
                                 Action
@@ -81,9 +81,6 @@
                                 Transaction Id
                             </th>
                             <th>
-                                Response Code
-                            </th>
-                            <th>
                                 Approval Code
                             </th>
                             <th>
@@ -91,6 +88,9 @@
                             </th>
                             <th>
                                 Amount
+                            </th>
+                            <th>
+                                Transaction Date
                             </th>
                             <th>
                                 Action
@@ -123,10 +123,10 @@
                     //"bVisible": false
                 },
                 { "mDataProp": "TransactionId" },
-                { "mDataProp": "ResponseCode" },
                 { "mDataProp": "ApprovalCode" },
                 { "mDataProp": "ApprovalMessage" },
                 { "mDataProp": "Amount" },
+                { "mDataProp": "CreationDate" },
                 //{ "mDataProp": "Zip" },
                 {
                     data: null,
@@ -163,8 +163,12 @@
 
         function rowCallbackHandler(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             $('td:eq(6)', nRow).find('a').each(function (index, element) {
-                //debugger;
-
+              
+                //resolving date problem
+                if (($(element).data("type") == "payment")) {
+                    var effectiveDate = new Date(parseInt(aData.CreationDate.replace("/Date(", "").replace(")/", ""), 10));
+                    $('td:eq(5)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
+                }
                 if ($(element).hasClass("delete-link")) {
                     $(element).attr('href', $(element).attr('href') + aData.Id + "&delType=" + $(element).data('type'));
                 }

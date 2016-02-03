@@ -118,11 +118,12 @@ namespace MobileHome.Insure.Web.Controllers
             int customerId = TempData["CustomerId"] == null ? 0 : Convert.ToInt32(TempData["CustomerId"]);
             int quoteId = TempData["QuoteId"] == null ? 0 : Convert.ToInt32(TempData["QuoteId"]);
             string proposalNumber = TempData["ProposalNumber"].ToString();
+            Quote quoteObject = _serviceFacade.GetQuoteById(quoteId);
+            model.Amount = quoteObject.TotalChargedToday.Value;
             int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId);
             Customer customerObject = _serviceFacade.GetCustomerById(customerId);
-            Quote quoteObject = _serviceFacade.GetQuoteById(quoteId);
             quoteObject.ProposalNumber = "";
-            model.Amount = quoteObject.TotalChargedToday.Value;
+            
 
             PaymentRequest request = new PaymentRequest
             {
