@@ -363,14 +363,12 @@ namespace MobileHome.Insure.Service.Rental
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.Quotes.Where(c => c.IsActive == true &&
-                                                    string.IsNullOrEmpty(c.ProposalNumber) &&
-                                                    ((c.Payments.Where(x => x.TransactionId != null).Any()))
+                                                    string.IsNullOrEmpty(c.ProposalNumber)                                                   
                                                     ).Count();
 
                     items = _context.Quotes.Where(c => c.IsActive == true &&
-                                                 ((c.Payments.Where(x => x.TransactionId != null).Any()) &&
-                                                 string.IsNullOrEmpty(c.ProposalNumber.Trim())
-                                                 )).OrderByDescending(x => x.Id)
+                                                  string.IsNullOrEmpty(c.ProposalNumber.Trim())
+                                                 ).OrderByDescending(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
                                                 ToList();

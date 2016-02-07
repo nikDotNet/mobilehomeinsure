@@ -8,6 +8,6 @@ namespace MobileHoome.Insure.ExtService
 {
     interface ISendPaymentService
     {
-        bool makePayment(string policyNumber, string customerName, string paymentID, string paymentAmount, string processingFee, string numberOfInstallments, DateTime transcationDateTime);
+        bool makePayment(string policyNumber, string customerName, string paymentID, string paymentAmount, string numberOfInstallments, DateTime transcationDateTime);
     }
 }

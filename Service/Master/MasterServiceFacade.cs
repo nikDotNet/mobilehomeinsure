@@ -402,7 +402,8 @@ namespace MobileHome.Insure.Service.Master
                     searchParam.TotalRecordCount = _context.ParkSites.Where(p => p.IsActive == true).Count();
                     items = _context.ParkSites.Include("State")
                         .Include("Park")
-                        .Include("Quote").Where(p => p.IsActive == true).
+                        .Include("Quote")
+                        .Include("Quote.Company").Where(p => p.IsActive == true).
                     OrderByDescending(x => x.Id)
                     .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ? searchParam.PageSize : searchParam.TotalRecordCount)).
                     ToList();

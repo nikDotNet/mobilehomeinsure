@@ -114,9 +114,7 @@
                             <th>
                                 ApprovalCode
                             </th>
-                            <th>
-                                ApprovalMessage
-                            </th>
+                           
                             @*<th>
                                     ErrorMessage
                                 </th>*@
@@ -250,8 +248,7 @@
                     return "<tr><td>" + item.CustomerId + "</td><td>" + item.CustomerName + "</td><td>" +
                                      item.Phone + "</td><td>" + item.Email + "</td><td>" +
                                    item.ZipCode + "</td><td>" + item.TotalPremium + "</td><td>" +
-                             item.TransactionId + "</td><td>" + item.ApprovalCode + "</td><td>" +
-                           item.ApprovalMessage + "</td><td>" + item.ProposalNumber + "</td><td>" +
+                             item.TransactionId + "</td><td>" + item.ApprovalCode + "</td><td>" + item.ProposalNumber + "</td><td>" +
                (item.CreationDateStr == null ? "" : item.CreationDateStr) + "</td></tr>"; //+ "</td><td>" + (item.CreatedBy == null ? "" : item.CreatedBy)
                 }).join("");
                 tbody.append(html);

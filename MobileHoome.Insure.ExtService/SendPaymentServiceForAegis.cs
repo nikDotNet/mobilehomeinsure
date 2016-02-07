@@ -12,7 +12,7 @@ namespace MobileHoome.Insure.ExtService
 {
     public class SendPaymentServiceForAegis : ISendPaymentService
     {
-        public bool makePayment(string policyNumber, string customerName, string paymentID, string paymentAmount, string processingFee, string numberOfInstallments, DateTime transcationDateTime)
+        public bool makePayment(string policyNumber, string customerName, string paymentID, string paymentAmount, string numberOfInstallments, DateTime transcationDateTime)
         {   
             PaymentInfo pmtInfo = new PaymentInfo
             {
