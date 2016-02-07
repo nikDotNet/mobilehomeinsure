@@ -331,7 +331,7 @@ namespace MobileHome.Insure.Service.Rental
             if (dateRange == null)
                 dateRange = DateTime.Now.AddYears(-100);
 
-            var quoteList = _context.Quotes.Where(c => c.IsActive == true && c.CreationDate > dateRange && (c.Payments.Where(x => x.TransactionId == null).Any())).ToList();
+            var quoteList = _context.Quotes.Where(c => c.IsActive == true && c.CreationDate > dateRange  && (c.Payments.Where(x => x.TransactionId == null).Any())).ToList();
             return quoteList.Select(x => new QuoteDto
             {
                 Id = x.Id,
@@ -519,14 +519,12 @@ namespace MobileHome.Insure.Service.Rental
                 if (!searchParam.IsFilterValue)
                 {
                     searchParam.TotalRecordCount = _context.Quotes.Where(c => c.IsActive == true &&
-                                                 !string.IsNullOrEmpty(c.ProposalNumber) &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
                                                  || c.IsParkSitePolicy == true)).Count();
 
                     items = _context.Quotes.Include("Customer").Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
-                                                 || c.IsParkSitePolicy == true) &&
-                                                 !string.IsNullOrEmpty(c.ProposalNumber)).OrderByDescending(x => x.Id)
+                                                 || c.IsParkSitePolicy == true)).OrderByDescending(x => x.Id)
                                                 .Skip(searchParam.StartIndex).Take((searchParam.PageSize > 0 ?
                                                 searchParam.PageSize : searchParam.TotalRecordCount)).
                                                 ToList();
@@ -538,7 +536,7 @@ namespace MobileHome.Insure.Service.Rental
                         .Where(c => c.IsActive == true &&
                                                  ((c.Payments.Where(x => x.TransactionId != null).Any())
                                                  || c.IsParkSitePolicy == true) &&
-                                                 !string.IsNullOrEmpty(c.ProposalNumber) &&
+
                                                  (Quote.Id == 0 ? 1 == 1 : c.Id == Quote.Id) &&
                                                  (string.IsNullOrEmpty(Quote.ProposalNumber) ? 1 == 1 : c.ProposalNumber.ToUpper().StartsWith(Quote.ProposalNumber.ToUpper())) &&
                                                  (string.IsNullOrEmpty(InsuredName) ? 1 == 1 : c.Customer.FirstName.ToUpper().StartsWith(InsuredName.ToUpper())) &&
