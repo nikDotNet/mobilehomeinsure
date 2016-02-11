@@ -45,8 +45,11 @@ namespace MobileHoome.Insure.ExtService
                                                         GetCoverItemInfo(CoverType.deductible, deductible: quote.Deductible),
                                                         GetCoverItemInfo(CoverType.lou, limit: quote.LOU),
                                                         GetCoverItemInfo(CoverType.liability, limit: quote.Liability),
-                                                        GetCoverItemInfo(CoverType.medpay, limit: quote.MedPay)
+                                                        GetCoverItemInfo(CoverType.medpay, limit: quote.MedPay),
+                                                        GetCoverItemInfo(CoverType.thirdpartydesignee)
                                                         ));
+                rootEle.Element("unitinfo").Add(new XElement("addl_exposure",
+                                                               GetAdditionalExposure(customerInfo.Park)));
 
                 //Call service and get the result with Premium
                 ServiceSoapClient sClient = new ServiceSoapClient();
@@ -69,6 +72,20 @@ namespace MobileHoome.Insure.ExtService
                 }
             }
             return premium;
+        }
+
+        private XElement GetAdditionalExposure(Park park)
+        {
+            var additionalExposure = new ThirdPartyDesignee()
+            {
+                name = park.ParkName,
+                addr1 = park.PhysicalAddress,
+                addr2 = park.PhysicalAddress2,
+                city = park.PhysicalCity,
+                state = park.PhysicalState.Name,
+                zip = park.PhysicalZip.ToString()
+            };
+            return Helpers.Extensions.ToXml(additionalExposure);
         }
 
 
@@ -198,6 +215,8 @@ namespace MobileHoome.Insure.ExtService
                 case CoverType.medpay:
                     coverItem.limit = limit.HasValue ? limit.Value.ToString() : "500";
                     coverItem.written_premium = coverItem.inforce_premium = coverItem.deductible = string.Empty;
+                    break;
+                case CoverType.thirdpartydesignee:
                     break;
             }
 

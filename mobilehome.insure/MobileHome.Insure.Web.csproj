@@ -1006,6 +1006,7 @@
     <Content Include="Content\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\about-us-header.png" />
+    <Content Include="Content\img\bg-pattern.jpg" />
     <Content Include="Content\img\clients\aegis.jpg" />
     <Content Include="Content\img\fav.png" />
     <Content Include="Content\img\favicon.ico" />
@@ -1016,7 +1017,7 @@
     <Content Include="Content\img\On.png" />
     <Content Include="Content\img\support-header.png" />
     <Content Include="Content\img\tabs\1.png" />
-    <Content Include="Content\img\bg-pattern.jpg" />
+    <Content Include="Content\img\bg-patternOLD211.jpg" />
     <Content Include="Content\img\bg-patternOLD.png" />
     <Content Include="Content\img\bg-patterntrash.jpg" />
     <Content Include="Content\img\blog\1-big.jpg" />

@@ -50,7 +50,9 @@ namespace MobileHoome.Insure.ExtService.Models
         [EnumMember]
         liability,
         [EnumMember]
-        medpay
+        medpay,
+        [EnumMember]
+        thirdpartydesignee,
 
     }
 }

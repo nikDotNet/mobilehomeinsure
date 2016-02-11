@@ -54,6 +54,7 @@
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="ICalculateHomePremiumService.cs" />
     <Compile Include="ISendPaymentService.cs" />
+    <Compile Include="Models\AdditionalExposureInfo.cs" />
     <Compile Include="Models\CoverItemInfo.cs" />
     <Compile Include="Models\HouseUnitInfo.cs" />
     <Compile Include="Models\PaymentInfo.cs" />
