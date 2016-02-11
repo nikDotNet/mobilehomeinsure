@@ -9,7 +9,7 @@ namespace MobileHome.Insure.Model.DTO
    public class ParkSiteDto
     {
       public int Id { get; set; }
-      public int? SiteNumber { get; set; }
+      public string SiteNumber { get; set; }
       public long ParkId { get; set; }
        public string ParkName { get; set; }
        public string TenantFirstName { get; set; }

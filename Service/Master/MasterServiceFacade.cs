@@ -342,7 +342,7 @@ namespace MobileHome.Insure.Service.Master
                 ExpiryDate = (x.Quote != null ? Convert.ToString(x.Quote.ExpiryDate.HasValue ? x.Quote.ExpiryDate.Value.ToShortDateString() : null) : ""),
                 EffectiveDate = (x.Quote != null ? Convert.ToString(x.Quote.EffectiveDate.HasValue ? x.Quote.EffectiveDate.Value.ToShortDateString() : null) : ""),
                 Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
-                SiteNumber = Convert.ToInt32(x.SiteNumber)
+                SiteNumber = x.SiteNumber
             }).OrderByDescending(t=>t.Id).ToList();
 
             return rtnItems;
@@ -367,7 +367,7 @@ namespace MobileHome.Insure.Service.Master
                             if (searchParam.SearchColumn[idx] == "Id") parkObj.Id = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
                             else if (searchParam.SearchColumn[idx] == "ParkId") parkObj.ParkId = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
                             else if (searchParam.SearchColumn[idx] == "ParkName") parkObj.ParkName = searchParam.SearchColumnValue[idx];
-                            else if (searchParam.SearchColumn[idx] == "SiteNumber") parkObj.SiteNumber = Convert.ToInt32(searchParam.SearchColumnValue[idx]);
+                            else if (searchParam.SearchColumn[idx] == "SiteNumber") parkObj.SiteNumber = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "TenantFirstName") parkObj.TenantFirstName = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "TenantLastName") parkObj.TenantLastName = searchParam.SearchColumnValue[idx];
                             else if (searchParam.SearchColumn[idx] == "Premium") parkObj.Premium = Convert.ToDecimal(searchParam.SearchColumnValue[idx]);
@@ -392,7 +392,7 @@ namespace MobileHome.Insure.Service.Master
             {
                 List<ParkSite> items = null;
                 ParkSiteDto ParkDto = GetParkSiteObject(searchParam);
-                Int32 SiteNumber = Convert.ToInt32(ParkDto.SiteNumber);
+                string SiteNumber = ParkDto.SiteNumber;
                 decimal Premium = Convert.ToDecimal(ParkDto.Premium);
                 decimal Liability = ParkDto.Liability.HasValue ? Convert.ToDecimal(ParkDto.Liability) : 0;
                 decimal PersonalProperty = ParkDto.PersonalProperty.HasValue ? Convert.ToDecimal(ParkDto.PersonalProperty) : 0;
@@ -418,7 +418,7 @@ namespace MobileHome.Insure.Service.Master
                         (ParkDto.Id == 0 ? 1 == 1 : m.Id == ParkDto.Id) &&
                         (ParkDto.ParkId == 0 ? 1 == 1 : m.ParkId == ParkDto.ParkId) &&
                         (string.IsNullOrEmpty(ParkDto.ParkName) ? 1 == 1 : m.Park.ParkName.ToUpper().StartsWith(ParkDto.ParkName.ToUpper())) &&
-                        (SiteNumber == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.SiteNumber).StartsWith(SqlFunctions.StringConvert((double)SiteNumber))) &&
+                        (string.IsNullOrEmpty(SiteNumber) ? 1 == 1 : m.SiteNumber.ToUpper().StartsWith(SiteNumber)) &&
                         (Premium == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.Quote.Premium).StartsWith(SqlFunctions.StringConvert((double)Premium))) &&
                         (string.IsNullOrEmpty(ParkDto.CompanyName) ? 1 == 1 : m.Quote.Company.Name.ToUpper().StartsWith(ParkDto.CompanyName.ToUpper())) &&
                         (string.IsNullOrEmpty(ParkDto.SiteRental) ? 1 == 1 : m.SiteRental.ToUpper().StartsWith(ParkDto.SiteRental.ToUpper())) &&
@@ -448,7 +448,7 @@ namespace MobileHome.Insure.Service.Master
                         EffectiveDate = (x.Quote != null ? Convert.ToString(x.Quote.EffectiveDate.HasValue ? x.Quote.EffectiveDate.Value.ToShortDateString() : null) : ""),
                         ExpiryDate = (x.Quote != null ? Convert.ToString(x.Quote.ExpiryDate.HasValue ? x.Quote.ExpiryDate.Value.ToShortDateString() : null) : ""),
                         Premium = (x.Quote != null ? Convert.ToInt32(x.Quote.Premium) : 0),
-                        SiteNumber = Convert.ToInt32(x.SiteNumber),
+                        SiteNumber = x.SiteNumber,
                     }
                 ).ToList();
 

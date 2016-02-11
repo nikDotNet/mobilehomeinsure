@@ -10,7 +10,7 @@ namespace MobileHome.Insure.Model
     public partial class ParkSite : Base.BaseEntity
     {
         public Nullable<int> ParkId { get; set; }
-        public Nullable<int> SiteNumber { get; set; }
+        public string SiteNumber { get; set; }
         public string TenantFirstName { get; set; }
         public string TenantLastName { get; set; }
         public string TenantEmail { get; set; }

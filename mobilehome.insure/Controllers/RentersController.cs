@@ -183,9 +183,7 @@ namespace MobileHome.Insure.Web.Controllers
         }
 
         private void SaveParkSite(int quoteId, Customer customerObject, Quote quoteObject)
-        {
-            int tmpSiteNumber;
-            int? nullInt = null;
+        {   
             ParkSite parkSite = new ParkSite()
             {
                 TenantFirstName = customerObject.FirstName,
@@ -200,7 +198,7 @@ namespace MobileHome.Insure.Web.Controllers
                 //State = customerObject.State
                 TenantEmail = customerObject.Email,
                 TenantPhoneNumber = customerObject.Phone,
-                SiteNumber = int.TryParse(customerObject.SiteNumber, out tmpSiteNumber) ? tmpSiteNumber : nullInt
+                SiteNumber = customerObject.SiteNumber
             };
 
             _masterServiceFacade.SaveParkSite(parkSite);
