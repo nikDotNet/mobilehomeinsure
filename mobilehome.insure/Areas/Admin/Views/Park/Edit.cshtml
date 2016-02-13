@@ -20,6 +20,13 @@
                         @Html.ValidationMessageFor(x => x.CurrentPark.ParkName, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentPark.Subproducer, new { @class = "control-label" })
+                        @Html.TextBoxFor(x => x.CurrentPark.Subproducer, new { @class = "form-control input-medium" })
+                        @Html.ValidationMessageFor(x => x.CurrentPark.Subproducer, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </div>
 
             <!-- Physical address-->

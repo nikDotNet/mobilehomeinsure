@@ -492,6 +492,7 @@ namespace MobileHome.Insure.Service.Master
                     else
                     {
                         existingObj.ParkName = parkObj.ParkName;
+                        existingObj.Subproducer = parkObj.Subproducer;
                         existingObj.PhysicalAddress = parkObj.PhysicalAddress;
                         existingObj.PhysicalAddress2 = parkObj.PhysicalAddress2;
                         existingObj.PhysicalCity = parkObj.PhysicalCity;

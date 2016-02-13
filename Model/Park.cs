@@ -89,6 +89,7 @@ namespace MobileHome.Insure.Model
         public string OwnerCsvState { get; set; }
 
         public string OwnerZip { get; set; }
+        public string Subproducer { get; set; }
 
         public bool IsOn { get; set; }
 

@@ -93,6 +93,8 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.OwnerZip)
               .HasMaxLength(15);
 
+            this.Property(t => t.Subproducer)
+                .HasMaxLength(10);
 
             this.Property(t => t.CreatedBy).HasMaxLength(50);
 
@@ -148,6 +150,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
             this.Property(t => t.IsActive).HasColumnName("IsActive");
             this.Property(t => t.IsOn).HasColumnName("IsOn");
+            this.Property(t => t.Subproducer).HasColumnName("Subproducer");
 
             // Relationships
             this.HasRequired(t => t.PhysicalState)

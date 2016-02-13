@@ -82,6 +82,7 @@ namespace mobilehome.insure.Helper.DataImport
         public ParkFieldMap()
         {
             Map(m => m.ParkName).Name("PARK NAME");
+            Map(m => m.Subproducer).Name("SUBPRODUCER");
 
             Map(m => m.PhysicalAddress).Name("PHYSICAL ADDRESS");
             Map(m => m.PhysicalAddress2).Name("PHYSICAL ADDRESS 2");
