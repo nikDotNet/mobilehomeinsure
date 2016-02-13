@@ -4,6 +4,7 @@ using MobileHoome.Insure.ExtService.AegisRental;
 using MobileHoome.Insure.ExtService.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
@@ -52,13 +53,14 @@ namespace MobileHoome.Insure.ExtService
                                                                GetAdditionalExposure(customerInfo.Park)));
 
                 //Call service and get the result with Premium
-                ServiceSoapClient sClient = new ServiceSoapClient();
+                ServiceSoapClient sClient = new ServiceSoapClient(ConfigurationManager.AppSettings["ServiceConfigName"]);
                 sClient.InnerChannel.OperationTimeout = new TimeSpan(0, 10, 0);
 
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(rootEle.ToString());
                 XmlNode xnode = doc.FirstChild;
-                XmlNode result = sClient.QuotePolicy("edb8f159-416a-4a2f-8018-61463980b727", xnode, "AGHO", AstecProcessingMode.SubmitOverride);
+
+                XmlNode result = sClient.QuotePolicy(ConfigurationManager.AppSettings["PasskeyForAegisService"], xnode, "AGHO", AstecProcessingMode.SubmitOverride);
 
                 if (result != null)
                 {
