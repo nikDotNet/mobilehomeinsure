@@ -410,6 +410,14 @@ namespace MobileHome.Insure.Service.Master
                 }
                 else
                 {
+                    DateTime dtoEffectiveDate = DateTime.Now;
+                    DateTime dtoExpiryDate = DateTime.Now; 
+
+                    if (!string.IsNullOrEmpty(ParkDto.EffectiveDate))
+                        dtoEffectiveDate = DateTime.Parse(ParkDto.EffectiveDate);
+                    else if (!string.IsNullOrEmpty(ParkDto.ExpiryDate))
+                        dtoExpiryDate = DateTime.Parse(ParkDto.ExpiryDate);
+
                     items = _context.ParkSites.Include("State")
                         .Include("Park")
                         .Include("Quote")
@@ -426,8 +434,8 @@ namespace MobileHome.Insure.Service.Master
                         (Liability == 0 ? 1 == 1 : SqlFunctions.StringConvert((double)m.Quote.Liability).StartsWith(SqlFunctions.StringConvert((double)Liability))) &&
                         (string.IsNullOrEmpty(ParkDto.TenantFirstName) ? 1 == 1 : m.TenantFirstName.ToUpper().StartsWith(ParkDto.TenantFirstName)) &&
                         (string.IsNullOrEmpty(ParkDto.TenantLastName) ? 1 == 1 : m.TenantLastName.ToUpper().StartsWith(ParkDto.TenantLastName)) &&
-                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.EffectiveDate.HasValue ? m.Quote.EffectiveDate.Value.ToShortDateString() : "").StartsWith(ParkDto.EffectiveDate)) &&
-                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.ExpiryDate.HasValue ? m.Quote.ExpiryDate.Value.ToShortDateString() : "").StartsWith(ParkDto.ExpiryDate)) &&
+                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.EffectiveDate.HasValue ? m.Quote.EffectiveDate.Value : DateTime.MinValue) == dtoEffectiveDate) &&
+                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.ExpiryDate.HasValue ? m.Quote.ExpiryDate.Value : DateTime.MinValue) == dtoExpiryDate) &&
                         m.IsActive == true
                     ).ToList();
 
