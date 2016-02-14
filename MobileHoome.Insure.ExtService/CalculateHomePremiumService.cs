@@ -19,7 +19,6 @@ namespace MobileHoome.Insure.ExtService
     {
         private static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
 
-
         public decimal GetPremiumDetail(MobileHome.Insure.Model.Rental.Quote quote, bool generatePolicy = false)
         {
             decimal premium = 0;
@@ -36,7 +35,7 @@ namespace MobileHoome.Insure.ExtService
 
                 XElement rootEle = new XElement("root",
                                         GetPolicyReturnInfo(generatePolicy,amountCharged),
-                                        GetPropertyDealerInfo(),
+                                        GetPropertyDealerInfo(string.IsNullOrEmpty(customerInfo.Park.Subproducer) ? customerInfo.Park.Id.ToString() : customerInfo.Park.Subproducer),
                                         GetPropertyInfo(customerInfo),
                                         new XElement("unitinfo", GetHouseUnitInfo(quote.PersonalProperty))
                                         );
@@ -111,12 +110,12 @@ namespace MobileHoome.Insure.ExtService
             return Helpers.Extensions.ToXml(returnInfo);
         }
 
-        private XElement GetPropertyDealerInfo()
+        private XElement GetPropertyDealerInfo(string agentSubProducerNumber)
         {
             var prd = new PropertyDealerInfo()
             {
                 agent = 2001,
-                agtsb1 = "650000",
+                agtsb1 = agentSubProducerNumber,
                 biltyp = 3
             };
 
