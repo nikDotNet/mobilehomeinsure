@@ -109,7 +109,9 @@ namespace mobilehome.insure.Areas.Admin.Controllers
 
         public ActionResult SearchPark(string parkName, int? stateId, string zipCode)
         {            
-            return Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
+           var jsonResult = Json(_masterServiceFacade.GetListParks(parkName, (stateId.HasValue ? stateId.Value : 0), zipCode), JsonRequestBehavior.AllowGet);
+           jsonResult.MaxJsonLength = int.MaxValue;
+           return jsonResult;
         }
         
         //public ActionResult LoadingPark(JQueryDataTablesModel jQueryDataTablesModel)
