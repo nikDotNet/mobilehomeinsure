@@ -48,8 +48,11 @@ namespace MobileHoome.Insure.ExtService
                                                         GetCoverItemInfo(CoverType.medpay, limit: quote.MedPay),
                                                         GetCoverItemInfo(CoverType.thirdpartydesignee)
                                                         ));
+                if(quote.SendLandLord)
+                { 
                 rootEle.Element("unitinfo").Add(new XElement("addl_exposure",
                                                                GetAdditionalExposure(customerInfo.Park)));
+                }
 
                 //Call service and get the result with Premium
                 ServiceSoapClient sClient = new ServiceSoapClient(ConfigurationManager.AppSettings["ServiceConfigName"]);
