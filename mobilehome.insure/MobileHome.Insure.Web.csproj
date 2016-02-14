@@ -1311,6 +1311,8 @@
     <None Include="Properties\PublishProfiles\mobilehomeinsuredemo - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mobilehomeinsuredemo - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\mobilehomeinsureprofile.pubxml" />
+    <None Include="Properties\PublishProfiles\mobilehomeinsuretest - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mobilehomeinsuretest - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\web_publish_mobinsure.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />

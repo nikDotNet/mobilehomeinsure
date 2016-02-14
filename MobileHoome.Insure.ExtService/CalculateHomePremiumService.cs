@@ -35,7 +35,7 @@ namespace MobileHoome.Insure.ExtService
 
                 XElement rootEle = new XElement("root",
                                         GetPolicyReturnInfo(generatePolicy,amountCharged),
-                                        GetPropertyDealerInfo(string.IsNullOrEmpty(customerInfo.Park.Subproducer) ? customerInfo.Park.Id.ToString() : customerInfo.Park.Subproducer),
+                                        GetPropertyDealerInfo(string.IsNullOrEmpty(customerInfo.Park.Subproducer) ? ConfigurationManager.AppSettings["MHISubproducerCode"] : customerInfo.Park.Subproducer),
                                         GetPropertyInfo(customerInfo),
                                         new XElement("unitinfo", GetHouseUnitInfo(quote.PersonalProperty))
                                         );
