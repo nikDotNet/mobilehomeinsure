@@ -6,7 +6,6 @@ using System.Web.Mvc;
 
 namespace mobilehome.insure.Controllers
 {
-    [Authorize]
     public class AboutController : Controller
     {
         //

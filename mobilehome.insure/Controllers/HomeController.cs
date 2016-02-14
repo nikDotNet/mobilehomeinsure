@@ -22,7 +22,7 @@ namespace MobileHome.Insure.Web.Controllers
             _serviceFacade = new Service.ServiceFacade();
         }
 
-        [Authorize]
+        
         public ActionResult Index()
         {
            // _serviceFacade.getStates();
@@ -30,20 +30,20 @@ namespace MobileHome.Insure.Web.Controllers
             return View();
         }
 
-        [Authorize]
+        
         public ActionResult AboutUs()
         {
             return View();
         }
 
-        [Authorize]
+        
         public ActionResult Contact()
         {
             ViewBag.ContactSent = false;
             return View();
         }
 
-        [Authorize]
+        
         [HttpPost]
         public ContentResult Contact(ContactViewModel objContact)
         {
@@ -75,13 +75,13 @@ namespace MobileHome.Insure.Web.Controllers
             return View();
         }
 
-        [Authorize]
+        
         public ActionResult TermsAndConditions()
         {
             return View();
         }
 
-        [Authorize]
+        
         public ActionResult PrivacyPolicy()
         {
             return View();

@@ -22,7 +22,7 @@ namespace MobileHome.Insure.Web.Controllers
             {
                 FormsAuthentication.SetAuthCookie("admin", false);
                 TempData["IsLoggedIn"] = "true";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Dashboard");
             }
             return View();
         }

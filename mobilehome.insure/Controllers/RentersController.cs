@@ -20,7 +20,6 @@ using System.Configuration;
 
 namespace MobileHome.Insure.Web.Controllers
 {
-    [Authorize]
     public class RentersController : Controller
     {
         //
