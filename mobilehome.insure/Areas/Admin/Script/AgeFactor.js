@@ -1,3 +1,5 @@
+/// <reference path="F:\work\project\mobilehomeinsure\mobilehome.insure\Content/assets/global/scripts/datatable.js" />
+
 var AgeEditable = function () {
 
     var handleTable = function () {
@@ -61,10 +63,12 @@ var AgeEditable = function () {
         }
 
         var table = $('#tblAgeFactor');
-
-      
-      
-
+        $("#reload").click(function () {
+            //alert($("#tblAgeFactor_filter input").val());
+            $("#tblAgeFactor_filter input").text("36");
+            //oTable.fnDraw();
+            //oTable.fnDraw();
+        });
         var oTable = table.dataTable({
 
             // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
@@ -100,7 +104,8 @@ var AgeEditable = function () {
             }],
             "order": [
                 [0, "desc"]
-            ] // set first column as a default sort by asc
+            ], // set first column as a default sort by asc
+            "stateSave": true
         });
 
 
