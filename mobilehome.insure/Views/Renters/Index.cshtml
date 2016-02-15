@@ -306,6 +306,8 @@
                             $("#btnParkSelContinue").css("display", "block");
                             $("#divParks").css("display", "block");
                             var datatmp = [];
+                            datatmp.length = 0;
+                            $("select option").remove();
                             $.each(data2.Result, function (index, item) {
                                 datatmp.push({
                                     id: item.Id, text: item.ParkName + "", address: item.PhysicalAddress + "", city: item.PhysicalCity + ""

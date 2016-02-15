@@ -542,10 +542,10 @@ namespace MobileHome.Insure.Service.Master
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
 
-                    if (parkObj.IsOn)
-                    {
-                        sendNotificationForPark(parkObj, true);
-                    }
+                    //if (parkObj.IsOn)
+                    //{
+                    //    sendNotificationForPark(parkObj, true);
+                    //}
                 }
             }
             else
@@ -617,11 +617,11 @@ namespace MobileHome.Insure.Service.Master
             {
                 item.CreatedBy = "admin";
                 item.CreatedDate = DateTime.Now;
-                //item.IsActive = true;
+                item.IsActive = true;
             });
             _context.Parks.AddRange(importParks);
             _context.SaveChanges();
-            importParks.ForEach(x => sendNotificationForPark(x, false));
+           // importParks.ForEach(x => sendNotificationForPark(x, false));
         }
 
         public void sendNotificationForPark(Park parkObj, bool isEdit)

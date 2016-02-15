@@ -29,6 +29,8 @@ namespace mobilehome.insure.Helper.DataImport
                     }
                     else
                         item.PhysicalZip = Convert.ToInt32(item.MapPhysicalZip);
+
+                    item.ParkName = item.ParkName.ToUpper();
                 });
                 
                 var states = new MobileHome.Insure.Service.Master.MasterServiceFacade().GetStates();
@@ -49,6 +51,8 @@ namespace mobilehome.insure.Helper.DataImport
                 {
                     record.OwnerStateId = GetStateIdByStateAbbr(states, record.OwnerCsvState);
                 }
+
+                
             }
 
             return listRec;
