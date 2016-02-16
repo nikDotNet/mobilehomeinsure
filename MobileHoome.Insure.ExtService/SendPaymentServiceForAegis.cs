@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using System.Configuration;
 
 namespace MobileHoome.Insure.ExtService
 {
@@ -37,13 +38,13 @@ namespace MobileHoome.Insure.ExtService
             XElement rootEle = new XElement("root", Helpers.Extensions.ToXml(pmtInfo).Nodes(), new XElement("proc-by"), new XElement("proc-status"));
 
             //Call service and get the result with Premium
-            ServiceSoapClient sClient = new ServiceSoapClient();
+            ServiceSoapClient sClient = new ServiceSoapClient(ConfigurationManager.AppSettings["ServiceConfigName"]);
             sClient.InnerChannel.OperationTimeout = new TimeSpan(0, 10, 0);
 
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(rootEle.ToString());
             XmlNode xnode = doc.FirstChild;
-            XmlNode result = sClient.QuotePolicy("edb8f159-416a-4a2f-8018-61463980b727", xnode, "PM", AstecProcessingMode.SubmitOverride);
+            XmlNode result = sClient.QuotePolicy(ConfigurationManager.AppSettings["PasskeyForAegisService"], xnode, "PM", AstecProcessingMode.SubmitOverride);
 
             if (result != null)
             {

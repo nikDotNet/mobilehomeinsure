@@ -15,10 +15,10 @@ namespace WebServiceTest
             ServiceSoapClient sClient = new ServiceSoapClient();
             sClient.InnerChannel.OperationTimeout = new TimeSpan(0, 10, 0);
             XmlDocument doc = new XmlDocument();
-            doc.Load(@"D:\Google Drive\TFS-Nik\ColonialGroup\teammobilehomeinsure\mobilehomeinsure\WebServiceTest\SampleXML\xmlnodesample.xml");
+            doc.Load(@"D:\Google Drive\TFS-Nik\ColonialGroup\teammobilehomeinsure\mobilehomeinsure\WebServiceTest\SampleXML\PaymentProcess.xml");
             XmlNode xnode = doc.FirstChild;
 
-            XmlNode result = sClient.QuotePolicy("62ba120e-839f-441a-a460-462cfa86a6b2", xnode, "AGHO", AstecProcessingMode.SubmitOverride);
+            XmlNode result = sClient.QuotePolicy("62ba120e-839f-441a-a460-462cfa86a6b2", xnode, "PM", AstecProcessingMode.SubmitOverride);
             Console.ReadLine();
         }
     }

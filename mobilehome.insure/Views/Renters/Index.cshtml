@@ -307,7 +307,8 @@
                             $("#divParks").css("display", "block");
                             var datatmp = [];
                             datatmp.length = 0;
-                            $("select option").remove();
+                            $("#ddlParks").empty();
+                            //$("#ddlParks").select2("val", "");
                             $.each(data2.Result, function (index, item) {
                                 datatmp.push({
                                     id: item.Id, text: item.ParkName + "", address: item.PhysicalAddress + "", city: item.PhysicalCity + ""

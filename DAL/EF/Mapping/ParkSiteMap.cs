@@ -37,7 +37,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
                 .HasMaxLength(50);
 
             this.Property(t => t.TenantPhoneNumber)
-                .HasMaxLength(10);
+                .HasMaxLength(15);
 
             this.Property(t => t.SiteRental)
                 .HasMaxLength(8);

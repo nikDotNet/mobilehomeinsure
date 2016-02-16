@@ -207,7 +207,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                     ? quoteObject.PremiumChargedToday.Value 
                     : 0,
                 infonoofremainingpmt = quoteObject != null && quoteObject.Payments.Any() 
-                    ? quoteObject.Payments.Count() - 1
+                    ? quoteObject.NoOfInstallments.Value - 1
                     : 0
 
             };

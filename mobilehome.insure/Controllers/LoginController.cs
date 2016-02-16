@@ -18,7 +18,7 @@ namespace MobileHome.Insure.Web.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel model)
         {
-            if (model.Name == "demo" && model.Password == "MobileHomeDemo2015!")
+            if ((model.Name == "admin" && model.Password == "MobileHomeInsure2015!") || (model.Name == "bburke" && model.Password == "melbourne123"))
             {
                 FormsAuthentication.SetAuthCookie("admin", false);
                 TempData["IsLoggedIn"] = "true";

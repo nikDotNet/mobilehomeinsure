@@ -216,6 +216,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Log.txt" />
     <Content Include="Areas\Admin\Script\AgeFactor.js" />
     <Content Include="Areas\Admin\Script\customer.js" />
     <Content Include="Areas\Admin\Script\park.js" />
@@ -1415,7 +1416,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Content\assets\admin\pages\media\bg\" />
     <Folder Include="Content\assets\admin\pages\media\blog\" />
     <Folder Include="Content\assets\admin\pages\media\gallery\" />

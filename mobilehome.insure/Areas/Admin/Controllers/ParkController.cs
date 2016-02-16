@@ -177,8 +177,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                             var records = mobilehome.insure.Helper.DataImport.ParkCsvImport.ParkImport(file.InputStream);
                             var parks = this._masterServiceFacade.GetParksWithOnOff();
 
-                            var findDuplicateRec = records.Where(dup => parks.Any(chk => chk.ParkName.Trim().Equals(dup.ParkName.Trim(), StringComparison.OrdinalIgnoreCase))).ToList();
-                            records.RemoveAll(rem => findDuplicateRec.Any(item => item.ParkName.Trim().Equals(rem.ParkName.Trim())));
+                            var findDuplicateRec = records.Where(dup => parks.Any(chk => chk.ParkName.Trim().Equals(dup.ParkName.Trim(), StringComparison.OrdinalIgnoreCase) && chk.PhysicalZip == dup.PhysicalZip)).ToList();
+                            records.RemoveAll(rem => findDuplicateRec.Any(item => item.ParkName.Trim().Equals(rem.ParkName.Trim()) && item.PhysicalZip == rem.PhysicalZip));
 
                             if (records != null && records.Count > 0)
                                 this._masterServiceFacade.SavePark(records);

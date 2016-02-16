@@ -1,17 +1,17 @@
 ﻿<root>
-  <polnbr>4200900038</polnbr>
+  <polnbr>4200001298</polnbr>
   <cmpcod>01</cmpcod>
   <pmttyp>SW</pmttyp>
   <billtype>DIRECT BILL</billtype>
   <pmtid />
-  <pmtamt>175.00</pmtamt>
+  <pmtamt>47.00</pmtamt>
   <procfee />
   <latefee />
   <reinsfee />
-  <payopt>1</payopt>
-  <trndat>01272016</trndat>
-  <trntim>11:00</trntim>
-  <payee>Zach Richards</payee>
+  <payopt>4</payopt>
+  <trndat>02172016</trndat>
+  <trntim>13:30</trntim>
+  <payee>bart simpson</payee>
   <nsffee />
   <prcemp />
   <polact />
