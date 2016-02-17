@@ -37,7 +37,7 @@
                     @Html.ValidationMessageFor(x => x.CSC, "", new { @class = "text-danger" })
                 </div>
 
-                <div class="col-xs-12 col-sm-4">
+                @*<div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.BillingAddressLine1)
                     @Html.TextBoxFor(x => x.BillingAddressLine1, new { @class = "le-input" })
                     @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
@@ -47,9 +47,9 @@
                     @Html.LabelFor(x => x.BillingAddressLine2)
                     @Html.TextBoxFor(x => x.BillingAddressLine2, new { @class = "le-input" })
                     @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
-                </div>
+                </div>*@
 
-                <div class="col-xs-12 col-sm-2">
+                <div class="col-xs-12 col-sm-4">
                     @Html.LabelFor(x => x.Zip)
                     @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
                     @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
@@ -85,88 +85,86 @@
     @<script>
     $(document).ready(function () {
         $("#EffectiveDate").datepicker();
-       
-            $("#btnPayment").click(function (evt) {
-                evt.preventDefault();
-                if (!$("#AcceptChargeOnCard").is(":checked"))
-                {
-                    bootbox.alert("Please check the checkbox to proceed with the payment.")
-                    return false;
-                }
-                var $form = $('#frmPayment');
-                if ($form.valid()) {
-                    $('#dvLoading').show();
-                    var ajaxOptions = {};
-                    ajaxOptions.data = JSON.stringify({
-                        NameOnCard: $("#NameOnCard").val(),
-                        CreditCardNumber: $("#CreditCardNumber").val(),
-                        ExpiryMonth: $("#ExpiryMonth").val(),
-                        ExpiryYear: $("#ExpiryYear").val(),
-                        BillingAddressLine1: $("#BillingAddressLine1").val(),
-                        BillingAddressLine2: $("#BillingAddressLine2").val(),
-                        Zip: $("#Zip").val(),
-                        NoOfInstallments: $("#NoOfInstallments").val(),
-                        CSC: $("#CSC").val()
-                    });
-                    ajaxOptions.url = "/Renters/_Step3";
-                    ajaxOptions.method = "POST";
-                    ajaxOptions.dataType = "JSON";
-                    ajaxOptions.contentType = 'application/json';
-                    var request = $.ajax(ajaxOptions);
 
-                    request.done(function (result) {
-
-                        $('#dvLoading').hide();
-
-                        if (result != "Failed") {
-
-                            $("#renterprocess").hide();
-                            $("#renterprint").show();
-                            var CustomerEmail;
-                            $.each(result, function (key, data) {
-                                var id = "#" + key;
-                                if (key == "infoEmail")
-                                    CustomerEmail = data;
-                                if (data == "$0.00") {
-                                    $(id).prev().remove();
-                                    $(id).remove();
-                                }
-                                $(id).html(data);
-                            });
-                            sendCustomerReceipt(CustomerEmail);
-                            bootbox.alert("Your Payment has been made successfully!");
-                        }
-                        else
-                        {
-                            bootbox.alert("Your Payment failed! Please try again.");
-                        }
-                        //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
-                    });
-
-                    request.fail(function (jqXHR, textStatus) {
-                         bootbox.alert("Your Payment failed! Please try again.");
-                    });
-                }
-            });
-
-            sendCustomerReceipt = function (CustomerEmail) {
+        $("#btnPayment").click(function (evt) {
+            evt.preventDefault();
+            if (!$("#AcceptChargeOnCard").is(":checked")) {
+                bootbox.alert("Please check the checkbox to proceed with the payment.")
+                return false;
+            }
+            var $form = $('#frmPayment');
+            if ($form.valid()) {
+                $('#dvLoading').show();
                 var ajaxOptions = {};
-                ajaxOptions.url = "/Renters/SendReceiptOnEmail";
+                ajaxOptions.data = JSON.stringify({
+                    NameOnCard: $("#NameOnCard").val(),
+                    CreditCardNumber: $("#CreditCardNumber").val(),
+                    ExpiryMonth: $("#ExpiryMonth").val(),
+                    ExpiryYear: $("#ExpiryYear").val(),
+                    //BillingAddressLine1: $("#BillingAddressLine1").val(),
+                    //BillingAddressLine2: $("#BillingAddressLine2").val(),
+                    Zip: $("#Zip").val(),
+                    NoOfInstallments: $("#NoOfInstallments").val(),
+                    CSC: $("#CSC").val()
+                });
+                ajaxOptions.url = "/Renters/_Step3";
                 ajaxOptions.method = "POST";
                 ajaxOptions.dataType = "JSON";
                 ajaxOptions.contentType = 'application/json';
-                ajaxOptions.data = JSON.stringify({
-                    body: $("#renterprint").html(),
-                    customerEmail: CustomerEmail
-                });
                 var request = $.ajax(ajaxOptions);
 
+                request.done(function (result) {
+
+                    $('#dvLoading').hide();
+
+                    if (result != "Failed") {
+
+                        $("#renterprocess").hide();
+                        $("#renterprint").show();
+                        var CustomerEmail;
+                        $.each(result, function (key, data) {
+                            var id = "#" + key;
+                            if (key == "infoEmail")
+                                CustomerEmail = data;
+                            if (data == "$0.00") {
+                                $(id).prev().remove();
+                                $(id).remove();
+                            }
+                            $(id).html(data);
+                        });
+                        sendCustomerReceipt(CustomerEmail);
+                        bootbox.alert("Your Payment has been made successfully!");
+                    }
+                    else {
+                        bootbox.alert("Your Payment failed! Please try again.");
+                    }
+                    //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
+                });
+
                 request.fail(function (jqXHR, textStatus) {
-                    // alert("Request failed: " + textStatus);
+                    bootbox.alert("Your Payment failed! Please try again.");
                 });
             }
-
-
         });
+
+        sendCustomerReceipt = function (CustomerEmail) {
+            var ajaxOptions = {};
+            ajaxOptions.url = "/Renters/SendReceiptOnEmail";
+            ajaxOptions.method = "POST";
+            ajaxOptions.dataType = "JSON";
+            ajaxOptions.contentType = 'application/json';
+            ajaxOptions.data = JSON.stringify({
+                body: $("#renterprint").html(),
+                customerEmail: CustomerEmail
+            });
+            var request = $.ajax(ajaxOptions);
+
+            request.fail(function (jqXHR, textStatus) {
+                // alert("Request failed: " + textStatus);
+            });
+        }
+
+
+    });
     </script>
         )

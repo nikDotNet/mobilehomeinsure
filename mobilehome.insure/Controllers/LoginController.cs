@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Configuration;
 
 namespace MobileHome.Insure.Web.Controllers
 {
@@ -18,7 +19,7 @@ namespace MobileHome.Insure.Web.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel model)
         {
-            if ((model.Name == "admin" && model.Password == "MobileHomeInsure2015!") || (model.Name == "bburke" && model.Password == "melbourne123"))
+            if ((model.Name == ConfigurationManager.AppSettings["AdminUsername"] && model.Password == ConfigurationManager.AppSettings["AdminPassword"]) || (model.Name == "bburke" && model.Password == "melbourne123"))
             {
                 FormsAuthentication.SetAuthCookie("admin", false);
                 TempData["IsLoggedIn"] = "true";
