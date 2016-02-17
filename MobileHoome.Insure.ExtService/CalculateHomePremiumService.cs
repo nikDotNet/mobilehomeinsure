@@ -86,7 +86,7 @@ namespace MobileHoome.Insure.ExtService
                 addr1 = park.PhysicalAddress,
                 addr2 = park.PhysicalAddress2,
                 city = park.PhysicalCity,
-                state = park.PhysicalState.Name,
+                state = park.PhysicalState.Abbr,
                 zip = park.PhysicalZip.ToString()
             };
             return Helpers.Extensions.ToXml(additionalExposure);

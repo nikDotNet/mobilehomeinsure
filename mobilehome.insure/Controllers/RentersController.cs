@@ -82,7 +82,7 @@ namespace MobileHome.Insure.Web.Controllers
             decimal premiumChargedToday, installmentFee, processingFee, totalChargedToday;
             var itemLia = GetLiabilities().Find(l => l.Id == Convert.ToInt32(model.Liability));
             model.Liability = itemLia != null ? Convert.ToDecimal(itemLia.Text.Replace("$", "")) : model.Liability;
-
+            model.Deductible = 500;
             var itemPProperty = GetPersonalProperties().Find(l => l.Id == Convert.ToInt32(model.PersonalProperty));
             model.PersonalProperty = itemPProperty != null ? Convert.ToDecimal(itemPProperty.Text.Replace("$", "")) : model.PersonalProperty;
 
