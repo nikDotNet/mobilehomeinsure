@@ -435,7 +435,7 @@ namespace MobileHome.Insure.Service.Master
                         (string.IsNullOrEmpty(ParkDto.TenantFirstName) ? 1 == 1 : m.TenantFirstName.ToUpper().StartsWith(ParkDto.TenantFirstName)) &&
                         (string.IsNullOrEmpty(ParkDto.TenantLastName) ? 1 == 1 : m.TenantLastName.ToUpper().StartsWith(ParkDto.TenantLastName)) &&
                         (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.EffectiveDate.HasValue ? m.Quote.EffectiveDate.Value : DateTime.MinValue) == dtoEffectiveDate) &&
-                        (string.IsNullOrEmpty(ParkDto.EffectiveDate) ? 1 == 1 : (m.Quote.ExpiryDate.HasValue ? m.Quote.ExpiryDate.Value : DateTime.MinValue) == dtoExpiryDate) &&
+                        (string.IsNullOrEmpty(ParkDto.ExpiryDate) ? 1 == 1 : (m.Quote.ExpiryDate.HasValue ? m.Quote.ExpiryDate.Value : DateTime.MinValue) == dtoExpiryDate) &&
                         m.IsActive == true
                     ).ToList();
 

@@ -150,6 +150,7 @@
         var effectiveDate = null;
         var expiryDate = null;
         var parkId = null;
+        var parkName = null;
         var dataTable = null;
         var dataTableAfterInit = null;
 
@@ -191,7 +192,8 @@
                 effectiveDate = $("#txtEffectiveDate").find("input").val();
                 expiryDate = $("#txtExpiryDate").find("input").val();
                 parkId = $("#parkList").val();
-                ReportingActions.search();
+                               
+                search();
             });
 
             //initialize date controls
@@ -205,18 +207,13 @@
         });
 
 
-        function search(oTable, effectiveDate) {
-            //redraw table with custom filter
-            //debugger;
+        function search() {
+            
+            $("#tblLists").dataTable().fnFilter(parkId, 1);
+            $("#tblLists").dataTable().fnFilter(effectiveDate, 7);
+            $("#tblLists").dataTable().fnFilter(expiryDate, 8);
 
-            if (effectiveDate != null) {
-                var arrayData = effectiveDate.split(",");
-                var idx = arrayData[0];
-                var value = arrayData[1];
-                oTable.column(idx)
-                        .search(value)
-                        .draw();
-            }
+           // $("#tblLists").dataTable().fnMultiFilter({ "ExpiryDate": expiryDate, "EffectiveDate": effectiveDate, "ParkId": parkId});
         }
 
         $(".select2me2").select2({
@@ -243,10 +240,11 @@
 
                 callback(data);
             }
-        }).on("change", function (e) {
-            // mostly used event, fired to the original element when the value changes
-            $("#tblLists").dataTable().fnFilter(e.val, 1);
         });
+        //.on("change", function (e) {
+        //    // mostly used event, fired to the original element when the value changes
+        //    $("#tblLists").dataTable().fnFilter(e.val, 1);
+        //});
     </script>
 }
 
