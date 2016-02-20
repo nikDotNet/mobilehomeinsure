@@ -175,6 +175,10 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult EndOfMonthReport()
+        {
+            return View();
+        }
         public JsonResult LoadParkSites(JQueryDataTablesModel jQueryDataTablesModel)
         {
             SearchParameter param = new SearchParameter();
