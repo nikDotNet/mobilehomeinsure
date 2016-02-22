@@ -108,7 +108,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             {
                 TempData["Success"] = false;
             }
-            return RedirectToAction("ParkSites", "Park", new { area = "admin" });
+            return RedirectToAction("ParkSites", "Master", new { area = "admin" });
         }
 
         public ActionResult Delete(int id)
@@ -314,12 +314,5 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 totalDisplayRecords: param.SearchedCount,
                 sEcho: jQueryDataTablesModel.sEcho));
         }
-
-        
-        public ActionResult ParkSites()
-        {
-            return View();
-        }
-
     }
 }

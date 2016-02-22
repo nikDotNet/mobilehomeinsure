@@ -175,6 +175,13 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         }
         #endregion
 
+        #region ParkSites
+        public ActionResult ParkSites()
+        {
+            return View("../Park/ParkSites");
+        }
+        #endregion
+
         #region Notify
         public ActionResult Notify(bool? exportCsv)
         {
