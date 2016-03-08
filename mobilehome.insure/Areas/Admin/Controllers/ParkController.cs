@@ -12,6 +12,8 @@ using System.Net.Mail;
 using MobileHome.Insure.Service.Rental;
 using mobilehome.insure.Areas.Admin.Models;
 using Newtonsoft.Json;
+using mobilehome.insure.Helper.Utility;
+using mobilehome.insure.Helper.Constants;
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
     [Authorize]
@@ -72,6 +74,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
             ParkSitesViewModel model = new ParkSitesViewModel();
             model.States = _masterServiceFacade.GetStates();
             model.Parks = _masterServiceFacade.GetFirstFewParks();
+            model.ParkSiteStatus = Utils.GetListFromEnum(typeof(ParkSiteStatus));
+            
             if (id.HasValue)
             {
                 model.CurrentParkSite = _masterServiceFacade.GetParkSiteById(id.Value);                

@@ -18,4 +18,11 @@ namespace mobilehome.insure.Helper.Constants
                 InstallmentList.Add(4, "4 Payments");
         }
     }
+
+    public enum ParkSiteStatus
+    {
+        InForce,
+        Expired,
+        Cancelled,
+    }
 }

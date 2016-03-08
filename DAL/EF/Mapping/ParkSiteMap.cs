@@ -42,6 +42,9 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.SiteRental)
                 .HasMaxLength(8);
 
+            this.Property(t => t.Status)
+                .HasMaxLength(15);
+
             // Table & Column Mappings
             this.ToTable("ParkSites");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -60,6 +63,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.TenantEmail).HasColumnName("TenantEmail");
             this.Property(t => t.TenantPhoneNumber).HasColumnName("TenantPhoneNumber");
             this.Property(t => t.SiteRental).HasColumnName("SiteRental");
+            this.Property(t => t.Status).HasColumnName("Status");
 
             // Relationships
             this.HasOptional(t => t.Park)

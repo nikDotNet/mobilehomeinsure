@@ -22,6 +22,13 @@
                         @Html.ValidationMessageFor(x => x.CurrentParkSite.Park.ParkName, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.CurrentParkSite.Status, new { @class = "control-label" })
+                        @Html.DropDownListFor(x => x.CurrentParkSite.Status, new System.Web.Mvc.SelectList(Model.ParkSiteStatus), "", new { @class = "form-control input-medium" })
+
+                    </div>
+                </div>
             </div>
             <!-- Tenant Details-->
             <div class="row">

@@ -592,6 +592,7 @@ namespace MobileHome.Insure.Service.Master
                         existingObj.TenantEmail = parkSiteObj.TenantEmail;
                         existingObj.TenantPhoneNumber = parkSiteObj.TenantPhoneNumber;
                         existingObj.SiteRental = parkSiteObj.SiteRental;
+                        existingObj.Status = parkSiteObj.Status;
                     }
                     _context.Entry(existingObj).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();

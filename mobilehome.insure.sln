@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
-MinimumVisualStudioVersion = 10.0.40219.1
+MinimumVisualStudioVersion = 12.0.21005.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileHome.Insure.Web", "mobilehome.insure\MobileHome.Insure.Web.csproj", "{FD640973-96AF-48CE-B68B-F279316700AA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileHome.Insure.Service", "Service\MobileHome.Insure.Service.csproj", "{C44414AF-FF88-41ED-8522-DC60DD71544D}"

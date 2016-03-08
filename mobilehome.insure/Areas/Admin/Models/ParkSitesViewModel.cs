@@ -20,5 +20,7 @@ namespace mobilehome.insure.Areas.Admin.Models
             public List<State> States { get; set; }
             public List<Park> Parks { get; set; }
 
+            public List<string> ParkSiteStatus { get; set; }
+
     }
 }

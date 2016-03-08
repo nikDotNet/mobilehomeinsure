@@ -193,6 +193,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helper\Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Helper\Utility\Utils.cs" />
     <Compile Include="Models\Admin\ListManufacturerViewModel.cs" />
     <Compile Include="Models\Admin\ListOptionsFactorViewModel.cs" />
     <Compile Include="Models\Admin\ListNotifyViewModel.cs" />

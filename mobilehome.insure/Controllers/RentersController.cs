@@ -149,7 +149,7 @@ namespace MobileHome.Insure.Web.Controllers
                     _serviceFacade.GeneratePolicy(quoteObject);
                     SaveParkSite(quoteId, customerObject, quoteObject);
                     var result = new MobileHoome.Insure.ExtService.SendPaymentServiceForAegis();
-                    result.makePayment(quoteObject.ProposalNumber.ToString(), customerObject.FirstName + " " + customerObject.LastName, paymentResponse.TransactionId.ToString(), (quoteObject.PremiumChargedToday.Value + Convert.ToDecimal(quoteObject.InstallmentFee.Value)).ToString(), quoteObject.NoOfInstallments.ToString(), quoteObject.CreationDate.Value);
+                    result.makePayment(quoteObject.ProposalNumber.ToString(), customerObject.FirstName + " " + customerObject.LastName, paymentResponse.TransactionId.ToString(), (quoteObject.PremiumChargedToday.Value + Convert.ToDecimal(quoteObject.InstallmentFee.HasValue ? quoteObject.InstallmentFee.Value : 0)).ToString(), quoteObject.NoOfInstallments.ToString(), quoteObject.CreationDate.Value);
 
                     ViewBag.CustomerEmail = customerObject.Email;
                     var rtn = new
@@ -182,10 +182,14 @@ namespace MobileHome.Insure.Web.Controllers
                 {
                     StreamWriter sw = new StreamWriter(Server.MapPath("~/App_Data/Log.txt"), true);
                     sw.Write(ex.Message + "\n" + ex.StackTrace);
-                    sw.WriteLine("Inner Exception");
-                    sw.WriteLine(ex.InnerException.Message + "\n" + ex.InnerException.StackTrace);
+                    if(ex.InnerException != null)
+                    { 
+                        sw.WriteLine("Inner Exception");
+                        sw.WriteLine(ex.InnerException.Message + "\n" + ex.InnerException.StackTrace);
+                    }
                     sw.Close();
                     sw.Dispose();
+                    TempData.Keep();
                 }
             }
             else

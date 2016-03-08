@@ -19,6 +19,7 @@ namespace MobileHome.Insure.Model
         public string PhysicalAddress1 { get; set; }
         public string PhysicalAddress2 { get; set; }
         public string PhysicalCity { get; set; }
+        public string Status { get; set; }
         public Nullable<int> PhysicalStateId { get; set; }
         public Nullable<int> PhysicalZip { get; set; }
         public Nullable<int> QuoteId { get; set; }
