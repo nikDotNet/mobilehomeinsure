@@ -235,6 +235,7 @@ namespace MobileHome.Insure.Service.Rental
                 quoteObj = new Quote
                 {
                     EffectiveDate = EffectiveDate,
+                    ExpiryDate = EffectiveDate.AddYears(1),
                     PersonalProperty = PersonalProperty,
                     Deductible = Deductible,
                     Liability = Liability,

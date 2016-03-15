@@ -207,6 +207,7 @@ namespace MobileHome.Insure.Web.Controllers
                 PhysicalCity = customerObject.Park.PhysicalCity,
                 PhysicalStateId = customerObject.Park.PhysicalStateId,
                 PhysicalZip = customerObject.Park.PhysicalZip,
+                CreatedDate = DateTime.Now,
                 //Park = customerObject.Park,
                 ParkId = customerObject.ParkId,
                 //Quote = quoteObject,
