@@ -76,6 +76,9 @@
                                 Send Landlord
                             </th>
                             <th>
+                                Execute
+                            </th>
+                            <th>
                                 Action
                             </th>
                         </tr>
@@ -103,6 +106,9 @@
                             </th>
                             <th>
                                 Send Landlord
+                            </th>
+                            <th>
+                                Execute
                             </th>
                             <th>
                                 Action
@@ -145,6 +151,11 @@
                 {
                     data: null,
                     className: "center",
+                    defaultContent: '<a href="/admin/customer/ExecuteQuote?id=" class="modal-link" data-type="quote">Execute</a>'
+                },
+                {
+                    data: null,
+                    className: "center",
                     defaultContent: '<a href="/admin/customer/delete?id=" class="delete-link" data-type="quote">Delete</a>'
                 }
             ];
@@ -175,7 +186,7 @@
         }
 
         function rowCallbackHandler(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            $('td:eq(8)', nRow).find('a').each(function (index, element) {
+            $('td:eq(8), td:eq(9)', nRow).find('a').each(function (index, element) {
                 //debugger;
                 //resolving date problem
                 if (($(element).data("type") == "quote")) {
@@ -183,7 +194,7 @@
                     $('td:eq(5)', nRow).html(effectiveDate.getMonth() + 1 + "/" + effectiveDate.getDate() + "/" + effectiveDate.getFullYear());
                 }
 
-                if ($(element).hasClass("delete-link")) {
+                if ($(element).hasClass("delete-link") || $(element).hasClass("modal-link")) {
                     $(element).attr('href', $(element).attr('href') + aData.Id + "&delType=" + $(element).data('type'));
                 }
             });

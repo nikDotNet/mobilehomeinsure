@@ -1303,6 +1303,7 @@
     <Content Include="Content\assets\global\plugins\select2\select2.jquery.json" />
     <Content Include="Content\assets\global\plugins\select2\select2_locale_en.js.template" />
     <Content Include="Areas\Admin\Views\Reporting\EndOfMonthReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Customer\ExecuteQuote.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />

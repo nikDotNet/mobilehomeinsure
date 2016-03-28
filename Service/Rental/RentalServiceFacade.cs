@@ -24,13 +24,13 @@ namespace MobileHome.Insure.Service.Rental
 
 
         #region Invoice
-        public int generateInvoice(decimal amount, int customerId, int quoteId)
+        public int generateInvoice(decimal amount, int customerId, int quoteId, string modeOfPayment)
         {
             MobileHome.Insure.Model.Payment paymentObj = new Model.Payment();
             paymentObj.Amount = amount;
             paymentObj.CustomerId = customerId;
             paymentObj.RentalQuoteId = quoteId;
-
+            paymentObj.ModeOfPayment = modeOfPayment;
             _context.Payments.Add(paymentObj);
             _context.SaveChanges();
 

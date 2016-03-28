@@ -152,7 +152,7 @@ namespace mobilehome.insure.Models.Rental
 
             //[Range(typeof(bool), "true", "true", ErrorMessage = "Please check to proceed with the payment")]
             public bool AcceptChargeOnCard { get; set; }
-
+            public string ModeOfPayment { get; set; }
             public List<int> MonthList { get; set; }
             public List<int> YearList { get; set; }
 

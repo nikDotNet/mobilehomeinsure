@@ -1,170 +1,286 @@
 ﻿@using mobilehome.insure.Helper.Extensions
+@using mobilehome.insure.Helper.Constants
 @model mobilehome.insure.Models.Rental.RentalViewModel.Payment
 @{
     Layout = null;
 }
 
-@using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name = "frmPayment", id = "frmPayment" }))
-{
-    <div class="col-xs-12 no-margin" style="padding-bottom:40px;">
-        <div class="billing-address">
+
+
+<div id="moneyOrderPayment" class="col-xs-12 no-margin">
+        @using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name = "frmMOPayment", id = "frmMOPayment" }))
+    {
+        <div class="col-xs-12 no-margin" style="padding-bottom:40px;">
             <div class="row field-row">
                 <div class="col-xs-12 col-sm-4">
-                    @Html.LabelFor(x => x.NameOnCard)
-                    @Html.TextBoxFor(x => x.NameOnCard, new { @class = "le-input" })
-                    @Html.ValidationMessageFor(x => x.NameOnCard, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-xs-12 col-sm-4">
-                    @Html.LabelFor(x => x.CreditCardNumber)
-                    @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "le-input" })
-                    @Html.ValidationMessageFor(x => x.CreditCardNumber, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-xs-12 col-sm-4">
-                    @Html.Label("Expiry Date:", new { @style = "display:block" })
-                    @Html.DropDownListFor(x => x.ExpiryMonth, new SelectList(Model.MonthList), "MM", new { @class = "le-input small" })
-                    @Html.DropDownListFor(x => x.ExpiryYear, new SelectList(Model.YearList), "YYYY", new { @class = "le-input small" })
-                    @Html.ValidationMessageFor(x => x.ExpiryMonth, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(x => x.ExpiryYear, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row field-row">
-                <div class="col-xs-12 col-sm-2">
-                    @Html.LabelFor(x => x.CSC)
-                    @Html.TextBoxFor(x => x.CSC, new { @class = "le-input" })
-                    @Html.ValidationMessageFor(x => x.CSC, "", new { @class = "text-danger" })
-                </div>
-
-                @*<div class="col-xs-12 col-sm-4">
-                    @Html.LabelFor(x => x.BillingAddressLine1)
-                    @Html.TextBoxFor(x => x.BillingAddressLine1, new { @class = "le-input" })
-                    @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-xs-12 col-sm-4">
-                    @Html.LabelFor(x => x.BillingAddressLine2)
-                    @Html.TextBoxFor(x => x.BillingAddressLine2, new { @class = "le-input" })
-                    @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
-                </div>*@
-
-                <div class="col-xs-12 col-sm-4">
-                    @Html.LabelFor(x => x.Zip)
-                    @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
-                    @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12">
-                    @Html.CheckBoxFor(x => x.AcceptChargeOnCard, new { @class="le-input"})
-                    @Html.LabelFor(x => x.AcceptChargeOnCard)
-                  
-                </div>
-            </div>
-            @*<div class="row field-row">
-                    <div class="col-xs-12 col-sm-12">
-                        @Html.CheckBoxFor(x => x.SendLandlond)
-                        @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
+                    If you would like to pay for this policy by check or money order, please call us at 877-773-1055 between the hours of 8AM and 8PM Eastern Standard Time.
                     </div>
-                </div>*@
-
-            <div class="pull-right">
-                <button class="btn btn-default" id="btnPayment">Charge My Card</button>
-                <button class="btn btn-default btn-cancel-renters">Cancel</button>
+                </div>
+                  
+                    <div class="pull-right">
+                        <button class="btn btn-default" type="button" id="changePayMode">Change Payment Mode</button>
+                        <button class="btn btn-default" id="btnPayment">Pay By Check or Money Order</button>
+                        <button class="btn btn-default btn-cancel-renters">Cancel</button>
+                    </div>
+                </div>
+                }
             </div>
-        </div>
-        @Html.ValidationSummary(true)
-    </div>
-}
 
+            <div id="creditCardPayment" class="col-xs-12 no-margin">
+                @using (Html.BeginForm("_Step3", "Rental", FormMethod.Post, new { name = "frmPayment", id = "frmPayment" }))
+    {
+                    <div class="col-xs-12 no-margin" style="padding-bottom:40px;">
+                        <div class="billing-address">
+                            <div class="row field-row">
+                                <div class="col-xs-12 col-sm-4">
+                                    @Html.LabelFor(x => x.NameOnCard)
+                                    @Html.TextBoxFor(x => x.NameOnCard, new { @class = "le-input" })
+                                    @Html.ValidationMessageFor(x => x.NameOnCard, "", new { @class = "text-danger" })
+                                </div>
 
-@Html.Script(
-    @<script>
-    $(document).ready(function () {
-        $("#EffectiveDate").datepicker();
+                                <div class="col-xs-12 col-sm-4">
+                                    @Html.LabelFor(x => x.CreditCardNumber)
+                                    @Html.TextBoxFor(x => x.CreditCardNumber, new { @class = "le-input" })
+                                    @Html.ValidationMessageFor(x => x.CreditCardNumber, "", new { @class = "text-danger" })
+                                </div>
 
-        $("#btnPayment").click(function (evt) {
-            evt.preventDefault();
-            if (!$("#AcceptChargeOnCard").is(":checked")) {
-                bootbox.alert("Please check the checkbox to proceed with the payment.")
-                return false;
-            }
-            var $form = $('#frmPayment');
-            if ($form.valid()) {
-                $('#dvLoading').show();
-                var ajaxOptions = {};
-                ajaxOptions.data = JSON.stringify({
-                    NameOnCard: $("#NameOnCard").val(),
-                    CreditCardNumber: $("#CreditCardNumber").val(),
-                    ExpiryMonth: $("#ExpiryMonth").val(),
-                    ExpiryYear: $("#ExpiryYear").val(),
-                    //BillingAddressLine1: $("#BillingAddressLine1").val(),
-                    //BillingAddressLine2: $("#BillingAddressLine2").val(),
-                    Zip: $("#Zip").val(),
-                    NoOfInstallments: $("#NoOfInstallments").val(),
-                    CSC: $("#CSC").val()
-                });
-                ajaxOptions.url = "/Renters/_Step3";
-                ajaxOptions.method = "POST";
-                ajaxOptions.dataType = "JSON";
-                ajaxOptions.contentType = 'application/json';
-                var request = $.ajax(ajaxOptions);
+                                <div class="col-xs-12 col-sm-4">
+                                    @Html.Label("Expiry Date:", new { @style = "display:block" })
+                                    @Html.DropDownListFor(x => x.ExpiryMonth, new SelectList(Model.MonthList), "MM", new { @class = "le-input small" })
+                                    @Html.DropDownListFor(x => x.ExpiryYear, new SelectList(Model.YearList), "YYYY", new { @class = "le-input small" })
+                                    @Html.ValidationMessageFor(x => x.ExpiryMonth, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(x => x.ExpiryYear, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
 
-                request.done(function (result) {
+                            <div class="row field-row">
+                                <div class="col-xs-12 col-sm-2">
+                                    @Html.LabelFor(x => x.CSC)
+                                    @Html.TextBoxFor(x => x.CSC, new { @class = "le-input" })
+                                    @Html.ValidationMessageFor(x => x.CSC, "", new { @class = "text-danger" })
+                                </div>
 
-                    $('#dvLoading').hide();
+                                @*<div class="col-xs-12 col-sm-4">
+                                        @Html.LabelFor(x => x.BillingAddressLine1)
+                                        @Html.TextBoxFor(x => x.BillingAddressLine1, new { @class = "le-input" })
+                                        @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
+                                    </div>
 
-                    if (result != "Failed") {
+                                    <div class="col-xs-12 col-sm-4">
+                                        @Html.LabelFor(x => x.BillingAddressLine2)
+                                        @Html.TextBoxFor(x => x.BillingAddressLine2, new { @class = "le-input" })
+                                        @Html.ValidationMessageFor(x => x.BillingAddressLine2, "", new { @class = "text-danger" })
+                                    </div>*@
 
-                        $("#renterprocess").hide();
-                        $("#renterprint").show();
-                        var CustomerEmail;
-                        $.each(result, function (key, data) {
-                            var id = "#" + key;
-                            if (key == "infoEmail")
-                                CustomerEmail = data;
-                            if (data == "$0.00") {
-                                $(id).prev().remove();
-                                $(id).remove();
+                                <div class="col-xs-12 col-sm-4">
+                                    @Html.LabelFor(x => x.Zip)
+                                    @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
+                                    @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12">
+                                    @Html.CheckBoxFor(x => x.AcceptChargeOnCard, new { @class = "le-input" })
+                                    @Html.LabelFor(x => x.AcceptChargeOnCard)
+
+                                </div>
+                            </div>
+                           
+                            @*<div class="row field-row">
+                                    <div class="col-xs-12 col-sm-12">
+                                        @Html.CheckBoxFor(x => x.SendLandlond)
+                                        @Html.ValidationMessageFor(x => x.BillingAddressLine1, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+
+                            <div class="pull-right">
+                                <button class="btn btn-default" type="button" id="changePayMode">Change Payment Mode</button>
+                                <button class="btn btn-default" id="btnPayment">Charge My Card</button>
+                                <button class="btn btn-default btn-cancel-renters">Cancel</button>
+
+                            </div>
+                        </div>
+                        @Html.ValidationSummary(true)
+                    </div>
+    }
+            </div>
+
+            <div class="col-xs-12" id="selectPaymentMode">
+                <div class="row">
+                    <div class="col-md-8">Please select a mode of payment:</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                        <label>@Html.RadioButton("modeOfPayment", ModeOfPayment.CreditCard.ToString(), new { @class = "le-input" })  Credit Card</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12">
+                       <label>@Html.RadioButton("modeOfPayment", ModeOfPayment.CheckOrMoneyOrder.ToString(), new { @class = "le-input" }) Check or Money Order</label>
+                    </div>
+                </div>
+            </div>
+
+            @Html.Script(
+            @<script>
+                $(document).ready(function () {
+                    $("#moneyOrderPayment").hide();
+                    $("#creditCardPayment").hide();
+                    $("#EffectiveDate").datepicker();
+
+                    $(document).on("click", "#modeOfPayment", function () {
+                       if ($("#modeOfPayment:checked").val() == '@ModeOfPayment.CreditCard.ToString()') {
+                            $("#selectPaymentMode").hide();
+                            $("#creditCardPayment").show();
+                            $("#moneyOrderPayment").hide();
+                        }
+                        else if ($("#modeOfPayment:checked").val() == '@ModeOfPayment.CheckOrMoneyOrder.ToString()') {
+                            $("#selectPaymentMode").hide();
+                            $("#creditCardPayment").hide();
+                            $("#moneyOrderPayment").show();
+                        }
+                    });
+
+                    $(document).on("click", "#changePayMode", function () {
+                        $("#selectPaymentMode").show();
+                        $("#creditCardPayment").hide();
+                        $("#moneyOrderPayment").hide();
+                    });
+
+                    $(document).on("click", "#btnPayment", function (evt) {
+                        evt.preventDefault();
+                        if ($("#modeOfPayment:checked").val() == '@ModeOfPayment.CreditCard.ToString()') {
+
+                            if (!$("#AcceptChargeOnCard").is(":checked")) {
+                                bootbox.alert("Please check the checkbox to proceed with the payment.")
+                                return false;
                             }
-                            $(id).html(data);
+                            var $form = $('#frmPayment');
+                            if ($form.valid()) {
+                                $('#dvLoading').show();
+                                var ajaxOptions = {};
+                                ajaxOptions.data = JSON.stringify({
+                                    NameOnCard: $("#NameOnCard").val(),
+                                    CreditCardNumber: $("#CreditCardNumber").val(),
+                                    ExpiryMonth: $("#ExpiryMonth").val(),
+                                    ExpiryYear: $("#ExpiryYear").val(),
+                                    //BillingAddressLine1: $("#BillingAddressLine1").val(),
+                                    //BillingAddressLine2: $("#BillingAddressLine2").val(),
+                                    Zip: $("#Zip").val(),
+                                    NoOfInstallments: $("#NoOfInstallments").val(),
+                                    CSC: $("#CSC").val(),
+                                    ModeOfPayment: '@ModeOfPayment.CreditCard.ToString()'
+                                });
+                                ajaxOptions.url = "/Renters/_Step3";
+                                ajaxOptions.method = "POST";
+                                ajaxOptions.dataType = "JSON";
+                                ajaxOptions.contentType = 'application/json';
+                                var request = $.ajax(ajaxOptions);
+
+                                request.done(function (result) {
+
+                                    $('#dvLoading').hide();
+
+                                    if (result != "Failed") {
+
+                                        $("#renterprocess").hide();
+                                        $("#renterprint").show();
+                                        var CustomerEmail;
+                                        $.each(result, function (key, data) {
+                                            var id = "#" + key;
+                                            if (key == "infoEmail")
+                                                CustomerEmail = data;
+                                            if (data == "$0.00") {
+                                                $(id).prev().remove();
+                                                $(id).remove();
+                                            }
+                                            $(id).html(data);
+                                        });
+                                        sendCustomerReceipt(CustomerEmail);
+                                        bootbox.alert("Your Payment has been made successfully!");
+                                    }
+                                    else {
+                                        bootbox.alert("Your Payment failed! Please try again.");
+                                    }
+                                    //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
+                                });
+
+                                request.fail(function (jqXHR, textStatus) {
+                                    bootbox.alert("Your Payment failed! Please try again.");
+                                });
+                            }
+                        }
+                        else if ($("#modeOfPayment:checked").val() == '@ModeOfPayment.CheckOrMoneyOrder.ToString()') {
+                            var $form = $('#frmMOPayment');
+                            if ($form.valid()) {
+                                $('#dvLoading').show();
+                                var ajaxOptions = {}
+                                ajaxOptions.data = JSON.stringify({
+                                    ModeOfPayment: '@ModeOfPayment.CheckOrMoneyOrder.ToString()'
+                                });
+                                ajaxOptions.url = "/Renters/_Step3";
+                                ajaxOptions.method = "POST";
+                                ajaxOptions.dataType = "JSON";
+                                ajaxOptions.contentType = 'application/json';
+                                var request = $.ajax(ajaxOptions);
+
+                                request.done(function (result) {
+
+                                    $('#dvLoading').hide();
+                                    if (result != "Failed") {
+
+                                        $("#renterprocess").hide();
+                                        $("#renterprint").show();
+                                        var CustomerEmail;
+                                        $.each(result, function (key, data) {
+                                            var id = "#" + key;
+                                            if (key == "infoEmail")
+                                                CustomerEmail = data;
+                                            if (data == "$0.00" || data == null || data == "") {
+                                                $(id).prev().remove();
+                                                $(id).remove();
+                                                }
+                                             if (key == "infopolnbr")
+                                                    $(id).prev().text("Quote Number");
+                                            
+                                            $(id).html(data);
+                                        });
+                                        sendCustomerReceipt(CustomerEmail);
+                                        bootbox.alert("Thanks for your interest. Please find your quote details.");
+                                    }
+                                    else {
+                                        bootbox.alert("Something went wrong! Please try again.");
+                                    }
+                                    //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
+                                });
+
+                                request.fail(function (jqXHR, textStatus) {
+                                    bootbox.alert("Something went wrong! Please try again.");
+                                });
+                            }
+                        }
+                    });
+
+                    sendCustomerReceipt = function (CustomerEmail) {
+                        var ajaxOptions = {};
+                        ajaxOptions.url = "/Renters/SendReceiptOnEmail";
+                        ajaxOptions.method = "POST";
+                        ajaxOptions.dataType = "JSON";
+                        ajaxOptions.contentType = 'application/json';
+                        ajaxOptions.data = JSON.stringify({
+                            body: $("#renterprint").html(),
+                            customerEmail: CustomerEmail
                         });
-                        sendCustomerReceipt(CustomerEmail);
-                        bootbox.alert("Your Payment has been made successfully!");
+                        var request = $.ajax(ajaxOptions);
+
+                        request.fail(function (jqXHR, textStatus) {
+                            // alert("Request failed: " + textStatus);
+                        });
                     }
-                    else {
-                        bootbox.alert("Your Payment failed! Please try again.");
-                    }
-                    //window.location.href = "http://@Request.Url.Host:@Request.Url.Port/Renters";
+
+
                 });
-
-                request.fail(function (jqXHR, textStatus) {
-                    bootbox.alert("Your Payment failed! Please try again.");
-                });
-            }
-        });
-
-        sendCustomerReceipt = function (CustomerEmail) {
-            var ajaxOptions = {};
-            ajaxOptions.url = "/Renters/SendReceiptOnEmail";
-            ajaxOptions.method = "POST";
-            ajaxOptions.dataType = "JSON";
-            ajaxOptions.contentType = 'application/json';
-            ajaxOptions.data = JSON.stringify({
-                body: $("#renterprint").html(),
-                customerEmail: CustomerEmail
-            });
-            var request = $.ajax(ajaxOptions);
-
-            request.fail(function (jqXHR, textStatus) {
-                // alert("Request failed: " + textStatus);
-            });
-        }
-
-
-    });
-    </script>
+            </script>
         )

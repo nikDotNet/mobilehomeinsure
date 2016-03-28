@@ -16,6 +16,7 @@ namespace MobileHome.Insure.Model
         public string ApprovalCode { get; set; }
         public string ApprovalMessage { get; set; }
         public string ErrorMessage { get; set; }
+        public string ModeOfPayment { get; set; }
         public Nullable<int> CustomerId { get; set; }
         public Nullable<int> RentalQuoteId { get; set; }
 

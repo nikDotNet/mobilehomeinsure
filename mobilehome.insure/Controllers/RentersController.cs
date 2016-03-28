@@ -120,81 +120,114 @@ namespace MobileHome.Insure.Web.Controllers
             string proposalNumber = TempData["ProposalNumber"].ToString();
             Quote quoteObject = _serviceFacade.GetQuoteById(quoteId);
             model.Amount = quoteObject.TotalChargedToday.Value;
-            int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId);
+            int InvoiceNumber = _serviceFacade.generateInvoice(model.Amount, customerId, quoteId, model.ModeOfPayment);
             Customer customerObject = _serviceFacade.GetCustomerById(customerId);
             quoteObject.ProposalNumber = "";
 
-
-            PaymentRequest request = new PaymentRequest
+            if (model.ModeOfPayment == ModeOfPayment.CreditCard.ToString())
             {
-                CreditCardNumber = model.CreditCardNumber,
-                ExpiryMonth = model.ExpiryMonth,
-                ExpiryYear = model.ExpiryYear,
-                Amount = model.Amount,
-                BillingAddressLine1 = model.BillingAddressLine1,
-                BillingAddressLine2 = model.BillingAddressLine2,
-                Zip = model.Zip,
-                InvoiceNumber = InvoiceNumber.ToString(),
-                CSC = model.CSC
-            };
-
-            PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
-            DateTime creationDate = DateTime.Now;
-            bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage, creationDate);
-            if (success && (paymentResponse.Successfull.HasValue && paymentResponse.Successfull.Value) && string.IsNullOrEmpty(paymentResponse.ErrorMessage))
-            {
-                try
+                PaymentRequest request = new PaymentRequest
                 {
-                    ViewBag.Success = true;
-                    _serviceFacade.GeneratePolicy(quoteObject);
-                    SaveParkSite(quoteId, customerObject, quoteObject);
-                    var result = new MobileHoome.Insure.ExtService.SendPaymentServiceForAegis();
-                    result.makePayment(quoteObject.ProposalNumber.ToString(), customerObject.FirstName + " " + customerObject.LastName, paymentResponse.TransactionId.ToString(), (quoteObject.PremiumChargedToday.Value + Convert.ToDecimal(quoteObject.InstallmentFee.HasValue ? quoteObject.InstallmentFee.Value : 0)).ToString(), quoteObject.NoOfInstallments.ToString(), quoteObject.CreationDate.Value);
+                    CreditCardNumber = model.CreditCardNumber,
+                    ExpiryMonth = model.ExpiryMonth,
+                    ExpiryYear = model.ExpiryYear,
+                    Amount = model.Amount,
+                    BillingAddressLine1 = model.BillingAddressLine1,
+                    BillingAddressLine2 = model.BillingAddressLine2,
+                    Zip = model.Zip,
+                    InvoiceNumber = InvoiceNumber.ToString(),
+                    CSC = model.CSC
+                };
 
-                    ViewBag.CustomerEmail = customerObject.Email;
-                    var rtn = new
+                PaymentResponse paymentResponse = _paymentServiceFacade.RequestPayment(request);
+                DateTime creationDate = DateTime.Now;
+                bool success = _serviceFacade.saveInvoice(InvoiceNumber, paymentResponse.ReponseCode, paymentResponse.TransactionId, paymentResponse.ApprovalCode, paymentResponse.ApprovalMessage, paymentResponse.ErrorMessage, creationDate);
+                if (success && (paymentResponse.Successfull.HasValue && paymentResponse.Successfull.Value) && string.IsNullOrEmpty(paymentResponse.ErrorMessage))
+                {
+                    try
                     {
-                        infoName = customerObject.FirstName + " " + customerObject.LastName,
-                        infoAddress1 = customerObject.Address,
-                        infoAddress2 = "",
-                        infoCity = customerObject.City,
-                        infoState = customerObject.State.Name,
-                        infoZipCode = customerObject.Zip,
-                        infoPhone = customerObject.Phone,
-                        infoEmail = customerObject.Email,
-                        infopolnbr = quoteObject.ProposalNumber,
-                        infocopcod = "Aegis",
-                        infopmtid = paymentResponse.TransactionId,
-                        infopmtamttoday = model.Amount.ToString("c"),
-                        infopmtprocfee = Convert.ToDecimal(quoteObject.ProcessingFee).ToString("c"),
-                        infopmtinstfee = Convert.ToDecimal(quoteObject.InstallmentFee).ToString("c"),
-                        infopmtamttotal = Convert.ToDecimal(quoteObject.Premium).ToString("c"),
-                        infonoofremainingpmt = quoteObject.NoOfInstallments.Value - 1,
-                        infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
-                        infotrndat = creationDate.ToShortDateString(),
-                        infotrntim = creationDate.ToShortTimeString()
-                    };
-                    TempData.Clear();
-                    
-                    return Json(rtn, JsonRequestBehavior.AllowGet);
-                }
-                catch (Exception ex)
-                {
-                    StreamWriter sw = new StreamWriter(Server.MapPath("~/App_Data/Log.txt"), true);
-                    sw.Write(ex.Message + "\n" + ex.StackTrace);
-                    if(ex.InnerException != null)
-                    { 
-                        sw.WriteLine("Inner Exception");
-                        sw.WriteLine(ex.InnerException.Message + "\n" + ex.InnerException.StackTrace);
-                    }
-                    sw.Close();
-                    sw.Dispose();
-                    TempData.Keep();
-                }
-            }
-            else
-                TempData.Keep();
+                        ViewBag.Success = true;
+                        _serviceFacade.GeneratePolicy(quoteObject);
+                        SaveParkSite(quoteId, customerObject, quoteObject);
+                        var result = new MobileHoome.Insure.ExtService.SendPaymentServiceForAegis();
+                        result.makePayment(quoteObject.ProposalNumber.ToString(), customerObject.FirstName + " " + customerObject.LastName, paymentResponse.TransactionId.ToString(), (quoteObject.PremiumChargedToday.Value + Convert.ToDecimal(quoteObject.InstallmentFee.HasValue ? quoteObject.InstallmentFee.Value : 0)).ToString(), quoteObject.NoOfInstallments.ToString(), quoteObject.CreationDate.Value);
 
+                        ViewBag.CustomerEmail = customerObject.Email;
+                        var rtn = new
+                        {
+                            infoName = customerObject.FirstName + " " + customerObject.LastName,
+                            infoAddress1 = customerObject.Address,
+                            infoAddress2 = "",
+                            infoCity = customerObject.City,
+                            infoState = customerObject.State.Name,
+                            infoZipCode = customerObject.Zip,
+                            infoPhone = customerObject.Phone,
+                            infoEmail = customerObject.Email,
+                            infopolnbr = quoteObject.ProposalNumber,
+                            infocopcod = "Aegis",
+                            infopmtid = paymentResponse.TransactionId,
+                            infopmtamttoday = model.Amount.ToString("c"),
+                            infopmtprocfee = Convert.ToDecimal(quoteObject.ProcessingFee).ToString("c"),
+                            infopmtinstfee = Convert.ToDecimal(quoteObject.InstallmentFee).ToString("c"),
+                            infopmtamttotal = Convert.ToDecimal(quoteObject.Premium).ToString("c"),
+                            infonoofremainingpmt = quoteObject.NoOfInstallments.Value - 1,
+                            infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
+                            infotrndat = creationDate.ToShortDateString(),
+                            infotrntim = creationDate.ToShortTimeString(),
+                            infomodeofpay = "Credit Card"
+                        };
+                        TempData.Clear();
+
+                        return Json(rtn, JsonRequestBehavior.AllowGet);
+                    }
+                    catch (Exception ex)
+                    {
+                        StreamWriter sw = new StreamWriter(Server.MapPath("~/App_Data/Log.txt"), true);
+                        sw.Write(ex.Message + "\n" + ex.StackTrace);
+                        if (ex.InnerException != null)
+                        {
+                            sw.WriteLine("Inner Exception");
+                            sw.WriteLine(ex.InnerException.Message + "\n" + ex.InnerException.StackTrace);
+                        }
+                        sw.Close();
+                        sw.Dispose();
+                        TempData.Keep();
+                    }
+                }
+                else
+                    TempData.Keep();
+            }
+            else if(model.ModeOfPayment == ModeOfPayment.CheckOrMoneyOrder.ToString())
+            {
+
+                ViewBag.CustomerEmail = customerObject.Email;
+                var rtn = new
+                {
+                    infoName = customerObject.FirstName + " " + customerObject.LastName,
+                    infoAddress1 = customerObject.Address,
+                    infoAddress2 = "",
+                    infoCity = customerObject.City,
+                    infoState = customerObject.State.Name,
+                    infoZipCode = customerObject.Zip,
+                    infoPhone = customerObject.Phone,
+                    infoEmail = customerObject.Email,
+                    infopolnbr = quoteObject.Id,
+                    infopmtid = "",
+                    infocopcod = "Aegis",
+                    infopmtamttoday = model.Amount.ToString("c"),
+                    infopmtprocfee = Convert.ToDecimal(quoteObject.ProcessingFee).ToString("c"),
+                    infopmtinstfee = Convert.ToDecimal(quoteObject.InstallmentFee).ToString("c"),
+                    infopmtamttotal = Convert.ToDecimal(quoteObject.Premium).ToString("c"),
+                    infonoofremainingpmt = quoteObject.NoOfInstallments.Value - 1,
+                    infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
+                    infotrndat = "",
+                    infotrntim = "",
+                    infomodeofpay = "Check Or Money Order"
+                };
+                TempData.Clear();
+
+                return Json(rtn, JsonRequestBehavior.AllowGet);
+            }
             return Json("Failed");
         }
 
@@ -208,6 +241,7 @@ namespace MobileHome.Insure.Web.Controllers
                 PhysicalStateId = customerObject.Park.PhysicalStateId,
                 PhysicalZip = customerObject.Park.PhysicalZip,
                 CreatedDate = DateTime.Now,
+                Status = ParkSiteStatus.InForce.ToString(),
                 //Park = customerObject.Park,
                 ParkId = customerObject.ParkId,
                 //Quote = quoteObject,

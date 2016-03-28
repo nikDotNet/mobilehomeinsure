@@ -25,4 +25,10 @@ namespace mobilehome.insure.Helper.Constants
         Expired,
         Cancelled,
     }
+
+    public enum ModeOfPayment
+    {
+        CreditCard,
+        CheckOrMoneyOrder
+    }
 }

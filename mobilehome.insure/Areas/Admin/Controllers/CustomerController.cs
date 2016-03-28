@@ -189,6 +189,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 infoEmail = customerObject.Email,
                 infopolnbr = quoteObject.ProposalNumber,
                 infocopcod = "Aegis",
+                infomodeofpay = paymentResponse.ModeOfPayment,
                 infopmtid = paymentResponse.TransactionId,
                 infopmtamt = paymentResponse.Amount,
                 infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
@@ -357,6 +358,59 @@ namespace mobilehome.insure.Areas.Admin.Controllers
         {
             var customers = _rentalServiceFacade.OwnRentalCustomerByParkId(parkId);
             return PartialView("~/areas/admin/views/customer/OwnRentalCustomer.cshtml", customers);
+        }
+
+        public ActionResult ExecuteQuote(int id)
+        {
+            var _serviceFacade = new RentalServiceFacade();
+            MobileHome.Insure.Model.Rental.Quote quoteObject = _serviceFacade.GetQuoteById(id);
+            Customer customerObject = null;
+            DateTime creationDate = DateTime.Now;
+
+            if (quoteObject.CustomerId.HasValue)
+                customerObject = _serviceFacade.GetCustomerById(quoteObject.CustomerId.Value);
+            MobileHome.Insure.Model.Payment paymentResponse = _serviceFacade.GetPolicyReceiptById(quoteObject.Id);
+
+            var rtn = new
+            {
+                infoName = customerObject.FirstName + " " + customerObject.LastName,
+                infoAddress1 = customerObject.Address,
+                infoAddress2 = "",
+                infoCity = customerObject.City,
+                infoState = customerObject.State.Name,
+                infoZipCode = customerObject.Zip,
+                infoPhone = customerObject.Phone,
+                infoEmail = customerObject.Email,
+                infopolnbr = quoteObject.ProposalNumber,
+                infocopcod = "Aegis",
+                infomodeofpay = paymentResponse == null ? "" :  paymentResponse.ModeOfPayment,
+                infopmtid = paymentResponse == null ? "" : paymentResponse.TransactionId,
+                infopmtamt = paymentResponse == null ? 0 : paymentResponse.Amount,
+                infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
+                infotrndat = creationDate.ToShortDateString(),
+                infotrntim = creationDate.ToShortTimeString(),
+                infopmtinstfee = quoteObject != null && quoteObject.InstallmentFee.HasValue
+                    ? quoteObject.InstallmentFee.Value
+                    : 0,
+                infopmtprocfee = quoteObject != null && quoteObject.ProcessingFee.HasValue
+                    ? quoteObject.ProcessingFee.Value
+                    : 0,
+                infopmtamttotal = quoteObject != null && quoteObject.Premium.HasValue
+                    ? quoteObject.Premium.Value
+                    : 0,
+                pmtamttoday = quoteObject != null && quoteObject.PremiumChargedToday.HasValue
+                    ? quoteObject.PremiumChargedToday.Value
+                    : 0,
+                infonoofremainingpmt = quoteObject != null && quoteObject.Payments.Any()
+                    ? quoteObject.NoOfInstallments.Value - 1
+                    : 0
+
+            };
+
+            //return Json(rtn, JsonRequestBehavior.AllowGet);
+
+            //return PartialView("~/areas/admin/views/customer/PolicyReceipt.cshtml", rtn.ToExpando());
+            return View(rtn.ToExpando());
         }
     }
 }
