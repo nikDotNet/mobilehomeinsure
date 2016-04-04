@@ -39,8 +39,8 @@
                     <h3><span>Transaction Details</span></h3>
                 </div>
                 <dl class="dl-horizontal">
-                    <dt>Policy Number</dt>
-                    <dd id="infopolnbr">@Model.infopolnbr</dd>
+                    <dt>Quote Number</dt>
+                    <dd id="infoQuoteId">@Model.infoQuoteId</dd>
 
                     <dt>Insurance Company</dt>
                     <dd id="infocopcod">@Model.infocopcod</dd>
@@ -79,19 +79,11 @@
         </div>
 
     </div>
-    <div class="row">
-        <div id="m-info" class="center">
-            <div id="page-header">
-                <h5><span>Enter Payment Details to Execute</span></h5>
-            </div>
-        </div>
-    </div>
+  
     <div class="row">
         <div class="row field-row">
             <div class="col-xs-12 col-sm-4">
-                @Html.LabelFor(x => x.NameOnCard)
-                @Html.TextBoxFor(x => x.NameOnCard, new { @class = "le-input" })
-                @Html.ValidationMessageFor(x => x.NameOnCard, "", new { @class = "text-danger" })
+             
             </div>
         </div>
     </div>

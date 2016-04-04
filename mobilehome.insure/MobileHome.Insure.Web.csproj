@@ -164,6 +164,7 @@
     <Compile Include="Areas\Admin\Controllers\CustomerController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Areas\Admin\Controllers\ExecuteQuoteViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterController.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Admin\Controllers\ParkController.cs">
@@ -173,6 +174,7 @@
     <Compile Include="Areas\Admin\Helpers\CSVExportExtension.cs" />
     <Compile Include="Areas\Admin\Helpers\CSVHelper.cs" />
     <Compile Include="Areas\Admin\Models\DashboardViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ExecuteQuoteViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ImportCsvStatus.cs" />
     <Compile Include="Areas\Admin\Models\OptionsFactorViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ParkSitesViewModel.cs" />

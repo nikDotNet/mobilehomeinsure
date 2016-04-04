@@ -11,6 +11,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using mobilehome.insure.Helper.Extensions;
 using MobileHome.Insure.Model.DTO;
+using mobilehome.insure.Areas.Admin.Models;
 
 namespace mobilehome.insure.Areas.Admin.Controllers
 {
@@ -177,7 +178,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 customerObject = _serviceFacade.GetCustomerById(quoteObject.CustomerId.Value);
             MobileHome.Insure.Model.Payment paymentResponse = _serviceFacade.GetPolicyReceiptById(quoteObject.Id);
 
-            var rtn = new
+            var rtn = new 
             {
                 infoName = customerObject.FirstName + " " + customerObject.LastName,
                 infoAddress1 = customerObject.Address,
@@ -371,7 +372,8 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 customerObject = _serviceFacade.GetCustomerById(quoteObject.CustomerId.Value);
             MobileHome.Insure.Model.Payment paymentResponse = _serviceFacade.GetPolicyReceiptById(quoteObject.Id);
 
-            var rtn = new
+
+            var rtn = new ExecuteQuoteViewModel
             {
                 infoName = customerObject.FirstName + " " + customerObject.LastName,
                 infoAddress1 = customerObject.Address,
@@ -383,9 +385,10 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 infoEmail = customerObject.Email,
                 infopolnbr = quoteObject.ProposalNumber,
                 infocopcod = "Aegis",
+                infoQuoteId = quoteObject.Id,
                 infomodeofpay = paymentResponse == null ? "" :  paymentResponse.ModeOfPayment,
                 infopmtid = paymentResponse == null ? "" : paymentResponse.TransactionId,
-                infopmtamt = paymentResponse == null ? 0 : paymentResponse.Amount,
+                infopmtamt = paymentResponse == null ? 0 : paymentResponse.Amount.Value,
                 infopayopt = Constants.InstallmentList[quoteObject.NoOfInstallments.Value],
                 infotrndat = creationDate.ToShortDateString(),
                 infotrntim = creationDate.ToShortTimeString(),
