@@ -52,19 +52,19 @@
         </div>
         <div class="col-xs-12 col-sm-4 s2">
             @Html.LabelFor(x => x.StateId)
-            @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", style = "width: 100%" })
+            @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", style = "width: 100%", @readonly = "readonly" })
             @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="row field-row">
         <div class="col-xs-12 col-sm-4">
             @Html.LabelFor(x => x.City)
-            @Html.TextBoxFor(x => x.City, new { @class = "le-input" })
+            @Html.TextBoxFor(x => x.City, new { @class = "le-input", @readonly = "readonly" })
             @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
         </div>
         <div class="col-xs-12 col-sm-4">
             @Html.LabelFor(x => x.Zip)
-            @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
+            @Html.TextBoxFor(x => x.Zip, new { @class = "le-input", @readonly = "readonly" })
             @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
         </div>
         <div class="col-xs-12 col-sm-4">
@@ -95,11 +95,12 @@
                 pwdBox.removeAttr("disabled");
             });
 
-            //$("#ddlStateId").select2(
-            //    {
-            //        //placeholder: "Select a State",
-            //        allowClear: true
-            //    })
+            $("#ddlStateId").select2(
+                {
+                    //placeholder: "Select a State",
+                    allowClear: true,
+                    disabled:true
+                });
             //    .on("change", function (e) {
 
             //    });

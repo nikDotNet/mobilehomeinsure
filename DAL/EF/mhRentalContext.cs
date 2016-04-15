@@ -34,6 +34,7 @@ namespace MobileHome.Insure.DAL.EF
         public virtual DbSet<Park> Parks { get; set; }
         public virtual DbSet<ParkSite> ParkSites { get; set; }
         public virtual DbSet<ParkNotify> ParkNotifies { get; set; }
+        public virtual DbSet<ZipInfo> ZipInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -45,6 +46,7 @@ namespace MobileHome.Insure.DAL.EF
             modelBuilder.Configurations.Add(new ParkMap());
             modelBuilder.Configurations.Add(new ParkNotifyMap());
             modelBuilder.Configurations.Add(new ParkSiteMap());
+            modelBuilder.Configurations.Add(new ZipInfoMap());
         }
     }
 }

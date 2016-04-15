@@ -24,13 +24,21 @@ namespace MobileHome.Insure.Service.Rental
 
 
         #region Invoice
+<<<<<<< env/PROD
         public int generateInvoice(decimal amount, int customerId, int quoteId)
+=======
+        public int generateInvoice(decimal amount, int customerId, int quoteId, string modeOfPayment = "")
+>>>>>>> local
         {
             MobileHome.Insure.Model.Payment paymentObj = new Model.Payment();
             paymentObj.Amount = amount;
             paymentObj.CustomerId = customerId;
             paymentObj.RentalQuoteId = quoteId;
+<<<<<<< env/PROD
 
+=======
+            //paymentObj.ModeOfPayment = modeOfPayment;
+>>>>>>> local
             _context.Payments.Add(paymentObj);
             _context.SaveChanges();
 
@@ -274,10 +282,12 @@ namespace MobileHome.Insure.Service.Rental
             }
 
             //Get Premium calculation service result
+            var customerObj = GetCustomerById(CustomerId);
+            quoteObj.Customer = customerObj;
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
             quoteObj.Premium = Premium = result.GetPremiumDetail(quoteObj);
-
-            var customerObj = GetCustomerById(CustomerId);
+            quoteObj.Customer = null;
+            
 
             if (quoteObj.NoOfInstallments.HasValue && quoteObj.NoOfInstallments.Value != 0 && quoteObj.NoOfInstallments.Value != 1)
             {
@@ -321,7 +331,9 @@ namespace MobileHome.Insure.Service.Rental
         public void GeneratePolicy(Quote quoteObj)
         {
             var result = new MobileHoome.Insure.ExtService.CalculateHomePremiumService();
+            quoteObj.Customer = GetCustomerById(quoteObj.CustomerId.Value);
             result.GetPremiumDetail(quoteObj, true);
+            quoteObj.Customer = null;
             saveQuote(quoteObj);
         }
 

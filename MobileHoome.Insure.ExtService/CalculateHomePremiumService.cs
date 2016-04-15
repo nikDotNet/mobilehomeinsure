@@ -1,5 +1,6 @@
 ﻿using MobileHome.Insure.DAL.EF;
 using MobileHome.Insure.Model;
+using MobileHome.Insure.Model.Rental;
 using MobileHoome.Insure.ExtService.AegisRental;
 using MobileHoome.Insure.ExtService.Models;
 using System;
@@ -19,15 +20,23 @@ namespace MobileHoome.Insure.ExtService
     {
         private static Random random = new Random((int)DateTime.Now.Ticks);//thanks to McAden
 
+        private Quote quote { get; set; }
+
+        private string CountyNb { get; set; }
+
         public decimal GetPremiumDetail(MobileHome.Insure.Model.Rental.Quote quote, bool generatePolicy = false)
         {
             decimal premium = 0;
+
+            this.quote = quote;
 
             //prepare XML file for sending and take the result from other service
             using (var cxt = new mhRentalContext())
             {
                 //cxt.Configuration.ProxyCreationEnabled = false;
                 var customerInfo = cxt.Customers.FirstOrDefault(c => c.Id == quote.CustomerId);
+                CountyNb = cxt.ZipInfo.Where(x => x.Zip == customerInfo.Zip).Select(y => y.CountyNumber).FirstOrDefault();
+
                 var amountCharged = 0M;
               // As per requirement, we are not sending the proc fee to aegis
                 if(quote.InstallmentFee.HasValue)
@@ -103,7 +112,7 @@ namespace MobileHoome.Insure.ExtService
                 premwrit = generatePolicy ? premiumCharged.ToString() :"316",
                 policynbr = generatePolicy ? "" : LongBetween(9999999999, 1000000000).ToString(), //"4200001254", //Finding new number
                 progmode = generatePolicy ? "A": "Q",
-                effdate = "06/14/2015",
+                effdate = String.Format("{0:MM/dd/yyyy}", quote.EffectiveDate.Value), // "06/14/2015", // quote.EffectiveDate.Value.ToShortDateString(),
                 productcde = "42DT",
                 lstate = "SC",
                 polterm = "12"
@@ -158,31 +167,31 @@ namespace MobileHoome.Insure.ExtService
             var houseUnit = new HouseUnitInfo()
             {
                 unitnbr = "1",
-                make = "REDMAN",
-                model = "5525-L",
-                modelyear = "2005",
-                constyear = "1997",
+                make = "UNKNOWN",
+                model = "UNKNOWN",
+                modelyear = "2000",
+                constyear = "2000",
                 consttype = "F",
-                serialnbr = "8EZT1442X5S038820",
-                lngth = "70",
-                width = "14",
+                serialnbr = "UNKNOWN",
+                lngth = "0",
+                width = "0",
                 fireprotcd = "8",
                 familycount = string.Empty,
-                locaddr1 = "271-273 REFLECTION LAKES",
+                locaddr1 = quote.Customer.Address,
                 locaddr2 = string.Empty,
-                loccity = "EQUINUNK",
-                locstate = "SC",
-                loccountynb = "64",
+                loccity = quote.Customer.Park.PhysicalCity,
+                locstate = quote.Customer.Park.PhysicalState.Abbr,
+                loccountynb = CountyNb, // quote.Customer.Park.PhysicalCounty,
                 locterritory = "1",
-                loczip = "18417",
+                loczip = quote.Customer.Park.PhysicalZip.ToString(),
                 ratingbase = (limit.HasValue ? limit.Value : 0).ToString(),
                 parkcode = string.Empty,
                 ftfmhyd = "500",
                 milfmfde = "5",
                 prefrisk = string.Empty,
                 protcode = "P",
-                purcpric = "19000",
-                purcdate = "09/2013",
+                purcpric = "0",
+                purcdate = "01/2000",
                 tiedown = "Y",
                 woodstov = "N",
                 fndtncod = string.Empty,

@@ -25,7 +25,9 @@ namespace MobileHoome.Insure.ExtService
                 pmtid = paymentID,
                 pmttyp = "SW",
                 polnbr = policyNumber,
-                trndat = transcationDateTime.Month.ToString() + transcationDateTime.Day.ToString() + transcationDateTime.Year.ToString(),
+                trndat = (transcationDateTime.Month.ToString().Length == 1 ? "0" + transcationDateTime.Month.ToString() : transcationDateTime.Month.ToString())
+                + (transcationDateTime.Day.ToString().Length == 1 ? "0" + transcationDateTime.Day.ToString() : transcationDateTime.Day.ToString())
+                + transcationDateTime.Year.ToString(),
                 trntim = transcationDateTime.Hour + ":" + transcationDateTime.Minute,
                 latefee ="",
                 nsffee = "",

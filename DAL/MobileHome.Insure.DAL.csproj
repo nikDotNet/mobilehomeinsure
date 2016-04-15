@@ -84,6 +84,7 @@
     <Compile Include="EF\Mapping\ParkMap.cs" />
     <Compile Include="EF\Mapping\PaymentMap.cs" />
     <Compile Include="EF\Mapping\QuoteMap.cs" />
+    <Compile Include="EF\Mapping\ZipInfoMap.cs" />
     <Compile Include="EF\mhRentalContext.cs" />
     <Compile Include="IAuditableEntity.cs" />
     <Compile Include="IDBContext.cs" />

@@ -76,6 +76,7 @@
     <Compile Include="State.cs" />
     <Compile Include="Appraisal\StateFactor.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="ZipInfo.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
