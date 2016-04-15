@@ -15,11 +15,8 @@ namespace MobileHome.Insure.Service.Rental
         decimal generateQuote(DateTime EffectiveDate, decimal PersonalProperty, decimal Deductible, decimal Liability, int CustomerId, int NoOfInstallments, bool SendLandlord, ref int quoteId, out string ProposalNo, out decimal premiumChargedToday, out decimal installmentFee, out decimal processingFee, out decimal totalChargedToday);
         void GeneratePolicy(Quote quoteObj);
         void saveQuote(Quote quoteObj);
-<<<<<<< env/PROD
-        int generateInvoice(decimal amount, int customerId, int quoteId);
-=======
         int generateInvoice(decimal amount, int customerId, int quoteId, string modeOfPayment = "");
->>>>>>> local
+
         bool SendLandlord(int quoteId, bool SendLandlord);
         bool saveInvoice(int PaymentId, string ResponseCode, string TransactionId, string ApprovalCode, string approvalMessage, string ErrorMessage, DateTime creationDate);
 
