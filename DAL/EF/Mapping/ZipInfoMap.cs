@@ -25,6 +25,7 @@ namespace MobileHome.Insure.DAL.EF.Mapping
             this.Property(t => t.StateAbbr).HasColumnName("StateAbbr");
             this.Property(t => t.Zip).HasColumnName("Zip");
             this.Property(t => t.ZipKey).HasColumnName("ZipKey");
+            this.Property(t => t.TerritoryNumber).HasColumnName("TerritoryNumber");
 
         }
     }

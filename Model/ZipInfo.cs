@@ -15,5 +15,6 @@ namespace MobileHome.Insure.Model
         public string County { get; set; }
         public string StateAbbr { get; set; }
         public string CountyNumber { get; set; }
+        public int TerritoryNumber { get; set; }
     }
 }

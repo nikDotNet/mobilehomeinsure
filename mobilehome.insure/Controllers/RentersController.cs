@@ -227,7 +227,7 @@ namespace MobileHome.Insure.Web.Controllers
 
             body = @"<style>#m-info{background:#fff;margin-bottom:30px}dd,dl{display:block}<style>#m-info{padding:40px 30px 30px}#page-header{padding:14px 0 15px}dd,dl,dt,li,ol,ul{margin:0;padding:0}#page-header h3 span{font-size:21px;color:#fff;background:#666;line-height:60px;display:table;margin:0 auto -30px;padding:0 20px}#page-header h3{border-bottom:1px solid #e6e6e6;font-weight:300;font-family:Roboto,Sans-serif}dl{-webkit-margin-before:1em;-webkit-margin-after:1em;-webkit-margin-start:0;-webkit-margin-end:0}dt{font-weight:700}dd,dt{line-height:1.42857143}dd{-webkit-margin-start:40px}</style> " + body;
             body = body.Replace(System.Environment.NewLine, "");
-            _generalFacade.sendMail(ConfigurationManager.AppSettings["OrdersEmail"], customerEmail, "Receipt", body, null, true);
+            _generalFacade.sendMail(ConfigurationManager.AppSettings["OrdersEmail"], customerEmail, "Receipt", body, null, true, Request.Url.Host);
             return Content("Success");
         }
 
