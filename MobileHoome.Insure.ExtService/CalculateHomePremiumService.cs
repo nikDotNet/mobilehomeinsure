@@ -73,10 +73,15 @@ namespace MobileHoome.Insure.ExtService
                                                              GetCoverItemInfo(CoverType.thirdpartydesignee)
                                                              ));
                 }
+                
                 if (quote.SendLandLord)
                 {
                     rootEle.Element("unitinfo").Add(new XElement("addl_exposure",
                                                                    GetAdditionalExposure(customerInfo.Park)));
+                }
+                else
+                {
+                    rootEle.Element("unitinfo").Element("covinfo").Elements("cov_item").Last().Remove();
                 }
 
                 //Call service and get the result with Premium
