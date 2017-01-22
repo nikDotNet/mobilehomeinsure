@@ -85,6 +85,16 @@
     @<script>
         $(document).ready(function () {
             var pwdBox = $("#Password");
+            var siteNumberAlertOn = true;
+            $("#SiteNumber").on("blur", function (e) {
+                if (siteNumberAlertOn) {
+                    bootbox.alert("Did you forget to enter the site number, Please enter if you have one.");
+                    e.preventDefault();
+                    setTimeout(function () { $('#SiteNumber').focus(); }, 100);
+                    siteNumberAlertOn = false;
+                    return;
+                }
+            });
 
             $("#linkShowPwd").off("mouseover").off("mouseout");
             $("#linkShowPwd").on("mouseover", function (e) {
