@@ -182,6 +182,7 @@ namespace mobilehome.insure.Areas.Admin.Controllers
                 infoName = customerObject.FirstName + " " + customerObject.LastName,
                 infoAddress1 = customerObject.Address,
                 infoAddress2 = "",
+                lotnumber = customerObject.SiteNumber,
                 infoCity = customerObject.City,
                 infoState = customerObject.State.Name,
                 infoZipCode = customerObject.Zip,
