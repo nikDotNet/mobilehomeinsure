@@ -94,6 +94,10 @@ namespace MobileHome.Insure.Web.Controllers
             return View();
         }
 
+        public ActionResult LandingChoice()
+        {
+            return View();
+        }
 
     }
 }

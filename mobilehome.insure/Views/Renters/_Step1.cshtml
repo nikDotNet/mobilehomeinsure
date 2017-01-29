@@ -3,98 +3,114 @@
 @{
     Layout = null;
 }
-       
+
 <form id="frmCustomer">
-<div class="col-xs-12" style="padding-bottom:40px;">
-<div class="billing-address">
-    <div class="row field-row">
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.FirstName)
-            @Html.TextBoxFor(x => x.FirstName, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.LastName)
-            @Html.TextBoxFor(x => x.LastName, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.Email)
-            @Html.TextBoxFor(x => x.Email, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+    <div class="col-xs-12" style="padding-bottom:40px;">
+        <div class="billing-address">
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.FirstName)
+                    @Html.TextBoxFor(x => x.FirstName, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.LastName)
+                    @Html.TextBoxFor(x => x.LastName, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.LastName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.Email)
+                    @Html.TextBoxFor(x => x.Email, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.FirstName2)
+                    @Html.TextBoxFor(x => x.FirstName2, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.FirstName2, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.LastName2)
+                    @Html.TextBoxFor(x => x.LastName2, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.LastName2, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4">
+
+                </div>
+            </div>
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.SiteNumber)
+                    @Html.TextBoxFor(x => x.SiteNumber, new { @class = "le-input", style = "width: 100%"})
+                    @Html.ValidationMessageFor(x => x.SiteNumber, "", new { @class = "text-danger" })
+
+
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.Address)
+                    @Html.TextAreaFor(x => x.Address, new { @class = "le-input", style = "width: 100%" })
+                    @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4 s2">
+                    @Html.LabelFor(x => x.StateId)
+                    @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", style = "width: 100%" })
+                    @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row field-row">
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.City)
+                    @Html.TextBoxFor(x => x.City, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.Zip)
+                    @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    @Html.LabelFor(x => x.Phone)
+                    @Html.TextBoxFor(x => x.Phone, new { @class = "le-input" })
+                    @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger", @placeholder = "(XXX) XXX-XXXX" })
+                </div>
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-default" id="btnCustomerInfo">Next</button>
+            </div>
         </div>
     </div>
-    <div class="row field-row">
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.FirstName2)
-            @Html.TextBoxFor(x => x.FirstName2, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.FirstName2, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.LastName2)
-            @Html.TextBoxFor(x => x.LastName2, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.LastName2, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            
-        </div>
-    </div>
-    <div class="row field-row">
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.SiteNumber)
-            @Html.TextBoxFor(x => x.SiteNumber, new { @class = "le-input", style = "width: 100%" })
-            @Html.ValidationMessageFor(x => x.SiteNumber, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.Address)
-            @Html.TextAreaFor(x => x.Address, new { @class = "le-input", style = "width: 100%" })
-            @Html.ValidationMessageFor(x => x.Address, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4 s2">
-            @Html.LabelFor(x => x.StateId)
-            @Html.DropDownListFor(x => x.StateId, new SelectList(Model.States, "Id", "Name"), "", new { id = "ddlStateId", @placeholder = "Select a State", style = "width: 100%" })
-            @Html.ValidationMessageFor(x => x.StateId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="row field-row">
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.City)
-            @Html.TextBoxFor(x => x.City, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.City, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.Zip)
-            @Html.TextBoxFor(x => x.Zip, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.Zip, "", new { @class = "text-danger" })
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            @Html.LabelFor(x => x.Phone)
-            @Html.TextBoxFor(x => x.Phone, new { @class = "le-input" })
-            @Html.ValidationMessageFor(x => x.Phone, "", new { @class = "text-danger", @placeholder = "(XXX) XXX-XXXX" })
-        </div>
-    </div>
-    <div class="pull-right">
-        <button class="btn btn-default" id="btnCustomerInfo">Next</button>
-        @*<button class="btn btn-default btn-cancel-renters">Cancel</button>*@
-    </div>
-</div>
-</div>
-@Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)
 </form>
 @Html.Script(
     @<script>
+       
         $(document).ready(function () {
             var pwdBox = $("#Password");
-            var siteNumberAlertOn = true;
-            $("#SiteNumber").on("blur", function (e) {
-                if (siteNumberAlertOn) {
-                    bootbox.alert("Did you forget to enter the site number, Please enter if you have one.");
-                    e.preventDefault();
-                    setTimeout(function () { $('#SiteNumber').focus(); }, 100);
-                    siteNumberAlertOn = false;
-                    return;
-                }
-            });
+            var siteNumberAlertOn = false;
+
+            //var _vl= $("#SiteNumber").val();
+            //$("#SiteNumber").on("blur", function (e) {
+            //    if ($("#siteNumberAlertOn").val() == "True") {
+            //        bootbox.alert("Did you forget to enter the site number, Please enter if you have one.");
+            //        setTimeout(function () { $('#SiteNumber').focus(); }, 500);
+            //        $("#siteNumberAlertOn").val("False");
+            //     }
+            //});
+
+
+
+
+            //$("#SiteNumber").focusout(function (e) {
+            //    if (!$(this).val()) {
+            //        e.preventDefault();
+            //        siteNumberAlertOn = true;
+            //        bootbox.alert("Did you forget to enter the site number, Please enter if you have one.");
+
+            //   }
+
+            //});
+            //if (siteNumberAlertOn) $("#SiteNumber").focus();
 
             $("#linkShowPwd").off("mouseover").off("mouseout");
             $("#linkShowPwd").on("mouseover", function (e) {
@@ -115,61 +131,84 @@
             //    });
 
             $("#EffectiveDate").datepicker();
-
+            function checkIfEmpty() {
+                var mnumber = document.getElementById('SiteNumber');
+                if (mnumber) {
+                    window.setTimeout(function () {
+                        document.getElementById('SiteNumber').focus();
+                    }, 1);
+                    return true;
+                }
+                return false;
+            }
 
             $("#btnCustomerInfo").off("click");
             $("#btnCustomerInfo").on("click", function (evt) {
-                //debugger;
                 evt.preventDefault();
-                var $form = $('#frmCustomer');
-                if ($form.valid()) {
-                    $('#dvLoading').show();
-
-                    var ajaxOptions = {};
-                    ajaxOptions.data = JSON.stringify({
-                        FirstName: $("#FirstName").val(),
-                        LastName: $("#LastName").val(),
-                        FirstName2: $("#FirstName2").val(),
-                        LastName2: $("#LastName2").val(),
-                        Email: $("#Email").val(),
-                        //Password: $("#Password").val(),
-                        Address: $("#Address").val(),
-                        StateId: $("#ddlStateId").val(),
-                        City: $("#City").val(),
-                        Zip: $("#Zip").val(),
-                        Phone: $("#Phone").val(),
-                        ParkId: parkId,
-                        SiteNumber: $("#SiteNumber").val()
-                    });
-                    ajaxOptions.url = "/Renters/_Step1";
-                    ajaxOptions.method = "POST";
-                    ajaxOptions.dataType = "JSON";
-                    ajaxOptions.contentType = 'application/json';
-
-                    var request = $.ajax(ajaxOptions);
-                    request.done(function (result) {
-                        //$("#accordion").accordion("destroy");
-                        //$("#accordion").accordion({
-                        //    disabled: 2,
-                        //    active: 1,
-                        //    heightStyle: "content"
-                        //});
-                        if ($("#ddlStateId option:selected").text().toLowerCase() == 'tennessee' || $("#ddlStateId option:selected").text().toLowerCase() == 'virginia)') {
-                            $(".fraudstatement").show();
-                        }
-                        $("#divCustomer address").html("<strong>" + $("#FirstName").val() + " " + $("#LastName").val() + "</strong><br>" + $("#Address").val() + "<br>" + $("#City").val() + ", " + $("#ddlStateId option:selected").text() + ", " + $("#Zip").val() + "<br><abbr title=\"Phone\">P:</abbr>" + $("#Phone").val());
-                        $("#step1").hide();
-                        $("#step2").show();
-                        $('#dvLoading').hide();
-                    });
-
-                    request.fail(function (jqXHR, textStatus) {
-                        alert("Request failed: " + textStatus);
-                        $('#dvLoading').hide();
-                    });
-                }
+                bootbox.confirm("Do you need to enter a site or lot number?", function (result) {
+                    if (result) {
+                        checkIfEmpty();
+                        return;
+                    }
+                    else
+                    {
+                        submitToStep2();
+                    }
+                });
             });
+
+                function submitToStep2() {
+                    var $form = $('#frmCustomer');
+
+                    if ($form.valid()) {
+                        $('#dvLoading').show();
+
+                        var ajaxOptions = {};
+                        ajaxOptions.data = JSON.stringify({
+                            FirstName: $("#FirstName").val(),
+                            LastName: $("#LastName").val(),
+                            FirstName2: $("#FirstName2").val(),
+                            LastName2: $("#LastName2").val(),
+                            Email: $("#Email").val(),
+                            //Password: $("#Password").val(),
+                            Address: $("#Address").val(),
+                            StateId: $("#ddlStateId").val(),
+                            City: $("#City").val(),
+                            Zip: $("#Zip").val(),
+                            Phone: $("#Phone").val(),
+                            ParkId: parkId,
+                            SiteNumber: $("#SiteNumber").val()
+                        });
+                        ajaxOptions.url = "/Renters/_Step1";
+                        ajaxOptions.method = "POST";
+                        ajaxOptions.dataType = "JSON";
+                        ajaxOptions.contentType = 'application/json';
+
+                        var request = $.ajax(ajaxOptions);
+                        request.done(function (result) {
+                            //$("#accordion").accordion("destroy");
+                            //$("#accordion").accordion({
+                            //    disabled: 2,
+                            //    active: 1,
+                            //    heightStyle: "content"
+                            //});
+                            if ($("#ddlStateId option:selected").text().toLowerCase() == 'tennessee' || $("#ddlStateId option:selected").text().toLowerCase() == 'virginia)') {
+                                $(".fraudstatement").show();
+                            }
+                            $("#divCustomer address").html("<strong>" + $("#FirstName").val() + " " + $("#LastName").val() + "</strong><br>" + $("#Address").val() + "<br>" + $("#City").val() + ", " + $("#ddlStateId option:selected").text() + ", " + $("#Zip").val() + "<br><abbr title=\"Phone\">P:</abbr>" + $("#Phone").val());
+                            $("#step1").hide();
+                            $("#step2").show();
+                            $('#dvLoading').hide();
+                        });
+
+                        request.fail(function (jqXHR, textStatus) {
+                            alert("Request failed: " + textStatus);
+                            $('#dvLoading').hide();
+                        });
+                    }
+                }
+            
         });
 
     </script>
-)
+                )
