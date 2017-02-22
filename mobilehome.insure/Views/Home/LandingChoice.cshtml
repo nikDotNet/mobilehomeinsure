@@ -10,11 +10,10 @@
         <div class="col-md-12">
             <img src="~/content/img/header-about-us.png" class="img-responsive" />
             <div id="page-header">
-                <h3><span>Welcome</span></h3>
+                <h3><span>Start your Mobile Home Quote Now!</span></h3>
                 <ul class="bread_crumbs">
-                        <li>Please make your selection below</li>
-                        
-                    </ul>
+                    <li> </li>
+                 </ul> 
             </div>
         </div>
     </div>
@@ -27,7 +26,7 @@
                     <div class="row">
 
                         <div class="col-md-6">
-                            <a class="btn" href="#">Homeowners</a>
+                            <a class="btn" href="http://www.specialtyhomeowners.com/mobilhomeinsure" target="_blank">Homeowners - Quote Now!</a>
                         </div>
                     </div>
                 </div>
@@ -38,8 +37,15 @@
                 <div class="tab-content" style="height: 250px;">
                     <div class="row">
                         <div class="col-md-6">
-                            <a class="btn" href="/Renters">Renters</a>
-                        </div>
+                            @if (Request.Url.Host != "mobilehome.insure")
+                            {
+                                <a class="btn" href="/Renters">Renters - Quote Now!</a>
+                            }
+                            else
+                            {
+                                <a class="btn" href="https://mobilehome.insure/Renters">Renters - Quote Now!</a>
+                            }
+                          </div>
                     </div>
                 </div>
             </div>

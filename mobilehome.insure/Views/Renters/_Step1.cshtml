@@ -145,17 +145,30 @@
             $("#btnCustomerInfo").off("click");
             $("#btnCustomerInfo").on("click", function (evt) {
                 evt.preventDefault();
-                bootbox.confirm("Do you need to enter a site or lot number?", function (result) {
-                    if (result) {
-                        checkIfEmpty();
-                        return;
+                bootbox.confirm({
+                    message: "Do you need to enter a site or lot number?",
+                    buttons: {
+                        'cancel': {
+                            label: 'No',
+                            className: 'btn-cancel-renters'
+                        },
+                        'confirm': {
+                            label: 'Yes'
+                         }
+                    },
+                    callback: function (result) {
+                        if (result) {
+                            checkIfEmpty();
+                            return;
+                        }
+                        else
+                        {
+                            submitToStep2();
+                        }
                     }
-                    else
-                    {
-                        submitToStep2();
-                    }
-                });
+                })
             });
+            
 
                 function submitToStep2() {
                     var $form = $('#frmCustomer');
