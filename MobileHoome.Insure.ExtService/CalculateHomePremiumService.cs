@@ -189,7 +189,7 @@ namespace MobileHoome.Insure.ExtService
                 firstname = customer.FirstName,
                 lastname = customer.LastName,
                 middleinit = string.Empty,        //TODO: update from DB
-                insaddr1 = customer.Address,
+                insaddr1 = customer.Address + ", LOT " + customer.SiteNumber,
                 insaddr2 = string.Empty,          //TODO: update from DB
                 inscity = customer.City,
                 insstate = customer.State.Abbr,
