@@ -1017,6 +1017,7 @@
     <Content Include="Content\img\header-about-us.png" />
     <Content Include="Content\img\header-appraisal.png" />
     <Content Include="Content\img\header-renters-app.png" />
+    <Content Include="Content\img\mhparkindex.png" />
     <Content Include="Content\img\Off.png" />
     <Content Include="Content\img\On.png" />
     <Content Include="Content\img\support-header.png" />
@@ -1308,6 +1309,7 @@
     <Content Include="Areas\Admin\Views\Customer\ExecuteQuote.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\dev_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
     <Content Include="Content\assets\global\plugins\uniform\README.md" />
@@ -1321,6 +1323,7 @@
     <None Include="Properties\PublishProfiles\mobilehomeinsuretest - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\web_publish_mobinsure.pubxml" />
     <None Include="Scripts\jquery-1.11.3.intellisense.js" />
+    <Content Include="Properties\PublishProfiles\asp_deploy.pubxml.user" />
     <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
     <Content Include="Scripts\jquery-1.11.3.min.js" />
