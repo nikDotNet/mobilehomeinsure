@@ -1,614 +1,204 @@
 ﻿@{
     ViewBag.Title = "MobileHome.Insure - Insurance for Mobile Homes & Manufactured Houses";
 }
-
-	<div class="col-md-9 m-right">
-        <div class="alert alert-info alert-renters-close" role="alert" style="display:none">
-            You have chosen to cancel.  If you wish to start over, please click <a href="/renters">here</a>
-            <br/>If you wish to contact us because you were experiencing problems, please contact us <a href="/home/contact">here</a>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+<div class="col-md-9 m-right">
+    <div class="alert alert-info alert-renters-close" role="alert" style="display:none">
+        You have chosen to cancel.  If you wish to start over, please click <a href="/renters">here</a>
+        <br />If you wish to contact us because you were experiencing problems, please contact us <a href="/home/contact">here</a>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- page header -->
+    <div class="row" data-animated="0">
+        <div class="col-md-12">
+            <img src="~/content/img/mhparkindex.png" width="840px" style="height:225px !important" class="img-responsive" />
+            <div id="page-header">
+                <h3><span>Start your Mobile Home Quote Now!</span></h3>
+                <ul class="bread_crumbs">
+                    <li> </li>
+                </ul>
+            </div>
         </div>
-			<!-- Intro Slider -->
-			<div class="row" data-animated="0">
-				<div class="col-md-12">
-					<div id="intro">
-						<div id="intro-slider" class="owl-carousel owl-theme">
-							<div class="item" style="z-index:1000"><img src="content/img/slider/intro/1.jpg" class="img-responsive" alt="/renters"></div>
-                            <div class="item" style="z-index:1000"><img src="content/img/slider/intro/2.jpg" class="img-responsive" alt="/renters"></div>
-                            <div class="item" style="z-index:1000"><img src="content/img/slider/intro/3.jpg" class="img-responsive" alt="/renters"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Welcome Content -->
-			<div class="row" data-animated="0">
-				<div class="col-md-12">
-					<div id="welcome">
-						<h3>THIS IS THE PLACE WHERE YOU PURCHASE MOBILE HOME RENTERS INSURANCE IN MINUTES</h3>
-						<a href="/Renters" class="btn-default btn-center">Quote Now!</a>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Services Content -->
-			@*<div class="row" data-animated="0">
-				<div class="col-md-12">
-					<div id="services">
-						<ul>
-							<li data-animated="0">
-                                <a href="/renters">
-                                    <i class="fa fa-edit"></i>
-                                    <h4>Save Time &amp; Money</h4>
-                                    <p>Renters Insurance You Can Afford!</p>
-                                </a>
-							</li>
-							<li data-animated="0">
-                                <a href="/renters">
-                                    <i class="fa fa-html5"></i>
-                                    <h4>The Right Policy At The Right Price</h4>
-                                    <p>MobileHome.Insure Matches Our Customers With the Perfect Policy!</p>
-                                </a>
-							</li>
-							<li data-animated="0">
-                                <a href="/renters">
-                                    <i class="fa fa-money"></i>
-                                    <h4>Quote, Buy, Print!</h4>
-                                    <p>We Make Buying a Mobile Home Policy Easy & Fast</p>
-                                </a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>*@
-			
-			<!-- Tab content -->
-			<div class="row">
-				<div class="col-md-12">
-					<div id="features-tab" data-animated="0">
-					
-						<!-- Tab nav -->
-						<ul class="nav-tabs" role="tablist" id="myTab">
-							<li class="active"><a href="#tab1" role="tab" data-toggle="tab">Save Time & Money</a></li>
-							<li><a href="#tab2" role="tab" data-toggle="tab">Straight Talk</a></li>
-							<li><a href="#tab3" role="tab" data-toggle="tab">Expert Advice</a></li>
-							<li><a href="#tab4" role="tab" data-toggle="tab">Peace Of Mind</a></li>
-						</ul>
-						
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div class="tab-pane active fade in" id="tab1">
-								<div class="row">
-									<div class="col-md-4">
-                                        <img src="content/img/tabs/save-time-money.png" class="img-responsive" alt="" />
-									</div>
-									<div class="col-md-8 tab-right-content">
-										<h4>Save Time & Money</h4>
-										<p>MobileHome.Insure specializes in providing our customers with competitive rates.</p>
-										<p>Our technology enables you to purchase a Renters Policy in minutes.</p>
-                                        <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
-									</div>
-								</div>
-							</div>
-							<div class="tab-pane fade" id="tab2">
-								<div class="row">
-									<div class="col-md-8 tab-left-content">
-										<h4>Straight Talk</h4>
-										<p>Each of our staff is committed to giving you the right answer every time.</p>
-										<p>Our team members are not only knowledgeable about our products but are also trained to be great communicators. We strive to be able to explain insurance coverage in easy to understand language.</p>
-                                        <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
-									</div>
-									<div class="col-md-4">
-                                        <img src="content/img/tabs/straight_talk.png" class="img-responsive" alt="" />
-									</div>
-								</div>
-							</div>
-							<div class="tab-pane fade" id="tab3">
-								<div class="row">
-									<div class="col-md-4">
-                                        <img src="content/img/tabs/expertadvice.png" class="img-responsive" alt="" />
-									</div>
-									<div class="col-md-8 tab-right-content">
-										<h4>Expert Advice</h4>
-										<p>We built a world class support system right into our business.</p>
-										<p>We offer expert advice and accurate information in a quick and clear manner. Have questions about your policy, your bill, or need help getting a new quote? NO PROBLEM! Our support specialists are here when you need them.</p>
-                                        <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
-									</div>
-								</div>
-							</div>
-							<div class="tab-pane fade" id="tab4">
-								<div class="row">
-									<div class="col-md-8 tab-left-content">
-										<h4>Peace Of Mind</h4>
-										<p>You want to have peace of mind when it comes to protecting your property. We work very hard to provide a good product, written with a good company at a good price. Knowing that you have protected yourself goes a long way to provide you with Peace of Mind.</p>
-										@*<p>Each of our staff is committed to giving you the right answer every time.</p>*@
-                                        <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
-									</div>
-									<div class="col-md-4">
-                                        <img src="content/img/tabs/peace_of_mind.png" class="img-responsive" alt="" />
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-        <!-- Vertical Tab -->
-        @*<div class="row">
+    </div>
+    <!-- Info Content -->
+    <div class="row" data-animated="0">
+        <div class="col-md-6">
+            <div id="m-info" style="height:300px">
+                <div class="tab-content" style="height: 250px;">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            <a class="btn" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Homeowners - Quote Now!</a><br />
+                            <a class="btn btn-primary" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Start Quote!</a><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="m-info" style="height:300px">
+                <div class="tab-content" style="height: 250px;">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            @if (Request.Url.Host != "mobilehome.insure")
+                            {
+                                <a class="btn" href="/Renters">Renters - Quote Now!</a><br />
+                                <a class="btn btn-warning" href="/Renters">Start Quote!</a>
+                            }
+                            else
+                            {
+                                <a class="btn" href="https://mobilehome.insure/Renters">Renters - Quote Now!</a><br />
+                                <a class="btn btn-warning" href="https://mobilehome.insure/Renters">Start Quote!</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Welcome Content -->
+    <div class="row" data-animated="0">
+        <div class="col-md-12">
+            <div id="welcome">
+                <h3>Your online home to purchase Mobile Home Insurance quickly and easily!</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Content -->
+    @*<div class="row" data-animated="0">
             <div class="col-md-12">
-                <div class="col-md-12" id="vertical-tabs" data-animated="0">
-                    <h3>Mobile Home Insurance Products</h3>
-                    <div id="verticalTab">
-                        <ul class="resp-tabs-list">
-                            <li><i class="fa fa-home"></i> Mobile Home Renters Policy</li>
-                            <li><i class="fa fa-key"></i> Mobile Home Owners Policy</li>
-                            <li><i class="fa fa-cogs"></i> Products For Park Managers</li>
-                        </ul>
-                        <div class="resp-tabs-container">
-                            <div>
-                                <p><img src="/content/img/tabs/renters.png" class="img-responsive" alt="mobile home renters insurance"></p>
-                                <p>MobileHome.Insure has partnered with some of the best insurance companies in the world to provide you with a mobile home renters policy that is affordable with good coverage. Our staff has over 100 years experience in the mobile home industry. This experience enables us to provide customer service at a level you would expect.</p>
+                <div id="services">
+                    <ul>
+                        <li data-animated="0">
+                            <a href="/renters">
+                                <i class="fa fa-edit"></i>
+                                <h4>Save Time &amp; Money</h4>
+                                <p>Renters Insurance You Can Afford!</p>
+                            </a>
+                        </li>
+                        <li data-animated="0">
+                            <a href="/renters">
+                                <i class="fa fa-html5"></i>
+                                <h4>The Right Policy At The Right Price</h4>
+                                <p>MobileHome.Insure Matches Our Customers With the Perfect Policy!</p>
+                            </a>
+                        </li>
+                        <li data-animated="0">
+                            <a href="/renters">
+                                <i class="fa fa-money"></i>
+                                <h4>Quote, Buy, Print!</h4>
+                                <p>We Make Buying a Mobile Home Policy Easy & Fast</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+    <!-- Tab content -->
+    <div class="row">
+        <div class="col-md-12">
+            <div id="features-tab" data-animated="0">
+
+                <!-- Tab nav -->
+                <ul class="nav-tabs" role="tablist" id="myTab">
+                    <li class="active"><a href="#tab1" role="tab" data-toggle="tab">Save Time & Money</a></li>
+                    <li><a href="#tab2" role="tab" data-toggle="tab">Straight Talk</a></li>
+                    <li><a href="#tab3" role="tab" data-toggle="tab">Expert Advice</a></li>
+                    <li><a href="#tab4" role="tab" data-toggle="tab">Peace Of Mind</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active fade in" id="tab1">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="content/img/tabs/save-time-money.png" class="img-responsive" alt="" />
                             </div>
-                            <div>
-                                <p><img src="/content/img/tabs/owners.png" class="img-responsive" alt="mobile home owners insurance">Do you own a mobile or manufactured home?  Covering and protecting that investment is where we shine!  </p>
-                                <p>We partner with some of the best insurance companies in the world to make sure you have a good policy at a good price. These companies specialize in mobile home insurance so you know they will know how to handle insurance claims effectively and efficiently.</p>
+                            <div class="col-md-8 tab-right-content">
+                                <h4>Save Time & Money</h4>
+                                <p>MobileHome.Insure specializes in providing our customers with competitive rates.</p>
+                                <p>Our technology enables you to purchase a Renters Policy in minutes.</p>
+                                <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
                             </div>
-                            <div>
-                                <p><img src="/content/img/tabs/parks.png" class="img-responsive" alt="mobile home park owners insurance">Managing a mobile or manufactured home park had its unique set of challenges.  We know in order for you to succesfully... </p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non est non tellus sollicitudin sollicitudin. Donec fermentum id dolor eget posuere. Morbi malesuada lacus non urna mattis vulputate. Nulla id fermentum velit, vel aliquet tortor.</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab2">
+                        <div class="row">
+                            <div class="col-md-8 tab-left-content">
+                                <h4>Straight Talk</h4>
+                                <p>Each of our staff is committed to giving you the right answer every time.</p>
+                                <p>Our team members are not only knowledgeable about our products but are also trained to be great communicators. We strive to be able to explain insurance coverage in easy to understand language.</p>
+                                <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="content/img/tabs/straight_talk.png" class="img-responsive" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img src="content/img/tabs/expertadvice.png" class="img-responsive" alt="" />
+                            </div>
+                            <div class="col-md-8 tab-right-content">
+                                <h4>Expert Advice</h4>
+                                <p>We built a world class support system right into our business.</p>
+                                <p>We offer expert advice and accurate information in a quick and clear manner. Have questions about your policy, your bill, or need help getting a new quote? NO PROBLEM! Our support specialists are here when you need them.</p>
+                                <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab4">
+                        <div class="row">
+                            <div class="col-md-8 tab-left-content">
+                                <h4>Peace Of Mind</h4>
+                                <p>You want to have peace of mind when it comes to protecting your property. We work very hard to provide a good product, written with a good company at a good price. Knowing that you have protected yourself goes a long way to provide you with Peace of Mind.</p>
+                                @*<p>Each of our staff is committed to giving you the right answer every time.</p>*@
+                                <p><a href="/Renters" class="btn-default btn-center">Quote Now!</a></p>
+                            </div>
+                            <div class="col-md-4">
+                                <img src="content/img/tabs/peace_of_mind.png" class="img-responsive" alt="" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>*@
-<!--			 Portfolio -->
-			@*<div class="row">
-				<div class="col-md-12">
-					<div id="m-portfolio" data-animated="0">
-						<h3>Our Partners</h3>
-						<div class="row">
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/1.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 1</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/1.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/2.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 2</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/2.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/3.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 3</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/3.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/4.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 4</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/4.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/5.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 5</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/5.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/6.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 6</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/6.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/7.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 7</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/7.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/8.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 8</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/8.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4" data-animated="0">
-								<div class="mp-thumb">
-									<img src="content/img/projects/9.jpg" class="img-responsive" alt=""/>
-									<div class="overlay1">
-										<h4>Company 9</h4>
-									</div>
-									<div class="overlay1-hr">
-										<a href="#" class="link"><i class="fa fa-file-text-o"></i></a>
-										<a href="content/img/projects/9.jpg" class="prettyPhoto zoom"><i class="fa fa-search"></i></a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>*@
-			
-			<!-- Blog Slider -->
-			@*<div class="row">
-				<div class="col-md-12">
-					<div id="blog" data-animated="0">
-						<h3>Blog Posts</h3>
-						
-						<div id="m-blog" class="owl-carousel owl-theme">
-							<div class="item">
-								<div class="mb-thumb">
-									<img src="content/img/blog/1.jpg" class="img-responsive" alt=""/>
-									<div class="date">22<span>dec</span></div>
-									<span class="rmore"><a href="#">read more</a></span>
-								</div>
-								<h4><a href="#">How to create a quick, simple and convenient method to purchase mobile home insurance</a></h4>
-								<div class="blog-meta">
-									<span><i class="fa fa-comments"></i> 2 comments</span>
-									<span><i class="fa fa-user"></i> premiumlayers</span>
-								</div>
-								<p>Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-							</div>
-							
-							<div class="item">
-								<div class="mb-thumb">
-									<img src="content/img/blog/2.jpg" class="img-responsive" alt=""/>
-									<div class="date">06<span>jan</span></div>
-									<span class="rmore"><a href="#">read more</a></span>
-								</div>
-								<h4><a href="#">Our team members are committed to giving our customers the best mobile home insurance available</a></h4>
-								<div class="blog-meta">
-									<span><i class="fa fa-comments"></i> 4 comments</span>
-									<span><i class="fa fa-user"></i> admin</span>
-								</div>
-								<p>Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor</p>
-							</div>
-							
-							
-						</div>
-					</div>
-				</div>
-			</div>*@
-			
-			<!-- Pricing Table -->
-<!--			<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="m-pricing" data-animated="0">
-						<h3>Pricing tables</h3>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="pricing-table">
-									<div class="mp-icon"></div>
-									<div class="mp-title">Basic</div>
-									<div class="mp-price"><small>$</small>40<span>.99<em>month</em></span></div>
-									<ul>
-										<li><i class="fa fa-check-circle"></i> Unlimited Bandwith</li>
-										<li><i class="fa fa-times-circle"></i> Professional Cpanel</li>
-										<li><i class="fa fa-check-circle"></i> Unlimited E-mails</li>
-										<li><i class="fa fa-times-circle"></i> 24/7 Support</li>
-										<li><i class="fa fa-check-circle"></i> High Security</li>
-									</ul>
-									<div class="mp-btn"><a href="#">Select this plan</a></div>
-								</div>
-							</div>
-							
-							<div class="col-md-4">
-								<div class="pricing-table">
-									<div class="mp-icon"></div>
-									<div class="mp-title">Standard</div>
-									<div class="mp-price"><small>$</small>60<span>.99<em>month</em></span></div>
-									<ul>
-										<li><i class="fa fa-check-circle"></i> Unlimited Bandwith</li>
-										<li><i class="fa fa-times-circle"></i> Professional Cpanel</li>
-										<li><i class="fa fa-check-circle"></i> Unlimited E-mails</li>
-										<li><i class="fa fa-times-circle"></i> 24/7 Support</li>
-										<li><i class="fa fa-check-circle"></i> High Security</li>
-									</ul>
-									<div class="mp-btn"><a href="#">Select this plan</a></div>
-								</div>
-							</div>
-							
-							<div class="col-md-4">
-								<div class="pricing-table">
-									<div class="mp-icon"></div>
-									<div class="mp-title">Professional</div>
-									<div class="mp-price"><small>$</small>90<span>.99<em>month</em></span></div>
-									<ul>
-										<li><i class="fa fa-check-circle"></i> Unlimited Bandwith</li>
-										<li><i class="fa fa-times-circle"></i> Professional Cpanel</li>
-										<li><i class="fa fa-check-circle"></i> Unlimited E-mails</li>
-										<li><i class="fa fa-times-circle"></i> 24/7 Support</li>
-										<li><i class="fa fa-check-circle"></i> High Security</li>
-									</ul>
-									<div class="mp-btn"><a href="#">Select this plan</a></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
--->			
-			<!-- Testimonials -->
-			@*<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="m-testimonials" data-animated="0">
-						<h3>Testimonials</h3>
-						<div class="row">
-							<div class="col-md-12">
-								<div id="testimonials" class="owl-carousel owl-theme">
-									<div class="item">
-										<img src="content/img/quote/1.png" class="img-responsive" alt="">
-										<p>Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit class aptent taciti sociosqu ad litora</p>
-										<i class="fa fa-user"></i>
-										<cite>John Smith, CEO at <span>Envato</span></cite>
-									</div>
-									<div class="item">
-										<img src="content/img/quote/1.png" class="img-responsive" alt="">
-										<p>Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit class aptent taciti sociosqu ad litora</p>
-										<i class="fa fa-user"></i>
-										<cite>John Smith, CEO at <span>Envato</span></cite>
-									</div>
-									<div class="item">
-										<img src="content/img/quote/1.png" class="img-responsive" alt="">
-										<p>Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit class aptent taciti sociosqu ad litora</p>
-										<i class="fa fa-user"></i>
-										<cite>John Smith, CEO at <span>Envato</span></cite>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>*@
-			
-			<!-- Icons content -->
-<!--			<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="icons-wrap" data-animated="0">
-						<h3>Font Awesome</h3>
-						<ul>
-							<li><i class="fa fa-play-circle"></i> Play Circle icon</li>
-							<li><i class="fa fa-signal"></i> Signal icon</li>
-							<li><i class="fa fa-envelope-o"></i> Envelope icon</li>
-							<li><i class="fa fa-home"></i> Home icon</li>
-							<li><i class="fa fa-volume-up"></i> Volume icon</li>
-							<li><i class="fa fa-refresh"></i> Refresh icon</li>
-							<li><i class="fa fa-download"></i> Download icon</li>
-							<li><i class="fa fa-camera"></i> Camera icon</li>
-							<li><i class="fa fa-comments"></i> Comments icon</li>
-							<li><i class="fa fa-lock"></i> Lock icon</li>
-							<li><i class="fa fa-search"></i> Search icon</li>
-							<li><i class="fa fa-folder-open"></i> Folder icon</li>
-						</ul>
-					</div>
-				</div>
-			</div>
--->			
-			<!-- Vertical Tab -->
-<!--			<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="vertical-tabs" data-animated="0">
-						<h3>Vertikal Tabs</h3>
-						vertical Tabs
-						<div id="verticalTab">
-							<ul class="resp-tabs-list">
-								<li><i class="fa fa-laptop"></i> Responsive Layout</li>
-								<li><i class="fa fa-suitcase"></i> Multiple Portfolios</li>
-								<li><i class="fa fa-youtube-play"></i> Video Support</li>
-							</ul>
-							<div class="resp-tabs-container">
-								<div>
-									<p>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-									<p>Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non  mauris vitae erat consequat auctor eu in elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet</p>
-								</div>
-								<div>
-									<p>Curabitur mauris lorem, egestas sit amet interdum vel, pretium nec quam. Nullam non vestibulum ligula. Fusce eget faucibus mauris, nec ornare orci. Fusce ac magna at turpis tempor iaculis.</p>
-									<p>Praesent scelerisque sed leo id pellentesque. Donec ipsum nibh, feugiat id neque sed, posuere malesuada nibh. Integer consequat dolor a ligula condimentum ultricies. Nam pellentesque magna ut condimentum elementum. Etiam sit amet orci euismod, mollis risus eu, sagittis magna. Proin vel metus blandit diam accumsan ornare. Sed a quam odio. Sed ut erat nec purus ultrices ultricies.</p>
-								</div>
-								<div>
-									<p>Integer lacinia commodo est, nec consequat dui fermentum nec. Quisque dapibus magna sit amet sapien tincidunt, vitae condimentum mauris lacinia. Vestibulum eu porta nibh. Curabitur aliquam metus bibendum dolor feugiat, cursus facilisis lectus maximus. Ut porta neque sit amet enim viverra, eu tincidunt ex hendrerit.</p>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non est non tellus sollicitudin sollicitudin. Donec fermentum id dolor eget posuere. Morbi malesuada lacus non urna mattis vulputate. Nulla id fermentum velit, vel aliquet tortor.</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
--->			
-			<!-- Timeline -->
-<!--			<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="timeline-wrap" data-animated="0">
-						<h3>Timeline</h3>
-						<ol id="timeline">
-							<li class="t-left" data-animated="0">
-								<div class="t-time">Lorem ipsum<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-							<li class="t-right" data-animated="0">
-								<div class="t-time">Dolor sit<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-							<li class="t-left" data-animated="0">
-								<div class="t-time">Aenan Auctor<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li> 
-							<li class="t-right" data-animated="0">
-								<div class="t-time">Gravida prin<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-							<li class="t-left" data-animated="0">
-								<div class="t-time">Lorem Quis<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-							<li class="t-right" data-animated="0">
-								<div class="t-time">Bibendum<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-							<li class="t-left" data-animated="0">
-								<div class="t-time">Nisi solic<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-							<li class="t-right" data-animated="0">
-								<div class="t-time">Proin Gravida<span>2000 - 2005</span></div>
-								<p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit</p>
-							</li>
-						</ol>
-					</div>
-				</div>
-			</div>
--->			
-			<!-- Home-Shop -->
-			<!--<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="m-products" data-animated="0">
-						<h3>Our Products</h3>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="product-wrap">
-									<div class="pw-price">$540.99</div>
-									<img src="img/products/1.jpg" class="img-responsive" alt=""/>
-									<div class="pw-inner">
-										<h4>Classic Bicycle</h4>
-										<ul>
-											<li><a href="#"><span><i class="fa fa-heart"></i></span></a></li>
-											<li><a href="#"><span><i class="fa fa-shopping-cart"></i></span></a></li>
-											<li><a href="#"><span><i class="fa fa-exchange"></i></span></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							
-							<div class="col-md-4">
-								<div class="product-wrap">
-									<div class="pw-price">$789.50</div>
-									<img src="img/products/2.jpg" class="img-responsive" alt=""/>
-									<div class="pw-inner">
-										<h4>Antic Car</h4>
-										<ul>
-											<li><a href="#"><span><i class="fa fa-heart"></i></span></a></li>
-											<li><a href="#"><span><i class="fa fa-shopping-cart"></i></span></a></li>
-											<li><a href="#"><span><i class="fa fa-exchange"></i></span></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							
-							<div class="col-md-4">
-								<div class="product-wrap">
-									<div class="pw-price">$210.00</div>
-									<img src="img/products/3.jpg" class="img-responsive" alt=""/>
-									<div class="pw-inner">
-										<h4>Vintage Panorama</h4>
-										<ul>
-											<li><a href="#"><span><i class="fa fa-heart"></i></span></a></li>
-											<li><a href="#"><span><i class="fa fa-shopping-cart"></i></span></a></li>
-											<li><a href="#"><span><i class="fa fa-exchange"></i></span></a></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			-->
-			<!-- Promo banner -->
-			@*<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="m-promo" data-animated="0">
-						<h3>Use MobileHome.Insure on ANY Device</h3>
-						<a href="#"><img src="content/img/promo-banner.png" class="img-responsive" alt=""/></a>
-					</div>
-				</div>
-			</div>*@
-			
-			<!-- Footer contact -->
-			<div class="row">
-				<div class="col-md-12">
-					<div class="col-md-12" id="m-contact" data-animated="0">
-						@{Html.RenderPartial("_contact"); }
+        </div>
+    </div>
 
-						<div class="contact-info" data-animated="0">
-							<h4>Contact Info</h4>
-							<ul>
-								<li><i class="fa fa-phone"></i> 877-773-1055</li>
-								<li><i class="fa fa-fax"></i> 303-379-6606</li>
-								<li><i class="fa fa-envelope"></i> info@mobilehome.insure</li>
-							</ul>
-						</div>
-<!--						<div class="flickr-widget" data-animated="0">
-							<h4>Flickr Gallery</h4>
-							<ul id="flickr" class="thumbs"></ul>
-						</div>
--->					</div>
-				</div>
-			</div>
-			
-			<!-- Footer - copyright -->
-			
-		</div>
 
+    <!-- Footer contact -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12" id="m-contact" data-animated="0">
+                @{Html.RenderPartial("_contact"); }
+                <div class="contact-info" data-animated="0">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fa fa-phone"></i> 877-773-1055</li>
+                        <li><i class="fa fa-fax"></i> 303-379-6606</li>
+                        <li><i class="fa fa-envelope"></i> info@mobilehome.insure</li>
+                    </ul>
+                </div>
+                <!--						<div class="flickr-widget" data-animated="0">
+                                            <h4>Flickr Gallery</h4>
+                                            <ul id="flickr" class="thumbs"></ul>
+                                        </div>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer - copyright -->
+
+</div>
 @if (ViewBag.ContactSent)
 {
     <script type="text/javascript">
         alert("Message Sent Successfully");
         $("#successMessage").show();
-        
+
     </script>
 }

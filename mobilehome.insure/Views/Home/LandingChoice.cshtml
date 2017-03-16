@@ -1,0 +1,54 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "MobileHome.Insure - Choose Quote Type";
+}
+<div class="col-md-9 m-right">
+    <!-- Page Header -->
+    <div class="row" data-animated="0">
+        <div class="col-md-12">
+            <img src="~/content/img/mhparkindex.png" width="840px" style="height:225px !important" class="img-responsive" />
+            <div id="page-header">
+                <h3><span>Start your Mobile Home Quote Now!</span></h3>
+                <ul class="bread_crumbs">
+                    <li> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Info Content -->
+    <div class="row" data-animated="0">
+        <div class="col-md-6">
+            <div id="m-info" style="height:300px">
+                <div class="tab-content" style="height: 250px;">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            <a class="btn" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Homeowners - Quote Now!</a><br />
+                            <a class="btn btn-primary" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Start Quote!</a><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="m-info" style="height:300px">
+                <div class="tab-content" style="height: 250px;">
+                    <div class="row">
+                        <div class="col-md-12" style="text-align:center;">
+                            @if (Request.Url.Host != "mobilehome.insure")
+                            {
+                                <a class="btn" href="/Renters">Renters - Quote Now!</a><br />
+                                <a class="btn btn-warning" href="/Renters">Start Quote!</a>
+                            }
+                            else
+                            {
+                                <a class="btn" href="https://mobilehome.insure/Renters">Renters - Quote Now!</a><br />
+                                <a class="btn btn-warning" href="https://mobilehome.insure/Renters">Start Quote!</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

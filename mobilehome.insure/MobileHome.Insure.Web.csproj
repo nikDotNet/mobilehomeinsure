@@ -1015,6 +1015,7 @@
     <Content Include="Content\img\header-about-us.png" />
     <Content Include="Content\img\header-appraisal.png" />
     <Content Include="Content\img\header-renters-app.png" />
+    <Content Include="Content\img\mhparkindex.png" />
     <Content Include="Content\img\Off.png" />
     <Content Include="Content\img\On.png" />
     <Content Include="Content\img\support-header.png" />

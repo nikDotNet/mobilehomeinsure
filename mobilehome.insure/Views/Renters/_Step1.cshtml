@@ -83,8 +83,10 @@
 </form>
 @Html.Script(
     @<script>
+
         $(document).ready(function () {
             var pwdBox = $("#Password");
+            var siteNumberAlertOn = false;
 
             $("#linkShowPwd").off("mouseover").off("mouseout");
             $("#linkShowPwd").on("mouseover", function (e) {
@@ -95,24 +97,54 @@
                 pwdBox.removeAttr("disabled");
             });
 
-            $("#ddlStateId").select2(
-                {
-                    //placeholder: "Select a State",
-                    allowClear: true,
-                    disabled:true
-                });
-            //    .on("change", function (e) {
-
-            //    });
-
             $("#EffectiveDate").datepicker();
-
+            function checkIfEmpty() {
+                var mnumber = document.getElementById('SiteNumber');
+                if (mnumber && mnumber.value.length == 0) {
+                    window.setTimeout(function () {
+                        document.getElementById('SiteNumber').focus();
+                    }, 1);
+                    return true;
+                }
+                return false;
+            }
 
             $("#btnCustomerInfo").off("click");
             $("#btnCustomerInfo").on("click", function (evt) {
-                //debugger;
                 evt.preventDefault();
+                debugger;
+                if (checkIfEmpty()) {
+                    bootbox.confirm({
+                        message: "Do you need to enter a site or lot number?",
+                        buttons: {
+                            'cancel': {
+                                label: 'No',
+                                className: 'btn-cancel-renters'
+                            },
+                            'confirm': {
+                                label: 'Yes'
+                            }
+                        },
+                        callback: function (result) {
+                            if (result) {
+                                checkIfEmpty();
+                                return;
+                            }
+                            else {
+                                submitToStep2();
+                            }
+                        }
+                    })
+                }
+                else {
+                    submitToStep2();
+                }
+            });
+
+
+            function submitToStep2() {
                 var $form = $('#frmCustomer');
+
                 if ($form.valid()) {
                     $('#dvLoading').show();
 
@@ -159,8 +191,9 @@
                         $('#dvLoading').hide();
                     });
                 }
-            });
+            }
+
         });
 
     </script>
-)
+                    )

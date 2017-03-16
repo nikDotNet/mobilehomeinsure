@@ -16,16 +16,7 @@
 					</div>
 					<div class="collapse navbar-collapse in" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav navbar-right menu-effect">
-							@*<li class="current"><a href="/" data-hover="Home">Home</a></li>*@
-                            <!-- Make DropDown Menu Item -->
-                            @if(Request.Url.Host != "mobilehome.insure")
-                            {
-                            <li><a href="/Renters" data-hover="Quote&nbsp;Now">Quote Now</a></li>    
-                            }
-                            else
-                            {
-                                <li><a href="https://mobilehome.insure/Renters" data-hover="Quote&nbsp;Now">Quote Now</a></li>
-                            }
+                            <li><a href="/Home/LandingChoice" data-hover="Quote&nbsp;Now">Quote Now</a></li>
                             
                             <li><a href="/Home/AboutUs" data-hover="About">About</a></li>
 							
