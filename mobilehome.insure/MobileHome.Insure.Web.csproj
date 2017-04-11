@@ -1414,6 +1414,7 @@
     <Content Include="Views\Home\PrivacyPolicy.cshtml" />
     <Content Include="Views\Renters\Notify.cshtml" />
     <Content Include="Views\Home\Unsubscribe.cshtml" />
+    <Content Include="Views\Home\LandingChoice.cshtml" />
     <None Include="Web.Production.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

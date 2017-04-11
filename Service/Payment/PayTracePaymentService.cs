@@ -25,7 +25,8 @@ namespace MobileHome.Insure.Service.Payment
             response.Successfull = false;
 
             WebClient wClient = new WebClient();
-
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            
             //process a keyed transaction
             String sRequest = "PARMLIST=" + System.Web.HttpUtility.UrlEncode
                 ("UN~" + requestPayment.Username +"|PSWD~"+ requestPayment.Password +
