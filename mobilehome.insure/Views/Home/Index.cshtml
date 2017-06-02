@@ -27,9 +27,12 @@
             <div id="m-info" style="height:300px">
                 <div class="tab-content" style="height: 250px;">
                     <div class="row">
-                        <div class="col-md-12" style="text-align:center;">
-                            <a class="btn" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Homeowners - Quote Now!</a><br />
-                            <a class="btn btn-primary" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Start Quote!</a><br />
+
+                        <div class="col-md-12" style="text-align:center">
+                            <p><b>Homeowners - Quote Now!</b></p>
+                            <p>Homes* @DateTime.Now.AddYears(-25).Year and newer (25 years old)</p>
+                            <a class="btn-default" href="http://www.specialtyhomeowners.com/mobilehomeinsure" target="_blank">Start Quote</a><br /><br />
+                            <p>If your home is over 25 years old please call 877-773-1055</p>
                         </div>
                     </div>
                 </div>
@@ -39,23 +42,24 @@
             <div id="m-info" style="height:300px">
                 <div class="tab-content" style="height: 250px;">
                     <div class="row">
-                        <div class="col-md-12" style="text-align:center;">
+                        <div class="col-md-12" style="text-align:center">
+                            <p><b>Renters - Quote Now!</b></p><br /><br />
                             @if (Request.Url.Host != "mobilehome.insure")
                             {
-                                <a class="btn" href="/Renters">Renters - Quote Now!</a><br />
-                                <a class="btn btn-warning" href="/Renters">Start Quote!</a>
+                                <a class="btn-default" href="/Renters">Start Quote</a> <br /><br />
                             }
                             else
                             {
-                                <a class="btn" href="https://mobilehome.insure/Renters">Renters - Quote Now!</a><br />
-                                <a class="btn btn-warning" href="https://mobilehome.insure/Renters">Start Quote!</a>
+                                <a class="btn-default" href="https://mobilehome.insure/Renters">Start Quote</a><br /><br />
                             }
+                            <p>Any age Home!</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
     <!-- Welcome Content -->
     <div class="row" data-animated="0">
         <div class="col-md-12">
