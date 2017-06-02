@@ -1309,6 +1309,7 @@
     <Content Include="Areas\Admin\Views\Customer\ExecuteQuote.cshtml" />
     <None Include="Properties\PublishProfiles\aaa.pubxml" />
     <None Include="Properties\PublishProfiles\asp_deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\DevPublish.pubxml" />
     <None Include="Properties\PublishProfiles\dev_deploy.pubxml" />
     <None Include="Properties\PublishProfiles\homedeploy.pubxml" />
     <Content Include="Content\assets\global\plugins\uniform\css\uniform.default.scss" />
@@ -1385,6 +1386,7 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1422,6 +1424,7 @@
     <Content Include="Views\Home\LandingChoice.cshtml" />
     <None Include="Web.Production.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
